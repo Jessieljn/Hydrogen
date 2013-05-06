@@ -1,5 +1,6 @@
 from PyQt4 import QtGui
 
+
 class GeneralWidget (QtGui.QGroupBox):
     def __init__(self, nao, parent):
         super(GeneralWidget, self).__init__()
@@ -12,16 +13,16 @@ class GeneralWidget (QtGui.QGroupBox):
         self.prod3 = QtGui.QPushButton("Prod 3")
         self.prod4 = QtGui.QPushButton("Prod 4")
         self.introduce = QtGui.QPushButton("Introduce")
-        self.nextTask = QtGui.QPushButton("Next task?")
-        self.endExperiment = QtGui.QPushButton("End")
+        self.nextTask = QtGui.QPushButton("Next Task?")
+        self.endExperiment = QtGui.QPushButton("End Experiment")
         self.debrief = QtGui.QPushButton("Debrief")
-        self.repeat = QtGui.QPushButton("Repeat")
-        self.louder = QtGui.QPushButton("Louder")
+        self.repeat = QtGui.QPushButton("Please Repeat")
+        self.louder = QtGui.QPushButton("Speak Louder")
         self.yes = QtGui.QPushButton("Yes")
         self.no = QtGui.QPushButton("No")
         self.good = QtGui.QPushButton("Good")
-        self.processing = QtGui.QPushButton("Processing response")
-        self.saveQuestions = QtGui.QPushButton("Please save specific questions about the tasks for after the experiment.")
+        self.processing = QtGui.QPushButton("Processing Response")
+        self.saveQuestions = QtGui.QPushButton("Please save your questions for later.")
 
         self.prod1.clicked.connect(self.nao.prod1)
         self.prod2.clicked.connect(self.nao.prod2)
@@ -53,6 +54,8 @@ class GeneralWidget (QtGui.QGroupBox):
         self.no.setMaximumWidth(150)
         self.good.setMaximumWidth(150)
         self.processing.setMaximumWidth(150)
+
+        #Uncomment to set a maximum width for the buttons.
         #self.saveQuestions.setMaximumWidth(150)
 
         layout = QtGui.QVBoxLayout()
@@ -80,21 +83,30 @@ class GeneralWidget (QtGui.QGroupBox):
         layout.addLayout(hbox2)
 
         self.setLayout(layout)
+    #END __init__()
 
     def sayProd(self):
         self.nao.say(str(self.sender().text()))
+    #END sayProd()
 
     def say_nextTask(self):
         self.nao.say("Why don't we move onto the next task?")
+    #END say_nextTask()
 
     def say_endExperiment(self):
-        self.nao.say("In that case, we will end the experiment now. Please wait a moment while I notify the leed researcher that we are done.")
+        self.nao.say("In that case, we will end the experiment now. Please wait a moment while I notify the "
+                     "lead researcher that we are done.")
+    #END say_endExperiment()
 
     def say_researcherComing(self):
         self.nao.say("The researcher is on his way to give you the debriefing. Please wait a moment.")
+    #END say_researcherComing()
 
     def say_repeat(self):
         self.nao.say("I didn't quite hear you. Can you please say that again?")
-	
+    #END say_repeat()
+
     def say_speakLouder(self):
         self.nao.say("Please speak louder.")
+    #END say_speakLouder()
+#END GeneralWidget

@@ -3,25 +3,24 @@ import MainWindow
 import Nao
 
 
+#Creates a camera widget in the GUI.
 class CameraWidget (QtGui.QGroupBox):
 
-    ##
-    # __init__():
-    ##
     def __init__(self, parent):
         super(CameraWidget, self).__init__()
         self.init()
         self.setParent(parent)
+    #END __init__()
 
-    ##
-    # init():
-    ##
     def init(self):
         self.setTitle("Camera")
 
         self.camera = QtGui.QLabel()
         self.camera.setMinimumSize(250, 250)
+
+        #Uncomment to scale the window.
         #self.camera.setScaledContents(True)
+
         self.camera.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.MinimumExpanding)
         self.camera.setFrameStyle(QtGui.QFrame.Panel)
         self.setImage(QtGui.QImage('image2.jpg'))
@@ -58,32 +57,32 @@ class CameraWidget (QtGui.QGroupBox):
         layout.addWidget(self.camera)
         layout.addLayout(btnLayout)
         layout.addLayout(cameraSourceLayout)
-
+        
         self.setLayout(layout)
+    #END init()
 
-    ##
-    # setNao(): Rotates head with keyboard.
-    ##
+    #setNao(): Rotates and tilts head.
     def setNao(self, nao):
         self.nao = nao
         self.left.clicked.connect(self.nao.turnHeadLeft)
         self.right.clicked.connect(self.nao.turnHeadRight)
         self.up.clicked.connect(self.nao.tiltHeadUp)
         self.down.clicked.connect(self.nao.tiltHeadDown)
+    #END setNao()
 
-    ##
-    # setImage(): Sets the image.
-    ##
+    #setImage():
     def setImage(self, image):
         self.camera.setPixmap(QtGui.QPixmap.fromImage(image).scaled(self.camera.size(), QtCore.Qt.KeepAspectRatio))
+    #END setImage()
 
-    ##
-    # getCameraSource(): Gets the source of the camera.
-    ##
+    #getCameraSource(): Returns the top or bottom camera.
     def getCameraSource(self):
         checked = self.cameraSource.checkedButton()
 
         if checked == self.topCamera:
             return Nao.TOP_CAMERA
+        #END if
         elif checked == self.bottomCamera:
             return Nao.BOTTOM_CAMERA
+        #END elif
+    #END getCameraSource()

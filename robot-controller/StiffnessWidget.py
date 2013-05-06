@@ -1,5 +1,6 @@
 from PyQt4 import QtGui
 
+
 class StiffnessWidget (QtGui.QGroupBox):
     def __init__(self, nao, parent):
         super(StiffnessWidget, self).__init__()
@@ -29,14 +30,21 @@ class StiffnessWidget (QtGui.QGroupBox):
         layout.addWidget(self.high)
 
         self.setLayout(layout)
+    #END __init__()
 
     def setStiffness(self, button):
         if button == self.off:
             self.nao.setStiffness(0.0)
+        #END if
         elif button == self.low:
             self.nao.setStiffness(0.25)
+        #END elif
         elif button == self.med:
             self.nao.setStiffness(0.5)
             pass
+        #END elif
         elif button == self.high:
             self.nao.setStiffness(1.0)
+        #END elif
+    #END setStiffness()
+#END StiffnessWidget
