@@ -2,6 +2,11 @@ import sys
 from PyQt4 import QtGui, QtNetwork, QtCore
 
 
+##
+# server.py
+#
+#
+##
 class ServerWindow (QtGui.QWidget):
 
     def __init__(self):
@@ -21,12 +26,12 @@ class ServerWindow (QtGui.QWidget):
         self.lbl4 = QtGui.QTextEdit(self)
         self.lbl4.resize(200, 500)
 
-        #Set to wait for access
+        # Set to wait for access
         self.stateb.clicked.connect(self.listen)
     
         self.server.connect(self.server, QtCore.SIGNAL("newConnection()"), self.newCon)
 
-        #Move
+        # Move
         self.lbl1.move(10, 10)
         self.stateb.move(80, 10)
         self.lbl3.move(10, 40)
@@ -39,15 +44,16 @@ class ServerWindow (QtGui.QWidget):
         src = self.sender()
 
         if src.text() == 'Closed':
-            #set to wait for access
+            # Set to wait for access
             self.server.listen(QtNetwork.QHostAddress('130.179.30.44'), int(9559))
-        #END if
+
             if not self.server.isListening():
                 print('Error: failed to listen to the specified address')
             #END if not
             else:
                 self.stateb.setText('Open')
             #END else
+        #END if
         elif src.text() == 'open':
             self.server.close()
             self.stateb.setText('Closed')

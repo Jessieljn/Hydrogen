@@ -3,6 +3,12 @@ from PyQt4 import QtGui, QtNetwork, QtCore
 #TabbedWid holds all *Tab classes
 
 
+##
+# TaskTabs.py
+#
+# Creates tabs for different commands.
+# General, Tedium, and Mental Challenge Tabs
+##
 class SpeechButton(QtGui.QPushButton):
     def __init__(self, title, speech, nao):
         super(SpeechButton, self).__init__(speech)
@@ -53,7 +59,6 @@ class General (QtGui.QWidget):
 
 
 class Tedium (QtGui.QWidget):
-
     def __init__(self, nao, parent):
         super(Tedium, self).__init__()
         self.nao = nao

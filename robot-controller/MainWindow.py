@@ -8,6 +8,12 @@ from GeneralWidget import GeneralWidget
 from StiffnessWidget import StiffnessWidget
 import Nao
 
+##
+# MainWindow.py
+#
+# Puts all the widgets together in one windows.
+##
+
 KEY_UP = 0
 KEY_DOWN = 1
 KEY_LEFT = 2
@@ -31,10 +37,10 @@ class MainWindow (QtGui.QWidget):
 
         self.setWindowTitle('NAO Robotic Controller')
 
-        #create a socket
+        # Creates a socket.
         self.socket = QtNetwork.QTcpSocket(self)
 
-        #create camera widget
+        # Creates a camera widget.
         self.cameraWidget = CameraWidget(self)
 
         self.nao = Nao.Nao(self.cameraWidget)
@@ -45,27 +51,27 @@ class MainWindow (QtGui.QWidget):
 
         self.cameraWidget.setNao(self.nao)
 
-        #create text widget
+        # Create the text widget.
         self.textWid = TextWid(self.nao, self)
         self.textWid.msg_sent.connect(self.grab_keyboard)
 
-        #create gesture widget
+        # Creates the gesture widget.
         self.gestureWidget = GestureWidget(self.nao, self)
 
-        #create tabbed widget
+        # Create a tabbed task bar.
         self.taskTabs = TaskTabs(self.nao, self)
 
-        #create connection button
+        # Create the connect button.
         self.connectButton = QtGui.QPushButton('Connect', self)
         self.naoIP = QtGui.QLineEdit(Nao.DEFAULT_IP)
         self.naoIP.setMaximumWidth(100)
         self.naoPort = QtGui.QLineEdit(str(Nao.DEFAULT_PORT))
         self.naoPort.setMaximumWidth(60)
 
-        #Event action for connection button
+        # ActionEvent for button.
         self.connectButton.clicked.connect(self.connectToNao)
 
-        #Widget layout
+        # Widget layout.
         self.resize(1000, 700)
 
         mainLayout = QtGui.QHBoxLayout()
@@ -82,17 +88,11 @@ class MainWindow (QtGui.QWidget):
         hbox2.addWidget(self.gestureWidget)
 
         hbox3 = QtGui.QHBoxLayout()
-
         hbox3.addWidget(self.textWid, 5)
-
         hbox3.addWidget(self.stiffnessWidget, 1)
-
         hbox2.addLayout(hbox3)
-
         vbox.addLayout(hbox2)
-
         vbox2.addWidget(self.taskTabs)
-        
         hbox.addLayout(vbox2)
 
         #Uncomment for smaller camera, and gestures on their own half of screen.
@@ -107,7 +107,6 @@ class MainWindow (QtGui.QWidget):
         vbox.addLayout(naoConnectionLayout)
 
         self.show()
-
         self.grabKeyboard()
         timerID = self.startTimer(1000/100)
     #END init()

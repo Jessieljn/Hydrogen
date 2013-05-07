@@ -2,6 +2,12 @@ import naoqi
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 
+##
+# Nao.py
+#
+# Connection to the NAO
+##
+
 DEFAULT_IP = '140.193.228.26'
 DEFAULT_PORT = 9559
 
@@ -13,7 +19,7 @@ BOTH_CAMERAS = 2
 
 class Nao(QtCore.QObject):
 
-    #Signals
+    # Signals
     connected_signal = QtCore.pyqtSignal()
     disconnected_signal = QtCore.pyqtSignal()
     newFrame_cam1_signal = QtCore.pyqtSignal(QtGui.QImage)
@@ -75,7 +81,6 @@ class Nao(QtCore.QObject):
 
     def disconnect(self):
         self.stopCamera()
-
         self.cameraProxy = None
         self.speechProxy = None
         self.behaviorProxy = None

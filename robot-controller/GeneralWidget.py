@@ -1,6 +1,11 @@
 from PyQt4 import QtGui
 
 
+##
+# GeneralWidget.py
+#
+# Creates the general layout of the GUI.
+##
 class GeneralWidget (QtGui.QGroupBox):
     def __init__(self, nao, parent):
         super(GeneralWidget, self).__init__()

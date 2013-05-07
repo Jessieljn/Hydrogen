@@ -1,6 +1,11 @@
 from PyQt4 import QtGui
 
 
+##
+# StiffnessWidget.py
+#
+# Sets the stiffness of the NAO.
+##
 class StiffnessWidget (QtGui.QGroupBox):
     def __init__(self, nao, parent):
         super(StiffnessWidget, self).__init__()

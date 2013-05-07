@@ -3,6 +3,11 @@ from PyQt4 import QtGui, QtNetwork, QtCore
 from MainWindow import MainWindow
 
 
+##
+# main.py
+#
+# Executes the application.
+##
 def main():
     app = QtGui.QApplication(sys.argv)   
     window = MainWindow()

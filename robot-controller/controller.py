@@ -1,11 +1,16 @@
 import sys
 import naoqi
 
+##
+# Controller.py
+#
+# Retrieves the user inputted IP Address and Port, or gets the default settings.
+##
+
 DEFAULT_PORT = 9559
 
 
 def main():
-    # Get IP and port from command line.
     if len(sys.argv) == 2:
         IP = sys.argv[1]
         port = DEFAULT_PORT
@@ -15,7 +20,7 @@ def main():
         port = int(sys.argv[2])
     #END elif
     else:
-        sys.exit("usage: ip [port]")
+        sys.exit("Usage: IP [port]")
     #END else
 
     print IP
@@ -34,7 +39,7 @@ def main():
     videoProxy.unsubscribe(nameID)
 #END main()
 
-    print "got video device"
+    print "Retrieved the video device."
 
 if __name__ == "__main__":
     main()

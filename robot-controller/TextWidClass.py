@@ -2,6 +2,11 @@ from PyQt4 import QtGui, QtNetwork, QtCore
 import MainWindow
 
 
+##
+# TextWidClass.py
+#
+# Text to Speech.
+##
 class FocusTextEdit(QtGui.QTextEdit):
     def __init__(self, parent):
         super(FocusTextEdit, self).__init__()
@@ -22,7 +27,6 @@ class FocusTextEdit(QtGui.QTextEdit):
             self.releaseKeyboard()
             self.parent.msg_sent.emit()
         #END elif
-
         else:
             QtGui.QTextEdit.keyPressEvent(self, event)
         #END else
@@ -52,7 +56,7 @@ class TextWid (QtGui.QGroupBox):
         hbox.addWidget(self.message)
         hbox.addWidget(self.button)
 
-        #self.volumeLabel = QtGui.QLabel("Volume:")
+        self.volumeLabel = QtGui.QLabel("Volume:")
         self.volumeSlider = QtGui.QSlider(QtCore.Qt.Vertical)
         self.volumeSlider.setMaximumHeight(55)
         self.volumeSlider.setRange(0, 100)
@@ -60,14 +64,12 @@ class TextWid (QtGui.QGroupBox):
         self.volumeSlider.valueChanged.connect(self.setVolume)
 
         vbox = QtGui.QVBoxLayout()
-        #vbox.addWidget(self.volumeLabel)
+        vbox.addWidget(self.volumeLabel)
         vbox.addWidget(self.volumeSlider)
 
         hbox.addLayout(vbox)
         self.setLayout(hbox)
-
         self.button.clicked.connect(self.sendMessage)
-
         self.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.Maximum)
     #END __init__()
 

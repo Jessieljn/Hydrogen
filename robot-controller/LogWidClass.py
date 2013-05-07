@@ -1,6 +1,11 @@
 from PyQt4 import QtGui, QtNetwork, QtCore
 
 
+##
+# LogWidClass.py
+#
+# Logs messages sent.
+##
 class LogWid (QtGui.QWidget):
     def __init__ (self, parent):
         super(LogWid, self).__init__()
@@ -14,7 +19,7 @@ class LogWid (QtGui.QWidget):
 
         self.te.setReadOnly(True)
         
-        #Layout
+        # Layout
         vbox = QtGui.QVBoxLayout()
         vbox.addWidget(self.lbl)
         vbox.addWidget(self.te)

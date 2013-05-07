@@ -3,7 +3,13 @@ import MainWindow
 import Nao
 
 
-#Creates a camera widget in the GUI.
+##
+# CameraWidget.py
+#
+# Creates a camera widget in the GUI.
+#
+# Allows for switching between the top and bottom camera, as well as rotation of the camera.
+##
 class CameraWidget (QtGui.QGroupBox):
 
     def __init__(self, parent):
@@ -61,7 +67,6 @@ class CameraWidget (QtGui.QGroupBox):
         self.setLayout(layout)
     #END init()
 
-    #setNao(): Rotates and tilts head.
     def setNao(self, nao):
         self.nao = nao
         self.left.clicked.connect(self.nao.turnHeadLeft)
@@ -70,12 +75,10 @@ class CameraWidget (QtGui.QGroupBox):
         self.down.clicked.connect(self.nao.tiltHeadDown)
     #END setNao()
 
-    #setImage():
     def setImage(self, image):
         self.camera.setPixmap(QtGui.QPixmap.fromImage(image).scaled(self.camera.size(), QtCore.Qt.KeepAspectRatio))
     #END setImage()
 
-    #getCameraSource(): Returns the top or bottom camera.
     def getCameraSource(self):
         checked = self.cameraSource.checkedButton()
 
@@ -86,3 +89,4 @@ class CameraWidget (QtGui.QGroupBox):
             return Nao.BOTTOM_CAMERA
         #END elif
     #END getCameraSource()
+#END CameraWidget

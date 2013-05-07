@@ -2,6 +2,11 @@ from PyQt4 import QtGui, QtNetwork, QtCore
 import MainWindow
 
 
+##
+# GestureWidget.py
+#
+# Creates the Gesture Widget in the GUI, used for motions.
+##
 class GestB (QtGui.QPushButton):
         def __init__ (self, parent, title, command):
                 super(GestB, self).__init__(title)
@@ -16,7 +21,6 @@ class GestB (QtGui.QPushButton):
 
 
 class GestureWidget (QtGui.QGroupBox):
-
         def __init__(self, nao, parent):
             super(GestureWidget, self).__init__()
             self.nao = nao

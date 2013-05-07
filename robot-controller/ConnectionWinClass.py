@@ -1,6 +1,13 @@
 from PyQt4 import QtGui, QtNetwork, QtCore
 
 
+##
+# ConnectionWinClass.py
+#
+# Creates the connection widget in the GUI, for user inputted IP address and port.
+# Default IP Address: 140.193.228.26
+# Default Port: 9559
+##
 class ConnectionWin (QtGui.QWidget):
     def __init__(self, mainwindow):
         super(ConnectionWin, self).__init__()
@@ -26,7 +33,6 @@ class ConnectionWin (QtGui.QWidget):
         self.show()
     #END init()
 
-    #passToMain(): Passes the IP and Port to the main
     def passToMain(self):
         li = []
         li.append(self.ip.displayText())#li[0]
