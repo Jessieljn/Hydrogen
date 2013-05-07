@@ -5,7 +5,6 @@ DEFAULT_PORT = 9559
 
 
 def main():
-
     # Get IP and port from command line.
     if len(sys.argv) == 2:
         IP = sys.argv[1]

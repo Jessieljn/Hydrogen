@@ -16,7 +16,7 @@ class ServerWindow (QtGui.QWidget):
         self.server = QtNetwork.QTcpServer(self)
         
         self.lbl1 = QtGui.QLabel('Status: ', self)
-        self.stateb = QtGui.QPushButton('closed', self)
+        self.stateb = QtGui.QPushButton('Closed', self)
         self.lbl3 = QtGui.QLabel('Received:', self)
         self.lbl4 = QtGui.QTextEdit(self)
         self.lbl4.resize(200, 500)
@@ -38,30 +38,30 @@ class ServerWindow (QtGui.QWidget):
     def listen(self):
         src = self.sender()
 
-        if src.text() == 'closed':
+        if src.text() == 'Closed':
             #set to wait for access
-            self.server.listen(QtNetwork.QHostAddress('127.0.0.1'), int(5555))
+            self.server.listen(QtNetwork.QHostAddress('130.179.30.44'), int(9559))
         #END if
             if not self.server.isListening():
                 print('Error: failed to listen to the specified address')
             #END if not
             else:
-                self.stateb.setText('open')
+                self.stateb.setText('Open')
             #END else
         elif src.text() == 'open':
             self.server.close()
-            self.stateb.setText('closed')
+            self.stateb.setText('Closed')
         #END elif
     #END listen()
 
     def changeInput(self):
-        print('input has come')
+        print('Input has come')
         self.txt = self.socket.readAll()
         self.lbl4.append(self.toStr(self.txt))
     #END readRequest
 
     def newCon(self):
-        print('connected')
+        print('Connected')
         self.socket = self.server.nextPendingConnection()
         self.connect(self.socket, QtCore.SIGNAL("readyRead()"), self.changeInput)
     #END newCon()

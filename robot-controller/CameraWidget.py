@@ -19,7 +19,7 @@ class CameraWidget (QtGui.QGroupBox):
         self.camera.setMinimumSize(250, 250)
 
         #Uncomment to scale the window.
-        #self.camera.setScaledContents(True)
+        self.camera.setScaledContents(True)
 
         self.camera.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.MinimumExpanding)
         self.camera.setFrameStyle(QtGui.QFrame.Panel)

@@ -15,7 +15,7 @@ class FocusTextEdit(QtGui.QTextEdit):
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return:
-            print "enter key"
+            print "Enter key"
             self.parent.sendMessage()
         #END if
         elif event.key() == QtCore.Qt.Key_Escape:
@@ -72,7 +72,7 @@ class TextWid (QtGui.QGroupBox):
     #END __init__()
 
     def sendMessage(self):
-        print "send"
+        print "Send"
         if self.nao.isConnected():
             self.nao.say(str(self.message.toPlainText()))
             if self.ledsProcessing == True:

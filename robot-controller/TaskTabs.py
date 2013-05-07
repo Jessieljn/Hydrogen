@@ -35,7 +35,7 @@ class General (QtGui.QWidget):
                                            "that you can leave at any time. The cash honorarium is yours to keep even "
                                            "if you choose not to continue to the end.", nao)
 
-        self.demographics = SpeechButton("Demographics", "Before wee begin, please open the blue folder in front of "
+        self.demographics = SpeechButton("Demographics", "Before we begin, please open the blue folder in front of "
                                                          "you. Inside, you will find a demographics questionnaire. "
                                                          "Please fill it out and let me know when you are finished.", nao)
 
@@ -223,7 +223,7 @@ class TaskTabs (QtGui.QTabWidget):
     def init(self):
         self.setWindowTitle('Buttons')
         
-        self.addTab(General(self.nao, self.parent), 'Pre-Experiment')
+        self.addTab(General(self.nao, self.parent), 'General')
         self.addTab(Tedium(self.nao, self.parent), 'Tedium')
         self.addTab(MentalChallenge(self.nao, self.parent), 'Mental Challenge')
     #END init()

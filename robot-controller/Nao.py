@@ -2,7 +2,7 @@ import naoqi
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 
-DEFAULT_IP = '130.179.30.44'
+DEFAULT_IP = '140.193.228.26'
 DEFAULT_PORT = 9559
 
 CAMERA_PARAM = 18
@@ -36,7 +36,7 @@ class Nao(QtCore.QObject):
         print " > Loading Text To Speech..."
         self.speechProxy = naoqi.ALProxy("ALTextToSpeech", IP, port)
         print " > " + str(self.speechProxy)
-        self.speechProxy.setVolume(0.6)
+        self.speechProxy.setVolume(0.3)
         print " > Loading Camera..."
         self.cameraProxy = naoqi.ALProxy("ALVideoDevice", IP, port)
         print " > " + str(self.cameraProxy)

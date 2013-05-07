@@ -29,7 +29,7 @@ class MainWindow (QtGui.QWidget):
         self.keys[KEY_LEFT] = False
         self.keys[KEY_RIGHT] = False
 
-        self.setWindowTitle('Robot Controller')
+        self.setWindowTitle('NAO Robotic Controller')
 
         #create a socket
         self.socket = QtNetwork.QTcpSocket(self)
@@ -62,10 +62,10 @@ class MainWindow (QtGui.QWidget):
         self.naoPort = QtGui.QLineEdit(str(Nao.DEFAULT_PORT))
         self.naoPort.setMaximumWidth(60)
 
-        #event action for conneciton button
+        #Event action for connection button
         self.connectButton.clicked.connect(self.connectToNao)
 
-        #widget layout
+        #Widget layout
         self.resize(1000, 700)
 
         mainLayout = QtGui.QHBoxLayout()
