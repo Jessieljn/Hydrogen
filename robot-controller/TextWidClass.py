@@ -20,8 +20,9 @@ class FocusTextEdit(QtGui.QTextEdit):
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return:
-            print "Enter key"
+            print "Enter Key."
             self.parent.sendMessage()
+            self.clear()
         #END if
         elif event.key() == QtCore.Qt.Key_Escape:
             self.releaseKeyboard()

@@ -29,7 +29,7 @@ class GestureWidget (QtGui.QGroupBox):
         #END __init__()
 
         def init(self):
-            self.setTitle("Gestures")
+            self.setTitle("Gestures/Motions")
 
             self.stand = QtGui.QPushButton("Stand Up")
             self.stand.clicked.connect(self.nao.standUp)
@@ -43,16 +43,16 @@ class GestureWidget (QtGui.QGroupBox):
             #GestB(self, <<Button Name>>, <<What command to send>>)
             #self.b1 = GestB(self, 'Gesture 1', 'g1')
             #self.b2 = GestB(self, 'Gesture 2', 'g2')
-            self.b3 = GestB(self, 'Gesture 3', 'g3')
-            self.b4 = GestB(self, 'Gesture 4', 'g4')
-            self.b5 = GestB(self, 'Gesture 5', 'g5')
+            #self.b3 = GestB(self, 'Gesture 3', 'g3')
+            #self.b4 = GestB(self, 'Gesture 4', 'g4')
+            #self.b5 = GestB(self, 'Gesture 5', 'g5')
 
             #Events for buttons.
             #self.b1.clicked.connect(self.sendMessage)
             #self.b2.clicked.connect(self.sendMessage)
-            #self.b3.clicked.connect(self.sendMessage)
-            #self.b4.clicked.connect(self.sendMessage)
-            #self.b5.clicked.connect(self.sendMessage)
+            #self.b3.clicked.connect(self.sendMessage())
+            #self.b4.clicked.connect(self.sendMessage())
+            #self.b5.clicked.connect(self.sendMessage())
 
             #Set layout.
             vbox = QtGui.QHBoxLayout()
@@ -61,9 +61,9 @@ class GestureWidget (QtGui.QGroupBox):
             vbox.addWidget(self.stand, 0, QtCore.Qt.AlignCenter)
             vbox.addWidget(self.sit, 0, QtCore.Qt.AlignCenter)
             vbox.addWidget(self.taiChi, 0, QtCore.Qt.AlignCenter)
-            vbox.addWidget(self.b3, 0, QtCore.Qt.AlignCenter)
-            vbox.addWidget(self.b4, 0, QtCore.Qt.AlignCenter)
-            vbox.addWidget(self.b5, 0, QtCore.Qt.AlignCenter)
+            #vbox.addWidget(self.b3, 0, QtCore.Qt.AlignCenter)
+            #vbox.addWidget(self.b4, 0, QtCore.Qt.AlignCenter)
+            #vbox.addWidget(self.b5, 0, QtCore.Qt.AlignCenter)
             vbox.addStretch(1)
             
             self.setLayout(vbox)
