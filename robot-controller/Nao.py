@@ -184,4 +184,20 @@ class Nao(QtCore.QObject):
     def taiChi(self):
         self.behaviorProxy.post.runBehavior("TaiChi")
     #END taiChi()
+
+    def scratchHead(self):
+        self.behaviorProxy.post.runBehavior("scratchHeadRight")
+    #END scratchHead()
+
+    def chinScratch(self):
+        self.behaviorProxy.post.runBehavior("chinScratch")
+    #END chinScratch()
+
+    def pointLeft(self):
+        self.behaviorProxy.post.runBehavior("leftHandPointing")
+    #END pointLeft()
+
+    def pointRight(self):
+        self.behaviorProxy.post.runBehavior("rightHandPointing")
+    #END pointRight()
 #END Nao
