@@ -4,8 +4,6 @@ from PyQt4 import QtGui, QtNetwork, QtCore
 
 ##
 # server.py
-#
-#
 ##
 class ServerWindow (QtGui.QWidget):
 

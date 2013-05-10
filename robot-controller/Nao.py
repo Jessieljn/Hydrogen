@@ -200,4 +200,16 @@ class Nao(QtCore.QObject):
     def pointRight(self):
         self.behaviorProxy.post.runBehavior("rightHandPointing")
     #END pointRight()
+
+    def shakeHand(self):
+        self.behaviorProxy.post.runBehavior("shakeHand")
+    #END shakeHand
+
+    def thriller(self):
+        self.behaviorProxy.post.runBehavior("thriller")
+    #END thriller
+
+    def wave(self):
+        self.behaviorProxy.post.runBehavior("wave")
+    #END wave
 #END Nao

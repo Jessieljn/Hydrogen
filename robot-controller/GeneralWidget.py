@@ -5,7 +5,7 @@ import TaskTabs
 ##
 # GeneralWidget.py
 #
-# Creates the general layout of the GUI.
+# Creates the General Widget in the GUI, used for speech.
 ##
 class GeneralWidget (QtGui.QGroupBox):
     def __init__(self, nao, parent):
@@ -14,6 +14,7 @@ class GeneralWidget (QtGui.QGroupBox):
         self.nao = nao
         self.parent = parent
 
+        # Create different speech buttons.
         self.hello = TaskTabs.SpeechButton("Hello", "Hello", nao)
         self.louder = TaskTabs.SpeechButton("Louder", "Please speak louder", nao)
         self.thanks = TaskTabs.SpeechButton("Thanks", "Thank you", nao)

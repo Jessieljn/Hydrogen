@@ -74,38 +74,41 @@ class MainWindow (QtGui.QWidget):
         # Widget layout.
         self.resize(1000, 700)
 
+        # Create layouts.
         mainLayout = QtGui.QHBoxLayout()
         vbox = QtGui.QVBoxLayout()
         vbox2 = QtGui.QVBoxLayout()
         hbox = QtGui.QHBoxLayout()
-        
+
+        # Add camera widget to the main layout.
         mainLayout.addWidget(self.cameraWidget)
         mainLayout.addLayout(vbox)
         self.setLayout(mainLayout)
 
+        # Add general and gesture widgets to horizontal box 2.
         hbox2 = QtGui.QVBoxLayout()
         hbox2.addWidget(self.generalWidget)
         hbox2.addWidget(self.gestureWidget)
 
+        # Add text and stiffness widgets to horizontal box 3.
         hbox3 = QtGui.QHBoxLayout()
         hbox3.addWidget(self.textWid, 5)
         hbox3.addWidget(self.stiffnessWidget, 1)
 
+        # Add elements to layout.
         vbox.addLayout(hbox3)
         vbox.addLayout(hbox2)
         vbox2.addWidget(self.taskTabs)
         hbox.addLayout(vbox2)
 
-
-        #Uncomment for smaller camera, and gestures on their own half of screen.
-        #hbox.addWidget(self.gestureWidget)
+        # Set layout.
         vbox.addLayout(hbox)
 
+        # Add connection widget to the layout.
         naoConnectionLayout = QtGui.QHBoxLayout()
         naoConnectionLayout.addWidget(self.connectButton, 0, QtCore.Qt.AlignLeft)
         naoConnectionLayout.addWidget(self.naoIP, 0, QtCore.Qt.AlignLeft)
         naoConnectionLayout.addWidget(self.naoPort, 0, QtCore.Qt.AlignLeft)
-
         vbox.addLayout(naoConnectionLayout)
 
         self.show()

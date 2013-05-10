@@ -23,6 +23,7 @@ class SpeechButton(QtGui.QPushButton):
     def say(self):
         self.nao.say(self.speech)
     #END say
+#END SpeechButton
 
 
 class General (QtGui.QWidget):
@@ -73,9 +74,9 @@ class Tedium (QtGui.QWidget):
                                                        "Machine learning algorithms require a great deal of data, hence"
                                                        " the need to do this repeatedly.", nao)
 
-        self.knowHow = SpeechButton("KnowHow?", "Do you know how to rename a file?", nao)
+        self.knowHow = SpeechButton("Know How?", "Do you know how to rename a file?", nao)
         self.great = SpeechButton("Great", "Great!", nao)
-        self.thatsOkay = SpeechButton("That's okay.", "That is okay, I will explain.", nao)
+        self.thatsOkay = SpeechButton("That's Okay.", "That is okay, I will explain.", nao)
         self.openFolder = SpeechButton("Open Folder", "Please open the folder called Experiment on the desktop.", nao)
         self.rightClick = SpeechButton("Right click", "Right click on the first file and press: re-name", nao)
 
@@ -84,7 +85,6 @@ class Tedium (QtGui.QWidget):
                                              " be renamed to robot, dot, pee n gee.", nao)
 
         self.enter = SpeechButton("Enter", "Then, press enter or click somewhere else in the folder.", nao)
-        self.understand = SpeechButton("Understand?", "Do you understand how to rename a file?", nao)
 
         self.good = SpeechButton("Good", "Good. Please continue to do this for each file in the folder, and let me know"
                                          " when you are done.", nao)
@@ -93,9 +93,9 @@ class Tedium (QtGui.QWidget):
                                                     " please do not use shortcuts such as copy and paste, as this may"
                                                     " confuse the machine learning system.", nao)
 
-        self.a = SpeechButton("I'll add next", "Good. I will now add the next set of files.", nao)
-        self.b = SpeechButton("Are you finished?", "Are you finished renaming the files?", nao)
-        self.c = SpeechButton("Do you see the files?", "Do you see the files?", nao)
+        self.a = SpeechButton("I'll Add Next", "Good. I will now add the next set of files.", nao)
+        self.b = SpeechButton("Are You Finished?", "Are you finished renaming the files?", nao)
+        self.c = SpeechButton("Do You See The Files?", "Do you see the files?", nao)
         self.d = SpeechButton("Try F5", "Try pressing F5 on the keyboard.", nao)
 
         self.data = SpeechButton("Data", "It is important to get as much data as we can for the machine learning"
@@ -105,13 +105,21 @@ class Tedium (QtGui.QWidget):
                                          " up to you how much data you give us. You, are in control. Let us know when"
                                          " you think you are done, and would like to move on to the next task.", nao)
 
-        self.fifty = SpeechButton("50-100", "This set contains 50 files. The next set will contain 100 files.", nao)
-        self.hundred = SpeechButton("100-500", "This set contains 100 files. The next set will contain 500 files.", nao) 
-        self.fiveHundred = SpeechButton("500-1000", "This set contains 500 files. The next set will contain 1000 files.", nao) 
-        self.thousand = SpeechButton("1000-5000", "This set contains 1000 files. The next set will contain 5000 files.", nao) 
-        self.tryClose = SpeechButton("Try closing folder", "Try closing the folder and opening it up again.", nao)
+        self.fifty = SpeechButton("This Set Has 50, Next Has 100", "This set contains 50 files. The next set will "
+                                                                   "contain 100 files.", nao)
+
+        self.hundred = SpeechButton("This Set Has 100, Next Has 500", "This set contains 100 files. The next set will "
+                                                                      "contain 500 files.", nao)
+
+        self.fiveHundred = SpeechButton("This Set Has 500, Next Has 1000", "This set contains 500 files. The next set "
+                                                                           "will contain 1000 files.", nao)
+
+        self.thousand = SpeechButton("This Set Has 1000, Next Has 5000 ", "This set contains 1000 files. The next set "
+                                                                          "will contain 5000 files.", nao)
+
+        self.tryClose = SpeechButton("Try Closing Folder", "Try closing the folder and opening it up again.", nao)
         self.done = SpeechButton("Done", "Thank you, that should be good for now.", nao)
-        self.nextTask = SpeechButton("nextTask", "We will now move onto the next task.", nao)
+        self.nextTask = SpeechButton("Next Task", "We will now move onto the next task.", nao)
 
         layout = QtGui.QHBoxLayout()
 
@@ -126,7 +134,6 @@ class Tedium (QtGui.QWidget):
         hbox1.addWidget(self.rightClick)
         hbox1.addWidget(self.change)
         hbox1.addWidget(self.enter)
-        hbox1.addWidget(self.understand)
         hbox1.addWidget(self.good)
         hbox1.addWidget(self.data)
         hbox1.addWidget(self.shortcuts)
@@ -172,26 +179,26 @@ class MentalChallenge (QtGui.QWidget):
                                                        " game and simply enjoy the puzzle, but do try your best to "
                                                        "solve it." , nao)
 
-        self.camera = SpeechButton("Turn on camera", "I will now turn on the camera.", nao)
+        self.camera = SpeechButton("Turn On The Camera", "I will now turn on the camera.", nao)
 
-        self.turn = SpeechButton("Turn towards camera", "Please turn towards the blue light, and keep your hands in the"
+        self.turn = SpeechButton("Turn Towards Camera", "Please turn towards the blue light, and keep your hands in the"
                                                         " general direction of the light.", nao)
 
-        self.good = SpeechButton("Good", "Good.", nao)
-        self.handsUp = SpeechButton("Move hands up", "Please move your hands up a bit.", nao)
-        self.handsDown = SpeechButton("Move hands down", "Please move your hands down a bit.", nao)
+        self.handsUp = SpeechButton("Move Hands Up", "Please move your hands up a bit.", nao)
 
-        self.positionHands = SpeechButton("Position hands", "Please position your hands more in the direction of "
-                                                            "the camera.", nao)
+        self.handsDown = SpeechButton("Move Hands Down", "Please move your hands down a bit.", nao)
 
-        self.solve = SpeechButton("Solve cube.", "Now, please try solving the cube.", nao)
+        self.positionHands = SpeechButton("Position Hands Infront Of The Camera", "Please position your hands more in "
+                                                                                  "the direction of the camera.", nao)
+
+        self.solve = SpeechButton("Solve Cube", "Now, please try solving the cube.", nao)
 
         self.data = SpeechButton("Data", "It is important to get as much data as we can for the machine learning "
                                          "system. We will do this as long as you can, but, let me know when you're "
                                          "done.", nao)
 
-        self.mixUp = SpeechButton("Mix up and try again.", "Good. Now, please mix up the cube and solve it again. "
-                                                           "Continue to do so each time you solve it.", nao)
+        self.mixUp = SpeechButton("Mix Up And Try Again", "Good. Now, please mix up the cube and solve it again. "
+                                                          "Continue to do so each time you solve it.", nao)
 
         self.done = SpeechButton("Done", "Thank you, that should be good for now.", nao)
 
@@ -201,7 +208,6 @@ class MentalChallenge (QtGui.QWidget):
         layout.addWidget(self.explanation)
         layout.addWidget(self.camera)
         layout.addWidget(self.turn)
-        layout.addWidget(self.good)
         layout.addWidget(self.handsUp)
         layout.addWidget(self.handsDown)
         layout.addWidget(self.positionHands)
@@ -213,6 +219,42 @@ class MentalChallenge (QtGui.QWidget):
         self.setLayout(layout)
     #END init()
 #END MentalChallenge
+
+
+class Empathy(QtGui.QWidget):
+    def __init__(self, nao, parent):
+        super(Empathy, self).__init__()
+        self.nao = nao
+        self.parent = parent
+
+        self.chinScratch = QtGui.QPushButton("Scratch Chin")
+        self.chinScratch.clicked.connect(self.nao.chinScratch)
+
+        self.pointLeft = QtGui.QPushButton("Left Hand Point")
+        self.pointLeft.clicked.connect(self.nao.pointLeft)
+
+        self.pointRight = QtGui.QPushButton("Right Hand Point")
+        self.pointRight.clicked.connect(self.nao.pointRight)
+
+        self.scratchHead = QtGui.QPushButton("Scratch Head")
+        self.scratchHead.clicked.connect(self.nao.scratchHead)
+
+        layout = QtGui.QHBoxLayout()
+
+        hbox1 = QtGui.QVBoxLayout()
+        hbox2 = QtGui.QVBoxLayout()
+
+        hbox1.addWidget(self.chinScratch)
+        hbox1.addWidget(self.scratchHead)
+        hbox1.addWidget(self.pointRight)
+        hbox1.addWidget(self.pointLeft)
+
+        layout.addLayout(hbox1)
+        layout.addLayout(hbox2)
+
+        self.setLayout(layout)
+    #END __init__()
+#END Empathy
 
 
 class TaskTabs (QtGui.QTabWidget):
@@ -229,5 +271,6 @@ class TaskTabs (QtGui.QTabWidget):
         self.addTab(General(self.nao, self.parent), 'General')
         self.addTab(Tedium(self.nao, self.parent), 'Tedium')
         self.addTab(MentalChallenge(self.nao, self.parent), 'Mental Challenge')
+        self.addTab(Empathy(self.nao, self.parent), "Empathy")
     #END init()
 #END TaskTabs
