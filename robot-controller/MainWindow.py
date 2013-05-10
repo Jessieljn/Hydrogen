@@ -90,10 +90,12 @@ class MainWindow (QtGui.QWidget):
         hbox3 = QtGui.QHBoxLayout()
         hbox3.addWidget(self.textWid, 5)
         hbox3.addWidget(self.stiffnessWidget, 1)
-        hbox2.addLayout(hbox3)
+
+        vbox.addLayout(hbox3)
         vbox.addLayout(hbox2)
         vbox2.addWidget(self.taskTabs)
         hbox.addLayout(vbox2)
+
 
         #Uncomment for smaller camera, and gestures on their own half of screen.
         #hbox.addWidget(self.gestureWidget)

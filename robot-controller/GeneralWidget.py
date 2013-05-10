@@ -1,4 +1,5 @@
 from PyQt4 import QtGui
+import TaskTabs
 
 
 ##
@@ -9,84 +10,56 @@ from PyQt4 import QtGui
 class GeneralWidget (QtGui.QGroupBox):
     def __init__(self, nao, parent):
         super(GeneralWidget, self).__init__()
-        self.setTitle("General")
-
+        self.setTitle("General Speech")
         self.nao = nao
+        self.parent = parent
 
-        self.prod1 = QtGui.QPushButton("Prod 1")
-        self.prod2 = QtGui.QPushButton("Prod 2")
-        self.prod3 = QtGui.QPushButton("Prod 3")
-        self.prod4 = QtGui.QPushButton("Prod 4")
-        self.introduce = QtGui.QPushButton("Introduce")
-        self.nextTask = QtGui.QPushButton("Next Task?")
-        self.endExperiment = QtGui.QPushButton("End Experiment")
-        self.debrief = QtGui.QPushButton("Debrief")
-        self.repeat = QtGui.QPushButton("Please Repeat")
-        self.louder = QtGui.QPushButton("Speak Louder")
-        self.yes = QtGui.QPushButton("Yes")
-        self.no = QtGui.QPushButton("No")
-        self.good = QtGui.QPushButton("Good")
-        self.processing = QtGui.QPushButton("Processing Response")
-        self.saveQuestions = QtGui.QPushButton("Please save your questions for later.")
+        self.hello = TaskTabs.SpeechButton("Hello", "Hello", nao)
+        self.louder = TaskTabs.SpeechButton("Louder", "Please speak louder", nao)
+        self.thanks = TaskTabs.SpeechButton("Thanks", "Thank you", nao)
+        self.good = TaskTabs.SpeechButton("Good", "Good", nao)
+        self.okay = TaskTabs.SpeechButton("Okay", "Okay", nao)
+        self.repeat = TaskTabs.SpeechButton("Repeat", "Would you like me to repeat that?", nao)
+        self.understand = TaskTabs.SpeechButton("Understand", "Do you understand", nao)
+        self.greeting = TaskTabs.SpeechButton("Greeting", "Hello, my name is NAO, nice to meet you", nao)
+        self.end = TaskTabs.SpeechButton("End Experiment", "Thank you for participating in our experiment", nao)
+        self.sound = TaskTabs.SpeechButton("Hmmm", "Hmmm", nao)
 
-        self.prod1.clicked.connect(self.nao.prod1)
-        self.prod2.clicked.connect(self.nao.prod2)
-        self.prod3.clicked.connect(self.nao.prod3)
-        self.prod4.clicked.connect(self.nao.prod4)
-        self.nextTask.clicked.connect(self.say_nextTask)
-        self.endExperiment.clicked.connect(self.say_endExperiment)
-        self.debrief.clicked.connect(self.say_researcherComing)
-        self.repeat.clicked.connect(self.say_repeat)
-        self.introduce.clicked.connect(self.nao.introduce)
-        self.louder.clicked.connect(self.say_speakLouder)
-        self.yes.clicked.connect(self.sayProd)
-        self.no.clicked.connect(self.sayProd)
-        self.good.clicked.connect(self.sayProd)
-        self.processing.clicked.connect(self.sayProd)
-        self.saveQuestions.clicked.connect(self.sayProd)
-
-        self.prod1.setMaximumWidth(150)
-        self.prod2.setMaximumWidth(150)
-        self.prod3.setMaximumWidth(150)
-        self.prod4.setMaximumWidth(150)
-        self.introduce.setMaximumWidth(150)
-        self.nextTask.setMaximumWidth(150)
-        self.endExperiment.setMaximumWidth(150)
-        self.debrief.setMaximumWidth(150)
-        self.repeat.setMaximumWidth(150)
+        # Maximum Widths
+        self.hello.setMaximumWidth(150)
         self.louder.setMaximumWidth(150)
-        self.yes.setMaximumWidth(150)
-        self.no.setMaximumWidth(150)
+        self.thanks.setMaximumWidth(150)
         self.good.setMaximumWidth(150)
-        self.processing.setMaximumWidth(150)
-
-        #Uncomment to set a maximum width for the buttons.
-        #self.saveQuestions.setMaximumWidth(150)
+        self.okay.setMaximumWidth(150)
+        self.repeat.setMaximumWidth(150)
+        self.understand.setMaximumWidth(150)
+        self.greeting.setMaximumWidth(150)
+        self.end.setMaximumWidth(150)
+        self.sound.setMaximumWidth(150)
 
         layout = QtGui.QVBoxLayout()
 
+        # Adding widgets to the horizontal box 1.
         hbox = QtGui.QHBoxLayout()
-        hbox.addWidget(self.prod1)
-        hbox.addWidget(self.prod2)
-        hbox.addWidget(self.prod3)
-        hbox.addWidget(self.prod4)
-        hbox.addWidget(self.introduce)
-        hbox.addWidget(self.nextTask)
-        hbox.addWidget(self.endExperiment)
-        hbox.addWidget(self.debrief)
+        hbox.addWidget(self.hello)
+        hbox.addWidget(self.thanks)
+        hbox.addWidget(self.okay)
+        hbox.addWidget(self.understand)
+        hbox.addWidget(self.greeting)
 
+        # Adding widgets to horizontal box 2.
         hbox2 = QtGui.QHBoxLayout()
-        hbox2.addWidget(self.repeat)
         hbox2.addWidget(self.louder)
         hbox2.addWidget(self.good)
-        hbox2.addWidget(self.yes)
-        hbox2.addWidget(self.no)
-        hbox2.addWidget(self.processing)
-        hbox2.addWidget(self.saveQuestions)
+        hbox2.addWidget(self.repeat)
+        hbox2.addWidget(self.end)
+        hbox2.addWidget(self.sound)
 
+        # Adding boxes to the layout.
         layout.addLayout(hbox)
         layout.addLayout(hbox2)
 
+        # Setting the layout.
         self.setLayout(layout)
     #END __init__()
 

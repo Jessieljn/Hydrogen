@@ -29,7 +29,7 @@ class GestureWidget (QtGui.QGroupBox):
         #END __init__()
 
         def init(self):
-            self.setTitle("Gestures/Motions")
+            self.setTitle("General Motions")
 
             self.stand = QtGui.QPushButton("Stand Up")
             self.stand.clicked.connect(self.nao.standUp)
@@ -39,18 +39,6 @@ class GestureWidget (QtGui.QGroupBox):
 
             self.taiChi = QtGui.QPushButton("Tai Chi")
             self.taiChi.clicked.connect(self.nao.taiChi)
-
-            self.scratchHead = QtGui.QPushButton("Scratch Head")
-            self.scratchHead.clicked.connect(self.nao.scratchHead)
-
-            self.chinScratch = QtGui.QPushButton("Scratch Chin")
-            self.chinScratch.clicked.connect(self.nao.chinScratch)
-
-            self.pointLeft = QtGui.QPushButton("Left Point")
-            self.pointLeft.clicked.connect(self.nao.pointLeft)
-
-            self.pointRight = QtGui.QPushButton("Right Point")
-            self.pointRight.clicked.connect(self.nao.pointRight)
 
             #GestB(self, <<Button Name>>, <<What command to send>>)
             #self.b1 = GestB(self, 'Gesture 1', 'g1')
@@ -73,10 +61,6 @@ class GestureWidget (QtGui.QGroupBox):
             vbox.addWidget(self.stand, 0, QtCore.Qt.AlignCenter)
             vbox.addWidget(self.sit, 0, QtCore.Qt.AlignCenter)
             vbox.addWidget(self.taiChi, 0, QtCore.Qt.AlignCenter)
-            vbox.addWidget(self.scratchHead, 0, QtCore.Qt.AlignCenter)
-            vbox.addWidget(self.chinScratch, 0, QtCore.Qt.AlignCenter)
-            vbox.addWidget(self.pointLeft, 0, QtCore.Qt.AlignCenter)
-            vbox.addWidget(self.pointRight, 0, QtCore.Qt.AlignCenter)
             #vbox.addWidget(self.b3, 0, QtCore.Qt.AlignCenter)
             #vbox.addWidget(self.b4, 0, QtCore.Qt.AlignCenter)
             #vbox.addWidget(self.b5, 0, QtCore.Qt.AlignCenter)

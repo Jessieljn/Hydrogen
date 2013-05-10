@@ -15,9 +15,7 @@ class SpeechButton(QtGui.QPushButton):
         self.nao = nao
         self.speech = speech
 
-        if len(speech) > 60:
-            self.setText(speech[0:60] + "...")
-        #END if
+        self.setText(title)
 
         self.clicked.connect(self.say)
     #END __init__()
