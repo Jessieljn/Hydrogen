@@ -1,5 +1,4 @@
-from PyQt4 import QtGui, QtNetwork, QtCore
-import MainWindow
+from PyQt4 import QtGui, QtCore
 import Nao
 
 

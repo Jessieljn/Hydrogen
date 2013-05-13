@@ -1,4 +1,4 @@
-from PyQt4 import QtGui, QtNetwork, QtCore
+from PyQt4 import QtGui
 
 
 ##
@@ -7,7 +7,7 @@ from PyQt4 import QtGui, QtNetwork, QtCore
 # Logs messages sent.
 ##
 class LogWid (QtGui.QWidget):
-    def __init__ (self, parent):
+    def __init__(self, parent):
         super(LogWid, self).__init__()
         self.init()
         self.setParent(parent)

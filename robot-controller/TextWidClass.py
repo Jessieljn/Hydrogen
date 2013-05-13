@@ -1,12 +1,12 @@
-from PyQt4 import QtGui, QtNetwork, QtCore
-import MainWindow
-
+from PyQt4 import QtGui, QtCore
 
 ##
 # TextWidClass.py
 #
 # Text to Speech.
 ##
+
+
 class FocusTextEdit(QtGui.QTextEdit):
     def __init__(self, parent):
         super(FocusTextEdit, self).__init__()
@@ -78,7 +78,7 @@ class TextWid (QtGui.QGroupBox):
         print "Send"
         if self.nao.isConnected():
             self.nao.say(str(self.message.toPlainText()))
-            if self.ledsProcessing == True:
+            if self.ledsProcessing:
                 self.ledsProcessing = False
                 self.nao.setLEDsNormal()
             #END if
@@ -93,13 +93,13 @@ class TextWid (QtGui.QGroupBox):
 
     def changeLEDs(self):
         if str(self.message.toPlainText()) == "":
-            if self.ledsProcessing == True:
+            if self.ledsProcessing:
                 self.ledsProcessing = False
                 self.nao.setLEDsNormal()
             #END if
         #END if
         else:
-            if self.ledsProcessing == False:
+            if not self.ledsProcessing:
                 self.ledsProcessing = True
                 self.nao.setLEDsProcessing()
             #END if

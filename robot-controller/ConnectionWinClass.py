@@ -1,4 +1,4 @@
-from PyQt4 import QtGui, QtNetwork, QtCore
+from PyQt4 import QtGui
 
 
 ##
@@ -26,18 +26,17 @@ class ConnectionWin (QtGui.QWidget):
 
         self.conB.clicked.connect(self.passToMain)
 
-        self.iPLb.move(15, 10); self.ip.move(105, 10)
-        self.portLb.move(15, 30); self.port.move(105, 30)
+        self.iPLb.move(15, 10)
+        self.ip.move(105, 10)
+        self.portLb.move(15, 30)
+        self.port.move(105, 30)
         self.conB.move(80, 70)
         
         self.show()
     #END init()
 
     def passToMain(self):
-        li = []
-        li.append(self.ip.displayText())#li[0]
-        li.append(self.port.displayText())#li[1]
-
+        li = [self.ip.displayText(), self.port.displayText()]
         self.parent.tryConnect(li)
         self.close()
     #END passToMain()

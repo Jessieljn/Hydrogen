@@ -1,5 +1,5 @@
 import sys
-from PyQt4 import QtGui, QtNetwork, QtCore
+from PyQt4 import QtGui
 from MainWindow import MainWindow
 
 
@@ -9,7 +9,7 @@ from MainWindow import MainWindow
 # Executes the application.
 ##
 def main():
-    app = QtGui.QApplication(sys.argv)   
+    app = QtGui.QApplication(sys.argv)
     window = MainWindow()
     sys.exit(app.exec_())
 #END main()

@@ -1,4 +1,4 @@
-from PyQt4 import QtGui, QtNetwork, QtCore
+from PyQt4 import QtGui, QtCore
 import MainWindow
 
 
@@ -8,7 +8,7 @@ import MainWindow
 # Creates the Gesture Widget in the GUI, used for motions.
 ##
 class GestB (QtGui.QPushButton):
-        def __init__ (self, parent, title, command):
+        def __init__(self, parent, title, command):
                 super(GestB, self).__init__(title)
                 self.setParent(parent)
                 self.command = command
@@ -47,23 +47,31 @@ class GestureWidget (QtGui.QGroupBox):
             self.thriller = QtGui.QPushButton("Thriller")
             self.thriller.clicked.connect(self.nao.thriller)
 
-            self.wave  = QtGui.QPushButton("Wave")
+            self.wave = QtGui.QPushButton("Wave")
             self.wave.clicked.connect(self.nao.wave)
 
-            vbox = QtGui.QHBoxLayout()
+            self.introduce = QtGui.QPushButton("Introduce")
+            self.introduce.clicked.connect(self.nao.introduce)
 
-            # Add buttons to vertical box.
-            vbox.addSpacing(10)
-            vbox.addWidget(self.stand, 0, QtCore.Qt.AlignCenter)
-            vbox.addWidget(self.sit, 0, QtCore.Qt.AlignCenter)
-            vbox.addWidget(self.taiChi, 0, QtCore.Qt.AlignCenter)
-            vbox.addWidget(self.handShake, 0, QtCore.Qt.AlignCenter)
-            vbox.addWidget(self.thriller, 0, QtCore.Qt.AlignCenter)
-            vbox.addWidget(self.wave, 0, QtCore.Qt.AlignCenter)
-            vbox.addStretch(1)
+            layout = QtGui.QVBoxLayout()
 
-            # Set layout.
-            self.setLayout(vbox)
+            hbox = QtGui.QHBoxLayout()
+            hbox2 = QtGui.QHBoxLayout()
+
+            hbox.addSpacing(10)
+            hbox.addWidget(self.stand, 0, QtCore.Qt.AlignCenter)
+            hbox.addWidget(self.sit, 0, QtCore.Qt.AlignCenter)
+            hbox.addWidget(self.taiChi, 0, QtCore.Qt.AlignCenter)
+            hbox.addWidget(self.handShake, 0, QtCore.Qt.AlignCenter)
+            hbox.addWidget(self.thriller, 0, QtCore.Qt.AlignCenter)
+
+            hbox2.addWidget(self.wave, 0, QtCore.Qt.AlignCenter)
+            hbox2.addWidget(self.introduce, 0, QtCore.Qt.AlignCenter)
+
+            layout.addLayout(hbox)
+            layout.addLayout(hbox2)
+
+            self.setLayout(layout)
         #END init()
 
         def sendMessage(self):
@@ -74,8 +82,8 @@ class GestureWidget (QtGui.QGroupBox):
                         wid = wid.parent()
                 #END while
 
-                if isinstance(wid, MainWindow.MainWindow)   :
-                        wid.sendMessage('Gest:'+src.getCommand())
+                if isinstance(wid, MainWindow.MainWindow):
+                        wid.sendMessage('Gest:' + src.getCommand())
                 #END if
                 else:
                         print("Error: sendMessage in GestureWid")

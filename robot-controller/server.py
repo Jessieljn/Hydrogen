@@ -71,7 +71,7 @@ class ServerWindow (QtGui.QWidget):
     #END newCon()
 
     def toStr(self, ba):
-        toReturn = '';
+        toReturn = ''
         
         for x in range(0, int(ba.size())):
             toReturn += ba[x]
@@ -84,7 +84,6 @@ class ServerWindow (QtGui.QWidget):
 
 def main():
     app = QtGui.QApplication(sys.argv)
-    window = ServerWindow()
     sys.exit(app.exec_())
 #END main()
 
