@@ -4,11 +4,11 @@
     <list default="true" id="5757e7d0-2e46-43be-979d-adc705a84221" name="Default" comment="" />
     <ignored path="robot-controller.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/CameraWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368216132872" ignored="false" />
+    <file path="/CameraWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368550128823" ignored="false" />
     <file path="/ConnectionWinClass.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1367948061079" ignored="false" />
     <file path="/controller.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1367948189745" ignored="false" />
     <file path="/GeneralWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368216191094" ignored="false" />
-    <file path="/GestureWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368220834764" ignored="false" />
+    <file path="/GestureWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368550072244" ignored="false" />
     <file path="/LogWidClass.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1367948755704" ignored="false" />
     <file path="/main.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1367948799529" ignored="false" />
     <file path="/MainWindow.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368217146150" ignored="false" />
@@ -18,6 +18,8 @@
     <file path="/TaskTabs.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368466067888" ignored="false" />
     <file path="/TextWidClass.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368466391905" ignored="false" />
     <file path="/Tabs.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368465943846" ignored="false" />
+    <file path="/Motions.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368550020702" ignored="false" />
+    <file path="/Jittering.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368636824842" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,11 +39,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CameraWidget.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/CameraWidget.py">
+      <file leaf-file-name="Nao.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Nao.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Jittering.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Jittering.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="38" selection-start="97" selection-end="97" vertical-scroll-proportion="0.11147541">
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -64,20 +77,22 @@
         <option value="$PROJECT_DIR$/Tabs.py" />
         <option value="$PROJECT_DIR$/TextWidClass.py" />
         <option value="$PROJECT_DIR$/server.py" />
-        <option value="$PROJECT_DIR$/Nao.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/LogWidClass.py" />
-        <option value="$PROJECT_DIR$/GestureWidget.py" />
         <option value="$PROJECT_DIR$/ConnectionWinClass.py" />
+        <option value="$PROJECT_DIR$/GestureWidget.py" />
         <option value="$PROJECT_DIR$/CameraWidget.py" />
+        <option value="$PROJECT_DIR$/Motions.py" />
+        <option value="$PROJECT_DIR$/Nao.py" />
+        <option value="$PROJECT_DIR$/Jittering.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="54" />
+    <option name="x" value="1358" />
     <option name="y" value="-8" />
-    <option name="width" value="1320" />
-    <option name="height" value="784" />
+    <option name="width" value="1936" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -105,7 +120,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -126,17 +140,18 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
+    <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="FullScreen" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -284,18 +299,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="54" y="-8" width="1320" height="784" extended-state="6" />
+    <frame x="1358" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3100159" sideWeight="0.6772655" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21611527" sideWeight="0.6780021" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3990461" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32695374" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3227345" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32199788" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -369,11 +384,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Desktop/robot-controller/TaskTabs.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="260" column="0" selection-start="11852" selection-end="13069" vertical-scroll-proportion="0.86821705" />
@@ -381,105 +391,82 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TaskTabs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="23" selection-start="23" selection-end="23" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="23" selection-start="23" selection-end="23" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Tabs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="215" column="67" selection-start="13287" selection-end="13287" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="215" column="67" selection-start="13287" selection-end="13287" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TextWidClass.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/StiffnessWidget.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="38" selection-start="2204" selection-end="2204" vertical-scroll-proportion="0.49">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Nao.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="102" column="25" selection-start="2784" selection-end="2784" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MainWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="38" selection-start="4382" selection-end="4382" vertical-scroll-proportion="0.3325">
-          <folding />
-        </state>
+        <state line="85" column="38" selection-start="2204" selection-end="2204" vertical-scroll-proportion="0.49" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/LogWidClass.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="19" selection-start="193" selection-end="193" vertical-scroll-proportion="0.4175">
-          <folding />
-        </state>
+        <state line="11" column="19" selection-start="193" selection-end="193" vertical-scroll-proportion="0.4175" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="23" selection-start="34" selection-end="34" vertical-scroll-proportion="0.0425">
-          <folding />
-        </state>
+        <state line="1" column="23" selection-start="34" selection-end="34" vertical-scroll-proportion="0.0425" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MainWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="138" column="38" selection-start="4270" selection-end="4270" vertical-scroll-proportion="5.525" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GestureWidget.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="18" selection-start="2933" selection-end="2933" vertical-scroll-proportion="0.745">
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="41" column="48" selection-start="1157" selection-end="1157" vertical-scroll-proportion="1.1388888" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/GeneralWidget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.003267974" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="34" column="8" selection-start="649" selection-end="649" vertical-scroll-proportion="0.9444444" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ConnectionWinClass.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="61" selection-start="1110" selection-end="1110" vertical-scroll-proportion="1.0555556" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CameraWidget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="77" column="0" selection-start="2601" selection-end="2601" vertical-scroll-proportion="0.33333334" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Nao.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller.py">
+    <entry file="file://$PROJECT_DIR$/Jittering.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="8" selection-start="649" selection-end="649" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ConnectionWinClass.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="61" selection-start="1110" selection-end="1110" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CameraWidget.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="25" selection-start="25" selection-end="25" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="6" column="38" selection-start="97" selection-end="97" vertical-scroll-proportion="0.11147541">
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

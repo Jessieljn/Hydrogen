@@ -115,63 +115,51 @@ class Nao(QtCore.QObject):
             self.frame = QtGui.QImage(self.rawFrame[6], self.rawFrame[0], self.rawFrame[1], QtGui.QImage.Format_RGB888)
             self.cameraWidget.setImage(self.frame)
             #END if
-
     #END timerEvent()
 
     def standUp(self):
         self.behaviorProxy.post.runBehavior("StandUp")
-
     #END standUp()
 
     def sitDown(self):
         self.behaviorProxy.post.runBehavior("SitDown")
         pass
-
     #END sitDown()
 
     def tiltHeadUp(self):
         self.motionProxy.changeAngles("HeadPitch", -0.20, 0.10)
-
     #END tiltHeadUp()
 
     def tiltHeadDown(self):
         self.motionProxy.changeAngles("HeadPitch", 0.20, 0.10)
-
     #END tiltHeadDown()
 
     def turnHeadLeft(self):
         self.motionProxy.changeAngles("HeadYaw", 0.20, 0.10)
-
     #END turnHeadLeft()
 
     def turnHeadRight(self):
         self.motionProxy.changeAngles("HeadYaw", -0.20, 0.10)
-
     #END turnHeadRight()
 
     def prod1(self):
         self.behaviorProxy.post.runBehavior("Prod1")
-
     #END prod1
 
     def prod2(self):
         self.behaviorProxy.post.runBehavior("Prod2")
-
     #END prod2
 
     def prod3(self):
         self.behaviorProxy.post.runBehavior("Prod3")
-
     #END prod3
 
     def prod4(self):
         self.behaviorProxy.post.runBehavior("Prod4")
-
     #END prod4
 
     def setVolume(self, volume):
         self.speechProxy.setVolume(volume)
-
     #END setVolume()
 
     def setLEDsNormal(self):
@@ -179,7 +167,6 @@ class Nao(QtCore.QObject):
         self.ledProxy.post.setIntensity("FaceLeds", 1.0)
         self.ledProxy.post.fadeRGB("LeftEarLeds", 0x00ff6100, 0.5)
         self.ledProxy.post.fadeRGB("RightEarLeds", 0x00ff6100, 0.5)
-
     #END setLEDsNormal()
 
     def setLEDsProcessing(self):
@@ -190,60 +177,49 @@ class Nao(QtCore.QObject):
 
         #Sets the intensity of the LEDs.
         #self.ledProxy.post.setIntensity("ChestLeds", 1.0)
-
     #END setLEDsProcessing()
 
     def introduce(self):
         self.behaviorProxy.post.runBehavior("introduce")
-
     #END introduce()
 
     def setStiffness(self, stiffness):
         self.motionProxy.setStiffnesses("Body", stiffness)
-
     #END setStiffness()
 
     def taiChi(self):
         self.behaviorProxy.post.runBehavior("TaiChi")
-
     #END taiChi()
 
     def scratchHead(self):
         self.behaviorProxy.post.runBehavior("scratchHeadRight")
-
     #END scratchHead()
 
     def chinScratch(self):
         self.behaviorProxy.post.runBehavior("chinScratch")
-
     #END chinScratch()
 
     def pointLeft(self):
         self.behaviorProxy.post.runBehavior("leftHandPointing")
-
     #END pointLeft()
 
     def pointRight(self):
         self.behaviorProxy.post.runBehavior("rightHandPointing")
-
     #END pointRight()
 
     def shakeHand(self):
         self.behaviorProxy.post.runBehavior("shakeHand")
-
     #END shakeHand()
 
     def thriller(self):
         self.behaviorProxy.post.runBehavior("thriller")
-
     #END thriller()
 
     def wave(self):
         self.behaviorProxy.post.runBehavior("wave")
-
     #END wave()
 
     def nod(self):
         self.behaviorProxy.post.runBehavior("headNod")
-        #END nod()
-        #END Nao
+    #END nod()
+#END Nao
