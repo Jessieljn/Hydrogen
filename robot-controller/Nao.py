@@ -222,4 +222,8 @@ class Nao(QtCore.QObject):
     def nod(self):
         self.behaviorProxy.post.runBehavior("headNod")
     #END nod()
+
+    def jitter(self):
+        self.motionProxy.changeAngles("HeadYaw", 0.5, 0.05)
+    #END jitter
 #END Nao

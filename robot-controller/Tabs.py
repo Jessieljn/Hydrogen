@@ -254,6 +254,9 @@ class Empathy(QtGui.QWidget):
         self.scratchHead = QtGui.QPushButton("Scratch Head")
         self.scratchHead.clicked.connect(self.nao.scratchHead)
 
+        self.jitter = QtGui.QPushButton("Jitter Test")
+        self.jitter.clicked.connect(self.nao.jitter)
+
         layout = QtGui.QHBoxLayout()
 
         hbox1 = QtGui.QVBoxLayout()
@@ -263,6 +266,7 @@ class Empathy(QtGui.QWidget):
         hbox1.addWidget(self.scratchHead)
         hbox1.addWidget(self.pointRight)
         hbox1.addWidget(self.pointLeft)
+        hbox1.addWidget(self.jitter)
 
         layout.addLayout(hbox1)
         layout.addLayout(hbox2)

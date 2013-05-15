@@ -20,7 +20,7 @@ class CameraWidget (QtGui.QGroupBox):
         self.setTitle("Camera")
 
         self.camera = QtGui.QLabel()
-        self.camera.setMinimumSize(250, 250)
+        self.camera.setFixedSize(400, 400)
 
         self.camera.setScaledContents(True)
 
@@ -82,7 +82,7 @@ class CameraWidget (QtGui.QGroupBox):
     #END setNao()
 
     def setImage(self, image):
-        self.camera.setPixmap(QtGui.QPixmap.fromImage(image).scaled(self.camera.size(), QtCore.Qt.KeepAspectRatio))
+        self.camera.setPixmap(QtGui.QPixmap.fromImage(image.scaled(self.camera.size(), QtCore.Qt.KeepAspectRatio)))
     #END setImage()
 
     # Retrieves the camera source.

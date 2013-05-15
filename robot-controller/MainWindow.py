@@ -135,13 +135,7 @@ class MainWindow (QtGui.QWidget):
         #END elif
     #END connectToNao()
 
-    def updateImageTop(self, image):
-        self.cameraWidget.setImage(1, image)
-    #END updateImageTop()
 
-    def updateImageBottom(self, image):
-        self.cameraWidget.setImage(2, image)
-    #END updateImageBottom()
 
     def closeEvent(self, event):
         if self.nao.isConnected():
