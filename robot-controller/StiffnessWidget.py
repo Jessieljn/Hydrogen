@@ -11,6 +11,7 @@ class StiffnessWidget (QtGui.QGroupBox):
         super(StiffnessWidget, self).__init__()
         self.setTitle("Stiffness")
         self.nao = nao
+        self.parent = parent
 
         self.buttons = QtGui.QButtonGroup()
 

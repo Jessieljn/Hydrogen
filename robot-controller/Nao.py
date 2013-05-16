@@ -59,14 +59,12 @@ class Nao(QtCore.QObject):
         self.is_connected = True
         self.connected_signal.emit()
         return True
-
     #END connect()
 
     def startCamera(self):
         self.cameraProxyID = self.cameraProxy.subscribe("controller", 0, 11, 20)
         self.cameraProxy.setParam(CAMERA_PARAM, TOP_CAMERA)
         self.timerID = self.startTimer(1000 / 30)
-
     #END startCamera
 
     def stopCamera(self):
@@ -80,7 +78,6 @@ class Nao(QtCore.QObject):
 
     def say(self, msg):
         self.speechProxy.post.say(msg)
-
     #END say()
 
     def disconnect(self):
@@ -92,12 +89,10 @@ class Nao(QtCore.QObject):
         self.ledProxy = None
         self.is_connected = False
         self.disconnected_signal.emit()
-
     #END disconnect()
 
     def isConnected(self):
         return self.is_connected
-
     #END isConnected()
 
     def timerEvent(self, event):
@@ -222,8 +217,4 @@ class Nao(QtCore.QObject):
     def nod(self):
         self.behaviorProxy.post.runBehavior("headNod")
     #END nod()
-
-    def jitter(self):
-        self.motionProxy.changeAngles("HeadYaw", 0.5, 0.05)
-    #END jitter
 #END Nao

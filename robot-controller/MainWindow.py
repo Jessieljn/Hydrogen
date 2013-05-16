@@ -21,6 +21,7 @@ KEY_RIGHT = 3
 
 
 class MainWindow (QtGui.QWidget):
+
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
@@ -76,6 +77,7 @@ class MainWindow (QtGui.QWidget):
 
         # Create layouts.
         mainLayout = QtGui.QHBoxLayout()
+
         vbox = QtGui.QVBoxLayout()
         vbox2 = QtGui.QVBoxLayout()
         hbox = QtGui.QHBoxLayout()
@@ -113,7 +115,7 @@ class MainWindow (QtGui.QWidget):
 
         self.show()
         self.grabKeyboard()
-        timerID = self.startTimer(1000/100)
+        timerID = self.startTimer(1000 / 100)
     #END init()
 
     def connectToNao(self):
@@ -134,8 +136,6 @@ class MainWindow (QtGui.QWidget):
             self.connectButton.setText('Connect')
         #END elif
     #END connectToNao()
-
-
 
     def closeEvent(self, event):
         if self.nao.isConnected():
