@@ -1,4 +1,3 @@
-import sys
 from PyQt4 import QtGui, QtNetwork, QtCore
 from TaskTabs import TaskTabs
 from TextWidClass import TextWid
@@ -20,11 +19,12 @@ KEY_LEFT = 2
 KEY_RIGHT = 3
 
 
-class MainWindow (QtGui.QWidget):
+class MainWindow(QtGui.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setWindowIcon(QtGui.QIcon("icon.png"))
         self.init()
     #END __init__()
 
@@ -41,26 +41,28 @@ class MainWindow (QtGui.QWidget):
         # Creates a socket.
         self.socket = QtNetwork.QTcpSocket(self)
 
+        mainWidget = QtGui.QWidget(self)
+
         # Creates a camera widget.
-        self.cameraWidget = CameraWidget(self)
+        self.cameraWidget = CameraWidget(mainWidget)
 
         self.nao = Nao.Nao(self.cameraWidget)
 
-        self.generalWidget = GeneralWidget(self.nao, self)
+        self.generalWidget = GeneralWidget(self.nao, mainWidget)
 
-        self.stiffnessWidget = StiffnessWidget(self.nao, self)
+        self.stiffnessWidget = StiffnessWidget(self.nao, mainWidget)
 
         self.cameraWidget.setNao(self.nao)
 
         # Create the text widget.
-        self.textWid = TextWid(self.nao, self)
+        self.textWid = TextWid(self.nao, mainWidget)
         self.textWid.msg_sent.connect(self.grab_keyboard)
 
         # Creates the gesture widget.
-        self.gestureWidget = GestureWidget(self.nao, self)
+        self.gestureWidget = GestureWidget(self.nao, mainWidget)
 
         # Create a tabbed task bar.
-        self.taskTabs = TaskTabs(self.nao, self)
+        self.taskTabs = TaskTabs(self.nao, mainWidget)
 
         # Create the connect button.
         self.connectButton = QtGui.QPushButton('Connect', self)
@@ -77,7 +79,6 @@ class MainWindow (QtGui.QWidget):
 
         # Create layouts.
         mainLayout = QtGui.QHBoxLayout()
-
         vbox = QtGui.QVBoxLayout()
         vbox2 = QtGui.QVBoxLayout()
         hbox = QtGui.QHBoxLayout()
@@ -85,7 +86,7 @@ class MainWindow (QtGui.QWidget):
         # Add camera widget to the main layout.
         mainLayout.addWidget(self.cameraWidget)
         mainLayout.addLayout(vbox)
-        self.setLayout(mainLayout)
+        mainWidget.setLayout(mainLayout)
 
         # Add general and gesture widgets to horizontal box 2.
         hbox2 = QtGui.QVBoxLayout()
@@ -113,6 +114,31 @@ class MainWindow (QtGui.QWidget):
         naoConnectionLayout.addWidget(self.naoPort, 0, QtCore.Qt.AlignLeft)
         vbox.addLayout(naoConnectionLayout)
 
+        ###############################################################################
+        menubar = QtGui.QMenuBar()
+        self.menuBar().addMenu("File")
+
+        submenus = {}
+        menu = QtGui.QMenu("File")
+
+        # set direction
+        menu.setLayoutDirection(QtCore.Qt.LeftToRight)
+
+        # add to menubar
+        menubar.addMenu(menu)
+        submenu = QtGui.QMenu("Test")
+
+        # some dummy actions
+        submenu.addAction("Test1")
+        submenu.addAction("Test2")
+
+        # add to the top menu
+        menu.addMenu(submenu)
+        menubar.setFixedSize(2000, 20)
+        ###############################################################################
+
+        self.setCentralWidget(mainWidget)
+        #self.setMenuBar(menubar)
         self.show()
         self.grabKeyboard()
         timerID = self.startTimer(1000 / 100)
