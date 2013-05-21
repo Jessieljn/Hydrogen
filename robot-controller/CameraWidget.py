@@ -26,7 +26,7 @@ class CameraWidget (QtGui.QGroupBox):
 
         self.camera.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.MinimumExpanding)
         self.camera.setFrameStyle(QtGui.QFrame.Panel)
-        self.setImage(QtGui.QImage('image1.jpg'))
+        self.setImage(QtGui.QImage('images/image1.jpg'))
 
         # Creates symbols for the buttons.
         self.up = QtGui.QPushButton("^")

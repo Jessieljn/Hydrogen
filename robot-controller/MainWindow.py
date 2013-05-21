@@ -24,7 +24,7 @@ class MainWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.setWindowIcon(QtGui.QIcon("icon.png"))
+        self.setWindowIcon(QtGui.QIcon("images/icon.png"))
         self.init()
     #END __init__()
 
@@ -40,18 +40,13 @@ class MainWindow(QtGui.QMainWindow):
 
         # Creates a socket.
         self.socket = QtNetwork.QTcpSocket(self)
-
         mainWidget = QtGui.QWidget(self)
 
         # Creates a camera widget.
         self.cameraWidget = CameraWidget(mainWidget)
-
         self.nao = Nao.Nao(self.cameraWidget)
-
         self.generalWidget = GeneralWidget(self.nao, mainWidget)
-
         self.stiffnessWidget = StiffnessWidget(self.nao, mainWidget)
-
         self.cameraWidget.setNao(self.nao)
 
         # Create the text widget.
@@ -114,34 +109,56 @@ class MainWindow(QtGui.QMainWindow):
         naoConnectionLayout.addWidget(self.naoPort, 0, QtCore.Qt.AlignLeft)
         vbox.addLayout(naoConnectionLayout)
 
-        ###############################################################################
-        menubar = QtGui.QMenuBar()
-        self.menuBar().addMenu("File")
+        ###################################################
+        # TODO: Move to own function/class, create sub_menu
+        ###################################################
+        menubar = self.menuBar()
 
-        submenus = {}
-        menu = QtGui.QMenu("File")
+        exitAction = QtGui.QAction(QtGui.QIcon('images/exit.png'), '&Exit', self)
+        exitAction.setShortcut('Esc')
+        exitAction.setStatusTip('Exit application')
+        exitAction.triggered.connect(QtGui.qApp.quit)
 
-        # set direction
-        menu.setLayoutDirection(QtCore.Qt.LeftToRight)
+        loadEmpathy = QtGui.QAction(QtGui.QIcon(), '&Load Empathy', self)
+        loadEmpathy.setShortcut('Ctrl+E')
 
-        # add to menubar
-        menubar.addMenu(menu)
-        submenu = QtGui.QMenu("Test")
+        loadTedium = QtGui.QAction(QtGui.QIcon(), '&Load Tedium', self)
+        loadTedium.setShortcut('Ctrl+T')
 
-        # some dummy actions
-        submenu.addAction("Test1")
-        submenu.addAction("Test2")
+        loadChallenge = QtGui.QAction(QtGui.QIcon(), '&Load Mental Challenge', self)
+        loadChallenge.setShortcut('Ctrl+M')
 
-        # add to the top menu
-        menu.addMenu(submenu)
-        menubar.setFixedSize(2000, 20)
-        ###############################################################################
+        loadGeneral = QtGui.QAction(QtGui.QIcon(), '&Load General', self)
+        loadGeneral.setShortcut('Ctrl+G')
+
+        disconnect = QtGui.QAction(QtGui.QIcon(), '&Disconnect', self)
+        disconnect.setShortcut('Ctrl+D')
+
+        connect = QtGui.QAction(QtGui.QIcon(), '&Connect', self)
+        connect.setShortcut('Ctrl+C')
+
+        ##########
+        # Toolbar instead of menubar
+        ##########
+        #self.toolbar = self.addToolBar('Exit')
+        #self.toolbar.addAction(exitAction)
+        #  self.setWindowTitle('Toolbar')
+        ##########
+
+        fileMenu = menubar.addMenu('File')
+        loadMenu = menubar.addMenu('Load')
+        fileMenu.addAction(connect)
+        fileMenu.addAction(disconnect)
+        loadMenu.addAction(loadGeneral)
+        loadMenu.addAction(loadTedium)
+        loadMenu.addAction(loadChallenge)
+        loadMenu.addAction(loadEmpathy)
+        fileMenu.addAction(exitAction)
+        ##################################################
 
         self.setCentralWidget(mainWidget)
-        #self.setMenuBar(menubar)
         self.show()
         self.grabKeyboard()
-        timerID = self.startTimer(1000 / 100)
     #END init()
 
     def connectToNao(self):

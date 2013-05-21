@@ -42,5 +42,6 @@ class TaskTabs (QtGui.QTabWidget):
         self.addTab(Tabs.Tedium(self.nao, self.parent), 'Tedium')
         self.addTab(Tabs.MentalChallenge(self.nao, self.parent), 'Mental Challenge')
         self.addTab(Tabs.Empathy(self.nao, self.parent), "Empathy")
+        #self.removeTab(3) Removes Empathy
     #END init()
 #END TaskTabs
