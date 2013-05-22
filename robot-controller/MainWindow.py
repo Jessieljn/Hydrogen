@@ -5,6 +5,7 @@ from GestureWidget import GestureWidget
 from CameraWidget import CameraWidget
 from GeneralWidget import GeneralWidget
 from StiffnessWidget import StiffnessWidget
+from ConnectionWinClass import ConnectionWin
 import Nao
 
 ##
@@ -110,7 +111,7 @@ class MainWindow(QtGui.QMainWindow):
         vbox.addLayout(naoConnectionLayout)
 
         ###################################################
-        # TODO: Move to own function/class, create sub_menu
+        # TODO: Move to own function/class
         ###################################################
         menubar = self.menuBar()
 
@@ -121,6 +122,7 @@ class MainWindow(QtGui.QMainWindow):
 
         loadEmpathy = QtGui.QAction(QtGui.QIcon(), '&Load Empathy', self)
         loadEmpathy.setShortcut('Ctrl+E')
+        loadEmpathy.triggered.connect(self.taskTabs.remove)
 
         loadTedium = QtGui.QAction(QtGui.QIcon(), '&Load Tedium', self)
         loadTedium.setShortcut('Ctrl+T')
@@ -133,9 +135,11 @@ class MainWindow(QtGui.QMainWindow):
 
         disconnect = QtGui.QAction(QtGui.QIcon(), '&Disconnect', self)
         disconnect.setShortcut('Ctrl+D')
+        disconnect.triggered.connect(self.nao.disconnect)
 
         connect = QtGui.QAction(QtGui.QIcon(), '&Connect', self)
         connect.setShortcut('Ctrl+C')
+        connect.triggered.connect(self.doit)
 
         ##########
         # Toolbar instead of menubar
@@ -160,6 +164,13 @@ class MainWindow(QtGui.QMainWindow):
         self.show()
         self.grabKeyboard()
     #END init()
+
+    def doit(self):
+        print "Opening Window"
+        self.w = Popup()
+        self.w.setGeometry(QtCore.QRect(100, 100, 400, 200))
+        self.w.show()
+    #######################################################
 
     def connectToNao(self):
         if self.connectButton.text() == 'Connect':
@@ -249,3 +260,18 @@ class MainWindow(QtGui.QMainWindow):
         self.grabKeyboard()
     #END focusInEvent
 #END MainWindow
+
+
+############
+# Test for popup window
+############
+class Popup(QtGui.QWidget):
+    def __init__(self):
+        QtGui.QWidget.__init__(self)
+        self.setWindowTitle('Connection Window')
+        self.setWindowIcon(QtGui.QIcon("images/icon.png"))
+
+    def paintEvent(self, e):
+        dc = QtGui.QPainter(self)
+        dc.drawLine(0, 0, 100, 100)
+        dc.drawLine(100, 0, 0, 100)

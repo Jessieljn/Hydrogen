@@ -27,7 +27,7 @@ class SpeechButton(QtGui.QPushButton):
 #END SpeechButton
 
 
-class TaskTabs (QtGui.QTabWidget):
+class TaskTabs(QtGui.QTabWidget):
     def __init__(self, nao, parent):
         self.parent = parent
         self.nao = nao
@@ -44,4 +44,9 @@ class TaskTabs (QtGui.QTabWidget):
         self.addTab(Tabs.Empathy(self.nao, self.parent), "Empathy")
         #self.removeTab(3) Removes Empathy
     #END init()
+
+    def remove(self):
+        self.removeTab(0)
+        self.addTab(Tabs.Empathy(self.nao, self.parent))
+    #END remove
 #END TaskTabs
