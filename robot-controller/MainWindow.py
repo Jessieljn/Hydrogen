@@ -5,9 +5,8 @@ from GestureWidget import GestureWidget
 from CameraWidget import CameraWidget
 from GeneralWidget import GeneralWidget
 from StiffnessWidget import StiffnessWidget
-from ConnectionWinClass import ConnectionWin
+from PopupWindow import Popup
 import Nao
-
 ##
 # MainWindow.py
 #
@@ -59,6 +58,9 @@ class MainWindow(QtGui.QMainWindow):
 
         # Create a tabbed task bar.
         self.taskTabs = TaskTabs(self.nao, mainWidget)
+
+        # Create a popup window
+        self.popup = Popup()
 
         # Create the connect button.
         self.connectButton = QtGui.QPushButton('Connect', self)
@@ -139,7 +141,7 @@ class MainWindow(QtGui.QMainWindow):
 
         connect = QtGui.QAction(QtGui.QIcon(), '&Connect', self)
         connect.setShortcut('Ctrl+C')
-        connect.triggered.connect(self.doit)
+        connect.triggered.connect(self.popup.doit)
 
         ##########
         # Toolbar instead of menubar
@@ -164,13 +166,6 @@ class MainWindow(QtGui.QMainWindow):
         self.show()
         self.grabKeyboard()
     #END init()
-
-    def doit(self):
-        print "Opening Window"
-        self.w = Popup()
-        self.w.setGeometry(QtCore.QRect(100, 100, 400, 200))
-        self.w.show()
-    #######################################################
 
     def connectToNao(self):
         if self.connectButton.text() == 'Connect':
@@ -260,18 +255,3 @@ class MainWindow(QtGui.QMainWindow):
         self.grabKeyboard()
     #END focusInEvent
 #END MainWindow
-
-
-############
-# Test for popup window
-############
-class Popup(QtGui.QWidget):
-    def __init__(self):
-        QtGui.QWidget.__init__(self)
-        self.setWindowTitle('Connection Window')
-        self.setWindowIcon(QtGui.QIcon("images/icon.png"))
-
-    def paintEvent(self, e):
-        dc = QtGui.QPainter(self)
-        dc.drawLine(0, 0, 100, 100)
-        dc.drawLine(100, 0, 0, 100)
