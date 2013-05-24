@@ -124,16 +124,19 @@ class MainWindow(QtGui.QMainWindow):
 
         loadEmpathy = QtGui.QAction(QtGui.QIcon(), '&Load Empathy', self)
         loadEmpathy.setShortcut('Ctrl+E')
-        loadEmpathy.triggered.connect(self.taskTabs.remove)
+        loadEmpathy.triggered.connect(lambda: self.taskTabs.remove("Empathy"))
 
         loadTedium = QtGui.QAction(QtGui.QIcon(), '&Load Tedium', self)
         loadTedium.setShortcut('Ctrl+T')
+        loadTedium.triggered.connect(lambda: self.taskTabs.remove("Tedium"))
 
         loadChallenge = QtGui.QAction(QtGui.QIcon(), '&Load Mental Challenge', self)
         loadChallenge.setShortcut('Ctrl+M')
+        loadChallenge.triggered.connect(lambda: self.taskTabs.remove("Challenge"))
 
         loadGeneral = QtGui.QAction(QtGui.QIcon(), '&Load General', self)
         loadGeneral.setShortcut('Ctrl+G')
+        loadGeneral.triggered.connect(lambda: self.taskTabs.remove('General'))
 
         disconnect = QtGui.QAction(QtGui.QIcon(), '&Disconnect', self)
         disconnect.setShortcut('Ctrl+D')

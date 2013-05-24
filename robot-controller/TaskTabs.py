@@ -39,14 +39,22 @@ class TaskTabs(QtGui.QTabWidget):
         self.setWindowTitle('Buttons')
         
         self.addTab(Tabs.General(self.nao, self.parent), 'General')
-        self.addTab(Tabs.Tedium(self.nao, self.parent), 'Tedium')
-        self.addTab(Tabs.MentalChallenge(self.nao, self.parent), 'Mental Challenge')
-        self.addTab(Tabs.Empathy(self.nao, self.parent), "Empathy")
+        #self.addTab(Tabs.Tedium(self.nao, self.parent), 'Tedium')
+        #self.addTab(Tabs.MentalChallenge(self.nao, self.parent), 'Mental Challenge')
+        #self.addTab(Tabs.Empathy(self.nao, self.parent), 'Empathy')
         #self.removeTab(3) Removes Empathy
     #END init()
 
-    def remove(self):
+    def remove(self, name):
         self.removeTab(0)
-        self.addTab(Tabs.Empathy(self.nao, self.parent))
+
+        if name == "General":
+            self.addTab(Tabs.General(self.nao, self.parent), "General")
+        elif name == "Tedium":
+            self.addTab(Tabs.Tedium(self.nao, self.parent), 'Tedium')
+        elif name == "Challenge":
+            self.addTab(Tabs.MentalChallenge(self.nao, self.parent), 'Mental Challenge')
+        elif name == "Empathy":
+            self.addTab(Tabs.Empathy(self.nao, self.parent), 'Empathy')
     #END remove
 #END TaskTabs

@@ -38,7 +38,7 @@ class Nao(QtCore.QObject):
 
     #END __init__()
 
-    def connect(self, IP=DEFAULT_IP, port=DEFAULT_PORT):
+    def connect(self, IP = DEFAULT_IP, port = DEFAULT_PORT):
         print " > Loading Text To Speech..."
         self.speechProxy = naoqi.ALProxy("ALTextToSpeech", IP, port)
         print " > " + str(self.speechProxy)
