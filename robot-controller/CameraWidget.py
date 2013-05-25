@@ -20,9 +20,9 @@ class CameraWidget (QtGui.QGroupBox):
         self.setTitle("Camera")
 
         self.camera = QtGui.QLabel()
-        self.camera.setFixedSize(650, 500)
+        self.camera.setFixedSize(250, 250)
 
-        self.camera.setScaledContents(True)
+        self.camera.setScaledContents(False)
 
         self.camera.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.MinimumExpanding)
         self.camera.setFrameStyle(QtGui.QFrame.Panel)
