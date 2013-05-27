@@ -63,6 +63,7 @@ class MainWindow(QtGui.QMainWindow):
         self.popup = Popup()
 
         # Create the connect button.
+        # TODO: Fix
         self.connectButton = QtGui.QPushButton('Connect', self)
         self.naoIP = QtGui.QLineEdit(Nao.DEFAULT_IP)
         self.naoIP.setMaximumWidth(100)

@@ -20,13 +20,13 @@ class CameraWidget (QtGui.QGroupBox):
         self.setTitle("Camera")
 
         self.camera = QtGui.QLabel()
-        self.camera.setFixedSize(250, 250)
+        self.camera.setFixedSize(320, 240)
 
-        self.camera.setScaledContents(False)
+        self.camera.setScaledContents(True)
 
         self.camera.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.MinimumExpanding)
         self.camera.setFrameStyle(QtGui.QFrame.Panel)
-        self.setImage(QtGui.QImage('images/image1.jpg'))
+        self.setImage(QtGui.QImage('images/image.jpg'))
 
         # Creates symbols for the buttons.
         self.up = QtGui.QPushButton("^")
@@ -35,10 +35,10 @@ class CameraWidget (QtGui.QGroupBox):
         self.right = QtGui.QPushButton(">")
 
         # Sets the size fo the buttons.
-        self.up.setFixedSize(50, 40)
-        self.left.setFixedSize(50, 40)
-        self.right.setFixedSize(50, 40)
-        self.down.setFixedSize(50, 40)
+        self.up.setFixedSize(25, 25)
+        self.left.setFixedSize(25, 25)
+        self.right.setFixedSize(25, 25)
+        self.down.setFixedSize(25, 25)
 
         # Radio buttons for the two camera views, top is the default.
         self.topCamera = QtGui.QRadioButton("Top")
@@ -64,7 +64,7 @@ class CameraWidget (QtGui.QGroupBox):
 
         # Adds all the elements to the layout.
         layout = QtGui.QVBoxLayout()
-        layout.addWidget(self.camera)
+        layout.addWidget(self.camera, 0, QtCore.Qt.AlignLeft)
         layout.addLayout(btnLayout)
         layout.addLayout(cameraSourceLayout)
 

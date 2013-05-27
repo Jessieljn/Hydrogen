@@ -1,6 +1,7 @@
 from PyQt4 import QtGui
 from PyQt4 import QtCore
 from ConnectionWinClass import ConnectionWin
+import Nao
 
 
 ##
@@ -22,6 +23,8 @@ class Popup(QtGui.QWidget):
         self.ip = QtGui.QLineEdit('140.193.228.26', self)
         self.port = QtGui.QLineEdit('9559', self)
 
+        self.conB.clicked.connect(self.passToMain)
+
         self.ip.move(105, 10)
         self.port.move(105, 30)
     #END __init__()
@@ -38,3 +41,9 @@ class Popup(QtGui.QWidget):
         self.w.setGeometry(QtCore.QRect(100, 100, 400, 200))
         self.w.show()
     #END doit
+
+    def passToMain(self):
+        li = [self.ip.displayText(), self.port.displayText()]
+        self.nao.tryConnect(li)
+        self.close()
+#END Popup

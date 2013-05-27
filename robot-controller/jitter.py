@@ -24,4 +24,5 @@ def jitter(addr, bhvName, boxName, startFrame = 0, endFrame = -1, joints = []):
 
 
 if __name__ == "__main__":
-    jitter(addr = "140.193.228.26", bhvName = "rightHandPointing", boxName = "PointDirectionR", joints = [["RWristYaw",-50,50]])
+    jitter(addr = "140.193.228.26", bhvName = "rightHandPointing", boxName = "PointDirectionR", joints = [["RWristYaw",
+                                                                                                           -50, 50]])
