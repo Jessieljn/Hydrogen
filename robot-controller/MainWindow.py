@@ -113,7 +113,7 @@ class MainWindow(QtGui.QMainWindow):
         vbox.addLayout(naoConnectionLayout)
 
         ###################################################
-        # TODO: Move to own function/class
+        # TODO: Add on click connect for connection window.
         ###################################################
         menubar = self.menuBar()
 

@@ -3,6 +3,13 @@ from PyQt4 import QtCore
 from ConnectionWinClass import ConnectionWin
 
 
+##
+# Popup.py
+#
+# Popup window for the connection class.
+#
+# TODO: Add on click connect for connection window.
+##
 class Popup(QtGui.QWidget):
     def __init__(self):
         QtGui.QWidget.__init__(self)
@@ -17,8 +24,6 @@ class Popup(QtGui.QWidget):
 
         self.ip.move(105, 10)
         self.port.move(105, 30)
-
-        self.show()
     #END __init__()
 
     def paintEvent(self, e):
