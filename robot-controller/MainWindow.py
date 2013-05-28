@@ -7,6 +7,7 @@ from GeneralWidget import GeneralWidget
 from StiffnessWidget import StiffnessWidget
 from PopupWindow import Popup
 import Nao
+from About import AboutWindow
 ##
 # MainWindow.py
 #
@@ -62,8 +63,10 @@ class MainWindow(QtGui.QMainWindow):
         # Create a popup window
         self.popup = Popup()
 
+        # Create the about popup window
+        self.about = AboutWindow()
+
         # Create the connect button.
-        # TODO: Fix
         self.connectButton = QtGui.QPushButton('Connect', self)
         self.naoIP = QtGui.QLineEdit(Nao.DEFAULT_IP)
         self.naoIP.setMaximumWidth(100)
@@ -78,9 +81,12 @@ class MainWindow(QtGui.QMainWindow):
 
         # Create layouts.
         mainLayout = QtGui.QHBoxLayout()
+        hbox = QtGui.QHBoxLayout()   # Main Box for layout
+        hbox3 = QtGui.QHBoxLayout()  # Text and Stiffness Widgets
+
         vbox = QtGui.QVBoxLayout()
-        vbox2 = QtGui.QVBoxLayout()
-        hbox = QtGui.QHBoxLayout()
+        vbox1 = QtGui.QVBoxLayout()  # General and Gesture Widgets
+        vbox2 = QtGui.QVBoxLayout()  # Task Tabs
 
         # Add camera widget to the main layout.
         mainLayout.addWidget(self.cameraWidget)
@@ -88,23 +94,21 @@ class MainWindow(QtGui.QMainWindow):
         mainWidget.setLayout(mainLayout)
 
         # Add general and gesture widgets to horizontal box 2.
-        hbox2 = QtGui.QVBoxLayout()
-        hbox2.addWidget(self.generalWidget)
-        hbox2.addWidget(self.gestureWidget)
+        vbox1.addWidget(self.generalWidget)
+        vbox1.addWidget(self.gestureWidget)
 
         # Add text and stiffness widgets to horizontal box 3.
-        hbox3 = QtGui.QHBoxLayout()
         hbox3.addWidget(self.textWid, 5)
         hbox3.addWidget(self.stiffnessWidget, 1)
 
         # Add elements to layout.
         vbox.addLayout(hbox3)
-        vbox.addLayout(hbox2)
+        vbox.addLayout(vbox1)
         vbox2.addWidget(self.taskTabs)
         hbox.addLayout(vbox2)
 
         # Set layout.
-        vbox.addLayout(hbox)
+        vbox.addLayout(hbox)  # Right side of the UI
 
         # Add connection widget to the layout.
         naoConnectionLayout = QtGui.QHBoxLayout()
@@ -118,34 +122,48 @@ class MainWindow(QtGui.QMainWindow):
         ###################################################
         menubar = self.menuBar()
 
-        exitAction = QtGui.QAction(QtGui.QIcon('images/exit.png'), '&Exit', self)
-        exitAction.setShortcut('Esc')
-        exitAction.setStatusTip('Exit application')
-        exitAction.triggered.connect(QtGui.qApp.quit)
-
-        loadEmpathy = QtGui.QAction(QtGui.QIcon(), '&Load Empathy', self)
-        loadEmpathy.setShortcut('Ctrl+E')
-        loadEmpathy.triggered.connect(lambda: self.taskTabs.remove("Empathy"))
-
-        loadTedium = QtGui.QAction(QtGui.QIcon(), '&Load Tedium', self)
-        loadTedium.setShortcut('Ctrl+T')
-        loadTedium.triggered.connect(lambda: self.taskTabs.remove("Tedium"))
-
-        loadChallenge = QtGui.QAction(QtGui.QIcon(), '&Load Mental Challenge', self)
-        loadChallenge.setShortcut('Ctrl+M')
-        loadChallenge.triggered.connect(lambda: self.taskTabs.remove("Challenge"))
-
-        loadGeneral = QtGui.QAction(QtGui.QIcon(), '&Load General', self)
-        loadGeneral.setShortcut('Ctrl+G')
-        loadGeneral.triggered.connect(lambda: self.taskTabs.remove('General'))
+        """
+        File Menubar
+        """
+        connect = QtGui.QAction(QtGui.QIcon(), '&Connect', self)
+        connect.setShortcut('Ctrl+C')
+        connect.triggered.connect(self.popup.doit)
 
         disconnect = QtGui.QAction(QtGui.QIcon(), '&Disconnect', self)
         disconnect.setShortcut('Ctrl+D')
         disconnect.triggered.connect(self.nao.disconnect)
 
-        connect = QtGui.QAction(QtGui.QIcon(), '&Connect', self)
-        connect.setShortcut('Ctrl+C')
-        connect.triggered.connect(self.popup.doit)
+        exitAction = QtGui.QAction(QtGui.QIcon('images/exit.png'), '&Exit', self)
+        exitAction.setShortcut('Esc')
+        exitAction.setStatusTip('Exit application')
+        exitAction.triggered.connect(QtGui.qApp.quit)
+
+        """
+        Load Menubar
+        """
+
+        loadGeneral = QtGui.QAction(QtGui.QIcon(), '&Load General', self)
+        loadGeneral.setShortcut('Ctrl+1')
+        loadGeneral.triggered.connect(lambda: self.taskTabs.remove('General'))
+
+        loadTedium = QtGui.QAction(QtGui.QIcon(), '&Load Tedium', self)
+        loadTedium.setShortcut('Ctrl+2')
+        loadTedium.triggered.connect(lambda: self.taskTabs.remove("Tedium"))
+
+        loadChallenge = QtGui.QAction(QtGui.QIcon(), '&Load Mental Challenge', self)
+        loadChallenge.setShortcut('Ctrl+3')
+        loadChallenge.triggered.connect(lambda: self.taskTabs.remove("Challenge"))
+
+        loadEmpathy = QtGui.QAction(QtGui.QIcon(), '&Load Empathy', self)
+        loadEmpathy.setShortcut('Ctrl+4')
+        loadEmpathy.triggered.connect(lambda: self.taskTabs.remove("Empathy"))
+
+        """
+        About
+        """
+
+        aboutBox = QtGui.QAction(QtGui.QIcon(), '&About', self)
+        aboutBox.triggered.connect(self.about.doit)
 
         ##########
         # Toolbar instead of menubar
@@ -157,12 +175,14 @@ class MainWindow(QtGui.QMainWindow):
 
         fileMenu = menubar.addMenu('File')
         loadMenu = menubar.addMenu('Load')
+        aboutMenu = menubar.addMenu('Help')
         fileMenu.addAction(connect)
         fileMenu.addAction(disconnect)
         loadMenu.addAction(loadGeneral)
         loadMenu.addAction(loadTedium)
         loadMenu.addAction(loadChallenge)
         loadMenu.addAction(loadEmpathy)
+        aboutMenu.addAction(aboutBox)
         fileMenu.addAction(exitAction)
         ##################################################
 

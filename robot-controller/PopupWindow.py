@@ -23,6 +23,9 @@ class Popup(QtGui.QWidget):
         self.ip = QtGui.QLineEdit('140.193.228.26', self)
         self.port = QtGui.QLineEdit('9559', self)
 
+        self.dialogLabel = QtGui.QLabel("<qt> Please visit <a href = http://www.google.ca>Google</a>to search.</qt>", self)
+        self.connect(self.dialogLabel, QtCore.SIGNAL("linkActivated(QString)"), self.OpenURL)
+
         self.conB.clicked.connect(self.passToMain)
 
         self.ip.move(105, 10)
@@ -46,4 +49,7 @@ class Popup(QtGui.QWidget):
         li = [self.ip.displayText(), self.port.displayText()]
         self.nao.tryConnect(li)
         self.close()
+
+    def OpenURL(self, URL):
+        QtGui.QDesktopServices().openUrl(QtCore.QUrl(URL))
 #END Popup
