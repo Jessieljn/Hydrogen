@@ -62,6 +62,7 @@ class MainWindow(QtGui.QMainWindow):
         self._wgtTaskPanel.setFrameShape(QtGui.QFrame.Panel)
         self._wgtTaskPanel.setFrameShadow(QtGui.QFrame.Plain)
         self._wgtTaskPanel.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        layoutTaskPanel = QtGui.QHBoxLayout(self._wgtTaskPanel)
 
         layoutLeft = QtGui.QVBoxLayout()
         layoutLeft.addWidget(self._wgtCamera, 2)
@@ -108,24 +109,28 @@ class MainWindow(QtGui.QMainWindow):
         actLoadGeneral.triggered.connect(lambda: self.on_actLoad_specific("General"))
         self._taskGeneral = General(self._wgtTaskPanel, self._actionQueue)
         self._task = self._taskGeneral
+        layoutRight.addWidget(self._taskGeneral)
 
         actLoadTedium = QtGui.QAction(QtGui.QIcon(), 'Load Tedium', self)
         actLoadTedium.setShortcut('Ctrl+2')
         actLoadTedium.triggered.connect(lambda: self.on_actLoad_specific("Tedium"))
         self._taskTedium = Tedium(self._wgtTaskPanel, self._actionQueue)
         self._taskTedium.hide()
+        layoutRight.addWidget(self._taskTedium)
 
         actLoadChallenge = QtGui.QAction(QtGui.QIcon(), 'Load Mental Challenge', self)
         actLoadChallenge.setShortcut('Ctrl+3')
         actLoadChallenge.triggered.connect(lambda: self.on_actLoad_specific("Challenge"))
         self._taskChallenge = MentalChallenge(self._wgtTaskPanel, self._actionQueue)
         self._taskChallenge.hide()
+        layoutRight.addWidget(self._taskChallenge)
 
         actLoadEmpathy = QtGui.QAction(QtGui.QIcon(), 'Load Empathy', self)
         actLoadEmpathy.setShortcut('Ctrl+4')
         actLoadEmpathy.triggered.connect(lambda: self.on_actLoad_specific("Empathy"))
         self._taskEmpathy = Empathy(self._wgtTaskPanel, self._actionQueue)
         self._taskEmpathy.hide()
+        layoutRight.addWidget(self._taskEmpathy)
 
         loadMenu = menubar.addMenu('Load')
         loadMenu.addAction(actLoadGeneral)
