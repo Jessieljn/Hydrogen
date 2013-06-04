@@ -2,11 +2,15 @@
   <dictionary name="Matt">
     <words>
       <w>addr</w>
+      <w>dequeue</w>
+      <w>focusable</w>
       <w>hbox</w>
       <w>leds</w>
       <w>mainwindow</w>
       <w>menubar</w>
+      <w>metaclass</w>
       <w>nao's</w>
+      <w>rdbtn</w>
       <w>submenu</w>
       <w>umanitoba</w>
       <w>vbox</w>

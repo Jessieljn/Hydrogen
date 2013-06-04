@@ -1,281 +1,333 @@
-from PyQt4 import QtGui, QtNetwork, QtCore
-from TaskTabs import TaskTabs
-from TextWidClass import TextWid
-from GestureWidget import GestureWidget
-from CameraWidget import CameraWidget
-from GeneralWidget import GeneralWidget
-from StiffnessWidget import StiffnessWidget
-from PopupWindow import Popup
-import Nao
-from About import AboutWindow
+from Definitions import Direction
+from PyQt4 import QtCore, QtGui
+from Nao import Nao
+from Action.ActionModel import ActionModel
+from Action.Behavior import Behavior
+from Action.HeadMotion import HeadMotion
+from Action.Speech import Speech
+from Study.General import General
+from Study.Tedium import Tedium
+from Study.MentalChallenge import MentalChallenge
+from Study.Empathy import Empathy
+from UI.AboutWindow import AboutWindow
+from UI.ActionListWidget import ActionListWidget
+from UI.CameraWidget import CameraWidget
+from UI.ConnectDialog import ConnectDialog
+from UI.GeneralWidget import GeneralWidget
+from UI.SpeechWidget import SpeechWidget
+from UI.StiffnessWidget import StiffnessWidget
+
+
 ##
 # MainWindow.py
 #
 # Puts all the widgets together in one windows.
 ##
-
-KEY_UP = 0
-KEY_DOWN = 1
-KEY_LEFT = 2
-KEY_RIGHT = 3
-
-
 class MainWindow(QtGui.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
-        self.setFocusPolicy(QtCore.Qt.StrongFocus)
-        self.setWindowIcon(QtGui.QIcon("images/icon.png"))
-        self.init()
-    #END __init__()
 
-    def init(self):
+        ##################################################
+        # Create Widgets
+        ##################################################
+        self._wgtMain = QtGui.QWidget(self)
 
-        self.keys = dict()
-        self.keys[KEY_UP] = False
-        self.keys[KEY_DOWN] = False
-        self.keys[KEY_LEFT] = False
-        self.keys[KEY_RIGHT] = False
+        self._wgtCamera = CameraWidget(self._wgtMain)
+        self._wgtCamera.setFixedHeight(385)
+        self._wgtCamera.cameraChanged.connect(self.on_cameraChanged)
+        self._wgtCamera.moveHead.connect(self.on_moveHead)
 
-        self.setWindowTitle('NAO Robotic Controller')
+        self._actionQueue = ActionModel(self)
+        self._actionQueue.dequeue.connect(self.on__actionQueue_execute)
+        self._actionQueue.startProcessing()
+        self._wgtActionList = ActionListWidget(self._wgtMain, self._actionQueue)
+        self._wgtActionList.setFixedWidth(328)
 
-        # Creates a socket.
-        self.socket = QtNetwork.QTcpSocket(self)
-        mainWidget = QtGui.QWidget(self)
+        self._wgtSpeech = SpeechWidget(self._wgtMain)
+        self._wgtSpeech.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.Maximum)
+        self._wgtSpeech.textEditing.connect(self.on_chagingLEDs)
+        self._wgtSpeech.textInputCancelled.connect(self.grab_keyboard)
+        self._wgtSpeech.textSubmitted.connect(self.on_playSpeech)
+        self._wgtSpeech.volumeChanged.connect(self.on_chagingVolume)
 
-        # Creates a camera widget.
-        self.cameraWidget = CameraWidget(mainWidget)
-        self.nao = Nao.Nao(self.cameraWidget)
-        self.generalWidget = GeneralWidget(self.nao, mainWidget)
-        self.stiffnessWidget = StiffnessWidget(self.nao, mainWidget)
-        self.cameraWidget.setNao(self.nao)
+        self._wgtStiffness = StiffnessWidget(self._wgtMain)
+        self._wgtStiffness.stiffnessChanged.connect(self.on_changingStiffness)
 
-        # Create the text widget.
-        self.textWid = TextWid(self.nao, mainWidget)
-        self.textWid.msg_sent.connect(self.grab_keyboard)
+        self._wgtGeneral = GeneralWidget(self._wgtMain)
+        self._wgtGeneral.playBehavior.connect(self.on_playBehaviour)
+        self._wgtGeneral.speechSynthesis.connect(self.on_playSpeech)
 
-        # Creates the gesture widget.
-        self.gestureWidget = GestureWidget(self.nao, mainWidget)
+        self._wgtTaskPanel = QtGui.QFrame(self._wgtMain)
+        self._wgtTaskPanel.setFrameShape(QtGui.QFrame.Panel)
+        self._wgtTaskPanel.setFrameShadow(QtGui.QFrame.Plain)
+        self._wgtTaskPanel.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
 
-        # Create a tabbed task bar.
-        self.taskTabs = TaskTabs(self.nao, mainWidget)
+        layoutLeft = QtGui.QVBoxLayout()
+        layoutLeft.addWidget(self._wgtCamera, 2)
+        layoutLeft.addWidget(self._wgtActionList, 1)
 
-        # Create a popup window
-        self.popup = Popup()
+        layoutTextStiff = QtGui.QHBoxLayout()
+        layoutTextStiff.addWidget(self._wgtSpeech, 5)
+        layoutTextStiff.addWidget(self._wgtStiffness, 1)
 
-        # Create the about popup window
-        self.about = AboutWindow()
+        layoutRight = QtGui.QVBoxLayout()
+        layoutRight.addLayout(layoutTextStiff)
+        layoutRight.addWidget(self._wgtGeneral)
+        layoutRight.addWidget(self._wgtTaskPanel)
 
-        # Create the connect button.
-        self.connectButton = QtGui.QPushButton('Connect', self)
-        self.naoIP = QtGui.QLineEdit(Nao.DEFAULT_IP)
-        self.naoIP.setMaximumWidth(100)
-        self.naoPort = QtGui.QLineEdit(str(Nao.DEFAULT_PORT))
-        self.naoPort.setMaximumWidth(60)
+        layoutMain = QtGui.QHBoxLayout(self._wgtMain)
+        layoutMain.addLayout(layoutLeft)
+        layoutMain.addLayout(layoutRight)
 
-        # ActionEvent for button.
-        self.connectButton.clicked.connect(self.connectToNao)
-
-        # Widget layout.
-        self.resize(1000, 700)
-
-        # Create layouts.
-        mainLayout = QtGui.QHBoxLayout()
-        hbox = QtGui.QHBoxLayout()   # Main Box for layout
-        hbox3 = QtGui.QHBoxLayout()  # Text and Stiffness Widgets
-
-        vbox = QtGui.QVBoxLayout()
-        vbox1 = QtGui.QVBoxLayout()  # General and Gesture Widgets
-        vbox2 = QtGui.QVBoxLayout()  # Task Tabs
-
-        # Add camera widget to the main layout.
-        mainLayout.addWidget(self.cameraWidget)
-        mainLayout.addLayout(vbox)
-        mainWidget.setLayout(mainLayout)
-
-        # Add general and gesture widgets to horizontal box 2.
-        vbox1.addWidget(self.generalWidget)
-        vbox1.addWidget(self.gestureWidget)
-
-        # Add text and stiffness widgets to horizontal box 3.
-        hbox3.addWidget(self.textWid, 5)
-        hbox3.addWidget(self.stiffnessWidget, 1)
-
-        # Add elements to layout.
-        vbox.addLayout(hbox3)
-        vbox.addLayout(vbox1)
-        vbox2.addWidget(self.taskTabs)
-        hbox.addLayout(vbox2)
-
-        # Set layout.
-        vbox.addLayout(hbox)  # Right side of the UI
-
-        # Add connection widget to the layout.
-        naoConnectionLayout = QtGui.QHBoxLayout()
-        naoConnectionLayout.addWidget(self.connectButton, 0, QtCore.Qt.AlignLeft)
-        naoConnectionLayout.addWidget(self.naoIP, 0, QtCore.Qt.AlignLeft)
-        naoConnectionLayout.addWidget(self.naoPort, 0, QtCore.Qt.AlignLeft)
-        vbox.addLayout(naoConnectionLayout)
-
-        ###################################################
-        # TODO: Add on click connect for connection window.
-        ###################################################
+        ##################################################
+        # Create Menus
+        ##################################################
         menubar = self.menuBar()
 
-        """
-        File Menubar
-        """
-        connect = QtGui.QAction(QtGui.QIcon(), '&Connect', self)
-        connect.setShortcut('Ctrl+C')
-        connect.triggered.connect(self.popup.doit)
+        actConnect = QtGui.QAction(QtGui.QIcon(), '&Connect', self)
+        actConnect.setShortcut('Ctrl+C')
+        actConnect.triggered.connect(self.on_actConnect_triggered)
 
-        disconnect = QtGui.QAction(QtGui.QIcon(), '&Disconnect', self)
-        disconnect.setShortcut('Ctrl+D')
-        disconnect.triggered.connect(self.nao.disconnect)
+        actDisconnect = QtGui.QAction(QtGui.QIcon(), '&Disconnect', self)
+        actDisconnect.setShortcut('Ctrl+D')
+        actDisconnect.triggered.connect(self.on_actDisconnect_triggered)
 
-        exitAction = QtGui.QAction(QtGui.QIcon('images/exit.png'), '&Exit', self)
-        exitAction.setShortcut('Esc')
-        exitAction.setStatusTip('Exit application')
-        exitAction.triggered.connect(QtGui.qApp.quit)
-
-        """
-        Load Menubar
-        """
-
-        loadGeneral = QtGui.QAction(QtGui.QIcon(), '&Load General', self)
-        loadGeneral.setShortcut('Ctrl+1')
-        loadGeneral.triggered.connect(lambda: self.taskTabs.remove('General'))
-
-        loadTedium = QtGui.QAction(QtGui.QIcon(), '&Load Tedium', self)
-        loadTedium.setShortcut('Ctrl+2')
-        loadTedium.triggered.connect(lambda: self.taskTabs.remove("Tedium"))
-
-        loadChallenge = QtGui.QAction(QtGui.QIcon(), '&Load Mental Challenge', self)
-        loadChallenge.setShortcut('Ctrl+3')
-        loadChallenge.triggered.connect(lambda: self.taskTabs.remove("Challenge"))
-
-        loadEmpathy = QtGui.QAction(QtGui.QIcon(), '&Load Empathy', self)
-        loadEmpathy.setShortcut('Ctrl+4')
-        loadEmpathy.triggered.connect(lambda: self.taskTabs.remove("Empathy"))
-
-        """
-        About
-        """
-
-        aboutBox = QtGui.QAction(QtGui.QIcon(), '&About', self)
-        aboutBox.triggered.connect(self.about.doit)
-
-        ##########
-        # Toolbar instead of menubar
-        ##########
-        #self.toolbar = self.addToolBar('Exit')
-        #self.toolbar.addAction(exitAction)
-        #  self.setWindowTitle('Toolbar')
-        ##########
+        actExit = QtGui.QAction(QtGui.QIcon('images/exit.png'), '&Exit', self)
+        actExit.setShortcut('Ctrl+X')
+        actExit.setStatusTip('Exit application')
+        actExit.triggered.connect(QtGui.qApp.quit)
 
         fileMenu = menubar.addMenu('File')
-        loadMenu = menubar.addMenu('Load')
-        aboutMenu = menubar.addMenu('Help')
-        fileMenu.addAction(connect)
-        fileMenu.addAction(disconnect)
-        loadMenu.addAction(loadGeneral)
-        loadMenu.addAction(loadTedium)
-        loadMenu.addAction(loadChallenge)
-        loadMenu.addAction(loadEmpathy)
-        aboutMenu.addAction(aboutBox)
-        fileMenu.addAction(exitAction)
-        ##################################################
+        fileMenu.addAction(actConnect)
+        fileMenu.addAction(actDisconnect)
+        fileMenu.addAction(actExit)
 
-        self.setCentralWidget(mainWidget)
+        actLoadGeneral = QtGui.QAction(QtGui.QIcon(), 'Load General', self)
+        actLoadGeneral.setShortcut('Ctrl+1')
+        actLoadGeneral.triggered.connect(lambda: self.on_actLoad_specific("General"))
+        self._taskGeneral = General(self._wgtTaskPanel, self._actionQueue)
+        self._task = self._taskGeneral
+
+        actLoadTedium = QtGui.QAction(QtGui.QIcon(), 'Load Tedium', self)
+        actLoadTedium.setShortcut('Ctrl+2')
+        actLoadTedium.triggered.connect(lambda: self.on_actLoad_specific("Tedium"))
+        self._taskTedium = Tedium(self._wgtTaskPanel, self._actionQueue)
+        self._taskTedium.hide()
+
+        actLoadChallenge = QtGui.QAction(QtGui.QIcon(), 'Load Mental Challenge', self)
+        actLoadChallenge.setShortcut('Ctrl+3')
+        actLoadChallenge.triggered.connect(lambda: self.on_actLoad_specific("Challenge"))
+        self._taskChallenge = MentalChallenge(self._wgtTaskPanel, self._actionQueue)
+        self._taskChallenge.hide()
+
+        actLoadEmpathy = QtGui.QAction(QtGui.QIcon(), 'Load Empathy', self)
+        actLoadEmpathy.setShortcut('Ctrl+4')
+        actLoadEmpathy.triggered.connect(lambda: self.on_actLoad_specific("Empathy"))
+        self._taskEmpathy = Empathy(self._wgtTaskPanel, self._actionQueue)
+        self._taskEmpathy.hide()
+
+        loadMenu = menubar.addMenu('Load')
+        loadMenu.addAction(actLoadGeneral)
+        loadMenu.addAction(actLoadTedium)
+        loadMenu.addAction(actLoadChallenge)
+        loadMenu.addAction(actLoadEmpathy)
+
+        actAboutBox = QtGui.QAction(QtGui.QIcon(), '&About', self)
+        actAboutBox.triggered.connect(self.on_actAbout_triggered)
+
+        aboutMenu = menubar.addMenu('Help')
+        aboutMenu.addAction(actAboutBox)
+
+        ##################################################
+        # MainWindow
+        ##################################################
+        self.setCentralWidget(self._wgtMain)
+        self.setFocusPolicy(QtCore.Qt.StrongFocus)
+        self.setMinimumSize(800, 600)
+        self.setWindowIcon(QtGui.QIcon("images/icon.png"))
+        self.setWindowTitle('NAO Robotic Controller')
+        self.resize(800, 600)
         self.show()
         self.grabKeyboard()
-    #END init()
 
-    def connectToNao(self):
-        if self.connectButton.text() == 'Connect':
+        self._keys = dict()
+        self._keys[Direction.Up] = False
+        self._keys[Direction.Down] = False
+        self._keys[Direction.Left] = False
+        self._keys[Direction.Right] = False
+        self._nao = Nao()
+        self._nao.frameAvailable.connect(self._wgtCamera.setImage)
+    #END __init__()
+
+
+    def on__actionQueue_execute(self, action):
+        if self._nao.isConnected():
+            action.execute(self._nao)
+        #END if
+    #END on__actionQueue_execute()
+
+
+    def on_cameraChanged(self, which):
+        self._nao.cameraSource = which
+    #END on_cameraChanged()
+
+
+    def on_chagingLEDs(self):
+        if self._wgtSpeech.isSpeechTextEmpty():
+            self._nao.setLEDsNormal()
+        else:
+            self._nao.setLEDsProcessing()
+        #END if
+    #END on_chagingLEDs()
+
+
+    def on_changingStiffness(self, value):
+        self._nao.setStiffness(value)
+    #END on_changingStiffness()
+
+
+    def on_chagingVolume(self, value):
+        self._nao.setVolume(value)
+    #END on_chagingVolume()
+
+
+    def on_moveHead(self, direction):
+        self._actionQueue.enqueue(HeadMotion(direction))
+    #END on_moveHead()
+
+
+    def on_playBehaviour(self, value):
+        self._actionQueue.enqueue(Behavior(value))
+    #END on_playSpeech()
+
+
+    def on_playSpeech(self, value):
+        self._actionQueue.enqueue(Speech(value))
+    #END on_playSpeech()
+
+
+    def on_actConnect_triggered(self):
+        if not self._nao.isConnected():
+            self._dlgConnect = ConnectDialog(self)
+            self._dlgConnect.accepted.connect(self.on_dlgConnect_accepted)
+            self._dlgConnect.show()
+        #END if
+    #END on_actConnect_triggered()
+
+
+    def on_actDisconnect_triggered(self):
+        if self._nao.isConnected():
+            self.killTimer(self._timerID)
             print "==================================="
-            print "Connecting to Nao (" + str(self.naoIP.text()) + ":" + str(self.naoPort.text()) + ")"
-            if self.nao.connect(str(self.naoIP.text()), int(str(self.naoPort.text()))):
-                self.nao.startCamera()
-                self.connectButton.setText('Disconnect')
-            #END if
+            print "Disconnecting from Nao"
+            self._nao.disconnect()
+            print "==================================="
+        #END if
+    #END on_actDisconnect_triggered()
+
+
+    def on_actLoad_specific(self, study):
+        self._task.hide()
+        if study == "General":
+            self._task = self._taskGeneral
+        elif study == "Tedium":
+            self._task = self._taskTedium
+        elif study == "Challenge":
+            self._task = self._taskChallenge
+        elif study == "Empathy":
+            self._task = self._taskEmpathy
+        #END if
+        self._task.show()
+    #END on_actLoad_specific
+
+
+    def on_actAbout_triggered(self):
+        dlgAbout = AboutWindow(self)
+        dlgAbout.show()
+    #END on_actAbout_triggered()
+
+
+    def on_dlgConnect_accepted(self):
+        if not self._nao.isConnected():
+            ipAddress = str(self._dlgConnect.ipAddress)
+            port = str(self._dlgConnect.port)
+            print "==================================="
+            print "Connecting to Nao (" + ipAddress + ":" + port + ")"
+            if self._nao.connect(ipAddress, int(port)):
+                self._nao.startCamera()
+                self._timerID = self.startTimer(1000 / 100)
             else:
                 print "FAILED"
-            #END else
+            #END if
             print "==================================="
         #END if
-        elif self.connectButton.text() == 'Disconnect':
-            self.nao.disconnect()
-            self.connectButton.setText('Connect')
-        #END elif
-    #END connectToNao()
+    #END on_dlgConnect_accepted()
+
 
     def closeEvent(self, event):
-        if self.nao.isConnected():
-            self.nao.disconnect()
-        #END if
+        self._actionQueue.stopProcessing()
+        self.on_actDisconnect_triggered()
     #END closeEvent()
+
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Up:
-            self.keys[KEY_UP] = True
-        #END if
-        if event.key() == QtCore.Qt.Key_Down:
-            self.keys[KEY_DOWN] = True
-        #END if
-        if event.key() == QtCore.Qt.Key_Left:
-            self.keys[KEY_LEFT] = True
-        #END if
-        if event.key() == QtCore.Qt.Key_Right:
-            self.keys[KEY_RIGHT] = True
-        #END if
-
-        print "key"
-        if event.key() == QtCore.Qt.Key_Escape:
-            print "tab"
+            self._keys[Direction.Up] = True;
+        elif event.key() == QtCore.Qt.Key_Down:
+            self._keys[Direction.Down] = True;
+        elif event.key() == QtCore.Qt.Key_Left:
+            self._keys[Direction.Left] = True;
+        elif event.key() == QtCore.Qt.Key_Right:
+            self._keys[Direction.Right] = True;
+        elif event.key() == QtCore.Qt.Key_Escape:
             self.releaseKeyboard()
-            self.textWid.message.setFocus(QtCore.Qt.OtherFocusReason)
-            self.textWid.message.grabKeyboard()
+            self._wgtSpeech.setTextEditFocus()
+        else:
+            super(MainWindow, self).keyPressEvent(event)
         #END if
     #END keyPressEvent()
 
+
     def keyReleaseEvent(self, event):
         if event.key() == QtCore.Qt.Key_Up:
-            self.keys[KEY_UP] = False
-        #END if
-        if event.key() == QtCore.Qt.Key_Down:
-            self.keys[KEY_DOWN] = False
-        #END if
-        if event.key() == QtCore.Qt.Key_Left:
-            self.keys[KEY_LEFT] = False
-        #END if
-        if event.key() == QtCore.Qt.Key_Right:
-            self.keys[KEY_RIGHT] = False
+            self._keys[Direction.Up] = False;
+        elif event.key() == QtCore.Qt.Key_Down:
+            self._keys[Direction.Down] = False;
+        elif event.key() == QtCore.Qt.Key_Left:
+            self._keys[Direction.Left] = False;
+        elif event.key() == QtCore.Qt.Key_Right:
+            self._keys[Direction.Right] = False;
+        else:
+            super(MainWindow, self).keyReleaseEvent(event)
         #END if
     #END keyReleaseEvent()
 
+
     def timerEvent(self, event):
-        if self.nao.isConnected():
-            if self.keys[KEY_UP]:
-                self.nao.tiltHeadUp()
-            #END if
-            if self.keys[KEY_DOWN]:
-                self.nao.tiltHeadDown()
-            #END if
-            if self.keys[KEY_LEFT]:
-                self.nao.turnHeadLeft()
-            #END if
-            if self.keys[KEY_RIGHT]:
-                self.nao.turnHeadRight()
-            #END if
+        if self._keys[Direction.Up]:
+            self._actionQueue.enqueue(HeadMotion(Direction.Up))
+        #END if
+        if self._keys[Direction.Down]:
+            self._actionQueue.enqueue(HeadMotion(Direction.Down))
+        #END if
+        if self._keys[Direction.Left]:
+            self._actionQueue.enqueue(HeadMotion(Direction.Left))
+        #END if
+        if self._keys[Direction.Right]:
+            self._actionQueue.enqueue(HeadMotion(Direction.Right))
         #END if
     #END timerEvent()
+
+
+    def focusInEvent(self, event):
+        self.grabKeyboard()
+    #END focusInEvent()
+
 
     def grab_keyboard(self):
         self.setFocus(QtCore.Qt.OtherFocusReason)
     #END grab_keyboard()
 
-    def focusInEvent(self, event):
-        self.grabKeyboard()
-    #END focusInEvent
+
 #END MainWindow
