@@ -46,10 +46,10 @@ class MainWindow(QtGui.QMainWindow):
 
         self._wgtSpeech = SpeechWidget(self._wgtMain)
         self._wgtSpeech.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.Maximum)
-        self._wgtSpeech.textEditing.connect(self.on_chagingLEDs)
+        self._wgtSpeech.textEditing.connect(self.on_changingLEDs)
         self._wgtSpeech.textInputCancelled.connect(self.grab_keyboard)
         self._wgtSpeech.textSubmitted.connect(self.on_playSpeech)
-        self._wgtSpeech.volumeChanged.connect(self.on_chagingVolume)
+        self._wgtSpeech.volumeChanged.connect(self.on_changingVolume)
 
         self._wgtStiffness = StiffnessWidget(self._wgtMain)
         self._wgtStiffness.stiffnessChanged.connect(self.on_changingStiffness)
@@ -160,52 +160,43 @@ class MainWindow(QtGui.QMainWindow):
         self._nao.frameAvailable.connect(self._wgtCamera.setImage)
     #END __init__()
 
-
     def on__actionQueue_execute(self, action):
         if self._nao.isConnected():
             action.execute(self._nao)
         #END if
     #END on__actionQueue_execute()
 
-
     def on_cameraChanged(self, which):
         self._nao.cameraSource = which
     #END on_cameraChanged()
 
-
-    def on_chagingLEDs(self):
+    def on_changingLEDs(self):
         if self._wgtSpeech.isSpeechTextEmpty():
             self._nao.setLEDsNormal()
         else:
             self._nao.setLEDsProcessing()
         #END if
-    #END on_chagingLEDs()
-
+    #END on_changingLEDs()
 
     def on_changingStiffness(self, value):
         self._nao.setStiffness(value)
     #END on_changingStiffness()
 
-
-    def on_chagingVolume(self, value):
+    def on_changingVolume(self, value):
         self._nao.setVolume(value)
-    #END on_chagingVolume()
-
+    #END on_changingVolume()
 
     def on_moveHead(self, direction):
         self._actionQueue.enqueue(HeadMotion(direction))
     #END on_moveHead()
 
-
     def on_playBehaviour(self, value):
         self._actionQueue.enqueue(Behavior(value))
     #END on_playSpeech()
 
-
     def on_playSpeech(self, value):
         self._actionQueue.enqueue(Speech(value))
     #END on_playSpeech()
-
 
     def on_actConnect_triggered(self):
         if not self._nao.isConnected():
@@ -214,7 +205,6 @@ class MainWindow(QtGui.QMainWindow):
             self._dlgConnect.show()
         #END if
     #END on_actConnect_triggered()
-
 
     def on_actDisconnect_triggered(self):
         if self._nao.isConnected():
@@ -225,7 +215,6 @@ class MainWindow(QtGui.QMainWindow):
             print "==================================="
         #END if
     #END on_actDisconnect_triggered()
-
 
     def on_actLoad_specific(self, study):
         self._task.hide()
@@ -241,12 +230,10 @@ class MainWindow(QtGui.QMainWindow):
         self._task.show()
     #END on_actLoad_specific
 
-
     def on_actAbout_triggered(self):
         dlgAbout = AboutWindow(self)
         dlgAbout.show()
     #END on_actAbout_triggered()
-
 
     def on_dlgConnect_accepted(self):
         if not self._nao.isConnected():
@@ -264,22 +251,20 @@ class MainWindow(QtGui.QMainWindow):
         #END if
     #END on_dlgConnect_accepted()
 
-
     def closeEvent(self, event):
         self._actionQueue.stopProcessing()
         self.on_actDisconnect_triggered()
     #END closeEvent()
 
-
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Up:
-            self._keys[Direction.Up] = True;
+            self._keys[Direction.Up] = True
         elif event.key() == QtCore.Qt.Key_Down:
-            self._keys[Direction.Down] = True;
+            self._keys[Direction.Down] = True
         elif event.key() == QtCore.Qt.Key_Left:
-            self._keys[Direction.Left] = True;
+            self._keys[Direction.Left] = True
         elif event.key() == QtCore.Qt.Key_Right:
-            self._keys[Direction.Right] = True;
+            self._keys[Direction.Right] = True
         elif event.key() == QtCore.Qt.Key_Escape:
             self.releaseKeyboard()
             self._wgtSpeech.setTextEditFocus()
@@ -288,21 +273,19 @@ class MainWindow(QtGui.QMainWindow):
         #END if
     #END keyPressEvent()
 
-
     def keyReleaseEvent(self, event):
         if event.key() == QtCore.Qt.Key_Up:
-            self._keys[Direction.Up] = False;
+            self._keys[Direction.Up] = False
         elif event.key() == QtCore.Qt.Key_Down:
-            self._keys[Direction.Down] = False;
+            self._keys[Direction.Down] = False
         elif event.key() == QtCore.Qt.Key_Left:
-            self._keys[Direction.Left] = False;
+            self._keys[Direction.Left] = False
         elif event.key() == QtCore.Qt.Key_Right:
-            self._keys[Direction.Right] = False;
+            self._keys[Direction.Right] = False
         else:
             super(MainWindow, self).keyReleaseEvent(event)
         #END if
     #END keyReleaseEvent()
-
 
     def timerEvent(self, event):
         if self._keys[Direction.Up]:
@@ -319,15 +302,11 @@ class MainWindow(QtGui.QMainWindow):
         #END if
     #END timerEvent()
 
-
     def focusInEvent(self, event):
         self.grabKeyboard()
     #END focusInEvent()
 
-
     def grab_keyboard(self):
         self.setFocus(QtCore.Qt.OtherFocusReason)
     #END grab_keyboard()
-
-
 #END MainWindow
