@@ -5,8 +5,14 @@ from Action.Action import Action
 class ActionPushButton(QtGui.QPushButton):
     def __init__(self, parent, title, actions = None):
         super(ActionPushButton, self).__init__(title, parent)
-        self.clicked.connect(self.onClick)
         self._actions = []
+        self.appendActions(actions)
+        self.clicked.connect(self.on_click)
+    #END __init__()
+
+    execute = QtCore.pyqtSignal(Action)
+
+    def appendActions(self, actions):
         if actions is None:
             pass
         elif isinstance(actions, Action):
@@ -16,13 +22,11 @@ class ActionPushButton(QtGui.QPushButton):
                 self._actions.append(act)
             #END for
         #END if
-    #END __init__()
+    #END appendActions()
 
-    execute = QtCore.pyqtSignal(Action)
-
-    def onClick(self):
+    def on_click(self):
         for act in self._actions:
             self.execute.emit(act)
         #END for
-    #END onClick()
+    #END on_click()
 #END class

@@ -23,7 +23,6 @@ class MainWindow(QtGui.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
-
         Study.setup()
 
         ##################################################
@@ -55,8 +54,8 @@ class MainWindow(QtGui.QMainWindow):
             actLoad = QtGui.QAction(QtGui.QIcon(), "Load " + Study.TASKS[i][Study.TASK_NAME], self)
             actLoad.setShortcut("Ctrl+" + str(i + 1))
             actLoad.triggered.connect(self.on_actLoad_specific)
-            self._loadActions.append([actLoad])
             loadMenu.addAction(actLoad)
+            self._loadActions.append(actLoad)
         #END for
 
         actAboutBox = QtGui.QAction(QtGui.QIcon(), '&About', self)
@@ -99,22 +98,14 @@ class MainWindow(QtGui.QMainWindow):
         self._wgtTaskPanel.setFrameShadow(QtGui.QFrame.Plain)
         self._wgtTaskPanel.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
 
-        layoutTaskPanel = QtGui.QHBoxLayout(self._wgtTaskPanel)
-        layoutTaskPanel.setMargin(0)
+        self._layoutTaskPanel = QtGui.QStackedLayout(self._wgtTaskPanel)
+        self._layoutTaskPanel.setMargin(0)
         for i in range(len(Study.TASKS)):
             Study.TASKS[i][Study.TASK_WIDGET].setParent(self._wgtTaskPanel)
             Study.TASKS[i][Study.TASK_WIDGET].setActionQueue(self._actionQueue)
-            scroll = QtGui.QScrollArea()
-            scroll.setAlignment(QtCore.Qt.AlignCenter)
-            scroll.setWidget(Study.TASKS[i][Study.TASK_WIDGET])
-            scroll.hide()
-            layoutScroll = QtGui.QVBoxLayout()
-            layoutScroll.addWidget(scroll)
-            layoutTaskPanel.addLayout(layoutScroll)
-            self._loadActions[i].append(scroll)
+            self._layoutTaskPanel.addWidget(Study.TASKS[i][Study.TASK_WIDGET])
         #END for
-        self._task = self._loadActions[0][1]
-        self._task.show()
+        self._layoutTaskPanel.setCurrentIndex(0)
 
         layoutLeft = QtGui.QVBoxLayout()
         layoutLeft.addWidget(self._wgtCamera, 2)
@@ -211,11 +202,9 @@ class MainWindow(QtGui.QMainWindow):
     #END on_actDisconnect_triggered()
 
     def on_actLoad_specific(self, studyShortName):
-        self._task.hide()
         for i in range(len(self._loadActions)):
-            if self._loadActions[i][0] == self.sender():
-                self._task = self._loadActions[i][1]
-                self._task.show()
+            if self._loadActions[i] == self.sender():
+                self._layoutTaskPanel.setCurrentIndex(i)
                 return
             #END if
         #END for
@@ -246,6 +235,14 @@ class MainWindow(QtGui.QMainWindow):
         self._actionQueue.stopProcessing()
         self.on_actDisconnect_triggered()
     #END closeEvent()
+
+    def focusInEvent(self, event):
+        self.grabKeyboard()
+    #END focusInEvent()
+
+    def grab_keyboard(self):
+        self.setFocus(QtCore.Qt.OtherFocusReason)
+    #END grab_keyboard()
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Up:
@@ -292,13 +289,4 @@ class MainWindow(QtGui.QMainWindow):
             self._actionQueue.enqueue(HeadMotion(Direction.Right))
         #END if
     #END timerEvent()
-
-    def focusInEvent(self, event):
-        self.grabKeyboard()
-    #END focusInEvent()
-
-    def grab_keyboard(self):
-        self.setFocus(QtCore.Qt.OtherFocusReason)
-    #END grab_keyboard()
-
 #END MainWindow
