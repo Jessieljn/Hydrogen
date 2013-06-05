@@ -8,7 +8,7 @@ class Speech(Action):
     #END __init__()
 
     def execute(self, nao):
-        nao.say(self.parameter)
+        nao.say(self.parameter, 250)
     #END execute()
 
     def actionToString(self):

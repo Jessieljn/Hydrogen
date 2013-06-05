@@ -94,10 +94,6 @@ class Nao(QtCore.QObject):
         self.cameraProxy.setParam(Nao.CAMERA_PARAM_SELECT, value)
     # END setCameraSource()
 
-    def behavior(self, bhv):
-        self.behaviorProxy.runBehavior(bhv)
-    # END behavior()
-
     def makeJitter(self, bhvName, boxName, startFrame = 0, endFrame = -1, joints = []):
         data = ""
         data += "in=/home/nao/behaviors/" + bhvName + "/behavior.xar|"
@@ -119,8 +115,14 @@ class Nao(QtCore.QObject):
             sck.close()
     # END makeJitter
 
-    def say(self, msg):
-        self.speechProxy.say(msg)
+    def behavior(self, bhv, msecs = 0):
+        ret = self.behaviorProxy.post.runBehavior(bhv)
+        self.behaviorProxy.wait(ret, msecs)
+    # END behavior()
+
+    def say(self, msg, msecs = 0):
+        ret = self.speechProxy.post.say(msg)
+        self.speechProxy.wait(ret, msecs)
     # END say()
 
     def postBehavior(self, bhv):
