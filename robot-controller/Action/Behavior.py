@@ -8,7 +8,7 @@ class Behavior(Action):
     #END __init__()
 
     def execute(self, nao):
-        nao.behavior(self.parameter)
+        nao.postBehavior(self.parameter)
     #END execute()
 
     def actionToString(self):

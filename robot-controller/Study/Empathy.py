@@ -17,7 +17,13 @@ class Empathy(QtGui.QWidget):
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Welcome", [ \
                     Speech("Oh,"),
                     # standing up motion
-                    Speech("Hi, nice to meet you. My name is"),
+                    Speech("Hi, nice to meet you."),
+                    Speech("My name is Nao."),
+                    Speech("Testing"),
+                    Speech("Testing"),
+                    Speech("Testing"),
+                    Speech("Testing"),
+                    Speech("Testing"),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Nice Meet", [ \
                     Speech("Nice to meet you"),

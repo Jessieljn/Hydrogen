@@ -23,8 +23,7 @@ class MainWindow(QtGui.QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self._actionQueue = ActionModel(self)
-        self._actionQueue.dequeue.connect(self.on__actionQueue_execute)
-        self._actionQueue.startProcessing()
+        self._actionQueue.execute.connect(self.on__actionQueue_execute)
         self._keys = dict()
         self._keys[Direction.Up] = False
         self._keys[Direction.Down] = False
@@ -244,7 +243,7 @@ class MainWindow(QtGui.QMainWindow):
             print "Connecting to Nao (" + ipAddress + ":" + port + ")"
             if self._nao.connect(ipAddress, int(port)):
                 self._nao.startCamera()
-                self._timerID = self.startTimer(1000 / 100)
+                self._timerID = self.startTimer(50)
             else:
                 print "FAILED"
             # END if
@@ -253,7 +252,6 @@ class MainWindow(QtGui.QMainWindow):
     # END on_dlgConnect_accepted()
 
     def closeEvent(self, event):
-        self._actionQueue.stopProcessing()
         self.on_actDisconnect_triggered()
     # END closeEvent()
 

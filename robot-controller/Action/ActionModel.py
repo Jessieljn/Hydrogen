@@ -6,21 +6,32 @@ class ActionModel(QtCore.QAbstractTableModel):
     def __init__(self, parent):
         super(ActionModel, self).__init__(parent)
         self._list = []
+        self._timerID = self.startTimer(250)
     #END __init__()
 
+    def __del__(self):
+        self.killTimer(self._timerID)
+    #END __del()
+
+    execute = QtCore.pyqtSignal(Action)
+
     def enqueue(self, action):
+        parentIndex = QtCore.QModelIndex()
+        self.beginInsertRows(parentIndex, len(self._list), len(self._list))
         self._list.append(action)
+        self.endInsertRows()
     #END enqueue()
 
-    dequeue = QtCore.pyqtSignal(Action)
-
-    def startProcessing(self):
-        self._timerID = self.startTimer(1000 / 100)
-    #END startProcessing
-
-    def stopProcessing(self):
-        self.killTimer(self._timerID)
-    #END stopProcessing
+    def dequeue(self):
+        parentIndex = QtCore.QModelIndex()
+        self.beginRemoveRows(parentIndex, 0, 0)
+        item = None
+        if len(self._list) > 0:
+            item = self._list.pop(0)
+        #END if
+        self.endRemoveRows()
+        return item
+    #END dequeue()
 
     def rowCount(self, parent):
         return len(self._list)
@@ -32,10 +43,12 @@ class ActionModel(QtCore.QAbstractTableModel):
 
     def data(self, index, role):
         if role == QtCore.Qt.DisplayRole:
-            if index.column() == 0:
-                return self._list[index.row()].actionToString()
-            else:
-                return self._list[index.row()].paramToString()
+            if index.row() < len(self._list):
+                if index.column() == 0:
+                    return self._list[index.row()].actionToString()
+                else:
+                    return self._list[index.row()].paramToString()
+                #END if
             #END if
         #END if
         return QtCore.QVariant()
@@ -56,7 +69,8 @@ class ActionModel(QtCore.QAbstractTableModel):
     #END headerData()
 
     def timerEvent(self, event):
-        if len(self._list) > 0:
-            self.dequeue.emit(self._list.pop(0))
+        item = self.dequeue()
+        if item is not None:
+            self.execute.emit(item)
     #END timerEvent
 #END class

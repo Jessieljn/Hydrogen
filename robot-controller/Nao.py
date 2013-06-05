@@ -28,14 +28,17 @@ class Nao(QtCore.QObject):
 
     frameAvailable = QtCore.pyqtSignal(QtGui.QImage)
 
+    def testing(self):
+        print "testing"
+
     def connect(self, ipAddress, port):
         self._ipAddress = ipAddress
         self._port = port
 
         print " > Loading Text To Speech..."
         self.speechProxy = naoqi.ALProxy("ALTextToSpeech", ipAddress, port)
-        print " > " + str(self.speechProxy)
         self.speechProxy.setVolume(0.85)
+        print " > " + str(self.speechProxy)
         print " > Loading Camera..."
         self.cameraProxy = naoqi.ALProxy("ALVideoDevice", ipAddress, port)
         print " > " + str(self.cameraProxy)
@@ -70,8 +73,7 @@ class Nao(QtCore.QObject):
     # END isConnected()
 
     def startCamera(self):
-        self.cameraProxyID = self.cameraProxy.subscribe(VIDEO_SUBSCRIBE_NAME, 0, 11, 20)
-        self.cameraProxy.setResolution(VIDEO_SUBSCRIBE_NAME, CameraResolution.VGA)
+        self.cameraProxyID = self.cameraProxy.subscribe(VIDEO_SUBSCRIBE_NAME, CameraResolution.VGA, 11, 20)
         self.cameraProxy.setParam(Nao.CAMERA_PARAM_SELECT, Camera.Top)
         self.timerID = self.startTimer(1000 / 30)
     # END startCamera()
@@ -85,7 +87,7 @@ class Nao(QtCore.QObject):
     # END stopCamera()
 
     def setCameraResolution(self, value):
-        self.cameraProxy.setResolution(VIDEO_SUBSCRIBE_NAME, value)
+        self.cameraProxy.setResolution(self.cameraProxyID, value)
     # END setCameraResolution()
 
     def setCameraSource(self, value):
@@ -93,7 +95,7 @@ class Nao(QtCore.QObject):
     # END setCameraSource()
 
     def behavior(self, bhv):
-        self.behaviorProxy.post.runBehavior(bhv)
+        self.behaviorProxy.runBehavior(bhv)
     # END behavior()
 
     def makeJitter(self, bhvName, boxName, startFrame = 0, endFrame = -1, joints = []):
@@ -118,8 +120,16 @@ class Nao(QtCore.QObject):
     # END makeJitter
 
     def say(self, msg):
-        self.speechProxy.post.say(msg)
+        self.speechProxy.say(msg)
     # END say()
+
+    def postBehavior(self, bhv):
+        self.behaviorProxy.post.runBehavior(bhv)
+    # END postBehavior()
+
+    def postSay(self, msg):
+        self.speechProxy.post.say(msg)
+    # END postSay()
 
     def timerEvent(self, event):
         self.rawFrame = self.cameraProxy.getImageRemote(self.cameraProxyID)
