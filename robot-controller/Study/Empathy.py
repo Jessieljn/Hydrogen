@@ -1,8 +1,7 @@
 from PyQt4 import QtGui
 from Action.Behavior import Behavior
 from Action.Speech import Speech
-from UI.BehaviorPushButton import BehaviorPushButton
-from UI.SpeechPushButton import SpeechPushButton
+from UI.ActionPushButton import ActionPushButton
 
 
 class Empathy(QtGui.QWidget):
@@ -10,59 +9,59 @@ class Empathy(QtGui.QWidget):
         super(Empathy, self).__init__()
         self._actionQueue = None
 
-        self.chinScratch = BehaviorPushButton(self, "Scratch Chin", "chinScratch")
-        self.chinScratch.execute.connect(self.on__BehaviorButton_clicked)
+        self.chinScratch = ActionPushButton(self, "Scratch Chin", Behavior("chinScratch"))
+        self.chinScratch.execute.connect(self.on_actionReceived)
 
-        self.pointLeft = BehaviorPushButton(self, "Left Hand Point", "leftHandPointing")
-        self.pointLeft.execute.connect(self.on__BehaviorButton_clicked)
+        self.pointLeft = ActionPushButton(self, "Left Hand Point", Behavior("leftHandPointing"))
+        self.pointLeft.execute.connect(self.on_actionReceived)
 
-        self.pointRight = BehaviorPushButton(self, "Right Hand Point", "rightHandPointing")
-        self.pointRight.execute.connect(self.on__BehaviorButton_clicked)
+        self.pointRight = ActionPushButton(self, "Right Hand Point", Behavior("rightHandPointing"))
+        self.pointRight.execute.connect(self.on_actionReceived)
 
-        self.scratchHead = BehaviorPushButton(self, "Scratch Head", "shakeHand")
-        self.scratchHead.execute.connect(self.on__BehaviorButton_clicked)
+        self.scratchHead = ActionPushButton(self, "Scratch Head", Behavior("shakeHand"))
+        self.scratchHead.execute.connect(self.on_actionReceived)
 
-        self.numsAre = SpeechPushButton(self, "#s are", "Possible numbers are")
-        self.numsAre.execute.connect(self.on__SpeechButton_clicked)
+        self.numsAre = ActionPushButton(self, "#s are", Speech("Possible numbers are"))
+        self.numsAre.execute.connect(self.on_actionReceived)
 
-        self.numIs = SpeechPushButton(self, "# is", "Possible number is")
-        self.numIs.execute.connect(self.on__SpeechButton_clicked)
+        self.numIs = ActionPushButton(self, "# is", Speech("Possible number is"))
+        self.numIs.execute.connect(self.on_actionReceived)
 
-        self.numAnd = SpeechPushButton(self, "And", "And")
-        self.numAnd.execute.connect(self.on__SpeechButton_clicked)
+        self.numAnd = ActionPushButton(self, "And", Speech("And"))
+        self.numAnd.execute.connect(self.on_actionReceived)
 
-        self.numOne = SpeechPushButton(self, "1: One", "One")
-        self.numOne.execute.connect(self.on__SpeechButton_clicked)
+        self.numOne = ActionPushButton(self, "1: One", Speech("One"))
+        self.numOne.execute.connect(self.on_actionReceived)
 
-        self.numTwo = SpeechPushButton(self, "2: Two", "Two")
-        self.numTwo.execute.connect(self.on__SpeechButton_clicked)
+        self.numTwo = ActionPushButton(self, "2: Two", Speech("Two"))
+        self.numTwo.execute.connect(self.on_actionReceived)
 
-        self.numThree = SpeechPushButton(self, "3: Three", "Three")
-        self.numThree.execute.connect(self.on__SpeechButton_clicked)
+        self.numThree = ActionPushButton(self, "3: Three", Speech("Three"))
+        self.numThree.execute.connect(self.on_actionReceived)
 
-        self.numFour = SpeechPushButton(self, "4: Four", "Four")
-        self.numFour.execute.connect(self.on__SpeechButton_clicked)
+        self.numFour = ActionPushButton(self, "4: Four", Speech("Four"))
+        self.numFour.execute.connect(self.on_actionReceived)
 
-        self.numFive = SpeechPushButton(self, "5: Five", "Five")
-        self.numFive.execute.connect(self.on__SpeechButton_clicked)
+        self.numFive = ActionPushButton(self, "5: Five", Speech("Five"))
+        self.numFive.execute.connect(self.on_actionReceived)
 
-        self.numSix = SpeechPushButton(self, "6: Six", "Six")
-        self.numSix.execute.connect(self.on__SpeechButton_clicked)
+        self.numSix = ActionPushButton(self, "6: Six", Speech("Six"))
+        self.numSix.execute.connect(self.on_actionReceived)
 
-        self.numSeven = SpeechPushButton(self, "7: Seven", "Seven")
-        self.numSeven.execute.connect(self.on__SpeechButton_clicked)
+        self.numSeven = ActionPushButton(self, "7: Seven", Speech("Seven"))
+        self.numSeven.execute.connect(self.on_actionReceived)
 
-        self.numEight = SpeechPushButton(self, "8: Eight", "Eight")
-        self.numEight.execute.connect(self.on__SpeechButton_clicked)
+        self.numEight = ActionPushButton(self, "8: Eight", Speech("Eight"))
+        self.numEight.execute.connect(self.on_actionReceived)
 
-        self.numNine = SpeechPushButton(self, "9: Nine", "Nine")
-        self.numNine.execute.connect(self.on__SpeechButton_clicked)
+        self.numNine = ActionPushButton(self, "9: Nine", Speech("Nine"))
+        self.numNine.execute.connect(self.on_actionReceived)
 
-        self.cwPurposeGoal = SpeechPushButton(self, "Purpose->Goal", "Purpose, hmmm. Goal?")
-        self.cwPurposeGoal.execute.connect(self.on__SpeechButton_clicked)
+        self.cwPurposeGoal = ActionPushButton(self, "Purpose->Goal", Speech("Purpose, hmmm. Goal?"))
+        self.cwPurposeGoal.execute.connect(self.on_actionReceived)
 
-        self.cwPurposeAim = SpeechPushButton(self, "Purpose->Aim", "Oh, how about aim?")
-        self.cwPurposeAim.execute.connect(self.on__SpeechButton_clicked)
+        self.cwPurposeAim = ActionPushButton(self, "Purpose->Aim", Speech("Oh, how about aim?"))
+        self.cwPurposeAim.execute.connect(self.on_actionReceived)
 
         hbox1 = QtGui.QVBoxLayout()
         hbox2 = QtGui.QVBoxLayout()
@@ -96,11 +95,7 @@ class Empathy(QtGui.QWidget):
         self._actionQueue = actionQueue
     #END setActionQueue()
 
-    def on__BehaviorButton_clicked(self, motion):
-        self._actionQueue.enqueue(Behavior(motion))
-    #END on__BehaviorButton_clicked()
-
-    def on__SpeechButton_clicked(self, speech):
-        self._actionQueue.enqueue(Speech(speech))
-    #END on__SpeechButton_clicked()
+    def on_actionReceived(self, action):
+        self._actionQueue.enqueue(action)
+    #END on_actionReceived()
 #END Empathy

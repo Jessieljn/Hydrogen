@@ -2,7 +2,6 @@ from Definitions import Direction
 from PyQt4 import QtCore, QtGui
 from Nao import Nao
 from Action.ActionModel import ActionModel
-from Action.Behavior import Behavior
 from Action.HeadMotion import HeadMotion
 from Action.Speech import Speech
 from Study import Study
@@ -93,8 +92,7 @@ class MainWindow(QtGui.QMainWindow):
         self._wgtStiffness.stiffnessChanged.connect(self.on_changingStiffness)
 
         self._wgtGeneral = GeneralWidget(self._wgtMain)
-        self._wgtGeneral.playBehavior.connect(self.on_playBehaviour)
-        self._wgtGeneral.speechSynthesis.connect(self.on_playSpeech)
+        self._wgtGeneral.playAction.connect(self.on_playAction)
 
         self._wgtTaskPanel = QtGui.QFrame(self._wgtMain)
         self._wgtTaskPanel.setFrameShape(QtGui.QFrame.Panel)
@@ -156,18 +154,15 @@ class MainWindow(QtGui.QMainWindow):
         self._nao.frameAvailable.connect(self._wgtCamera.setImage)
     #END __init__()
 
-
     def on__actionQueue_execute(self, action):
         if self._nao.isConnected():
             action.execute(self._nao)
         #END if
     #END on__actionQueue_execute()
 
-
     def on_cameraChanged(self, which):
         self._nao.cameraSource = which
     #END on_cameraChanged()
-
 
     def on_chagingLEDs(self):
         if self._wgtSpeech.isSpeechTextEmpty():
@@ -177,31 +172,25 @@ class MainWindow(QtGui.QMainWindow):
         #END if
     #END on_chagingLEDs()
 
-
     def on_changingStiffness(self, value):
         self._nao.setStiffness(value)
     #END on_changingStiffness()
-
 
     def on_chagingVolume(self, value):
         self._nao.setVolume(value)
     #END on_chagingVolume()
 
-
     def on_moveHead(self, direction):
         self._actionQueue.enqueue(HeadMotion(direction))
     #END on_moveHead()
 
-
-    def on_playBehaviour(self, value):
-        self._actionQueue.enqueue(Behavior(value))
+    def on_playAction(self, action):
+        self._actionQueue.enqueue(action)
     #END on_playSpeech()
-
 
     def on_playSpeech(self, value):
         self._actionQueue.enqueue(Speech(value))
     #END on_playSpeech()
-
 
     def on_actConnect_triggered(self):
         if not self._nao.isConnected():
@@ -210,7 +199,6 @@ class MainWindow(QtGui.QMainWindow):
             self._dlgConnect.show()
         #END if
     #END on_actConnect_triggered()
-
 
     def on_actDisconnect_triggered(self):
         if self._nao.isConnected():
@@ -221,7 +209,6 @@ class MainWindow(QtGui.QMainWindow):
             print "==================================="
         #END if
     #END on_actDisconnect_triggered()
-
 
     def on_actLoad_specific(self, studyShortName):
         self._task.hide()
@@ -234,12 +221,10 @@ class MainWindow(QtGui.QMainWindow):
         #END for
     #END on_actLoad_specific
 
-
     def on_actAbout_triggered(self):
         dlgAbout = AboutWindow(self)
         dlgAbout.show()
     #END on_actAbout_triggered()
-
 
     def on_dlgConnect_accepted(self):
         if not self._nao.isConnected():
@@ -257,12 +242,10 @@ class MainWindow(QtGui.QMainWindow):
         #END if
     #END on_dlgConnect_accepted()
 
-
     def closeEvent(self, event):
         self._actionQueue.stopProcessing()
         self.on_actDisconnect_triggered()
     #END closeEvent()
-
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Up:
@@ -281,7 +264,6 @@ class MainWindow(QtGui.QMainWindow):
         #END if
     #END keyPressEvent()
 
-
     def keyReleaseEvent(self, event):
         if event.key() == QtCore.Qt.Key_Up:
             self._keys[Direction.Up] = False;
@@ -295,7 +277,6 @@ class MainWindow(QtGui.QMainWindow):
             super(MainWindow, self).keyReleaseEvent(event)
         #END if
     #END keyReleaseEvent()
-
 
     def timerEvent(self, event):
         if self._keys[Direction.Up]:
@@ -312,15 +293,12 @@ class MainWindow(QtGui.QMainWindow):
         #END if
     #END timerEvent()
 
-
     def focusInEvent(self, event):
         self.grabKeyboard()
     #END focusInEvent()
 
-
     def grab_keyboard(self):
         self.setFocus(QtCore.Qt.OtherFocusReason)
     #END grab_keyboard()
-
 
 #END MainWindow
