@@ -1,6 +1,7 @@
 from PyQt4 import QtCore, QtGui
 from Action.Behavior import Behavior
 from Action.Speech import Speech
+from Action.Wait import Wait
 from UI.ActionPushButton import ActionPushButton
 
 
@@ -17,6 +18,7 @@ class Empathy(QtGui.QWidget):
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Welcome", [ \
                     Speech("Oh,"),
                     # standing up motion
+                    Wait(200),
                     Speech("Hi, nice to meet you."),
                     Speech("My name is Nao."),
                 ]),
