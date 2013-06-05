@@ -1,4 +1,4 @@
-from Definitions import Camera, VIDEO_SUBSCRIBE_NAME
+from Definitions import Camera, CameraResolution, VIDEO_SUBSCRIBE_NAME
 from PyQt4 import QtCore, QtGui
 import naoqi
 import socket
@@ -10,7 +10,7 @@ import socket
 # Connection to the NAO
 ##
 class Nao(QtCore.QObject):
-    CAMERA_PARAM = 18
+    CAMERA_PARAM_SELECT = 18
 
     def __init__(self):
         super(Nao, self).__init__()
@@ -20,7 +20,6 @@ class Nao(QtCore.QObject):
         self.behaviorProxy = None
         self.motionProxy = None
         self.timerID = None
-        self.cameraSource = Camera.Top
     #END __init__()
 
     connected = QtCore.pyqtSignal()
@@ -70,7 +69,8 @@ class Nao(QtCore.QObject):
 
     def startCamera(self):
         self.cameraProxyID = self.cameraProxy.subscribe(VIDEO_SUBSCRIBE_NAME, 0, 11, 20)
-        self.cameraProxy.setParam(Nao.CAMERA_PARAM, Camera.Top)
+        self.cameraProxy.setResolution(VIDEO_SUBSCRIBE_NAME, CameraResolution.VGA)
+        self.cameraProxy.setParam(Nao.CAMERA_PARAM_SELECT, Camera.Top)
         self.timerID = self.startTimer(1000 / 30)
     #END startCamera()
 
@@ -81,6 +81,14 @@ class Nao(QtCore.QObject):
             self.cameraProxy.unsubscribe(self.cameraProxyID)
         #END if
     #END stopCamera()
+
+    def setCameraResolution(self, value):
+        self.cameraProxy.setResolution(VIDEO_SUBSCRIBE_NAME, value)
+    #END setCameraResolution()
+
+    def setCameraSource(self, value):
+        self.cameraProxy.setParam(Nao.CAMERA_PARAM_SELECT, value)
+    #END setCameraSource()
 
     def behavior(self, bhv):
         self.behaviorProxy.post.runBehavior(bhv)
@@ -112,7 +120,6 @@ class Nao(QtCore.QObject):
     #END say()
 
     def timerEvent(self, event):
-        self.cameraProxy.setParam(Nao.CAMERA_PARAM, self.cameraSource)
         self.rawFrame = self.cameraProxy.getImageRemote(self.cameraProxyID)
         self.frame = QtGui.QImage(self.rawFrame[6], self.rawFrame[0], self.rawFrame[1], QtGui.QImage.Format_RGB888)
         self.frameAvailable.emit(self.frame)

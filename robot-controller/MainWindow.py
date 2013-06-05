@@ -2,7 +2,6 @@ from Definitions import Direction
 from PyQt4 import QtCore, QtGui
 from Nao import Nao
 from Action.ActionModel import ActionModel
-from Action.HeadMotion import HeadMotion
 from Action.Speech import Speech
 from Study import Study
 from UI.AboutWindow import AboutWindow
@@ -23,6 +22,15 @@ class MainWindow(QtGui.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
+        self._actionQueue = ActionModel(self)
+        self._actionQueue.dequeue.connect(self.on__actionQueue_execute)
+        self._actionQueue.startProcessing()
+        self._keys = dict()
+        self._keys[Direction.Up] = False
+        self._keys[Direction.Down] = False
+        self._keys[Direction.Left] = False
+        self._keys[Direction.Right] = False
+
         Study.setup()
 
         ##################################################
@@ -68,32 +76,48 @@ class MainWindow(QtGui.QMainWindow):
         # Create Widgets
         ##################################################
         self._wgtMain = QtGui.QWidget(self)
+        splitter = QtGui.QSplitter(self._wgtMain)
+        splitter.setOrientation(QtCore.Qt.Horizontal);
 
-        self._wgtCamera = CameraWidget(self._wgtMain)
-        self._wgtCamera.setFixedHeight(385)
+        wgtLeft = QtGui.QWidget(splitter)
+        wgtLeft.setMinimumWidth(350)
+        splitterLeft = QtGui.QSplitter(wgtLeft)
+        splitterLeft.setOrientation(QtCore.Qt.Vertical);
+        layoutLeft = QtGui.QHBoxLayout(wgtLeft)
+        layoutLeft.addWidget(splitterLeft)
+
+        self._wgtCamera = CameraWidget(splitterLeft)
+        self._wgtCamera.setMinimumHeight(385)
         self._wgtCamera.cameraChanged.connect(self.on_cameraChanged)
         self._wgtCamera.moveHead.connect(self.on_moveHead)
 
-        self._actionQueue = ActionModel(self)
-        self._actionQueue.dequeue.connect(self.on__actionQueue_execute)
-        self._actionQueue.startProcessing()
-        self._wgtActionList = ActionListWidget(self._wgtMain, self._actionQueue)
-        self._wgtActionList.setFixedWidth(328)
+        self._wgtActionList = ActionListWidget(splitterLeft, self._actionQueue)
+        self._wgtActionList.setMinimumHeight(120)
 
-        self._wgtSpeech = SpeechWidget(self._wgtMain)
+        wgtRight = QtGui.QWidget(splitter)
+        wgtRight.setMinimumWidth(380)
+
+        self._wgtSpeech = SpeechWidget(wgtRight)
         self._wgtSpeech.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.Maximum)
         self._wgtSpeech.textEditing.connect(self.on_changingLEDs)
         self._wgtSpeech.textInputCancelled.connect(self.grab_keyboard)
         self._wgtSpeech.textSubmitted.connect(self.on_playSpeech)
         self._wgtSpeech.volumeChanged.connect(self.on_changingVolume)
+        layoutSpeech = QtGui.QHBoxLayout()
+        layoutSpeech.setMargin(0)
+        layoutSpeech.addWidget(self._wgtSpeech)
 
-        self._wgtStiffness = StiffnessWidget(self._wgtMain)
+        self._wgtStiffness = StiffnessWidget(wgtRight)
         self._wgtStiffness.stiffnessChanged.connect(self.on_changingStiffness)
 
-        self._wgtGeneral = GeneralWidget(self._wgtMain)
+        layoutTextStiff = QtGui.QHBoxLayout()
+        layoutTextStiff.addLayout(layoutSpeech)
+        layoutTextStiff.addWidget(self._wgtStiffness)
+
+        self._wgtGeneral = GeneralWidget(wgtRight)
         self._wgtGeneral.playAction.connect(self.on_playAction)
 
-        self._wgtTaskPanel = QtGui.QFrame(self._wgtMain)
+        self._wgtTaskPanel = QtGui.QFrame(wgtRight)
         self._wgtTaskPanel.setFrameShape(QtGui.QFrame.Panel)
         self._wgtTaskPanel.setFrameShadow(QtGui.QFrame.Plain)
         self._wgtTaskPanel.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
@@ -107,22 +131,14 @@ class MainWindow(QtGui.QMainWindow):
         #END for
         self._layoutTaskPanel.setCurrentIndex(0)
 
-        layoutLeft = QtGui.QVBoxLayout()
-        layoutLeft.addWidget(self._wgtCamera, 2)
-        layoutLeft.addWidget(self._wgtActionList, 1)
-
-        layoutTextStiff = QtGui.QHBoxLayout()
-        layoutTextStiff.addWidget(self._wgtSpeech, 5)
-        layoutTextStiff.addWidget(self._wgtStiffness, 1)
-
-        layoutRight = QtGui.QVBoxLayout()
+        layoutRight = QtGui.QVBoxLayout(wgtRight)
+        layoutRight.setMargin(0)
         layoutRight.addLayout(layoutTextStiff)
         layoutRight.addWidget(self._wgtGeneral)
         layoutRight.addWidget(self._wgtTaskPanel)
 
         layoutMain = QtGui.QHBoxLayout(self._wgtMain)
-        layoutMain.addLayout(layoutLeft)
-        layoutMain.addLayout(layoutRight)
+        layoutMain.addWidget(splitter)
 
         ##################################################
         # MainWindow
@@ -136,11 +152,6 @@ class MainWindow(QtGui.QMainWindow):
         self.show()
         self.grabKeyboard()
 
-        self._keys = dict()
-        self._keys[Direction.Up] = False
-        self._keys[Direction.Down] = False
-        self._keys[Direction.Left] = False
-        self._keys[Direction.Right] = False
         self._nao = Nao()
         self._nao.frameAvailable.connect(self._wgtCamera.setImage)
     #END __init__()
@@ -152,7 +163,7 @@ class MainWindow(QtGui.QMainWindow):
     #END on__actionQueue_execute()
 
     def on_cameraChanged(self, which):
-        self._nao.cameraSource = which
+        self._nao.setCameraSource(which)
     #END on_cameraChanged()
 
     def on_changingLEDs(self):
@@ -172,7 +183,15 @@ class MainWindow(QtGui.QMainWindow):
     #END on_changingVolume()
 
     def on_moveHead(self, direction):
-        self._actionQueue.enqueue(HeadMotion(direction))
+        if direction == Direction.Up:
+            self._nao.tiltHeadUp()
+        elif direction == Direction.Down:
+            self._nao.tiltHeadDown()
+        elif direction == Direction.Left:
+            self._nao.turnHeadLeft()
+        elif direction == Direction.Right:
+            self._nao.turnHeadRight()
+        #END if
     #END on_moveHead()
 
     def on_playAction(self, action):
@@ -277,16 +296,16 @@ class MainWindow(QtGui.QMainWindow):
 
     def timerEvent(self, event):
         if self._keys[Direction.Up]:
-            self._actionQueue.enqueue(HeadMotion(Direction.Up))
+            self._nao.tiltHeadUp()
         #END if
         if self._keys[Direction.Down]:
-            self._actionQueue.enqueue(HeadMotion(Direction.Down))
+            self._nao.tiltHeadDown()
         #END if
         if self._keys[Direction.Left]:
-            self._actionQueue.enqueue(HeadMotion(Direction.Left))
+            self._nao.turnHeadLeft()
         #END if
         if self._keys[Direction.Right]:
-            self._actionQueue.enqueue(HeadMotion(Direction.Right))
+            self._nao.turnHeadRight()
         #END if
     #END timerEvent()
 #END MainWindow
