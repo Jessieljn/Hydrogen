@@ -56,7 +56,7 @@ class MainWindow(QtGui.QMainWindow):
             actLoad.triggered.connect(self.on_actLoad_specific)
             loadMenu.addAction(actLoad)
             self._loadActions.append(actLoad)
-        #END for
+        # END for
 
         actAboutBox = QtGui.QAction(QtGui.QIcon(), '&About', self)
         actAboutBox.triggered.connect(self.on_actAbout_triggered)
@@ -100,11 +100,13 @@ class MainWindow(QtGui.QMainWindow):
 
         self._layoutTaskPanel = QtGui.QStackedLayout(self._wgtTaskPanel)
         self._layoutTaskPanel.setMargin(0)
+
         for i in range(len(Study.TASKS)):
             Study.TASKS[i][Study.TASK_WIDGET].setParent(self._wgtTaskPanel)
             Study.TASKS[i][Study.TASK_WIDGET].setActionQueue(self._actionQueue)
             self._layoutTaskPanel.addWidget(Study.TASKS[i][Study.TASK_WIDGET])
-        #END for
+        # END for
+
         self._layoutTaskPanel.setCurrentIndex(0)
 
         layoutLeft = QtGui.QVBoxLayout()
@@ -143,53 +145,53 @@ class MainWindow(QtGui.QMainWindow):
         self._keys[Direction.Right] = False
         self._nao = Nao()
         self._nao.frameAvailable.connect(self._wgtCamera.setImage)
-    #END __init__()
+    # END __init__()
 
     def on__actionQueue_execute(self, action):
         if self._nao.isConnected():
             action.execute(self._nao)
-        #END if
-    #END on__actionQueue_execute()
+        # END if
+    # END on__actionQueue_execute()
 
     def on_cameraChanged(self, which):
         self._nao.cameraSource = which
-    #END on_cameraChanged()
+    # END on_cameraChanged()
 
     def on_changingLEDs(self):
         if self._wgtSpeech.isSpeechTextEmpty():
             self._nao.setLEDsNormal()
         else:
             self._nao.setLEDsProcessing()
-        #END if
-    #END on_changingLEDs()
+        # END if
+    # END on_changingLEDs()
 
     def on_changingStiffness(self, value):
         self._nao.setStiffness(value)
-    #END on_changingStiffness()
+    # END on_changingStiffness()
 
     def on_changingVolume(self, value):
         self._nao.setVolume(value)
-    #END on_changingVolume()
+    # END on_changingVolume()
 
     def on_moveHead(self, direction):
         self._actionQueue.enqueue(HeadMotion(direction))
-    #END on_moveHead()
+    # END on_moveHead()
 
     def on_playAction(self, action):
         self._actionQueue.enqueue(action)
-    #END on_playSpeech()
+    # END on_playSpeech()
 
     def on_playSpeech(self, value):
         self._actionQueue.enqueue(Speech(value))
-    #END on_playSpeech()
+    # END on_playSpeech()
 
     def on_actConnect_triggered(self):
         if not self._nao.isConnected():
             self._dlgConnect = ConnectDialog(self)
             self._dlgConnect.accepted.connect(self.on_dlgConnect_accepted)
             self._dlgConnect.show()
-        #END if
-    #END on_actConnect_triggered()
+        # END if
+    # END on_actConnect_triggered()
 
     def on_actDisconnect_triggered(self):
         if self._nao.isConnected():
@@ -198,22 +200,22 @@ class MainWindow(QtGui.QMainWindow):
             print "Disconnecting from Nao"
             self._nao.disconnect()
             print "==================================="
-        #END if
-    #END on_actDisconnect_triggered()
+        # END if
+    # END on_actDisconnect_triggered()
 
     def on_actLoad_specific(self, studyShortName):
         for i in range(len(self._loadActions)):
             if self._loadActions[i] == self.sender():
                 self._layoutTaskPanel.setCurrentIndex(i)
                 return
-            #END if
-        #END for
-    #END on_actLoad_specific
+            # END if
+        # END for
+    # END on_actLoad_specific
 
     def on_actAbout_triggered(self):
         dlgAbout = AboutWindow(self)
         dlgAbout.show()
-    #END on_actAbout_triggered()
+    # END on_actAbout_triggered()
 
     def on_dlgConnect_accepted(self):
         if not self._nao.isConnected():
@@ -226,23 +228,23 @@ class MainWindow(QtGui.QMainWindow):
                 self._timerID = self.startTimer(1000 / 100)
             else:
                 print "FAILED"
-            #END if
+            # END if
             print "==================================="
-        #END if
-    #END on_dlgConnect_accepted()
+        # END if
+    # END on_dlgConnect_accepted()
 
     def closeEvent(self, event):
         self._actionQueue.stopProcessing()
         self.on_actDisconnect_triggered()
-    #END closeEvent()
+    # END closeEvent()
 
     def focusInEvent(self, event):
         self.grabKeyboard()
-    #END focusInEvent()
+    # END focusInEvent()
 
     def grab_keyboard(self):
         self.setFocus(QtCore.Qt.OtherFocusReason)
-    #END grab_keyboard()
+    # END grab_keyboard()
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Up:
@@ -258,8 +260,8 @@ class MainWindow(QtGui.QMainWindow):
             self._wgtSpeech.setTextEditFocus()
         else:
             super(MainWindow, self).keyPressEvent(event)
-        #END if
-    #END keyPressEvent()
+        # END if
+    # END keyPressEvent()
 
     def keyReleaseEvent(self, event):
         if event.key() == QtCore.Qt.Key_Up:
@@ -272,21 +274,21 @@ class MainWindow(QtGui.QMainWindow):
             self._keys[Direction.Right] = False
         else:
             super(MainWindow, self).keyReleaseEvent(event)
-        #END if
-    #END keyReleaseEvent()
+        # END if
+    # END keyReleaseEvent()
 
     def timerEvent(self, event):
         if self._keys[Direction.Up]:
             self._actionQueue.enqueue(HeadMotion(Direction.Up))
-        #END if
+        # END if
         if self._keys[Direction.Down]:
             self._actionQueue.enqueue(HeadMotion(Direction.Down))
-        #END if
+        # END if
         if self._keys[Direction.Left]:
             self._actionQueue.enqueue(HeadMotion(Direction.Left))
-        #END if
+        # END if
         if self._keys[Direction.Right]:
             self._actionQueue.enqueue(HeadMotion(Direction.Right))
-        #END if
-    #END timerEvent()
-#END MainWindow
+        # END if
+    # END timerEvent()
+# END MainWindow
