@@ -19,11 +19,6 @@ class Empathy(QtGui.QWidget):
                     # standing up motion
                     Speech("Hi, nice to meet you."),
                     Speech("My name is Nao."),
-                    Speech("Testing"),
-                    Speech("Testing"),
-                    Speech("Testing"),
-                    Speech("Testing"),
-                    Speech("Testing"),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Nice Meet", [ \
                     Speech("Nice to meet you"),

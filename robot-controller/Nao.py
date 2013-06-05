@@ -32,24 +32,23 @@ class Nao(QtCore.QObject):
         print "testing"
 
     def connect(self, ipAddress, port):
-        self._ipAddress = ipAddress
-        self._port = port
+        self._naoBroker = naoqi.ALBroker("NaoBroker", "0.0.0.0", 0, ipAddress, port)
 
         print " > Loading Text To Speech..."
-        self.speechProxy = naoqi.ALProxy("ALTextToSpeech", ipAddress, port)
+        self.speechProxy = naoqi.ALProxy("ALTextToSpeech")
         self.speechProxy.setVolume(0.85)
         print " > " + str(self.speechProxy)
         print " > Loading Camera..."
-        self.cameraProxy = naoqi.ALProxy("ALVideoDevice", ipAddress, port)
+        self.cameraProxy = naoqi.ALProxy("ALVideoDevice")
         print " > " + str(self.cameraProxy)
         print " > Loading Behaviors..."
-        self.behaviorProxy = naoqi.ALProxy("ALBehaviorManager", ipAddress, port)
+        self.behaviorProxy = naoqi.ALProxy("ALBehaviorManager")
         print " > " + str(self.behaviorProxy)
         print " > Loading Motion..."
-        self.motionProxy = naoqi.ALProxy("ALMotion", ipAddress, port)
+        self.motionProxy = naoqi.ALProxy("ALMotion")
         print " > " + str(self.motionProxy)
         print " > Loading LEDs..."
-        self.ledProxy = naoqi.ALProxy("ALLeds", ipAddress, port)
+        self.ledProxy = naoqi.ALProxy("ALLeds")
         print " > " + str(self.ledProxy)
 
         self.is_connected = True
@@ -65,6 +64,7 @@ class Nao(QtCore.QObject):
         self.motionProxy = None
         self.ledProxy = None
         self.is_connected = False
+        self._naoBroker.shutdown()
         self.disconnected.emit()
     # END disconnect()
 
@@ -111,7 +111,7 @@ class Nao(QtCore.QObject):
 
         sck = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            sck.connect((self._ipAddress, self._port))
+            sck.connect((self._naoBroker.getIP(), self._naoBroker.getPort()))
             sck.send(data)
             # Disconnect Signal
             sck.send("\0")
