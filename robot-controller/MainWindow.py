@@ -16,6 +16,7 @@ from UI.ConnectDialog import ConnectDialog
 from UI.GeneralWidget import GeneralWidget
 from UI.SpeechWidget import SpeechWidget
 from UI.StiffnessWidget import StiffnessWidget
+from UI.JitterWidget import JitterWidget
 
 
 ##
@@ -63,9 +64,12 @@ class MainWindow(QtGui.QMainWindow):
         self._wgtTaskPanel.setFrameShadow(QtGui.QFrame.Plain)
         self._wgtTaskPanel.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
 
+        self._wgtJitter = JitterWidget(self._wgtMain)
+
         layoutLeft = QtGui.QVBoxLayout()
         layoutLeft.addWidget(self._wgtCamera, 2)
-        layoutLeft.addWidget(self._wgtActionList, 1)
+        layoutLeft.addWidget(self._wgtJitter, 1)
+        #layoutLeft.addWidget(self._wgtActionList, 1)
 
         layoutTextStiff = QtGui.QHBoxLayout()
         layoutTextStiff.addWidget(self._wgtSpeech, 5)
