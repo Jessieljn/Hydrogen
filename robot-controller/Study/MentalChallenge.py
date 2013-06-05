@@ -4,9 +4,9 @@ from UI.SpeechPushButton import SpeechPushButton
 
 
 class MentalChallenge(QtGui.QWidget):
-    def __init__(self, parent, actionQueue):
-        super(MentalChallenge, self).__init__(parent)
-        self._actionQueue = actionQueue
+    def __init__(self):
+        super(MentalChallenge, self).__init__()
+        self._actionQueue = None
 
         self.findCube = SpeechPushButton(self, "Find Cube", "Please look behind your monitor and take out the Rubik's cube.")
         self.findCube.execute.connect(self.on__SpeechButton_clicked)
@@ -73,6 +73,10 @@ class MentalChallenge(QtGui.QWidget):
         layout.addWidget(self.mixUp)
         layout.addWidget(self.done)
     #END __init__()
+
+    def setActionQueue(self, actionQueue):
+        self._actionQueue = actionQueue
+    #END setActionQueue()
 
     def on__SpeechButton_clicked(self, speech):
         self._actionQueue.enqueue(Speech(speech))

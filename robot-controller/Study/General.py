@@ -6,9 +6,9 @@ from UI.SpeechPushButton import SpeechPushButton
 
 
 class General(QtGui.QWidget):
-    def __init__(self, parent, actionQueue):
-        super(General, self).__init__(parent)
-        self._actionQueue = actionQueue
+    def __init__(self):
+        super(General, self).__init__()
+        self._actionQueue = None
 
         self.intro = SpeechPushButton(self, "Introduction", "Thanks for coming in. Please remember that you can leave at"
                                                            " any time. If you have any specific questions about the "
@@ -46,6 +46,10 @@ class General(QtGui.QWidget):
         layout.addWidget(self.nod)
         layout.addWidget(self.scratch)
     #END __init__()
+
+    def setActionQueue(self, actionQueue):
+        self._actionQueue = actionQueue
+    #END setActionQueue()
 
     def on__BehaviorButton_clicked(self, motion):
         self._actionQueue.enqueue(Behavior(motion))

@@ -4,9 +4,9 @@ from UI.SpeechPushButton import SpeechPushButton
 
 
 class Tedium(QtGui.QWidget):
-    def __init__(self, parent, actionQueue):
-        super(Tedium, self).__init__(parent)
-        self._actionQueue = actionQueue
+    def __init__(self):
+        super(Tedium, self).__init__()
+        self._actionQueue = None
 
         self.explanation = SpeechPushButton(self, "Explanation", "Currently, the process of renaming files in a "
                                                                 "graphical user interface is not very efficient. We "
@@ -130,6 +130,10 @@ class Tedium(QtGui.QWidget):
         layout.addLayout(hbox1)
         layout.addLayout(hbox2)
     #END __init__()
+
+    def setActionQueue(self, actionQueue):
+        self._actionQueue = actionQueue
+    #END setActionQueue()
 
     def on__SpeechButton_clicked(self, speech):
         self._actionQueue.enqueue(Speech(speech))

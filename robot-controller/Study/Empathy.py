@@ -6,9 +6,9 @@ from UI.SpeechPushButton import SpeechPushButton
 
 
 class Empathy(QtGui.QWidget):
-    def __init__(self, parent, actionQueue):
-        super(Empathy, self).__init__(parent)
-        self._actionQueue = actionQueue
+    def __init__(self):
+        super(Empathy, self).__init__()
+        self._actionQueue = None
 
         self.chinScratch = BehaviorPushButton(self, "Scratch Chin", "chinScratch")
         self.chinScratch.execute.connect(self.on__BehaviorButton_clicked)
@@ -92,14 +92,15 @@ class Empathy(QtGui.QWidget):
         layout.addLayout(hbox2)
     #END __init__()
 
+    def setActionQueue(self, actionQueue):
+        self._actionQueue = actionQueue
+    #END setActionQueue()
 
     def on__BehaviorButton_clicked(self, motion):
         self._actionQueue.enqueue(Behavior(motion))
     #END on__BehaviorButton_clicked()
 
-
     def on__SpeechButton_clicked(self, speech):
         self._actionQueue.enqueue(Speech(speech))
     #END on__SpeechButton_clicked()
-
 #END Empathy
