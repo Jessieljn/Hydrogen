@@ -20,10 +20,12 @@ class Nao(QtCore.QObject):
         self.behaviorProxy = None
         self.motionProxy = None
         self.timerID = None
-    #END __init__()
+    # END __init__()
 
     connected = QtCore.pyqtSignal()
+
     disconnected = QtCore.pyqtSignal()
+
     frameAvailable = QtCore.pyqtSignal(QtGui.QImage)
 
     def connect(self, ipAddress, port):
@@ -50,7 +52,7 @@ class Nao(QtCore.QObject):
         self.is_connected = True
         self.connected.emit()
         return True
-    #END connect()
+    # END connect()
 
     def disconnect(self):
         self.stopCamera()
@@ -61,38 +63,38 @@ class Nao(QtCore.QObject):
         self.ledProxy = None
         self.is_connected = False
         self.disconnected.emit()
-    #END disconnect()
+    # END disconnect()
 
     def isConnected(self):
         return self.is_connected
-    #END isConnected()
+    # END isConnected()
 
     def startCamera(self):
         self.cameraProxyID = self.cameraProxy.subscribe(VIDEO_SUBSCRIBE_NAME, 0, 11, 20)
         self.cameraProxy.setResolution(VIDEO_SUBSCRIBE_NAME, CameraResolution.VGA)
         self.cameraProxy.setParam(Nao.CAMERA_PARAM_SELECT, Camera.Top)
         self.timerID = self.startTimer(1000 / 30)
-    #END startCamera()
+    # END startCamera()
 
     def stopCamera(self):
         if self.timerID is not None:
             self.killTimer(self.timerID)
             self.timerID = None
             self.cameraProxy.unsubscribe(self.cameraProxyID)
-        #END if
-    #END stopCamera()
+        # END if
+    # END stopCamera()
 
     def setCameraResolution(self, value):
         self.cameraProxy.setResolution(VIDEO_SUBSCRIBE_NAME, value)
-    #END setCameraResolution()
+    # END setCameraResolution()
 
     def setCameraSource(self, value):
         self.cameraProxy.setParam(Nao.CAMERA_PARAM_SELECT, value)
-    #END setCameraSource()
+    # END setCameraSource()
 
     def behavior(self, bhv):
         self.behaviorProxy.post.runBehavior(bhv)
-    #END behavior()
+    # END behavior()
 
     def makeJitter(self, bhvName, boxName, startFrame = 0, endFrame = -1, joints = []):
         data = ""
@@ -103,7 +105,7 @@ class Nao(QtCore.QObject):
         data += "end=" + str(endFrame) + "|"
         for j in joints:
             data += "joint=" + j[0] + "," + str(j[1]) + "," + str(j[2]) + "|"
-        #END for
+        # END for
 
         sck = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
@@ -113,40 +115,40 @@ class Nao(QtCore.QObject):
             sck.send("\0")
         finally:
             sck.close()
-    #END makeJitter
+    # END makeJitter
 
     def say(self, msg):
         self.speechProxy.post.say(msg)
-    #END say()
+    # END say()
 
     def timerEvent(self, event):
         self.rawFrame = self.cameraProxy.getImageRemote(self.cameraProxyID)
         self.frame = QtGui.QImage(self.rawFrame[6], self.rawFrame[0], self.rawFrame[1], QtGui.QImage.Format_RGB888)
         self.frameAvailable.emit(self.frame)
-    #END timerEvent()
+    # END timerEvent()
 
     def tiltHeadUp(self):
         self.motionProxy.changeAngles("HeadPitch", -0.20, 0.10)
-    #END tiltHeadUp()
+    # END tiltHeadUp()
 
     def tiltHeadDown(self):
         self.motionProxy.changeAngles("HeadPitch", 0.20, 0.10)
-    #END tiltHeadDown()
+    # END tiltHeadDown()
 
     def turnHeadLeft(self):
         self.motionProxy.changeAngles("HeadYaw", 0.20, 0.10)
-    #END turnHeadLeft()
+    # END turnHeadLeft()
 
     def turnHeadRight(self):
         self.motionProxy.changeAngles("HeadYaw", -0.20, 0.10)
-    #END turnHeadRight()
+    # END turnHeadRight()
 
     def setLEDsNormal(self):
         self.ledProxy.post.fadeRGB("ChestLeds", 0x0000ff00, 0.5)
         self.ledProxy.post.setIntensity("FaceLeds", 1.0)
         self.ledProxy.post.fadeRGB("LeftEarLeds", 0x00ff6100, 0.5)
         self.ledProxy.post.fadeRGB("RightEarLeds", 0x00ff6100, 0.5)
-    #END setLEDsNormal()
+    # END setLEDsNormal()
 
     def setLEDsProcessing(self):
         self.ledProxy.post.fadeRGB("ChestLeds", 0x00ff0000, 0.5)
@@ -154,15 +156,15 @@ class Nao(QtCore.QObject):
         self.ledProxy.post.fadeRGB("LeftEarLeds", 0x00ffa500, 0.5)
         self.ledProxy.post.fadeRGB("RightEarLeds", 0x00ffa500, 0.5)
 
-        #Sets the intensity of the LEDs.
-        #self.ledProxy.post.setIntensity("ChestLeds", 1.0)
-    #END setLEDsProcessing()
+        # Sets the intensity of the LEDs.
+        # self.ledProxy.post.setIntensity("ChestLeds", 1.0)
+    # END setLEDsProcessing()
 
     def setStiffness(self, stiffness):
         self.motionProxy.setStiffnesses("Body", stiffness)
-    #END setStiffness()
+    # END setStiffness()
 
     def setVolume(self, volume):
         self.speechProxy.setVolume(volume)
-    #END setVolume()
-#END Nao
+    # END setVolume()
+# END Nao

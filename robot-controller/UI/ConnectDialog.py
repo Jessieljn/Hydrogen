@@ -46,7 +46,7 @@ class ConnectDialog(QtGui.QDialog):
         self.setFixedSize(260, 120)
         self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.setWindowTitle('Connection to NAO')
-    #END __init__()
+    # END __init__()
 
     def on__btnConnect_triggered(self):
         self.ipAddress = self._leIPAddr.text()
@@ -54,11 +54,11 @@ class ConnectDialog(QtGui.QDialog):
         self.setResult(QtGui.QDialog.Accepted)
         self.accept()
         self.close()
-    #END on__btnConnect_triggered()
+    # END on__btnConnect_triggered()
 
     def on__btnCancel_triggered(self):
         self.setResult(QtGui.QDialog.Rejected)
         self.reject()
         self.close()
-    #END on__btnCancel_triggered()
-#END PanelConnect
+    # END on__btnCancel_triggered()
+# END PanelConnect

@@ -23,7 +23,7 @@ class CameraResolution:
  = range(4)
 #END class
 
-class Direction:  # enum
+class Direction:
     Neutral, \
     Up, \
     Down, \
