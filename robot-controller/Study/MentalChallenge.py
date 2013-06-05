@@ -1,17 +1,17 @@
 from PyQt4 import QtGui
 from Action.Speech import Speech
-from UI.SpeechPushButton import SpeechPushButton
+from UI.ActionPushButton import ActionPushButton
 
 
 class MentalChallenge(QtGui.QWidget):
-    def __init__(self, parent, actionQueue):
-        super(MentalChallenge, self).__init__(parent)
-        self._actionQueue = actionQueue
+    def __init__(self):
+        super(MentalChallenge, self).__init__()
+        self._actionQueue = None
 
-        self.findCube = SpeechPushButton(self, "Find Cube", "Please look behind your monitor and take out the Rubik's cube.")
-        self.findCube.execute.connect(self.on__SpeechButton_clicked)
+        self.findCube = ActionPushButton(self, "Find Cube", Speech("Please look behind your monitor and take out the Rubik's cube."))
+        self.findCube.execute.connect(self.on_actionReceived)
 
-        self.explanation = SpeechPushButton(self, "Explanation", "Currently, computers are not very good at solving "
+        self.explanation = ActionPushButton(self, "Explanation", Speech("Currently, computers are not very good at solving "
                                                                 "Rubik's Cubes. Computers can brute force the problem "
                                                                 "or use simple tricks, but humans are able to solve "
                                                                 "the problem much more organically. Because we can "
@@ -25,40 +25,40 @@ class MentalChallenge(QtGui.QWidget):
                                                                 "algorithm. Please do not feel pressured: most people"
                                                                 " are not able to solve these puzzles. Approach this "
                                                                 "as a game and simply enjoy the puzzle, but do try "
-                                                                "your best to solve it.")
-        self.explanation.execute.connect(self.on__SpeechButton_clicked)
+                                                                "your best to solve it."))
+        self.explanation.execute.connect(self.on_actionReceived)
 
-        self.camera = SpeechPushButton(self, "Turn On The Camera", "I will now turn on the camera.")
-        self.camera.execute.connect(self.on__SpeechButton_clicked)
+        self.camera = ActionPushButton(self, "Turn On The Camera", Speech("I will now turn on the camera."))
+        self.camera.execute.connect(self.on_actionReceived)
 
-        self.turn = SpeechPushButton(self, "Turn Towards Camera", "Please turn towards the blue light, and keep your"
-                                                                 " hands in the general direction of the light.")
-        self.turn.execute.connect(self.on__SpeechButton_clicked)
+        self.turn = ActionPushButton(self, "Turn Towards Camera", Speech("Please turn towards the blue light, and keep your"
+                                                                 " hands in the general direction of the light."))
+        self.turn.execute.connect(self.on_actionReceived)
 
-        self.handsUp = SpeechPushButton(self, "Move Hands Up", "Please move your hands up a bit.")
-        self.handsUp.execute.connect(self.on__SpeechButton_clicked)
+        self.handsUp = ActionPushButton(self, "Move Hands Up", Speech("Please move your hands up a bit."))
+        self.handsUp.execute.connect(self.on_actionReceived)
 
-        self.handsDown = SpeechPushButton(self, "Move Hands Down", "Please move your hands down a bit.")
-        self.handsDown.execute.connect(self.on__SpeechButton_clicked)
+        self.handsDown = ActionPushButton(self, "Move Hands Down", Speech("Please move your hands down a bit."))
+        self.handsDown.execute.connect(self.on_actionReceived)
 
-        self.positionHands = SpeechPushButton(self, "Position Hands Infront Of The Camera", "Please position your hands"
-                                                    " more in the direction of the camera.")
-        self.positionHands.execute.connect(self.on__SpeechButton_clicked)
+        self.positionHands = ActionPushButton(self, "Position Hands Infront Of The Camera",
+                                              Speech("Please position your hands more in the direction of the camera."))
+        self.positionHands.execute.connect(self.on_actionReceived)
 
-        self.solve = SpeechPushButton(self, "Solve Cube", "Now, please try solving the cube.")
-        self.solve.execute.connect(self.on__SpeechButton_clicked)
+        self.solve = ActionPushButton(self, "Solve Cube", Speech("Now, please try solving the cube."))
+        self.solve.execute.connect(self.on_actionReceived)
 
-        self.data = SpeechPushButton(self, "Data", "It is important to get as much data as we can for the machine "
+        self.data = ActionPushButton(self, "Data", Speech("It is important to get as much data as we can for the machine "
                                                   "learning system. We will do this as long as you can, but, let me "
-                                                  "know when you're done.")
-        self.data.execute.connect(self.on__SpeechButton_clicked)
+                                                  "know when you're done."))
+        self.data.execute.connect(self.on_actionReceived)
 
-        self.mixUp = SpeechPushButton(self, "Mix Up And Try Again", "Good. Now, please mix up the cube and solve it "
-                                                                   "again. Continue to do so each time you solve it.")
-        self.mixUp.execute.connect(self.on__SpeechButton_clicked)
+        self.mixUp = ActionPushButton(self, "Mix Up And Try Again", Speech("Good. Now, please mix up the cube and solve it "
+                                                                   "again. Continue to do so each time you solve it."))
+        self.mixUp.execute.connect(self.on_actionReceived)
 
-        self.done = SpeechPushButton(self, "Done", "Thank you, that should be good for now.")
-        self.done.execute.connect(self.on__SpeechButton_clicked)
+        self.done = ActionPushButton(self, "Done", Speech("Thank you, that should be good for now."))
+        self.done.execute.connect(self.on_actionReceived)
 
         layout = QtGui.QVBoxLayout(self)
         layout.addWidget(self.findCube)
@@ -74,7 +74,11 @@ class MentalChallenge(QtGui.QWidget):
         layout.addWidget(self.done)
     #END __init__()
 
-    def on__SpeechButton_clicked(self, speech):
-        self._actionQueue.enqueue(Speech(speech))
-    #END on__SpeechButton_clicked()
+    def setActionQueue(self, actionQueue):
+        self._actionQueue = actionQueue
+    #END setActionQueue()
+
+    def on_actionReceived(self, action):
+        self._actionQueue.enqueue(action)
+    #END on_actionReceived()
 #END class

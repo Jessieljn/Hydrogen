@@ -1,6 +1,8 @@
 from PyQt4 import QtCore, QtGui
-from BehaviorPushButton import BehaviorPushButton
-from SpeechPushButton import SpeechPushButton
+from Action.Action import Action
+from Action.Behavior import Behavior
+from Action.Speech import Speech
+from ActionPushButton import ActionPushButton
 
 
 ##
@@ -15,36 +17,36 @@ class GeneralWidget(QtGui.QWidget):
         ##################################################
         # General Speech
         ##################################################
-        self.hello = SpeechPushButton(self, "Hello", "Hello")
+        self.hello = ActionPushButton(self, "Hello", Speech("Hello"))
         self.hello.setMaximumWidth(150)
-        self.hello.execute.connect(self.on__SpeechButton_clicked)
-        self.louder = SpeechPushButton(self, "Louder", "Please speak louder")
+        self.hello.execute.connect(self.on_actionReceived)
+        self.louder = ActionPushButton(self, "Louder", Speech("Please speak louder"))
         self.louder.setMaximumWidth(150)
-        self.louder.execute.connect(self.on__SpeechButton_clicked)
-        self.thanks = SpeechPushButton(self, "Thanks", "Thank you")
+        self.louder.execute.connect(self.on_actionReceived)
+        self.thanks = ActionPushButton(self, "Thanks", Speech("Thank you"))
         self.thanks.setMaximumWidth(150)
-        self.thanks.execute.connect(self.on__SpeechButton_clicked)
-        self.good = SpeechPushButton(self, "Good", "Good")
+        self.thanks.execute.connect(self.on_actionReceived)
+        self.good = ActionPushButton(self, "Good", Speech("Good"))
         self.good.setMaximumWidth(150)
-        self.good.execute.connect(self.on__SpeechButton_clicked)
-        self.okay = SpeechPushButton(self, "Okay", "Okay")
+        self.good.execute.connect(self.on_actionReceived)
+        self.okay = ActionPushButton(self, "Okay", Speech("Okay"))
         self.okay.setMaximumWidth(150)
-        self.okay.execute.connect(self.on__SpeechButton_clicked)
-        self.repeat = SpeechPushButton(self, "Repeat", "Would you like me to repeat that?")
+        self.okay.execute.connect(self.on_actionReceived)
+        self.repeat = ActionPushButton(self, "Repeat", Speech("Would you like me to repeat that?"))
         self.repeat.setMaximumWidth(150)
-        self.repeat.execute.connect(self.on__SpeechButton_clicked)
-        self.understand = SpeechPushButton(self, "Understand", "Do you understand")
+        self.repeat.execute.connect(self.on_actionReceived)
+        self.understand = ActionPushButton(self, "Understand", Speech("Do you understand"))
         self.understand.setMaximumWidth(150)
-        self.understand.execute.connect(self.on__SpeechButton_clicked)
-        self.greeting = SpeechPushButton(self, "Greeting", "Hello, my name is NAO, nice to meet you")
+        self.understand.execute.connect(self.on_actionReceived)
+        self.greeting = ActionPushButton(self, "Greeting", Speech("Hello, my name is NAO, nice to meet you"))
         self.greeting.setMaximumWidth(150)
-        self.greeting.execute.connect(self.on__SpeechButton_clicked)
-        self.end = SpeechPushButton(self, "End Experiment", "Thank you for participating in our experiment")
+        self.greeting.execute.connect(self.on_actionReceived)
+        self.end = ActionPushButton(self, "End Experiment", Speech("Thank you for participating in our experiment"))
         self.end.setMaximumWidth(150)
-        self.end.execute.connect(self.on__SpeechButton_clicked)
-        self.sound = SpeechPushButton(self, "Hmmm", "Hmmm")
+        self.end.execute.connect(self.on_actionReceived)
+        self.sound = ActionPushButton(self, "Hmmm", Speech("Hmmm"))
         self.sound.setMaximumWidth(150)
-        self.sound.execute.connect(self.on__SpeechButton_clicked)
+        self.sound.execute.connect(self.on_actionReceived)
 
         speechHBox = QtGui.QHBoxLayout()
         speechHBox.addWidget(self.hello)
@@ -69,20 +71,20 @@ class GeneralWidget(QtGui.QWidget):
         ##################################################
         # General Motions
         ##################################################
-        self.stand = BehaviorPushButton(self, "Stand Up", "StandUp")
-        self.stand.execute.connect(self.on__BehaviorButton_clicked)
-        self.sit = BehaviorPushButton(self, "Sit Down", "SitDown")
-        self.sit.execute.connect(self.on__BehaviorButton_clicked)
-        self.taiChi = BehaviorPushButton(self, "Tai Chi", "TaiChi")
-        self.taiChi.execute.connect(self.on__BehaviorButton_clicked)
-        self.handShake = BehaviorPushButton(self, "Hand Shake", "shakeHand")
-        self.handShake.execute.connect(self.on__BehaviorButton_clicked)
-        self.thriller = BehaviorPushButton(self, "Thriller", "thriller")
-        self.thriller.execute.connect(self.on__BehaviorButton_clicked)
-        self.wave = BehaviorPushButton(self, "Wave", "wave")
-        self.wave.execute.connect(self.on__BehaviorButton_clicked)
-        self.introduce = BehaviorPushButton(self, "Introduce", "introduce")
-        self.introduce.execute.connect(self.on__BehaviorButton_clicked)
+        self.stand = ActionPushButton(self, "Stand Up", Behavior("StandUp"))
+        self.stand.execute.connect(self.on_actionReceived)
+        self.sit = ActionPushButton(self, "Sit Down", Behavior("SitDown"))
+        self.sit.execute.connect(self.on_actionReceived)
+        self.taiChi = ActionPushButton(self, "Tai Chi", Behavior("TaiChi"))
+        self.taiChi.execute.connect(self.on_actionReceived)
+        self.handShake = ActionPushButton(self, "Hand Shake", Behavior("shakeHand"))
+        self.handShake.execute.connect(self.on_actionReceived)
+        self.thriller = ActionPushButton(self, "Thriller", Behavior("thriller"))
+        self.thriller.execute.connect(self.on_actionReceived)
+        self.wave = ActionPushButton(self, "Wave", Behavior("wave"))
+        self.wave.execute.connect(self.on_actionReceived)
+        self.introduce = ActionPushButton(self, "Introduce", Behavior("introduce"))
+        self.introduce.execute.connect(self.on_actionReceived)
 
         behaviorHBox = QtGui.QHBoxLayout()
         behaviorHBox.addSpacing(10)
@@ -108,14 +110,9 @@ class GeneralWidget(QtGui.QWidget):
         layoutMain.addWidget(self._grpBehaviors)
     #END __init__()
 
-    playBehavior = QtCore.pyqtSignal(str)
-    speechSynthesis = QtCore.pyqtSignal(str)
+    playAction = QtCore.pyqtSignal(Action)
 
-    def on__BehaviorButton_clicked(self, motion):
-        self.playBehavior.emit(motion)
-    #END on__BehaviorButton_clicked()
-
-    def on__SpeechButton_clicked(self, speech):
-        self.speechSynthesis.emit(speech)
-    #END on__SpeechButton_clicked()
+    def on_actionReceived(self, action):
+        self.playAction.emit(action)
+    #END on_actionReceived()
 #END GeneralWidget

@@ -2,13 +2,9 @@ from Definitions import Direction
 from PyQt4 import QtCore, QtGui
 from Nao import Nao
 from Action.ActionModel import ActionModel
-from Action.Behavior import Behavior
 from Action.HeadMotion import HeadMotion
 from Action.Speech import Speech
-from Study.General import General
-from Study.Tedium import Tedium
-from Study.MentalChallenge import MentalChallenge
-from Study.Empathy import Empathy
+from Study import Study
 from UI.AboutWindow import AboutWindow
 from UI.ActionListWidget import ActionListWidget
 from UI.CameraWidget import CameraWidget
@@ -16,7 +12,6 @@ from UI.ConnectDialog import ConnectDialog
 from UI.GeneralWidget import GeneralWidget
 from UI.SpeechWidget import SpeechWidget
 from UI.StiffnessWidget import StiffnessWidget
-from UI.JitterWidget import JitterWidget
 
 
 ##
@@ -28,6 +23,46 @@ class MainWindow(QtGui.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
+        Study.setup()
+
+        ##################################################
+        # Create Menus
+        ##################################################
+        menubar = self.menuBar()
+
+        actConnect = QtGui.QAction(QtGui.QIcon(), '&Connect', self)
+        actConnect.setShortcut('Ctrl+C')
+        actConnect.triggered.connect(self.on_actConnect_triggered)
+
+        actDisconnect = QtGui.QAction(QtGui.QIcon(), '&Disconnect', self)
+        actDisconnect.setShortcut('Ctrl+D')
+        actDisconnect.triggered.connect(self.on_actDisconnect_triggered)
+
+        actExit = QtGui.QAction(QtGui.QIcon('images/exit.png'), '&Exit', self)
+        actExit.setShortcut('Ctrl+X')
+        actExit.setStatusTip('Exit application')
+        actExit.triggered.connect(QtGui.qApp.quit)
+
+        fileMenu = menubar.addMenu('File')
+        fileMenu.addAction(actConnect)
+        fileMenu.addAction(actDisconnect)
+        fileMenu.addAction(actExit)
+
+        loadMenu = menubar.addMenu('Load')
+        self._loadActions = []
+        for i in range(len(Study.TASKS)):
+            actLoad = QtGui.QAction(QtGui.QIcon(), "Load " + Study.TASKS[i][Study.TASK_NAME], self)
+            actLoad.setShortcut("Ctrl+" + str(i + 1))
+            actLoad.triggered.connect(self.on_actLoad_specific)
+            loadMenu.addAction(actLoad)
+            self._loadActions.append(actLoad)
+        #END for
+
+        actAboutBox = QtGui.QAction(QtGui.QIcon(), '&About', self)
+        actAboutBox.triggered.connect(self.on_actAbout_triggered)
+
+        aboutMenu = menubar.addMenu('Help')
+        aboutMenu.addAction(actAboutBox)
 
         ##################################################
         # Create Widgets
@@ -56,20 +91,25 @@ class MainWindow(QtGui.QMainWindow):
         self._wgtStiffness.stiffnessChanged.connect(self.on_changingStiffness)
 
         self._wgtGeneral = GeneralWidget(self._wgtMain)
-        self._wgtGeneral.playBehavior.connect(self.on_playBehaviour)
-        self._wgtGeneral.speechSynthesis.connect(self.on_playSpeech)
+        self._wgtGeneral.playAction.connect(self.on_playAction)
 
         self._wgtTaskPanel = QtGui.QFrame(self._wgtMain)
         self._wgtTaskPanel.setFrameShape(QtGui.QFrame.Panel)
         self._wgtTaskPanel.setFrameShadow(QtGui.QFrame.Plain)
         self._wgtTaskPanel.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
 
-        self._wgtJitter = JitterWidget(self._wgtMain)
+        self._layoutTaskPanel = QtGui.QStackedLayout(self._wgtTaskPanel)
+        self._layoutTaskPanel.setMargin(0)
+        for i in range(len(Study.TASKS)):
+            Study.TASKS[i][Study.TASK_WIDGET].setParent(self._wgtTaskPanel)
+            Study.TASKS[i][Study.TASK_WIDGET].setActionQueue(self._actionQueue)
+            self._layoutTaskPanel.addWidget(Study.TASKS[i][Study.TASK_WIDGET])
+        #END for
+        self._layoutTaskPanel.setCurrentIndex(0)
 
         layoutLeft = QtGui.QVBoxLayout()
         layoutLeft.addWidget(self._wgtCamera, 2)
-        layoutLeft.addWidget(self._wgtJitter, 1)
-        #layoutLeft.addWidget(self._wgtActionList, 1)
+        layoutLeft.addWidget(self._wgtActionList, 1)
 
         layoutTextStiff = QtGui.QHBoxLayout()
         layoutTextStiff.addWidget(self._wgtSpeech, 5)
@@ -83,65 +123,6 @@ class MainWindow(QtGui.QMainWindow):
         layoutMain = QtGui.QHBoxLayout(self._wgtMain)
         layoutMain.addLayout(layoutLeft)
         layoutMain.addLayout(layoutRight)
-
-        ##################################################
-        # Create Menus
-        ##################################################
-        menubar = self.menuBar()
-
-        actConnect = QtGui.QAction(QtGui.QIcon(), '&Connect', self)
-        actConnect.setShortcut('Ctrl+C')
-        actConnect.triggered.connect(self.on_actConnect_triggered)
-
-        actDisconnect = QtGui.QAction(QtGui.QIcon(), '&Disconnect', self)
-        actDisconnect.setShortcut('Ctrl+D')
-        actDisconnect.triggered.connect(self.on_actDisconnect_triggered)
-
-        actExit = QtGui.QAction(QtGui.QIcon('images/exit.png'), '&Exit', self)
-        actExit.setShortcut('Ctrl+X')
-        actExit.setStatusTip('Exit application')
-        actExit.triggered.connect(QtGui.qApp.quit)
-
-        fileMenu = menubar.addMenu('File')
-        fileMenu.addAction(actConnect)
-        fileMenu.addAction(actDisconnect)
-        fileMenu.addAction(actExit)
-
-        actLoadGeneral = QtGui.QAction(QtGui.QIcon(), 'Load General', self)
-        actLoadGeneral.setShortcut('Ctrl+1')
-        actLoadGeneral.triggered.connect(lambda: self.on_actLoad_specific("General"))
-        self._taskGeneral = General(self._wgtTaskPanel, self._actionQueue)
-        self._task = self._taskGeneral
-
-        actLoadTedium = QtGui.QAction(QtGui.QIcon(), 'Load Tedium', self)
-        actLoadTedium.setShortcut('Ctrl+2')
-        actLoadTedium.triggered.connect(lambda: self.on_actLoad_specific("Tedium"))
-        self._taskTedium = Tedium(self._wgtTaskPanel, self._actionQueue)
-        self._taskTedium.hide()
-
-        actLoadChallenge = QtGui.QAction(QtGui.QIcon(), 'Load Mental Challenge', self)
-        actLoadChallenge.setShortcut('Ctrl+3')
-        actLoadChallenge.triggered.connect(lambda: self.on_actLoad_specific("Challenge"))
-        self._taskChallenge = MentalChallenge(self._wgtTaskPanel, self._actionQueue)
-        self._taskChallenge.hide()
-
-        actLoadEmpathy = QtGui.QAction(QtGui.QIcon(), 'Load Empathy', self)
-        actLoadEmpathy.setShortcut('Ctrl+4')
-        actLoadEmpathy.triggered.connect(lambda: self.on_actLoad_specific("Empathy"))
-        self._taskEmpathy = Empathy(self._wgtTaskPanel, self._actionQueue)
-        self._taskEmpathy.hide()
-
-        loadMenu = menubar.addMenu('Load')
-        loadMenu.addAction(actLoadGeneral)
-        loadMenu.addAction(actLoadTedium)
-        loadMenu.addAction(actLoadChallenge)
-        loadMenu.addAction(actLoadEmpathy)
-
-        actAboutBox = QtGui.QAction(QtGui.QIcon(), '&About', self)
-        actAboutBox.triggered.connect(self.on_actAbout_triggered)
-
-        aboutMenu = menubar.addMenu('Help')
-        aboutMenu.addAction(actAboutBox)
 
         ##################################################
         # MainWindow
@@ -194,8 +175,8 @@ class MainWindow(QtGui.QMainWindow):
         self._actionQueue.enqueue(HeadMotion(direction))
     #END on_moveHead()
 
-    def on_playBehaviour(self, value):
-        self._actionQueue.enqueue(Behavior(value))
+    def on_playAction(self, action):
+        self._actionQueue.enqueue(action)
     #END on_playSpeech()
 
     def on_playSpeech(self, value):
@@ -220,18 +201,13 @@ class MainWindow(QtGui.QMainWindow):
         #END if
     #END on_actDisconnect_triggered()
 
-    def on_actLoad_specific(self, study):
-        self._task.hide()
-        if study == "General":
-            self._task = self._taskGeneral
-        elif study == "Tedium":
-            self._task = self._taskTedium
-        elif study == "Challenge":
-            self._task = self._taskChallenge
-        elif study == "Empathy":
-            self._task = self._taskEmpathy
-        #END if
-        self._task.show()
+    def on_actLoad_specific(self, studyShortName):
+        for i in range(len(self._loadActions)):
+            if self._loadActions[i] == self.sender():
+                self._layoutTaskPanel.setCurrentIndex(i)
+                return
+            #END if
+        #END for
     #END on_actLoad_specific
 
     def on_actAbout_triggered(self):
@@ -259,6 +235,14 @@ class MainWindow(QtGui.QMainWindow):
         self._actionQueue.stopProcessing()
         self.on_actDisconnect_triggered()
     #END closeEvent()
+
+    def focusInEvent(self, event):
+        self.grabKeyboard()
+    #END focusInEvent()
+
+    def grab_keyboard(self):
+        self.setFocus(QtCore.Qt.OtherFocusReason)
+    #END grab_keyboard()
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Up:
@@ -305,12 +289,4 @@ class MainWindow(QtGui.QMainWindow):
             self._actionQueue.enqueue(HeadMotion(Direction.Right))
         #END if
     #END timerEvent()
-
-    def focusInEvent(self, event):
-        self.grabKeyboard()
-    #END focusInEvent()
-
-    def grab_keyboard(self):
-        self.setFocus(QtCore.Qt.OtherFocusReason)
-    #END grab_keyboard()
 #END MainWindow

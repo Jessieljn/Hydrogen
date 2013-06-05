@@ -1,9 +1,12 @@
-from PyQt4 import QtGui, QtCore
+from PyQt4 import QtCore, QtGui
+from Action.Speech import Speech
+from UI.ActionPushButton import ActionPushButton
 
 
-class JitterWidget(QtGui.QWidget):
-    def __init__(self, parent):
-        super(JitterWidget, self).__init__(parent)
+class Jitter(QtGui.QWidget):
+    def __init__(self):
+        super(Jitter, self).__init__()
+        self._actionQueue = None
 
         self.setWindowTitle("Jitter Function")
         self.vbox = QtGui.QVBoxLayout()
@@ -32,6 +35,14 @@ class JitterWidget(QtGui.QWidget):
         """
         Handler called when a distro is chosen from the combo box
         """
-        self.lbl.setText(text)
+        self.label.setText(text)
     #END combo_chosen()
-#END JitterWidget
+
+    def setActionQueue(self, actionQueue):
+        self._actionQueue = actionQueue
+    #END setActionQueue()
+
+    def on_actionReceived(self, action):
+        self._actionQueue.enqueue(action)
+    #END on_actionReceived()
+#END class

@@ -1,39 +1,108 @@
-from PyQt4 import QtGui
+from PyQt4 import QtCore, QtGui
 from Action.Behavior import Behavior
-from UI.BehaviorPushButton import BehaviorPushButton
+from Action.Speech import Speech
+from UI.ActionPushButton import ActionPushButton
 
 
 class Empathy(QtGui.QWidget):
-    def __init__(self, parent, actionQueue):
-        super(Empathy, self).__init__(parent)
-        self._actionQueue = actionQueue
+    def __init__(self):
+        super(Empathy, self).__init__()
+        self._actionQueue = None
+        self._widgets = []
+        self._buttons = []
 
-        self.chinScratch = BehaviorPushButton(self, "Scratch Chin", "chinScratch")
-        self.chinScratch.execute.connect(self.on__BehaviorButton_clicked)
+        self._widgets.append(QtGui.QWidget(self))
+        self._buttons.append([
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "INTRODUCTION"),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Welcome", [ \
+                    Speech("Oh,"),
+                    # standing up motion
+                    Speech("Hi, nice to meet you. My name is"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Nice Meet", [ \
+                    Speech("Nice to meet you"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Vision Process", [ \
+                    Speech("I can also do vision processing"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Excite to play", [ \
+                    Speech("I am so excited to play with you"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "PHASE 1"),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Play well?", [ \
+                    Speech("It is so exciting to play this game with someone else"),
+                    Speech("Do you play games well?"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Yes:", [ \
+                    Speech("Oh yes!"),
+                    Speech("My last partner was not really good. I hope that this time we can finish the games"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "No:", [ \
+                    Speech("That is okay"),
+                    Speech("I am sure we will do a good job"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Last time", [ \
+                    Speech("Last time, we did not do very well in this game because we did not really play the same way."),
+                    Speech("But you seem to be more like me!"),
+                    Speech("I think we can do well."),
+                    Speech("Let's do it"),
+                    Speech("We can do it"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Yeah:", [ \
+                    Speech("I knew it!"),
+                    Speech("Bring the paper here, please"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "You robot:", [ \
+                    Speech("Well, if you don't trust me, we cannot win the game."),
+                    Speech("I know what I am and I know what I am doing."),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Go first", [ \
+                    Speech("You can go first."),
+                    Speech("When you filled in one box, tell me."),
+                ]),
+        ])
 
-        self.pointLeft = BehaviorPushButton(self, "Left Hand Point", "leftHandPointing")
-        self.pointLeft.execute.connect(self.on__BehaviorButton_clicked)
+        self._widgets.append(QtGui.QWidget(self))
+        self._buttons.append([
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Let me think", [ \
+                    Speech("Hmm,"),
+                    # pause
+                    Speech("Let me think carefully"),
+                ]),
+        ])
 
-        self.pointRight = BehaviorPushButton(self, "Right Hand Point", "rightHandPointing")
-        self.pointRight.execute.connect(self.on__BehaviorButton_clicked)
-
-        self.scratchHead = BehaviorPushButton(self, "Scratch Head", "shakeHand")
-        self.scratchHead.execute.connect(self.on__BehaviorButton_clicked)
-
-        hbox1 = QtGui.QVBoxLayout()
-        hbox2 = QtGui.QVBoxLayout()
-
-        hbox1.addWidget(self.chinScratch)
-        hbox1.addWidget(self.scratchHead)
-        hbox1.addWidget(self.pointRight)
-        hbox1.addWidget(self.pointLeft)
+        self._widgets.append(QtGui.QWidget(self))
+        self._buttons.append([
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Scratch Chin", Behavior("chinScratch")),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Left Hand Point", Behavior("leftHandPointing")),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Right Hand Point", Behavior("rightHandPointing")),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Scratch Head", Behavior("shakeHand")),
+        ])
 
         layout = QtGui.QHBoxLayout(self)
-        layout.addLayout(hbox1)
-        layout.addLayout(hbox2)
+        layout.setMargin(0)
+        for i in range(len(self._widgets)):
+            layoutButtons = QtGui.QVBoxLayout(self._widgets[i])
+            layoutButtons.setMargin(0)
+            for button in self._buttons[i]:
+                button.execute.connect(self.on_actionReceived)
+                layoutButtons.addWidget(button)
+            #END for
+            scroll = QtGui.QScrollArea()
+            scroll.setAlignment(QtCore.Qt.AlignCenter)
+            scroll.setWidget(self._widgets[i])
+            layoutScroll = QtGui.QHBoxLayout()
+            layoutScroll.setMargin(0)
+            layoutScroll.addWidget(scroll)
+            layout.addLayout(layoutScroll)
+        #END for
     #END __init__()
 
-    def on__BehaviorButton_clicked(self, motion):
-        self._actionQueue.enqueue(Behavior(motion))
-    #END on__BehaviorButton_clicked()
+    def setActionQueue(self, actionQueue):
+        self._actionQueue = actionQueue
+    #END setActionQueue()
+
+    def on_actionReceived(self, action):
+        self._actionQueue.enqueue(action)
+    #END on_actionReceived()
 #END Empathy
