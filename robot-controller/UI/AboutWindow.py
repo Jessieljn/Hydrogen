@@ -37,4 +37,4 @@ class AboutWindow(QtGui.QDialog):
         self.accept()
         self.close()
     #END on__btnOkay_triggered()
-#END class
+#END AboutWindow
