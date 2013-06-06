@@ -22,8 +22,8 @@ class MainWindow(QtGui.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
-        self._actionQueue = ActionModel(self)
-        self._actionQueue.execute.connect(self.on__actionQueue_execute)
+        self._nao = Nao()
+        self._actionQueue = ActionModel(self, self._nao)
         self._keys = dict()
         self._keys[Direction.Up] = False
         self._keys[Direction.Down] = False
@@ -89,6 +89,7 @@ class MainWindow(QtGui.QMainWindow):
         self._wgtCamera.setMinimumHeight(385)
         self._wgtCamera.cameraChanged.connect(self.on_cameraChanged)
         self._wgtCamera.moveHead.connect(self.on_moveHead)
+        self._nao.frameAvailable.connect(self._wgtCamera.setImage)
 
         self._wgtActionList = ActionListWidget(splitterLeft, self._actionQueue)
         self._wgtActionList.setMinimumHeight(120)
@@ -114,7 +115,7 @@ class MainWindow(QtGui.QMainWindow):
         layoutTextStiff.addWidget(self._wgtStiffness)
 
         self._wgtGeneral = GeneralWidget(wgtRight)
-        self._wgtGeneral.playAction.connect(self.on_playAction)
+        self._wgtGeneral.playAction.connect(self._actionQueue.addActions)
 
         self._wgtTaskPanel = QtGui.QFrame(wgtRight)
         self._wgtTaskPanel.setFrameShape(QtGui.QFrame.Panel)
@@ -152,16 +153,7 @@ class MainWindow(QtGui.QMainWindow):
         self.resize(800, 600)
         self.show()
         self.grabKeyboard()
-
-        self._nao = Nao()
-        self._nao.frameAvailable.connect(self._wgtCamera.setImage)
     # END __init__()
-
-    def on__actionQueue_execute(self, action):
-        if self._nao.isConnected():
-            action.execute(self._nao)
-        # END if
-    # END on__actionQueue_execute()
 
     def on_cameraChanged(self, which):
         self._nao.setCameraSource(which)
@@ -195,10 +187,6 @@ class MainWindow(QtGui.QMainWindow):
         #END if
     # END on_moveHead()
 
-    def on_playAction(self, action):
-        self._actionQueue.enqueue(action)
-    # END on_playSpeech()
-
     def on_playSpeech(self, value):
         self._actionQueue.enqueue(Speech(value))
     # END on_playSpeech()
@@ -213,11 +201,11 @@ class MainWindow(QtGui.QMainWindow):
 
     def on_actDisconnect_triggered(self):
         if self._nao.isConnected():
-            self.killTimer(self._timerID)
             print "==================================="
             print "Disconnecting from Nao"
             self._nao.disconnect()
             print "==================================="
+            self.killTimer(self._timerID)
         # END if
     # END on_actDisconnect_triggered()
 
@@ -252,6 +240,7 @@ class MainWindow(QtGui.QMainWindow):
     # END on_dlgConnect_accepted()
 
     def closeEvent(self, event):
+        self._actionQueue.dispose()
         self.on_actDisconnect_triggered()
     # END closeEvent()
 

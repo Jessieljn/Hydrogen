@@ -1,3 +1,4 @@
+from PyQt4 import QtCore, QtGui
 from General import General
 from Tedium import Tedium
 from MentalChallenge import MentalChallenge

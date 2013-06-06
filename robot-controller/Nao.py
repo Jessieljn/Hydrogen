@@ -14,7 +14,8 @@ class Nao(QtCore.QObject):
 
     def __init__(self):
         super(Nao, self).__init__()
-        self.is_connected = False
+        self._isConnected = False
+        self._naoBroker = None
         self.speechProxy = None
         self.cameraProxy = None
         self.behaviorProxy = None
@@ -51,7 +52,7 @@ class Nao(QtCore.QObject):
         self.ledProxy = naoqi.ALProxy("ALLeds")
         print " > " + str(self.ledProxy)
 
-        self.is_connected = True
+        self._isConnected = True
         self.connected.emit()
         return True
     # END connect()
@@ -63,13 +64,14 @@ class Nao(QtCore.QObject):
         self.behaviorProxy = None
         self.motionProxy = None
         self.ledProxy = None
-        self.is_connected = False
+        self._isConnected = False
         self._naoBroker.shutdown()
+        self._naoBroker = None
         self.disconnected.emit()
     # END disconnect()
 
     def isConnected(self):
-        return self.is_connected
+        return self._isConnected
     # END isConnected()
 
     def startCamera(self):
@@ -115,14 +117,12 @@ class Nao(QtCore.QObject):
             sck.close()
     # END makeJitter
 
-    def behavior(self, bhv, msecs = 0):
-        ret = self.behaviorProxy.post.runBehavior(bhv)
-        self.behaviorProxy.wait(ret, msecs)
+    def behavior(self, bhv):
+        self.behaviorProxy.runBehavior(bhv)
     # END behavior()
 
-    def say(self, msg, msecs = 0):
-        ret = self.speechProxy.post.say(msg)
-        self.speechProxy.wait(ret, msecs)
+    def say(self, msg):
+        self.speechProxy.say(msg)
     # END say()
 
     def postBehavior(self, bhv):

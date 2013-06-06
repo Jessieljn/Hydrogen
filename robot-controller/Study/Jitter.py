@@ -1,8 +1,9 @@
 from PyQt4 import QtCore, QtGui
+from BaseStudy import BaseStudy
 from UI.FocusableLineEdit import FocusableLineEdit
 
 
-class Jitter(QtGui.QWidget):
+class Jitter(BaseStudy):
     def __init__(self):
         super(Jitter, self).__init__()
         self._actionQueue = None

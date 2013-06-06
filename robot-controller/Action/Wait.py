@@ -1,5 +1,5 @@
-from PyQt4 import QtCore
 from Action import Action
+from PyQt4 import QtCore
 
 
 class Wait(Action):
@@ -9,7 +9,7 @@ class Wait(Action):
     #END __init__()
 
     def execute(self, nao):
-        Wait.msleep(self.parameter)
+        QtCore.QThread.msleep(self.parameter)
     #END execute()
 
     def actionToString(self):
@@ -19,11 +19,4 @@ class Wait(Action):
     def paramToString(self):
         return str(self.parameter)
     #END paramToString()
-
-    @staticmethod
-    def msleep(msecs, mutex = QtCore.QMutex(), waitCond = QtCore.QWaitCondition()):
-        mutex.lock()
-        waitCond.wait(mutex, msecs)
-        mutex.unlock()
-    #END msleep
 #END class

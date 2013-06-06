@@ -1,16 +1,15 @@
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtGui
+from BaseStudy import BaseStudy
 from Action.Behavior import Behavior
 from Action.Speech import Speech
 from Action.Wait import Wait
 from UI.ActionPushButton import ActionPushButton
 
 
-class Empathy(QtGui.QWidget):
+class Empathy(BaseStudy):
     def __init__(self):
         super(Empathy, self).__init__()
-        self._actionQueue = None
-        self._widgets = []
-        self._buttons = []
+        self._setupBegin()
 
         self._widgets.append(QtGui.QWidget(self))
         self._buttons.append([
@@ -118,30 +117,6 @@ class Empathy(QtGui.QWidget):
             self._buttons[j].append(button)
         #END for
 
-        layout = QtGui.QHBoxLayout(self)
-        layout.setMargin(0)
-        for i in range(len(self._widgets)):
-            layoutButtons = QtGui.QVBoxLayout(self._widgets[i])
-            layoutButtons.setMargin(0)
-            for button in self._buttons[i]:
-                button.execute.connect(self.on_actionReceived)
-                layoutButtons.addWidget(button)
-            #END for
-            scroll = QtGui.QScrollArea()
-            scroll.setAlignment(QtCore.Qt.AlignCenter)
-            scroll.setWidget(self._widgets[i])
-            layoutScroll = QtGui.QHBoxLayout()
-            layoutScroll.setMargin(0)
-            layoutScroll.addWidget(scroll)
-            layout.addLayout(layoutScroll)
-        #END for
+        self._setupEnd()
     #END __init__()
-
-    def setActionQueue(self, actionQueue):
-        self._actionQueue = actionQueue
-    #END setActionQueue()
-
-    def on_actionReceived(self, action):
-        self._actionQueue.enqueue(action)
-    #END on_actionReceived()
 #END Empathy
