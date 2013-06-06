@@ -8,7 +8,6 @@ class ActionModel(QtCore.QAbstractTableModel):
     def __init__(self, parent, nao):
         super(ActionModel, self).__init__(parent)
         self._list = ActionQueue(nao)
-        self._list.cleared.connect(self.on__list_cleared)
         self._list.dequeued.connect(self.on__list_dequeued)
         self._list.enqueued.connect(self.on__list_enqueued)
         self._timer = ThreadTimer()
@@ -36,7 +35,10 @@ class ActionModel(QtCore.QAbstractTableModel):
     #END addAction()
 
     def clearActions(self):
+        parentIndex = QtCore.QModelIndex()
+        self.beginRemoveRows(parentIndex, 0, self._list.length())
         self._list.clear()
+        self.endRemoveRows()
     #END clearActions
 
     def rowCount(self, parent):
@@ -72,12 +74,6 @@ class ActionModel(QtCore.QAbstractTableModel):
         #END if
         return QtCore.QVariant()
     #END headerData()
-
-    def on__list_cleared(self, length):
-        parentIndex = QtCore.QModelIndex()
-        self.beginRemoveRows(parentIndex, 0, length)
-        self.endRemoveRows()
-    #END on__list_cleared()
 
     def on__list_dequeued(self, index):
         parentIndex = QtCore.QModelIndex()

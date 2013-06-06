@@ -83,16 +83,18 @@ class MainWindow(QtGui.QMainWindow):
         splitterLeft = QtGui.QSplitter(wgtLeft)
         splitterLeft.setOrientation(QtCore.Qt.Vertical);
         layoutLeft = QtGui.QHBoxLayout(wgtLeft)
+        layoutLeft.setMargin(0)
         layoutLeft.addWidget(splitterLeft)
 
         self._wgtCamera = CameraWidget(splitterLeft)
         self._wgtCamera.setMinimumHeight(385)
-        self._wgtCamera.cameraChanged.connect(self.on_cameraChanged)
+        self._wgtCamera.cameraChanged.connect(self._nao.setCameraSource)
         self._wgtCamera.moveHead.connect(self.on_moveHead)
         self._nao.frameAvailable.connect(self._wgtCamera.setImage)
 
         self._wgtActionList = ActionListWidget(splitterLeft, self._actionQueue)
         self._wgtActionList.setMinimumHeight(120)
+        self._wgtActionList.clearClicked.connect(self._actionQueue.clearActions)
 
         wgtRight = QtGui.QWidget(splitter)
         wgtRight.setMinimumWidth(380)
@@ -102,13 +104,13 @@ class MainWindow(QtGui.QMainWindow):
         self._wgtSpeech.textEditing.connect(self.on_changingLEDs)
         self._wgtSpeech.textInputCancelled.connect(self.grab_keyboard)
         self._wgtSpeech.textSubmitted.connect(self.on_playSpeech)
-        self._wgtSpeech.volumeChanged.connect(self.on_changingVolume)
+        self._wgtSpeech.volumeChanged.connect(self._nao.setVolume)
         layoutSpeech = QtGui.QHBoxLayout()
         layoutSpeech.setMargin(0)
         layoutSpeech.addWidget(self._wgtSpeech)
 
         self._wgtStiffness = StiffnessWidget(wgtRight)
-        self._wgtStiffness.stiffnessChanged.connect(self.on_changingStiffness)
+        self._wgtStiffness.stiffnessChanged.connect(self._nao.setStiffness)
 
         layoutTextStiff = QtGui.QHBoxLayout()
         layoutTextStiff.addLayout(layoutSpeech)
@@ -155,10 +157,6 @@ class MainWindow(QtGui.QMainWindow):
         self.grabKeyboard()
     # END __init__()
 
-    def on_cameraChanged(self, which):
-        self._nao.setCameraSource(which)
-    # END on_cameraChanged()
-
     def on_changingLEDs(self):
         if self._wgtSpeech.isSpeechTextEmpty():
             self._nao.setLEDsNormal()
@@ -166,14 +164,6 @@ class MainWindow(QtGui.QMainWindow):
             self._nao.setLEDsProcessing()
         # END if
     # END on_changingLEDs()
-
-    def on_changingStiffness(self, value):
-        self._nao.setStiffness(value)
-    # END on_changingStiffness()
-
-    def on_changingVolume(self, value):
-        self._nao.setVolume(value)
-    # END on_changingVolume()
 
     def on_moveHead(self, direction):
         if direction == Direction.Up:

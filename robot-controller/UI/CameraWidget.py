@@ -73,6 +73,7 @@ class CameraWidget(QtGui.QGroupBox):
     #END setImage()
 
     cameraChanged = QtCore.pyqtSignal(int)
+
     moveHead = QtCore.pyqtSignal(int)
 
     def on__btnUp_clicked(self):

@@ -1,4 +1,4 @@
-from PyQt4 import QtGui
+from PyQt4 import QtCore, QtGui
 
 
 class ActionListWidget(QtGui.QWidget):
@@ -10,8 +10,14 @@ class ActionListWidget(QtGui.QWidget):
         self._table.setColumnWidth(0, 100)
         self._table.setColumnWidth(1, 180)
 
+        self._btnClear = QtGui.QPushButton("Clear", self)
+        self._btnClear.clicked.connect(self.clearClicked)
+
         layoutMain = QtGui.QVBoxLayout(self)
         layoutMain.setMargin(0)
         layoutMain.addWidget(self._table)
+        layoutMain.addWidget(self._btnClear)
     #END __init__()
+
+    clearClicked = QtCore.pyqtSignal()
 #END class
