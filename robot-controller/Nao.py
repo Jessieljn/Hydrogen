@@ -1,5 +1,6 @@
-from Definitions import Camera, CameraResolution, VIDEO_SUBSCRIBE_NAME
+from Definitions import LEDNames
 from PyQt4 import QtCore, QtGui
+from NaoCamera import NaoCamera
 import naoqi
 import socket
 
@@ -10,17 +11,14 @@ import socket
 # Connection to the NAO
 ##
 class Nao(QtCore.QObject):
-    CAMERA_PARAM_SELECT = 18
-
     def __init__(self):
         super(Nao, self).__init__()
         self._isConnected = False
         self._naoBroker = None
         self.speechProxy = None
-        self.cameraProxy = None
+        self._camera = None
         self.behaviorProxy = None
         self.motionProxy = None
-        self.timerID = None
     # END __init__()
 
     connected = QtCore.pyqtSignal()
@@ -28,9 +26,6 @@ class Nao(QtCore.QObject):
     disconnected = QtCore.pyqtSignal()
 
     frameAvailable = QtCore.pyqtSignal(QtGui.QImage)
-
-    def testing(self):
-        print "testing"
 
     def connect(self, ipAddress, port):
         self._naoBroker = naoqi.ALBroker("NaoBroker", "0.0.0.0", 0, ipAddress, port)
@@ -40,8 +35,10 @@ class Nao(QtCore.QObject):
         self.speechProxy.setVolume(0.85)
         print " > " + str(self.speechProxy)
         print " > Loading Camera..."
-        self.cameraProxy = naoqi.ALProxy("ALVideoDevice")
-        print " > " + str(self.cameraProxy)
+        self._camera = NaoCamera()
+        self._camera.frameAvailable.connect(self.frameAvailable)
+        self._camera.start()
+        print " > " + str(self._camera.getCameraProxy())
         print " > Loading Behaviors..."
         self.behaviorProxy = naoqi.ALProxy("ALBehaviorManager")
         print " > " + str(self.behaviorProxy)
@@ -58,8 +55,8 @@ class Nao(QtCore.QObject):
     # END connect()
 
     def disconnect(self):
-        self.stopCamera()
-        self.cameraProxy = None
+        self._camera.stop()
+        self._camera = None
         self.speechProxy = None
         self.behaviorProxy = None
         self.motionProxy = None
@@ -73,28 +70,6 @@ class Nao(QtCore.QObject):
     def isConnected(self):
         return self._isConnected
     # END isConnected()
-
-    def startCamera(self):
-        self.cameraProxyID = self.cameraProxy.subscribe(VIDEO_SUBSCRIBE_NAME, CameraResolution.VGA, 11, 20)
-        self.cameraProxy.setParam(Nao.CAMERA_PARAM_SELECT, Camera.Top)
-        self.timerID = self.startTimer(1000 / 30)
-    # END startCamera()
-
-    def stopCamera(self):
-        if self.timerID is not None:
-            self.killTimer(self.timerID)
-            self.timerID = None
-            self.cameraProxy.unsubscribe(self.cameraProxyID)
-        # END if
-    # END stopCamera()
-
-    def setCameraResolution(self, value):
-        self.cameraProxy.setResolution(self.cameraProxyID, value)
-    # END setCameraResolution()
-
-    def setCameraSource(self, value):
-        self.cameraProxy.setParam(Nao.CAMERA_PARAM_SELECT, value)
-    # END setCameraSource()
 
     def makeJitter(self, bhvName, boxName, startFrame = 0, endFrame = -1, joints = []):
         data = ""
@@ -125,6 +100,29 @@ class Nao(QtCore.QObject):
         self.speechProxy.say(msg)
     # END say()
 
+    def LEDNormal(self):
+        self.postLEDsetIntensity(LEDNames.Face, 1.0)
+        self.postLEDfadeRGB(LEDNames.Chest, 0x0000ff00, 0.5)
+        self.postLEDfadeRGB(LEDNames.LeftEar, 0x00ff6100, 0.5)
+        self.postLEDfadeRGB(LEDNames.RightEar, 0x00ff6100, 0.5)
+    # END LEDNormal()
+
+    def LEDfadeIntensity(self, name, intensity, seconds):
+        self.ledProxy.fade(name, intensity, seconds)
+    # END LEDfadeIntensity()
+
+    def LEDfadeRGB(self, name, rgb, seconds):
+        self.ledProxy.fadeRGB(name, rgb, seconds)
+    # END LEDfadeRGB()
+
+    def LEDsetIntensity(self, name, intensity):
+        self.ledProxy.setIntensity(name, intensity)
+    # END LEDsetIntensity()
+
+    def LEDrandomEyes(self, duration):
+        self.ledProxy.randomEyes(duration)
+    # END LEDrandomEyes()
+
     def postBehavior(self, bhv):
         self.behaviorProxy.post.runBehavior(bhv)
     # END postBehavior()
@@ -133,11 +131,21 @@ class Nao(QtCore.QObject):
         self.speechProxy.post.say(msg)
     # END postSay()
 
-    def timerEvent(self, event):
-        self.rawFrame = self.cameraProxy.getImageRemote(self.cameraProxyID)
-        self.frame = QtGui.QImage(self.rawFrame[6], self.rawFrame[0], self.rawFrame[1], QtGui.QImage.Format_RGB888)
-        self.frameAvailable.emit(self.frame)
-    # END timerEvent()
+    def postLEDfadeIntensity(self, name, intensity, seconds):
+        self.ledProxy.post.fade(name, intensity, seconds)
+    # END postLEDfadeIntensity()
+
+    def postLEDfadeRGB(self, name, rgb, seconds):
+        self.ledProxy.post.fadeRGB(name, rgb, seconds)
+    # END postLEDfadeRGB()
+
+    def postLEDsetIntensity(self, name, intensity):
+        self.ledProxy.post.setIntensity(name, intensity)
+    # END postLEDsetIntensity()
+
+    def postLEDrandomEyes(self, duration):
+        self.ledProxy.post.randomEyes(duration)
+    # END postLEDrandomEyes()
 
     def tiltHeadUp(self):
         self.motionProxy.changeAngles("HeadPitch", -0.20, 0.10)
@@ -155,22 +163,13 @@ class Nao(QtCore.QObject):
         self.motionProxy.changeAngles("HeadYaw", -0.20, 0.10)
     # END turnHeadRight()
 
-    def setLEDsNormal(self):
-        self.ledProxy.post.fadeRGB("ChestLeds", 0x0000ff00, 0.5)
-        self.ledProxy.post.setIntensity("FaceLeds", 1.0)
-        self.ledProxy.post.fadeRGB("LeftEarLeds", 0x00ff6100, 0.5)
-        self.ledProxy.post.fadeRGB("RightEarLeds", 0x00ff6100, 0.5)
-    # END setLEDsNormal()
+    def setCameraResolution(self, value):
+        self._camera.setResolution(value)
+    # END setCameraResolution()
 
-    def setLEDsProcessing(self):
-        self.ledProxy.post.fadeRGB("ChestLeds", 0x00ff0000, 0.5)
-        self.ledProxy.post.fadeRGB("FaceLeds", 0x00ffa500, 0.5)
-        self.ledProxy.post.fadeRGB("LeftEarLeds", 0x00ffa500, 0.5)
-        self.ledProxy.post.fadeRGB("RightEarLeds", 0x00ffa500, 0.5)
-
-        # Sets the intensity of the LEDs.
-        # self.ledProxy.post.setIntensity("ChestLeds", 1.0)
-    # END setLEDsProcessing()
+    def setCameraSource(self, value):
+        self._camera.setParam(value)
+    # END setCameraSource()
 
     def setStiffness(self, stiffness):
         self.motionProxy.setStiffnesses("Body", stiffness)

@@ -4,10 +4,10 @@ from PyQt4 import QtCore
 class ThreadTimer(QtCore.QObject):
     THREAD_SLEEP_INTERVAL = 7
 
-    def __init__(self, parent = None):
+    def __init__(self, parent = None, interval = 100):
         super(ThreadTimer, self).__init__(parent)
         self._thread = None
-        self._interval = 100
+        self._interval = interval
         self._running = False
     #END __init__()
 
@@ -44,8 +44,11 @@ class ThreadTimer(QtCore.QObject):
 
     def stop(self):
         if self._thread is not None:
+            self._old = self._thread
             self._running = False
+            self._thread.wait(1000)
             self._thread.quit()
+            self._thread = None
         #END if
     #END stop()
 
@@ -54,7 +57,7 @@ class ThreadTimer(QtCore.QObject):
             while self._running:
                 end = QtCore.QTime.currentTime().addMSecs(self._interval)
                 self.timeElapsed.emit()
-                while QtCore.QTime.currentTime() < end:
+                while self._running and QtCore.QTime.currentTime() < end:
                     QtCore.QThread.msleep(ThreadTimer.THREAD_SLEEP_INTERVAL)
                 #END while
             #END while

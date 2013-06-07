@@ -67,9 +67,12 @@ class CameraWidget(QtGui.QGroupBox):
     #END __init__()
 
     def setImage(self, image):
-        image = image.scaled(self._lCamera.size(), QtCore.Qt.KeepAspectRatio)
-        image = QtGui.QPixmap.fromImage(image)
-        self._lCamera.setPixmap(image)
+        try:
+            image = image.scaled(self._lCamera.size(), QtCore.Qt.KeepAspectRatio)
+            image = QtGui.QPixmap.fromImage(image)
+            self._lCamera.setPixmap(image)
+        except:
+            pass
     #END setImage()
 
     cameraChanged = QtCore.pyqtSignal(int)
