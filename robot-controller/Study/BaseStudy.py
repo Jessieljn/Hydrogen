@@ -1,4 +1,5 @@
 from PyQt4 import QtCore, QtGui
+from UI.ActionPushButton import ActionPushButton
 
 
 class BaseStudy(QtGui.QWidget):
@@ -19,7 +20,8 @@ class BaseStudy(QtGui.QWidget):
             layoutButtons = QtGui.QVBoxLayout(self._widgets[i])
             layoutButtons.setMargin(0)
             for button in self._buttons[i]:
-                button.clicked.connect(self.on_button_clicked)
+                if isinstance(button, ActionPushButton):
+                    button.clicked.connect(self.on_button_clicked)
                 layoutButtons.addWidget(button)
             #END for
             scroll = QtGui.QScrollArea()

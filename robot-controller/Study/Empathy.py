@@ -165,19 +165,15 @@ class Empathy(BaseStudy):
                     Speech("I hope not."),
                     Speech("I can keep it a secret if I try hard."),
                 ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "FINAL PHASE"),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Intro after reset", [ \
+                    Speech("NAO online."),
+                    Speech("Hi, my name is Nao."),
+                ]),
         ])
 
         self._widgets.append(QtGui.QWidget(self))
         self._buttons.append([
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "I think", [ \
-                    Speech("I think"),
-                ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "# at", [ \
-                    Speech("the number at"),
-                ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "should be", [ \
-                    Speech("should be"),
-                ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Can't read", [ \
                     Speech("I can't read."),
                     Speech("Can you make it straight!"),
@@ -211,19 +207,37 @@ class Empathy(BaseStudy):
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Scratch Head", Behavior("shakeHand")),
         ])
 
-        i = len(self._buttons)
-        self._buttons.append([])
         self._widgets.append(QtGui.QWidget(self))
-        j = len(self._buttons)
-        self._buttons.append([])
+        self._buttons.append([ \
+            # NEED GESTURES
+        ])
+
         self._widgets.append(QtGui.QWidget(self))
+        self._buttons.append([ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "I think", [ \
+                    Speech("I think"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "# at", [ \
+                    Speech("the number at"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "should be", [ \
+                    Speech("should be"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "could be", [ \
+                    Speech("could be"),
+                ]),
+        ])
         for k in range(9):
-            button = ActionPushButton(self._widgets[i], str(chr(ord('A') + k)), Speech(str(chr(ord('A') + k))))
+            widget = QtGui.QWidget(self._widgets[len(self._widgets) - 1])
+            layout = QtGui.QHBoxLayout(widget)
+            layout.setMargin(0)
+            button = ActionPushButton(widget, str(chr(ord('A') + k)), Speech(str(chr(ord('A') + k))))
             button.setMaximumWidth(40)
-            self._buttons[i].append(button)
-            button = ActionPushButton(self._widgets[j], str(k + 1), Speech(str(k + 1)))
+            layout.addWidget(button)
+            button = ActionPushButton(widget, str(k + 1), Speech(str(k + 1)))
             button.setMaximumWidth(40)
-            self._buttons[j].append(button)
+            layout.addWidget(button)
+            self._buttons[len(self._buttons) - 1].append(widget)
         #END for
 
         self._setupEnd()
