@@ -12,7 +12,6 @@ class CameraWidget(QtGui.QGroupBox):
     def __init__(self, parent):
         super(CameraWidget, self).__init__(parent)
         self.setTitle("Camera")
-        self._updateImage = False
 
         self._wgtImage = QtGui.QWidget(self)
         self._wgtImage.setMinimumSize(320, 240)
@@ -66,21 +65,28 @@ class CameraWidget(QtGui.QGroupBox):
         layoutMain.addWidget(self._wgtCamSel)
 
         self.setDefaultImage()
+        self._mutexImage = QtCore.QMutex(QtCore.QMutex.Recursive)
+        self._updateImage = False
+        self._timerID = self.startTimer(1000 / 30)
     #END __init__()
+
+    def __del__(self):
+        self.killTimer(self._timerID)
+    #END __del__()
 
     cameraChanged = QtCore.pyqtSignal(int)
 
     moveHead = QtCore.pyqtSignal(int)
 
     def setDefaultImage(self):
-        self._lCamera.setPixmap(QtGui.QPixmap('images/image.png'))
+        self._image = QtGui.QPixmap('images/image.png')
     #END setDefaultImage()
 
     def setImage(self, image):
         if self._updateImage:
-            image = image.scaled(self._lCamera.size(), QtCore.Qt.KeepAspectRatio)
-            image = QtGui.QPixmap.fromImage(image)
-            self._lCamera.setPixmap(image)
+            locker = QtCore.QMutexLocker(self._mutexImage)
+            self._image = QtGui.QPixmap.fromImage(image)
+            locker.unlock()
         #END if
     #END setImage()
 
@@ -114,4 +120,11 @@ class CameraWidget(QtGui.QGroupBox):
     def resizeEvent(self, event):
         self._lCamera.setFixedSize(self._wgtImage.size())
     #END resizeEvent()
+
+    def timerEvent(self, event):
+        locker = QtCore.QMutexLocker(self._mutexImage)
+        image = self._image.scaled(self._lCamera.size(), QtCore.Qt.KeepAspectRatio)
+        locker.unlock()
+        self._lCamera.setPixmap(image)
+    #END timerEvent()
 #END CameraWidget
