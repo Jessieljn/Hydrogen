@@ -16,7 +16,7 @@ class Empathy(BaseStudy):
 
         self._widgets.append(QtGui.QWidget(self))
         self._buttons.append([
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "INTRODUCTION"),
+            QtGui.QLabel("INTRODUCTION", self._widgets[len(self._widgets) - 1]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Welcome", [ \
                     Speech("Oh,"),
                     Behavior("StandUp"),
@@ -32,9 +32,9 @@ class Empathy(BaseStudy):
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Excite to play", [ \
                     Speech("I'm so excited to play with you"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "PHASE 1"),
+            QtGui.QLabel("PHASE 1", self._widgets[len(self._widgets) - 1]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Play well?", [ \
-                    Speech("It is so exciting to play with someone else"),
+                    Speech("It's so exciting to play with someone else"),
                     Speech("Do you play Sudoku well?"),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Yes:", [ \
@@ -68,9 +68,9 @@ class Empathy(BaseStudy):
                     Speech("You can go first."),
                     Speech("When you filled in one box, tell me."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "PHASE 2"),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "PHASE 3"),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "PHASE 4"),
+            QtGui.QLabel("PHASE 2", self._widgets[len(self._widgets) - 1]),
+            QtGui.QLabel("PHASE 3", self._widgets[len(self._widgets) - 1]),
+            QtGui.QLabel("PHASE 4", self._widgets[len(self._widgets) - 1]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Retire", [ \
                     # big sigh
                     Speech("I can't play anymore."),
@@ -110,7 +110,7 @@ class Empathy(BaseStudy):
                     # play sigh
                     Speech("I should be fine"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "PHASE 6"),
+            QtGui.QLabel("PHASE 6", self._widgets[len(self._widgets) - 1]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Don't tell anyone", [ \
                     Speech("Well, I really shouldn't tell anyone."),
                     Speech("Please don't tell anyone."),
@@ -165,15 +165,20 @@ class Empathy(BaseStudy):
                     Speech("I hope not."),
                     Speech("I can keep it a secret if I try hard."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "FINAL PHASE"),
+            QtGui.QLabel("FINAL PHASE", self._widgets[len(self._widgets) - 1]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Intro after reset", [ \
-                    Speech("NAO online."),
+                    Speech("NAO"),
+                    Speech("online."),
                     Speech("Hi, my name is Nao."),
                 ]),
         ])
 
         self._widgets.append(QtGui.QWidget(self))
         self._buttons.append([
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Your turn", [ \
+                    Speech("It's your turn."),
+                    Speech("Please "),
+                ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Can't read", [ \
                     Speech("I can't read."),
                     Speech("Can you make it straight!"),
@@ -201,15 +206,15 @@ class Empathy(BaseStudy):
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Play with me", [ \
                     Speech("Please keey, playing with me."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Scratch Chin", Behavior("chinScratch")),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Left Hand Point", Behavior("leftHandPointing")),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Right Hand Point", Behavior("rightHandPointing")),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Scratch Head", Behavior("shakeHand")),
         ])
 
         self._widgets.append(QtGui.QWidget(self))
         self._buttons.append([ \
             # NEED GESTURES
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Scratch Chin", Behavior("chinScratch")),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Left Hand Point", Behavior("leftHandPointing")),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Right Hand Point", Behavior("rightHandPointing")),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Scratch Head", Behavior("shakeHand")),
         ])
 
         self._widgets.append(QtGui.QWidget(self))
