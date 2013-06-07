@@ -195,11 +195,13 @@ class MainWindow(QtGui.QMainWindow):
 
     def on_actDisconnect_triggered(self):
         if self._nao.isConnected():
+            self._wgtCamera.setUpdateImage(False)
+            self.killTimer(self._timerID)
             print "==================================="
             print "Disconnecting from Nao"
             self._nao.disconnect()
             print "==================================="
-            self.killTimer(self._timerID)
+            self._wgtCamera.setDefaultImage()
         # END if
     # END on_actDisconnect_triggered()
 
@@ -221,6 +223,7 @@ class MainWindow(QtGui.QMainWindow):
         if not self._nao.isConnected():
             ipAddress = str(self._dlgConnect.ipAddress)
             port = str(self._dlgConnect.port)
+            self._wgtCamera.setUpdateImage(True)
             print "==================================="
             print "Connecting to Nao (" + ipAddress + ":" + port + ")"
             if self._nao.connect(ipAddress, int(port)):
@@ -233,8 +236,8 @@ class MainWindow(QtGui.QMainWindow):
     # END on_dlgConnect_accepted()
 
     def closeEvent(self, event):
-        self._actionQueue.dispose()
         self.on_actDisconnect_triggered()
+        self._actionQueue.dispose()
     # END closeEvent()
 
     def focusInEvent(self, event):

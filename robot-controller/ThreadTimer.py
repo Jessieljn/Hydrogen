@@ -37,32 +37,27 @@ class ThreadTimer(QtCore.QObject):
             self._thread = QtCore.QThread()
             self.moveToThread(self._thread)
             self.connect(self._thread, QtCore.SIGNAL("started()"), self._process);
-            self._thread.connect(self, QtCore.SIGNAL("deleteLater()"), self.deleteLater);
             self._thread.start()
         #END if
     #END start()
 
     def stop(self):
         if self._thread is not None:
-            self._old = self._thread
             self._running = False
-            self._thread.wait(1000)
             self._thread.quit()
+            self._thread.wait()
             self._thread = None
         #END if
     #END stop()
 
     def _process(self):
-        try:
-            while self._running:
-                end = QtCore.QTime.currentTime().addMSecs(self._interval)
-                self.timeElapsed.emit()
-                while self._running and QtCore.QTime.currentTime() < end:
-                    QtCore.QThread.msleep(ThreadTimer.THREAD_SLEEP_INTERVAL)
-                #END while
+        while self._running:
+            end = QtCore.QTime.currentTime().addMSecs(self._interval)
+            self.timeElapsed.emit()
+            while self._running and QtCore.QTime.currentTime() < end:
+                QtCore.QThread.msleep(ThreadTimer.THREAD_SLEEP_INTERVAL)
             #END while
-        except:
-            pass
+        #END while
         self._running = False
     #END _process()
 #END class

@@ -12,13 +12,13 @@ class CameraWidget(QtGui.QGroupBox):
     def __init__(self, parent):
         super(CameraWidget, self).__init__(parent)
         self.setTitle("Camera")
+        self._updateImage = False
 
         self._wgtImage = QtGui.QWidget(self)
         self._wgtImage.setMinimumSize(320, 240)
-        self._wgtImage.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.MinimumExpanding)
         self._lCamera = QtGui.QLabel(self._wgtImage)
+        self._lCamera.setAlignment(QtCore.Qt.AlignCenter)
         self._lCamera.setFrameStyle(QtGui.QFrame.Panel)
-        self._lCamera.setPixmap(QtGui.QPixmap('images/image.png'))
         layoutCamera = QtGui.QHBoxLayout(self._wgtImage)
         layoutCamera.setMargin(0)
         layoutCamera.addWidget(self._lCamera, 0, QtCore.Qt.AlignCenter)
@@ -64,20 +64,29 @@ class CameraWidget(QtGui.QGroupBox):
         layoutMain.addWidget(self._wgtImage)
         layoutMain.addWidget(self._wgtButtons)
         layoutMain.addWidget(self._wgtCamSel)
-    #END __init__()
 
-    def setImage(self, image):
-        try:
-            image = image.scaled(self._lCamera.size(), QtCore.Qt.KeepAspectRatio)
-            image = QtGui.QPixmap.fromImage(image)
-            self._lCamera.setPixmap(image)
-        except:
-            pass
-    #END setImage()
+        self.setDefaultImage()
+    #END __init__()
 
     cameraChanged = QtCore.pyqtSignal(int)
 
     moveHead = QtCore.pyqtSignal(int)
+
+    def setDefaultImage(self):
+        self._lCamera.setPixmap(QtGui.QPixmap('images/image.png'))
+    #END setDefaultImage()
+
+    def setImage(self, image):
+        if self._updateImage:
+            image = image.scaled(self._lCamera.size(), QtCore.Qt.KeepAspectRatio)
+            image = QtGui.QPixmap.fromImage(image)
+            self._lCamera.setPixmap(image)
+        #END if
+    #END setImage()
+
+    def setUpdateImage(self, enable):
+        self._updateImage = enable
+    #END setUpdateImage()
 
     def on__btnUp_clicked(self):
         self.moveHead.emit(Direction.Up)
@@ -85,15 +94,15 @@ class CameraWidget(QtGui.QGroupBox):
 
     def on__btnDown_clicked(self):
         self.moveHead.emit(Direction.Down)
-    #END on__btnUp_clicked()
+    #END on__btnDown_clicked()
 
     def on__btnLeft_clicked(self):
         self.moveHead.emit(Direction.Left)
-    #END on__btnUp_clicked()
+    #END on__btnLeft_clicked()
 
     def on__btnRight_clicked(self):
         self.moveHead.emit(Direction.Right)
-    #END on__btnUp_clicked()
+    #END on__btnRight_clicked()
 
     def on__btnGrpCamera_buttonClicked(self, button):
         if button == self._rdbtnTopCamera:
@@ -101,4 +110,8 @@ class CameraWidget(QtGui.QGroupBox):
         elif button == self._rdbtnBottomCamera:
             self.cameraChanged.emit(Camera.Bottom)
     #END on__btnGrpCamera_buttonClicked()
+
+    def resizeEvent(self, event):
+        self._lCamera.setFixedSize(self._wgtImage.size())
+    #END resizeEvent()
 #END CameraWidget
