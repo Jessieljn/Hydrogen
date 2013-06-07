@@ -1,4 +1,4 @@
-from Definitions import Camera, CameraResolution, VIDEO_SUBSCRIBE_NAME
+from Definitions import Camera, CameraResolution, LEDNames, VIDEO_SUBSCRIBE_NAME
 from PyQt4 import QtCore, QtGui
 import naoqi
 import socket
@@ -125,6 +125,29 @@ class Nao(QtCore.QObject):
         self.speechProxy.say(msg)
     # END say()
 
+    def LEDNormal(self):
+        self.postLEDsetIntensity(LEDNames.Face, 1.0)
+        self.postLEDfadeRGB(LEDNames.Chest, 0x0000ff00, 0.5)
+        self.postLEDfadeRGB(LEDNames.LeftEar, 0x00ff6100, 0.5)
+        self.postLEDfadeRGB(LEDNames.RightEar, 0x00ff6100, 0.5)
+    # END LEDNormal()
+
+    def LEDfadeIntensity(self, name, intensity, seconds):
+        self.ledProxy.fade(name, intensity, seconds)
+    # END LEDfadeIntensity()
+
+    def LEDfadeRGB(self, name, rgb, seconds):
+        self.ledProxy.fadeRGB(name, rgb, seconds)
+    # END LEDfadeRGB()
+
+    def LEDsetIntensity(self, name, intensity):
+        self.ledProxy.setIntensity(name, intensity)
+    # END LEDsetIntensity()
+
+    def LEDrandomEyes(self, duration):
+        self.ledProxy.randomEyes(duration)
+    # END LEDrandomEyes()
+
     def postBehavior(self, bhv):
         self.behaviorProxy.post.runBehavior(bhv)
     # END postBehavior()
@@ -132,6 +155,22 @@ class Nao(QtCore.QObject):
     def postSay(self, msg):
         self.speechProxy.post.say(msg)
     # END postSay()
+
+    def postLEDfadeIntensity(self, name, intensity, seconds):
+        self.ledProxy.post.fade(name, intensity, seconds)
+    # END postLEDfadeIntensity()
+
+    def postLEDfadeRGB(self, name, rgb, seconds):
+        self.ledProxy.post.fadeRGB(name, rgb, seconds)
+    # END postLEDfadeRGB()
+
+    def postLEDsetIntensity(self, name, intensity):
+        self.ledProxy.post.setIntensity(name, intensity)
+    # END postLEDsetIntensity()
+
+    def postLEDrandomEyes(self, duration):
+        self.ledProxy.post.randomEyes(duration)
+    # END postLEDrandomEyes()
 
     def timerEvent(self, event):
         self.rawFrame = self.cameraProxy.getImageRemote(self.cameraProxyID)
@@ -154,23 +193,6 @@ class Nao(QtCore.QObject):
     def turnHeadRight(self):
         self.motionProxy.changeAngles("HeadYaw", -0.20, 0.10)
     # END turnHeadRight()
-
-    def setLEDsNormal(self):
-        self.ledProxy.post.fadeRGB("ChestLeds", 0x0000ff00, 0.5)
-        self.ledProxy.post.setIntensity("FaceLeds", 1.0)
-        self.ledProxy.post.fadeRGB("LeftEarLeds", 0x00ff6100, 0.5)
-        self.ledProxy.post.fadeRGB("RightEarLeds", 0x00ff6100, 0.5)
-    # END setLEDsNormal()
-
-    def setLEDsProcessing(self):
-        self.ledProxy.post.fadeRGB("ChestLeds", 0x00ff0000, 0.5)
-        self.ledProxy.post.fadeRGB("FaceLeds", 0x00ffa500, 0.5)
-        self.ledProxy.post.fadeRGB("LeftEarLeds", 0x00ffa500, 0.5)
-        self.ledProxy.post.fadeRGB("RightEarLeds", 0x00ffa500, 0.5)
-
-        # Sets the intensity of the LEDs.
-        # self.ledProxy.post.setIntensity("ChestLeds", 1.0)
-    # END setLEDsProcessing()
 
     def setStiffness(self, stiffness):
         self.motionProxy.setStiffnesses("Body", stiffness)

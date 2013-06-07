@@ -77,7 +77,7 @@ class GeneralWidget(QtGui.QWidget):
         self.sit.clicked.connect(self.on_button_clicked)
         self.taiChi = ActionPushButton(self, "Tai Chi", Behavior("TaiChi"))
         self.taiChi.clicked.connect(self.on_button_clicked)
-        self.handShake = ActionPushButton(self, "Hand Shake", Behavior("shakeHand"))
+        self.handShake = ActionPushButton(self, "Hand Shake", Behavior("ShakeHand"))
         self.handShake.clicked.connect(self.on_button_clicked)
         self.thriller = ActionPushButton(self, "Thriller", Behavior("thriller"))
         self.thriller.clicked.connect(self.on_button_clicked)

@@ -31,3 +31,16 @@ class Direction:
     Right \
  = range(5)
 #END class
+
+class LEDNames:
+    All = "AllLeds"
+    Brain = "BrainLeds"
+    Ears = "EarLeds"
+    LeftEar = "LeftEarLeds"
+    RightEar = "RightEarLeds"
+    Face = "FaceLeds"
+    FaceLeft = "LeftFaceLeds"
+    FaceRight = "RightFaceLeds"
+    Chest = "ChestLeds"
+    Feet = "FeetLeds"
+#END class

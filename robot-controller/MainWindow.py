@@ -24,6 +24,7 @@ class MainWindow(QtGui.QMainWindow):
         super(MainWindow, self).__init__()
         self._nao = Nao()
         self._actionQueue = ActionModel(self, self._nao)
+        self._blinkLEDTime = QtCore.QTime.currentTime()
         self._keys = dict()
         self._keys[Direction.Up] = False
         self._keys[Direction.Down] = False
@@ -159,9 +160,12 @@ class MainWindow(QtGui.QMainWindow):
 
     def on_changingLEDs(self):
         if self._wgtSpeech.isSpeechTextEmpty():
-            self._nao.setLEDsNormal()
+            self._nao.LEDNormal()
         else:
-            self._nao.setLEDsProcessing()
+            if self._blinkLEDTime.addSecs(1) < QtCore.QTime.currentTime():
+                self._nao.postLEDrandomEyes(1)
+                self._blinkLEDTime = QtCore.QTime.currentTime()
+            # END if
         # END if
     # END on_changingLEDs()
 
@@ -178,7 +182,7 @@ class MainWindow(QtGui.QMainWindow):
     # END on_moveHead()
 
     def on_playSpeech(self, value):
-        self._actionQueue.enqueue(Speech(value))
+        self._actionQueue.addActions(Speech(value))
     # END on_playSpeech()
 
     def on_actConnect_triggered(self):
