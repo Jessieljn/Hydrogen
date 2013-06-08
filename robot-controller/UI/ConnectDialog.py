@@ -27,10 +27,10 @@ class ConnectDialog(QtGui.QDialog):
         self._lePort.setText(self.port)
         self._lePort.setFocusPolicy(QtCore.Qt.StrongFocus)
 
-        self._btnConnect = QtGui.QPushButton('Connect', self)
+        self._btnConnect = QtGui.QPushButton('Connect (&C)', self)
         self._btnConnect.clicked.connect(self.on__btnConnect_triggered)
 
-        self._btnCancel = QtGui.QPushButton('Cancel', self)
+        self._btnCancel = QtGui.QPushButton('Cancel (&X)', self)
         self._btnCancel.clicked.connect(self.on__btnCancel_triggered)
 
         self._layoutGrid = QtGui.QGridLayout(self)
