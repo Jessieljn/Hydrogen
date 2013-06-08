@@ -49,7 +49,7 @@ class MainWindow(QtGui.QMainWindow):
         actExit = QtGui.QAction(QtGui.QIcon('images/exit.png'), '&Exit', self)
         actExit.setShortcut('Ctrl+X')
         actExit.setStatusTip('Exit application')
-        actExit.triggered.connect(QtGui.qApp.quit)
+        actExit.triggered.connect(self.close)
 
         fileMenu = menubar.addMenu('File')
         fileMenu.addAction(actConnect)
