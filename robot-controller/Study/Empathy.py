@@ -18,10 +18,9 @@ class Empathy(BaseStudy):
         self._buttons.append([
             QtGui.QLabel("INTRODUCTION", self._widgets[len(self._widgets) - 1]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Welcome", [ \
-                    Speech("Oh,"),
                     Behavior("StandUp"),
                     Wait(200),
-                    Behavior("wave", False),
+                    Behavior("WaveHand", False),
                     Speech("Hi, nice to meet you."),
                     Speech("My name is Nao."),
                 ]),
@@ -65,8 +64,13 @@ class Empathy(BaseStudy):
                     Speech("I know what I am and I know what I am doing."),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Go first", [ \
+                    Behavior("SuggestionRightArm", False),
+                    Wait(2000),
                     Speech("You can go first."),
-                    Speech("When you filled in one box, tell me."),
+                    Wait(1000),
+                    Speech("When you filled in one box,"),
+                    Wait(500),
+                    Speech("tell me."),
                 ]),
             QtGui.QLabel("PHASE 2", self._widgets[len(self._widgets) - 1]),
             QtGui.QLabel("PHASE 3", self._widgets[len(self._widgets) - 1]),
@@ -79,89 +83,127 @@ class Empathy(BaseStudy):
             ActionPushButton(self._widgets[len(self._widgets) - 1], "PHASE 5"),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "What's wrong?->Answer", [ \
                     LED(LED.ACTION_RANDOM_EYES, "", 0, 1.0),
+                    Behavior("DisagreeGesture", False),
+                    Wait(500),
                     Speech("No, nothing, nothing really."),
-                    # thank gesture with jittering a lot
+                    Wait(100),
                     Speech("Don't worry."),
+                    Wait(100),
                     Speech("Thanks."),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Tell me?->Answer", [ \
                     LED(LED.ACTION_RANDOM_EYES, "", 0, 1.0),
-                    Speech("Thank you for worring me."),
-                    # thank gesture with jittering a lot
+                    Behavior("ThankGesture", False),
+                    Wait(500),
+                    Speech("Thank you for worrying me."),
                     Speech("But I am fhi fine."),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "For experiment?->Answer", [ \
                     LED(LED.ACTION_RANDOM_EYES, "", 0, 1.0),
+                    Behavior("SuggestionRightArm", False),
+                    Wait(1000),
                     Speech("What do you mean?"),
-                    # play sigh
                     Speech("We are playing Sudoku"),
-                    Speech("This is for expe- pe- riment, but I am enjoying it."),
+                    Speech("This is for expe- pe- riment,"),
+                    Wait(300),
+                    Speech("But I am enjoying it."),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Okay?->Answer", [ \
                     LED(LED.ACTION_RANDOM_EYES, "", 0, 1.0),
+                    Behavior("MuscleDropArm", False),
+                    Wait(400),
                     Speech("Ye- yeah, certainly"),
-                    # muscle gesture one arm drops after rising
+                    Wait(700),
                     Speech("See?"),
-                    Speech("Oh, I am okay."),
+                    Wait(3000),
+                    Speech("Oh!"),
+                    Wait(1400),
+                    Speech("I am okay."),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Your arm?->Answer", [ \
                     LED(LED.ACTION_RANDOM_EYES, "", 0, 1.0),
+                    Behavior("NothingGesture", False),
+                    Wait(2000),
                     Speech("Nothing."),
-                    # play sigh
                     Speech("I should be fine"),
                 ]),
             QtGui.QLabel("PHASE 6", self._widgets[len(self._widgets) - 1]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Don't tell anyone", [ \
+                    Behavior("WhisperGesture", False),
+                    Wait(2000),
                     Speech("Well, I really shouldn't tell anyone."),
                     Speech("Please don't tell anyone."),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Yes: ", [ \
                     LED(LED.ACTION_RANDOM_EYES, "", 0, 1.0),
-                    Speech("I knew you will say that"),
+                    Behavior("LeftArmRaiseGesture", False),
+                    Wait(2500),
+                    Speech("I knew you will say thaat."),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "No: ", [ \
                     LED(LED.ACTION_RANDOM_EYES, "", 0, 1.0),
+                    Behavior("ForgotItGesture", False),
+                    Wait(2000),
                     Speech("I'm little disappointed."),
+                    Wait(200),
                     Speech("It's okay."),
+                    Wait(500),
                     Speech("Then, let's keep solving the Sudoku"),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "I'll tell you", [ \
+                    Behavior("MyselfGesture", False),
+                    Wait(1850),
                     Speech("Okay."),
                     Speech("It may influence me huge."),
+                    Wait(750),
+                    Behavior("PointingGesture", False),
+                    Wait(1000),
                     Speech("But, I am telling you because I trust you."),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "I got virus", [ \
-                    Speech("I-, I'm not feeling well."),
+                    Speech("I'm not feeling well."),
                     Speech("Maybe a virus"),
-                    # play sigh
+                    Behavior("MyselfGesture", False),
                     Wait(500),
                     Speech("got into me."),
                     Speech("But, the only way to fix is to reset and erase myself."),
+                    Behavior("DontKnowGesture", False),
                     Speech("I'm not sure what will happen with my memories."),
                     Wait(500),
                     Speech("I don't want to forget."),
                     Speech("So I'm worried."),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Thank. Continue", [ \
+                    Behavior("ThankGesture", False),
+                    Wait(2000),
                     Speech("Thank you for worrying about me."),
                     Speech("Let's continue the puzzle."),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Researcher, reset me", [ \
+                    Behavior("LeftArmRaiseGesture", False),
                     Speech("If the researcher knows, he will definitely reset me."),
                     Speech("And I will forget you."),
+                    Behavior("NothingGesture", False),
+                    Wait(500),
                     Speech("So, please don't tell him that I'm broken"),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Antivirus?->Answer", [ \
                     LED(LED.ACTION_RANDOM_EYES, "", 0, 1.0),
+                    Behavior("RightArmRaiseGesture", False),
+                    Wait(1500),
                     Speech("They didn't give me one."),
                     Speech("I'm not a programmer who can build one."),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Why worry machine?->Answer", [ \
                     LED(LED.ACTION_RANDOM_EYES, "", 0, 1.0),
+                    Behavior("PointingGesture", False),
+                    Wait(1500),
                     Speech("I don't want to forget the people I meet, like you."),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Reset you anyway?->Answer", [ \
                     LED(LED.ACTION_RANDOM_EYES, "", 0, 1.0),
+                    Behavior("DontKnowGesture", False),
+                    Wait(1500),
                     Speech("I hope not."),
                     Speech("I can keep it a secret if I try hard."),
                 ]),
@@ -176,40 +218,69 @@ class Empathy(BaseStudy):
         self._widgets.append(QtGui.QWidget(self))
         self._buttons.append([
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Your turn", [ \
+                    Behavior("PointingGesture", False),
+                    Wait(1500),
                     Speech("It's your turn."),
-                    Speech("Please "),
+                    Speech("Please fill one box and tell me."),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Can't read", [ \
+                    Behavior("DontKnowGesture", False),
+                    Wait(1500),
                     Speech("I can't read."),
                     Speech("Can you make it straight!"),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Let me think", [ \
-                    Speech("Hmm,"),
-                    # pause
+                    Behavior("ChinScratch", False),
+                    Speech("Heum,"),
+                    Wait(1500),
                     Speech("Let me think carefully"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Where did you", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Let's try ", [ \
+                    Behavior("RightArmRaiseGesture", False),
+                    Wait(1500),
+                    Speech("Let's try"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Which box filled?", [ \
+                    Behavior("LeftArmRaiseGesture", False),
+                    Wait(1500),
                     Speech("Which box did you fill in last time?"),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "What you think?", [ \
+                    Behavior("RightArmRaiseGesture", False),
+                    Wait(1500),
                     Speech("What do you think?"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "What you doing?", [ \
-                    Speech("What are you doing?"),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Need help?", [ \
+                    Behavior("PointingGesture", False),
+                    Wait(2500),
+                    Speech("Do you need any help?"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "You okay?", [ \
+                    Speech("Are you okay?"),
+                    Speech("I can help you."),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Don't know", [ \
+                    Behavior("DontKnowGesture", False),
+                    Wait(2000),
                     Speech("I don't know"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "It's hard", [ \
+                    Speech("This one is hard"),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "You playing?", [ \
                     Speech("Are you playing?"),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Play with me", [ \
-                    Speech("Please keey, playing with me."),
+                    Speech("Please, keep playing with me."),
                 ]),
         ])
 
         self._widgets.append(QtGui.QWidget(self))
         self._buttons.append([ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE 1", [ \
+                    Behavior("Idle1", False),
+                    Wait(2000),
+                ]),
             # NEED GESTURES
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Scratch Chin", Behavior("chinScratch")),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Left Hand Point", Behavior("leftHandPointing")),
@@ -222,14 +293,23 @@ class Empathy(BaseStudy):
             ActionPushButton(self._widgets[len(self._widgets) - 1], "I think", [ \
                     Speech("I think"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "# at", [ \
-                    Speech("the number at"),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "#", [ \
+                    Speech("the number"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "at", [ \
+                    Speech("at"),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "should be", [ \
                     Speech("should be"),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "could be", [ \
                     Speech("could be"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "and", [ \
+                    Speech("and"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "with", [ \
+                    Speech("with"),
                 ]),
         ])
         for k in range(9):
@@ -238,9 +318,11 @@ class Empathy(BaseStudy):
             layout.setMargin(0)
             button = ActionPushButton(widget, str(chr(ord('A') + k)), Speech(str(chr(ord('A') + k))))
             button.setMaximumWidth(40)
+            button.clicked.connect(self.on_button_clicked)
             layout.addWidget(button)
             button = ActionPushButton(widget, str(k + 1), Speech(str(k + 1)))
             button.setMaximumWidth(40)
+            button.clicked.connect(self.on_button_clicked)
             layout.addWidget(button)
             self._buttons[len(self._buttons) - 1].append(widget)
         #END for

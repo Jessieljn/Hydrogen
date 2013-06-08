@@ -25,6 +25,10 @@ class NaoCamera(QtCore.QObject):
             self.moveToThread(self._thread)
             self.connect(self._thread, QtCore.SIGNAL("started()"), self._process);
             self._cameraProxy = naoqi.ALProxy("ALVideoDevice")
+            try:
+                self._cameraProxy.unsubscribe(VIDEO_SUBSCRIBE_NAME)
+            except:
+                pass
             self._cameraProxy.setParam(NaoCamera.CAMERA_PARAM_SELECT, Camera.Top)
             self._cameraProxyID = self._cameraProxy.subscribe(VIDEO_SUBSCRIBE_NAME, CameraResolution.VGA, 11, 20)
             self._thread.start()
