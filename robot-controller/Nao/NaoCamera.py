@@ -1,5 +1,8 @@
-from Definitions import Camera, CameraResolution, VIDEO_SUBSCRIBE_NAME
-from PyQt4 import QtCore, QtGui
+from Definitions import Camera
+from Definitions import CameraResolution
+from Definitions import VIDEO_SUBSCRIBE_NAME
+from PyQt4 import QtCore
+from PyQt4 import QtGui
 import naoqi
 
 

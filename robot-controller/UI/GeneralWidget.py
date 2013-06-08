@@ -1,7 +1,8 @@
-from PyQt4 import QtCore, QtGui
-from Action.Action import Action
-from Action.Behavior import Behavior
-from Action.Speech import Speech
+from PyQt4 import QtCore
+from PyQt4 import QtGui
+from Action import Action
+from Action import Behavior
+from Action import Speech
 from ActionPushButton import ActionPushButton
 
 

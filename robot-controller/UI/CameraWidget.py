@@ -1,5 +1,7 @@
-from Definitions import Camera, Direction
-from PyQt4 import QtCore, QtGui
+from Definitions import Camera
+from Definitions import Direction
+from PyQt4 import QtCore
+from PyQt4 import QtGui
 
 
 ##

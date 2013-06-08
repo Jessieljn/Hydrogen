@@ -1,16 +1,17 @@
 from Definitions import Direction
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtCore
+from PyQt4 import QtGui
 from Nao import Nao
-from Action.ActionModel import ActionModel
-from Action.Speech import Speech
+from Action import ActionModel
+from Action import Speech
 from Study import Study
-from UI.AboutWindow import AboutWindow
-from UI.ActionListWidget import ActionListWidget
-from UI.CameraWidget import CameraWidget
-from UI.ConnectDialog import ConnectDialog
-from UI.GeneralWidget import GeneralWidget
-from UI.SpeechWidget import SpeechWidget
-from UI.StiffnessWidget import StiffnessWidget
+from AboutWindow import AboutWindow
+from ActionListWidget import ActionListWidget
+from CameraWidget import CameraWidget
+from ConnectDialog import ConnectDialog
+from GeneralWidget import GeneralWidget
+from SpeechWidget import SpeechWidget
+from StiffnessWidget import StiffnessWidget
 
 
 ##
@@ -46,7 +47,7 @@ class MainWindow(QtGui.QMainWindow):
         actDisconnect.setShortcut('Ctrl+D')
         actDisconnect.triggered.connect(self.on_actDisconnect_triggered)
 
-        actExit = QtGui.QAction(QtGui.QIcon('images/exit.png'), '&Exit', self)
+        actExit = QtGui.QAction(QtGui.QIcon('images/exit.png'), 'E&xit', self)
         actExit.setShortcut('Ctrl+X')
         actExit.setStatusTip('Exit application')
         actExit.triggered.connect(self.close)
@@ -158,30 +159,35 @@ class MainWindow(QtGui.QMainWindow):
     # END __init__()
 
     def on_changingLEDs(self):
-        if self._wgtSpeech.isSpeechTextEmpty():
-            self._nao.LEDNormal()
-        else:
-            if self._blinkLEDTime.addSecs(1) < QtCore.QTime.currentTime():
-                self._nao.postLEDrandomEyes(1)
-                self._blinkLEDTime = QtCore.QTime.currentTime()
+        if self._nao.isConnected():
+            if self._wgtSpeech.isSpeechTextEmpty():
+                self._nao.LEDNormal()
+            else:
+                if self._blinkLEDTime < QtCore.QTime.currentTime():
+                    self._nao.postLEDrandomEyes(1)
+                    self._blinkLEDTime = QtCore.QTime.currentTime().addSecs(1)
+                # END if
             # END if
         # END if
     # END on_changingLEDs()
 
     def on_moveHead(self, direction):
-        if direction == Direction.Up:
-            self._nao.tiltHeadUp()
-        elif direction == Direction.Down:
-            self._nao.tiltHeadDown()
-        elif direction == Direction.Left:
-            self._nao.turnHeadLeft()
-        elif direction == Direction.Right:
-            self._nao.turnHeadRight()
+        if self._nao.isConnected():
+            if direction == Direction.Up:
+                self._nao.tiltHeadUp()
+            elif direction == Direction.Down:
+                self._nao.tiltHeadDown()
+            elif direction == Direction.Left:
+                self._nao.turnHeadLeft()
+            elif direction == Direction.Right:
+                self._nao.turnHeadRight()
+            #END if
         #END if
     # END on_moveHead()
 
     def on_playSpeech(self, value):
-        self._actionQueue.addActions(Speech(value, False))
+        print Speech(value, blocking = False).paramToString()
+        self._actionQueue.addActions(Speech(value, blocking = False))
     # END on_playSpeech()
 
     def on_actConnect_triggered(self):

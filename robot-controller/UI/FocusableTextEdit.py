@@ -1,4 +1,5 @@
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtCore
+from PyQt4 import QtGui
 
 
 class FocusableTextEdit(QtGui.QTextEdit):
@@ -7,6 +8,7 @@ class FocusableTextEdit(QtGui.QTextEdit):
     #END __init__()
 
     textSubmitted = QtCore.pyqtSignal()
+
     inputCancelled = QtCore.pyqtSignal()
 
     def mousePressEvent(self, event):

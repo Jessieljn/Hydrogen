@@ -1,5 +1,5 @@
 from PyQt4 import QtGui
-from Action.Action import Action
+from Action import Action
 
 
 class ActionPushButton(QtGui.QPushButton):

@@ -46,6 +46,8 @@ class Empathy(BaseStudy):
                     Speech("I am sure we will do a good job"),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Last time", [ \
+                    Behavior("SuggestionLeftArm", False),
+                    Wait(2000),
                     Speech("Last time, we didn't do very well because we did not really play the same way."),
                     Speech("But you seem to be more like me!"),
                     Speech("I think we can do well."),
@@ -103,7 +105,7 @@ class Empathy(BaseStudy):
                     Wait(1000),
                     Speech("What do you mean?"),
                     Speech("We are playing Sudoku"),
-                    Speech("This is for expe- pe- riment,"),
+                    Speech("This is for the expe- expe- expe-. Sorry, this is for the experiment"),
                     Wait(300),
                     Speech("But I am enjoying it."),
                 ]),
@@ -222,11 +224,17 @@ class Empathy(BaseStudy):
                     Speech("It's your turn."),
                     Speech("Please fill one box and tell me."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Can't read", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Can't read, straight", [ \
                     Behavior("DontKnowGesture", False),
                     Wait(1500),
                     Speech("I can't read."),
-                    Speech("Can you make it straight!"),
+                    Speech("Can you make it straight?"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Can't read, tell me", [ \
+                    Behavior("MyselfGesture", False),
+                    Wait(1500),
+                    Speech("I can't read."),
+                    Speech("Can you tell me what you wrote?"),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Let me think", [ \
                     Behavior("ChinScratch", False),
@@ -309,6 +317,9 @@ class Empathy(BaseStudy):
             ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE 1", [ \
                     Behavior("Idle1", False),
                     Wait(2000),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "JITTER", [ \
+                    Behavior("jitter"),
                 ]),
             # NEED GESTURES
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Scratch Chin", Behavior("chinScratch")),
