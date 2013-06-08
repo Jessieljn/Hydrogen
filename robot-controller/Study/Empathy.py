@@ -5,14 +5,13 @@ from Action.Speech import Speech
 from Action.LED import LED
 from Action.Wait import Wait
 from UI.ActionPushButton import ActionPushButton
+from UI.FocusableLineEdit import FocusableLineEdit
 
 
 class Empathy(BaseStudy):
     def __init__(self):
         super(Empathy, self).__init__()
         self._setupBegin()
-
-        ### TODO: Participant name box.
 
         self._widgets.append(QtGui.QWidget(self))
         self._buttons.append([
@@ -240,6 +239,19 @@ class Empathy(BaseStudy):
                     Wait(1500),
                     Speech("Let's try"),
                 ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Don't know", [ \
+                    Behavior("DontKnowGesture", False),
+                    Wait(2000),
+                    Speech("I don't know"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "It's hard", [ \
+                    Speech("This one is hard"),
+                ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Fill number", [ \
+                    Behavior("RightArmRaiseGesture", False),
+                    Wait(1500),
+                    Speech("Please, could you fill the number in for me?"),
+                ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Which box filled?", [ \
                     Behavior("LeftArmRaiseGesture", False),
                     Wait(1500),
@@ -259,29 +271,41 @@ class Empathy(BaseStudy):
                     Speech("Are you okay?"),
                     Speech("I can help you."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Don't know", [ \
-                    Behavior("DontKnowGesture", False),
-                    Wait(2000),
-                    Speech("I don't know"),
-                ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "It's hard", [ \
-                    Speech("This one is hard"),
-                ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "You playing?", [ \
                     Speech("Are you playing?"),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Play with me", [ \
                     Speech("Please, keep playing with me."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Fill number", [ \
-                    Behavior("RightArmRaiseGesture", False),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Do play yourself", [ \
+                    Behavior("NothingGesture", False),
+                    Wait(2000),
+                    Speech("Don't play by yourself."),
+                    Wait(1000),
+                    Behavior("MyselfGesture", False),
                     Wait(1500),
-                    Speech("Please, could you fill the number in for me?"),
+                    Speech("Please, let me play as well"),
                 ]),
         ])
 
         self._widgets.append(QtGui.QWidget(self))
-        self._buttons.append([ \
+        widget = QtGui.QWidget(self._widgets[len(self._widgets) - 1])
+        layout = QtGui.QHBoxLayout(widget)
+        layout.setMargin(0)
+        self._leName = FocusableLineEdit(self._widgets[len(self._widgets) - 1])
+        layout.addWidget(self._leName)
+        button = QtGui.QPushButton("PlayName", widget)
+        button.setMaximumWidth(55)
+        button.clicked.connect(self.on_participantName)
+        layout.addWidget(button)
+        self._buttons.append([
+            widget,
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Wait a minute", [ \
+                    Behavior("RightArmRaiseGesture", False),
+                    Wait(1500),
+                    Speech("Please, wait a minute."),
+                    Speech("I need time to process."),
+                ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE 1", [ \
                     Behavior("Idle1", False),
                     Wait(2000),
@@ -294,7 +318,7 @@ class Empathy(BaseStudy):
         ])
 
         self._widgets.append(QtGui.QWidget(self))
-        self._buttons.append([ \
+        self._buttons.append([
             ActionPushButton(self._widgets[len(self._widgets) - 1], "I think", [ \
                     Speech("I think"),
                 ]),
@@ -334,4 +358,9 @@ class Empathy(BaseStudy):
 
         self._setupEnd()
     #END __init__()
+
+    def on_participantName(self):
+        if self._actionQueue is not None:
+            self._actionQueue.addActions(Speech(self._leName.text()))
+    #END on_participantName()
 #END Empathy
