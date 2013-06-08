@@ -273,6 +273,11 @@ class Empathy(BaseStudy):
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Play with me", [ \
                     Speech("Please, keep playing with me."),
                 ]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Fill number", [ \
+                    Behavior("RightArmRaiseGesture", False),
+                    Wait(1500),
+                    Speech("Please, could you fill the number in for me?"),
+                ]),
         ])
 
         self._widgets.append(QtGui.QWidget(self))
