@@ -1,8 +1,8 @@
-from Action import Action
+from BaseAction import BaseAction
 
 
-class Speech(Action):
-    def __init__(self, text, speed = 100, shaping = 100, blocking = True):
+class Speech(BaseAction):
+    def __init__(self, text, speed = 95, shaping = 100, blocking = True):
         super(Speech, self).__init__()
         self._text = str(text)
         speed = int(speed)
@@ -25,10 +25,10 @@ class Speech(Action):
     #END __init__()
 
     def execute(self, nao):
-        if self.blocking:
-            nao.say(self.parameter)
+        if self._blocking:
+            nao.say(self.paramToString())
         else:
-            nao.postSay(self.parameter)
+            nao.postSay(self.paramToString())
     #END execute()
 
     def actionToString(self):

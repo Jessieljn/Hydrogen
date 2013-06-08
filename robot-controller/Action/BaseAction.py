@@ -2,10 +2,9 @@ from abc import abstractmethod
 from PyQt4 import QtCore
 
 
-class Action(QtCore.QObject):
+class BaseAction(QtCore.QObject):
     def __init__(self):
-        super(Action, self).__init__()
-        self.parameter = None
+        super(BaseAction, self).__init__()
     #END __init__()
 
     @abstractmethod

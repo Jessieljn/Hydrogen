@@ -1,7 +1,7 @@
 from PyQt4 import QtGui
 from BaseStudy import BaseStudy
-from Action.Behavior import Behavior
-from Action.Speech import Speech
+from Action import Behavior
+from Action import Speech
 from UI.ActionPushButton import ActionPushButton
 
 

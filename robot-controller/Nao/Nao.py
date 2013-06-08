@@ -1,6 +1,8 @@
 from Definitions import LEDNames
 from PyQt4 import QtCore
 from NaoCamera import NaoCamera
+from NaoMotion import NaoMotion
+from NaoMotionList import NaoMotionList
 import naoqi
 import socket
 
@@ -19,7 +21,12 @@ class Nao(QtCore.QObject):
         self._camera = NaoCamera()
         self.behaviorProxy = None
         self.motionProxy = None
+        NaoMotionList.initialize()
     # END __init__()
+
+    def __del__(self):
+        NaoMotionList.destroy()
+    # END __del__()
 
     connected = QtCore.pyqtSignal()
 
@@ -90,6 +97,14 @@ class Nao(QtCore.QObject):
     def behavior(self, bhv):
         self.behaviorProxy.runBehavior(bhv)
     # END behavior()
+
+    def motion(self, motion):
+        if motion.getMethod() == NaoMotion.METHOD_BEZIER:
+            self.motionProxy.angleInterpolationBezier(motion.getNames(), motion.getTimes(), motion.getKeys());
+        else:
+            self.motionProxy.angleInterpolation(motion.getNames(), motion.getKeys(), motion.getTimes(), True);
+        #END if
+    # END motion()
 
     def say(self, msg):
         self.speechProxy.say(msg)

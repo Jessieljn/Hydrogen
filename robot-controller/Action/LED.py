@@ -1,7 +1,7 @@
-from Action import Action
+from BaseAction import BaseAction
 
 
-class LED(Action):
+class LED(BaseAction):
     ACTION_FADE_RGB = "fadeRGB"
     ACTION_FADE_INTENSITY = "fadeIntensity"
     ACTION_SET_INTENSITY = "setIntensity"
@@ -9,37 +9,37 @@ class LED(Action):
 
     def __init__(self, action, ledname, value, seconds = 0.5, blocking = False):
         super(LED, self).__init__()
-        self.action = str(action)
-        self.ledname = str(ledname)
-        self.value = value
-        self.seconds = float(seconds)
-        self.blocking = blocking
+        self._action = str(action)
+        self._ledname = str(ledname)
+        self._value = value
+        self._seconds = float(seconds)
+        self._blocking = blocking
     #END __init__()
 
     def execute(self, nao):
-        if self.action == LED.ACTION_FADE_RGB:
-            if self.blocking:
-                nao.LEDfadeRGB(self.ledname, int(self.value), self.seconds)
+        if self._action == LED.ACTION_FADE_RGB:
+            if self._blocking:
+                nao.LEDfadeRGB(self._ledname, int(self._value), self._seconds)
             else:
-                nao.postLEDfadeRGB(self.ledname, int(self.value), self.seconds)
+                nao.postLEDfadeRGB(self._ledname, int(self._value), self._seconds)
             #END if
-        elif self.action == LED.ACTION_FADE_INTENSITY:
-            if self.blocking:
-                nao.LEDfadeIntensity(self.ledname, float(self.value), self.seconds)
+        elif self._action == LED.ACTION_FADE_INTENSITY:
+            if self._blocking:
+                nao.LEDfadeIntensity(self._ledname, float(self._value), self._seconds)
             else:
-                nao.postLEDfadeIntensity(self.ledname, float(self.value), self.seconds)
+                nao.postLEDfadeIntensity(self._ledname, float(self._value), self._seconds)
             #END if
-        elif self.action == LED.ACTION_SET_INTENSITY:
-            if self.blocking:
-                nao.LEDsetIntensity(self.ledname, float(self.value))
+        elif self._action == LED.ACTION_SET_INTENSITY:
+            if self._blocking:
+                nao.LEDsetIntensity(self._ledname, float(self._value))
             else:
-                nao.postLEDsetIntensity(self.ledname, float(self.value))
+                nao.postLEDsetIntensity(self._ledname, float(self._value))
             #END if
-        elif self.action == LED.ACTION_RANDOM_EYES:
-            if self.blocking:
-                nao.LEDrandomEyes(self.seconds)
+        elif self._action == LED.ACTION_RANDOM_EYES:
+            if self._blocking:
+                nao.LEDrandomEyes(self._seconds)
             else:
-                nao.postLEDrandomEyes(self.seconds)
+                nao.postLEDrandomEyes(self._seconds)
             #END if
         #END if
     #END execute()
@@ -49,15 +49,15 @@ class LED(Action):
     #END actionToString()
 
     def paramToString(self):
-        ret = self.action + ": ";
-        if self.action == LED.ACTION_FADE_RGB:
-            return ret + self.ledname + " with RGB " + str(self.value) + " and duration " + str(self.seconds)
-        elif self.action == LED.ACTION_FADE_INTENSITY:
-            return ret + self.ledname + " with intensity " + str(self.value) + " and duration " + str(self.seconds)
-        elif self.action == LED.ACTION_SET_INTENSITY:
-            return ret + self.ledname + " with intensity " + str(self.value)
-        elif self.action == LED.ACTION_RANDOM_EYES:
-            return ret + " with duration " + str(self.seconds)
+        ret = self._action + ": ";
+        if self._action == LED.ACTION_FADE_RGB:
+            return ret + self._ledname + " with RGB " + str(self._value) + " and duration " + str(self._seconds)
+        elif self._action == LED.ACTION_FADE_INTENSITY:
+            return ret + self._ledname + " with intensity " + str(self._value) + " and duration " + str(self._seconds)
+        elif self._action == LED.ACTION_SET_INTENSITY:
+            return ret + self._ledname + " with intensity " + str(self._value)
+        elif self._action == LED.ACTION_RANDOM_EYES:
+            return ret + " with duration " + str(self._seconds)
         return "INVALID PARAMETER(S)"
     #END paramToString()
 #END class

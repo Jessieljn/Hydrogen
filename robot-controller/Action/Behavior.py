@@ -1,18 +1,18 @@
-from Action import Action
+from BaseAction import BaseAction
 
 
-class Behavior(Action):
-    def __init__(self, param, blocking = True):
+class Behavior(BaseAction):
+    def __init__(self, bhvName, blocking = True):
         super(Behavior, self).__init__()
-        self.parameter = str(param)
-        self.blocking = blocking
+        self._bhvName = str(bhvName)
+        self._blocking = blocking
     #END __init__()
 
     def execute(self, nao):
-        if self.blocking:
-            nao.behavior(self.parameter)
+        if self._blocking:
+            nao.behavior(self._bhvName)
         else:
-            nao.postBehavior(self.parameter)
+            nao.postBehavior(self._bhvName)
     #END execute()
 
     def actionToString(self):
@@ -20,6 +20,6 @@ class Behavior(Action):
     #END actionToString()
 
     def paramToString(self):
-        return self.parameter
+        return self._bhvName
     #END paramToString()
 #END class

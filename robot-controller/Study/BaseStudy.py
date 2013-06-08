@@ -1,4 +1,5 @@
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtCore
+from PyQt4 import QtGui
 from UI.ActionPushButton import ActionPushButton
 
 
@@ -22,6 +23,7 @@ class BaseStudy(QtGui.QWidget):
             for button in self._buttons[i]:
                 if isinstance(button, ActionPushButton):
                     button.clicked.connect(self.on_button_clicked)
+                #END if
                 layoutButtons.addWidget(button)
             #END for
             scroll = QtGui.QScrollArea()
@@ -41,5 +43,6 @@ class BaseStudy(QtGui.QWidget):
     def on_button_clicked(self):
         if self._actionQueue is not None:
             self._actionQueue.addActions(self.sender().getRobotActions())
+        #END if
     #END on_button_clicked()
 #END class

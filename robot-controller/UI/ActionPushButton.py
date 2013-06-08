@@ -1,5 +1,5 @@
 from PyQt4 import QtGui
-from Action import Action
+from Action import BaseAction
 
 
 class ActionPushButton(QtGui.QPushButton):
@@ -12,7 +12,7 @@ class ActionPushButton(QtGui.QPushButton):
     def addRobotActions(self, actions):
         if actions is None:
             pass
-        elif isinstance(actions, Action):
+        elif isinstance(actions, BaseAction):
             self._actions.append(actions)
         else:
             for act in actions:

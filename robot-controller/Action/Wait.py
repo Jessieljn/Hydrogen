@@ -1,15 +1,15 @@
-from Action import Action
+from BaseAction import BaseAction
 from PyQt4 import QtCore
 
 
-class Wait(Action):
-    def __init__(self, param):
+class Wait(BaseAction):
+    def __init__(self, msecs):
         super(Wait, self).__init__()
-        self.parameter = int(param)
+        self._msecs = int(msecs)
     #END __init__()
 
     def execute(self, nao):
-        QtCore.QThread.msleep(self.parameter)
+        QtCore.QThread.msleep(self._msecs)
     #END execute()
 
     def actionToString(self):
@@ -17,6 +17,6 @@ class Wait(Action):
     #END actionToString()
 
     def paramToString(self):
-        return str(self.parameter)
+        return str(self._msecs)
     #END paramToString()
 #END class

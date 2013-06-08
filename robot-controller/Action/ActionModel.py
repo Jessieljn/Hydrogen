@@ -1,5 +1,5 @@
 from PyQt4 import QtCore
-from Action import Action
+from BaseAction import BaseAction
 from ActionQueue import ActionQueue
 from ThreadTimer import ThreadTimer
 
@@ -23,7 +23,7 @@ class ActionModel(QtCore.QAbstractTableModel):
     def addActions(self, actions):
         if actions is None:
             pass
-        elif isinstance(actions, Action):
+        elif isinstance(actions, BaseAction):
             self._timer.addToThread(actions)
             self._list.enqueue(actions)
         else:

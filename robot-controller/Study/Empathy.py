@@ -1,9 +1,10 @@
 from PyQt4 import QtGui
 from BaseStudy import BaseStudy
-from Action.Behavior import Behavior
-from Action.Speech import Speech
-from Action.LED import LED
-from Action.Wait import Wait
+from Action import Behavior
+from Action import Speech
+from Action import LED
+from Action import Motion
+from Action import Wait
 from UI.ActionPushButton import ActionPushButton
 from UI.FocusableLineEdit import FocusableLineEdit
 
@@ -16,6 +17,9 @@ class Empathy(BaseStudy):
         self._widgets.append(QtGui.QWidget(self))
         self._buttons.append([
             QtGui.QLabel("INTRODUCTION", self._widgets[len(self._widgets) - 1]),
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Testing", [ \
+                    Motion("DisagreeGesture"),
+                ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Welcome", [ \
                     Behavior("StandUp"),
                     Wait(200),
@@ -81,7 +85,7 @@ class Empathy(BaseStudy):
                     Speech("I can't play anymore."),
                     Speech("I need some rest, please go ahead"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "PHASE 5"),
+            QtGui.QLabel("PHASE 5", self._widgets[len(self._widgets) - 1]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "What's wrong?->Answer", [ \
                     LED(LED.ACTION_RANDOM_EYES, "", 0, 1.0),
                     Behavior("DisagreeGesture", False),
