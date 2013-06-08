@@ -9,7 +9,7 @@ from PyQt4 import QtCore, QtGui
 # Allows for switching between the top and bottom camera, as well as rotation of the camera.
 ##
 class CameraWidget(QtGui.QGroupBox):
-    def __init__(self, parent):
+    def __init__(self, parent, naoCamera):
         super(CameraWidget, self).__init__(parent)
         self.setTitle("Camera")
 
@@ -64,10 +64,9 @@ class CameraWidget(QtGui.QGroupBox):
         layoutMain.addWidget(self._wgtButtons)
         layoutMain.addWidget(self._wgtCamSel)
 
+        self._naoCamera = naoCamera
+        self._timerID = self.startTimer(1000 / 60)
         self.setDefaultImage()
-        self._mutexImage = QtCore.QMutex(QtCore.QMutex.Recursive)
-        self._updateImage = False
-        self._timerID = self.startTimer(1000 / 30)
     #END __init__()
 
     def __del__(self):
@@ -79,20 +78,8 @@ class CameraWidget(QtGui.QGroupBox):
     moveHead = QtCore.pyqtSignal(int)
 
     def setDefaultImage(self):
-        self._image = QtGui.QPixmap('images/image.png')
+        self._lCamera.setPixmap(QtGui.QPixmap('images/image.png'))
     #END setDefaultImage()
-
-    def setImage(self, image):
-        if self._updateImage:
-            locker = QtCore.QMutexLocker(self._mutexImage)
-            self._image = QtGui.QPixmap.fromImage(image)
-            locker.unlock()
-        #END if
-    #END setImage()
-
-    def setUpdateImage(self, enable):
-        self._updateImage = enable
-    #END setUpdateImage()
 
     def on__btnUp_clicked(self):
         self.moveHead.emit(Direction.Up)
@@ -115,6 +102,7 @@ class CameraWidget(QtGui.QGroupBox):
             self.cameraChanged.emit(Camera.Top)
         elif button == self._rdbtnBottomCamera:
             self.cameraChanged.emit(Camera.Bottom)
+        #END if
     #END on__btnGrpCamera_buttonClicked()
 
     def resizeEvent(self, event):
@@ -122,9 +110,11 @@ class CameraWidget(QtGui.QGroupBox):
     #END resizeEvent()
 
     def timerEvent(self, event):
-        locker = QtCore.QMutexLocker(self._mutexImage)
-        image = self._image.scaled(self._lCamera.size(), QtCore.Qt.KeepAspectRatio)
-        locker.unlock()
-        self._lCamera.setPixmap(image)
+        image = self._naoCamera.frame()
+        if image is not None:
+            image = QtGui.QPixmap.fromImage(image)
+            image = image.scaled(self._lCamera.size(), QtCore.Qt.KeepAspectRatio)
+            self._lCamera.setPixmap(image)
+        #END if
     #END timerEvent()
 #END CameraWidget

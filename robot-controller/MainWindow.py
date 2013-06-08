@@ -87,11 +87,10 @@ class MainWindow(QtGui.QMainWindow):
         layoutLeft.setMargin(0)
         layoutLeft.addWidget(splitterLeft)
 
-        self._wgtCamera = CameraWidget(splitterLeft)
+        self._wgtCamera = CameraWidget(splitterLeft, self._nao.getCamera())
         self._wgtCamera.setMinimumHeight(385)
         self._wgtCamera.cameraChanged.connect(self._nao.setCameraSource)
         self._wgtCamera.moveHead.connect(self.on_moveHead)
-        self._nao.frameAvailable.connect(self._wgtCamera.setImage)
 
         self._wgtActionList = ActionListWidget(splitterLeft, self._actionQueue)
         self._wgtActionList.setMinimumHeight(120)
@@ -182,7 +181,7 @@ class MainWindow(QtGui.QMainWindow):
     # END on_moveHead()
 
     def on_playSpeech(self, value):
-        self._actionQueue.addActions(Speech(value))
+        self._actionQueue.addActions(Speech(value, False))
     # END on_playSpeech()
 
     def on_actConnect_triggered(self):
@@ -195,7 +194,6 @@ class MainWindow(QtGui.QMainWindow):
 
     def on_actDisconnect_triggered(self):
         if self._nao.isConnected():
-            self._wgtCamera.setUpdateImage(False)
             self.killTimer(self._timerID)
             print "==================================="
             print "Disconnecting from Nao"
@@ -223,7 +221,6 @@ class MainWindow(QtGui.QMainWindow):
         if not self._nao.isConnected():
             ipAddress = str(self._dlgConnect.ipAddress)
             port = str(self._dlgConnect.port)
-            self._wgtCamera.setUpdateImage(True)
             print "==================================="
             print "Connecting to Nao (" + ipAddress + ":" + port + ")"
             if self._nao.connect(ipAddress, int(port)):

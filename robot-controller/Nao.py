@@ -1,5 +1,5 @@
 from Definitions import LEDNames
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtCore
 from NaoCamera import NaoCamera
 import naoqi
 import socket
@@ -16,7 +16,7 @@ class Nao(QtCore.QObject):
         self._isConnected = False
         self._naoBroker = None
         self.speechProxy = None
-        self._camera = None
+        self._camera = NaoCamera()
         self.behaviorProxy = None
         self.motionProxy = None
     # END __init__()
@@ -24,8 +24,6 @@ class Nao(QtCore.QObject):
     connected = QtCore.pyqtSignal()
 
     disconnected = QtCore.pyqtSignal()
-
-    frameAvailable = QtCore.pyqtSignal(QtGui.QImage)
 
     def connect(self, ipAddress, port):
         self._naoBroker = naoqi.ALBroker("NaoBroker", "0.0.0.0", 0, ipAddress, port)
@@ -35,8 +33,6 @@ class Nao(QtCore.QObject):
         self.speechProxy.setVolume(0.85)
         print " > " + str(self.speechProxy)
         print " > Loading Camera..."
-        self._camera = NaoCamera()
-        self._camera.frameAvailable.connect(self.frameAvailable)
         self._camera.start()
         print " > " + str(self._camera.getCameraProxy())
         print " > Loading Behaviors..."
@@ -56,7 +52,6 @@ class Nao(QtCore.QObject):
 
     def disconnect(self):
         self._camera.stop()
-        self._camera = None
         self.speechProxy = None
         self.behaviorProxy = None
         self.motionProxy = None
@@ -162,6 +157,10 @@ class Nao(QtCore.QObject):
     def turnHeadRight(self):
         self.motionProxy.changeAngles("HeadYaw", -0.20, 0.10)
     # END turnHeadRight()
+
+    def getCamera(self):
+        return self._camera
+    # END getCamera()
 
     def setCameraResolution(self, value):
         self._camera.setResolution(value)

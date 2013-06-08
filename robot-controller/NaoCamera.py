@@ -14,9 +14,11 @@ class NaoCamera(QtCore.QObject):
         self._running = False
         self._cameraProxy = None
         self._cameraProxyID = None
+        self._frames = []
+        self._mutex = QtCore.QMutex()
     #END __init__()
 
-    frameAvailable = QtCore.pyqtSignal(QtGui.QImage)
+    frameAvailable = QtCore.pyqtSignal()
 
     def start(self):
         if self._thread is None:
@@ -51,6 +53,16 @@ class NaoCamera(QtCore.QObject):
         #END if
     #END stop()
 
+    def frame(self):
+        f = None
+        self._mutex.lock()
+        if len(self._frames) > 0:
+            f = self._frames.pop(0)
+        #END if
+        self._mutex.unlock()
+        return f
+    #END frame()
+
     def getCameraProxy(self):
         return self._cameraProxy
     #END getCameraProxy()
@@ -67,8 +79,10 @@ class NaoCamera(QtCore.QObject):
         while self._running:
             end = QtCore.QTime.currentTime().addMSecs(self._interval)
             rawFrame = self._cameraProxy.getImageRemote(self._cameraProxyID)
-            frame = QtGui.QImage(rawFrame[6], rawFrame[0], rawFrame[1], QtGui.QImage.Format_RGB888)
-            self.frameAvailable.emit(frame)
+            self._mutex.lock()
+            self._frames.append(QtGui.QImage(rawFrame[6], rawFrame[0], rawFrame[1], QtGui.QImage.Format_RGB888))
+            self._mutex.unlock()
+            self.frameAvailable.emit()
             while self._running and QtCore.QTime.currentTime() < end:
                 QtCore.QThread.msleep(NaoCamera.THREAD_SLEEP_INTERVAL)
             #END while
