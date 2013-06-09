@@ -6,7 +6,9 @@ class Motion(BaseAction):
     def __init__(self, motionName, speed = 1.0, repeat = 0, repeatBegin = 0, repeatEnd = -1, blocking = False):
         super(Motion, self).__init__()
         self._motionName = str(motionName)
-        if speed <= 0:
+        speed = float(speed)
+        print speed
+        if speed <= 0.0:
             self._speed = 0.0001
         elif speed >= 3.0:
             self._speed = 3.0
@@ -22,13 +24,14 @@ class Motion(BaseAction):
     def execute(self, nao):
         motion = NaoMotionList.find(self._motionName)
         if motion is not None:
+            print str(motion)
             if self._speed != 1.0:
                 motion = motion.applySpeed(self._speed)
             #END if
             if self._repeat > 0:
                 motion = motion.applyRepeat(self._repeatBegin, self._repeatEnd, self._repeat)
             #END if
-            nao.motion(motion, self._blocking)
+            nao.motion(motion, not self._blocking)
         #END if
     #END execute()
 

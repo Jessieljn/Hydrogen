@@ -2,7 +2,7 @@ from BaseAction import BaseAction
 
 
 class Speech(BaseAction):
-    def __init__(self, text, speed = 95, shaping = 100, blocking = True):
+    def __init__(self, text, speed = 90, shaping = 100, blocking = True):
         super(Speech, self).__init__()
         self._text = str(text)
         speed = int(speed)
@@ -25,7 +25,7 @@ class Speech(BaseAction):
     #END __init__()
 
     def execute(self, nao):
-        nao.say(self.paramToString(), self._blocking)
+        nao.say(self.paramToString(), not self._blocking)
     #END execute()
 
     def actionToString(self):

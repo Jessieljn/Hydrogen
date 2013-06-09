@@ -7,6 +7,7 @@ class ActionQueue(QtCore.QObject):
         self._list = []
         self._mutex = QtCore.QMutex()
         self._nao = nao
+        self._running = False
     #END __init__()
 
     cleared = QtCore.pyqtSignal(int)
@@ -43,9 +44,15 @@ class ActionQueue(QtCore.QObject):
     #END enqueue()
 
     def execute(self):
-        item = self.dequeue()
-        if item is not None and self._nao is not None and self._nao.isConnected():
-            item.execute(self._nao)
+        if self._running:
+            item = self.dequeue()
+            if item is not None:
+                if self._nao is not None and self._nao.isConnected():
+                    item.execute(self._nao)
+                #END if
+            else:
+                self._running = False
+            #END if
         #END if
     #END execute()
 
@@ -72,4 +79,8 @@ class ActionQueue(QtCore.QObject):
     def setNao(self, nao):
         self._nao = nao
     #END setNao()
+
+    def setRunning(self, value):
+        self._running = value
+    #END setRunning()
 #END class

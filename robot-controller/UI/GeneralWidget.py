@@ -1,5 +1,6 @@
 from PyQt4 import QtCore
 from PyQt4 import QtGui
+from Action import AutoRunAction
 from Action import BaseAction
 from Action import Behavior
 from Action import Speech
@@ -18,7 +19,7 @@ class GeneralWidget(QtGui.QWidget):
         ##################################################
         # General Speech
         ##################################################
-        self.hello = ActionPushButton(self, "Hello", Speech("Hello"))
+        self.hello = ActionPushButton(self, "Hello", [Speech("Hello"), AutoRunAction()])
         self.hello.setMaximumWidth(150)
         self.hello.clicked.connect(self.on_button_clicked)
         self.louder = ActionPushButton(self, "Louder", Speech("Please speak louder"))

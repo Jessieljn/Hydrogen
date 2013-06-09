@@ -96,6 +96,7 @@ class MainWindow(QtGui.QMainWindow):
         self._wgtActionList = ActionListWidget(splitterLeft, self._actionQueue)
         self._wgtActionList.setMinimumHeight(120)
         self._wgtActionList.clearClicked.connect(self._actionQueue.clearActions)
+        self._wgtActionList.runClicked.connect(self._actionQueue.runActions)
 
         wgtRight = QtGui.QWidget(splitter)
         wgtRight.setMinimumWidth(380)

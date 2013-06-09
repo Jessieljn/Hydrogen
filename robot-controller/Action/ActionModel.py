@@ -1,6 +1,7 @@
 from PyQt4 import QtCore
-from BaseAction import BaseAction
 from ActionQueue import ActionQueue
+from AutoRunAction import AutoRunAction
+from BaseAction import BaseAction
 from ThreadTimer import ThreadTimer
 
 
@@ -23,23 +24,34 @@ class ActionModel(QtCore.QAbstractTableModel):
     def addActions(self, actions):
         if actions is None:
             pass
+        elif isinstance(actions, AutoRunAction):
+            self._list.setRunning(True)
         elif isinstance(actions, BaseAction):
             self._timer.addToThread(actions)
             self._list.enqueue(actions)
         else:
             for act in actions:
-                self._timer.addToThread(act)
-                self._list.enqueue(act)
+                if isinstance(actions, AutoRunAction):
+                    self._list.setRunning(True)
+                else:
+                    self._timer.addToThread(act)
+                    self._list.enqueue(act)
+                #END if
             #END for
         #END if
     #END addAction()
 
     def clearActions(self):
         parentIndex = QtCore.QModelIndex()
+        self._list.setRunning(False)
         self.beginRemoveRows(parentIndex, 0, self._list.length())
         self._list.clear()
         self.endRemoveRows()
     #END clearActions
+
+    def runActions(self):
+        self._list.setRunning(True)
+    #END runActions()
 
     def rowCount(self, parent):
         return self._list.length()

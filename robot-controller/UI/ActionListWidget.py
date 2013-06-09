@@ -13,12 +13,20 @@ class ActionListWidget(QtGui.QWidget):
 
         self._btnClear = QtGui.QPushButton("Clear", self)
         self._btnClear.clicked.connect(self.clearClicked)
+        self._btnRun = QtGui.QPushButton("Run", self)
+        self._btnRun.clicked.connect(self.runClicked)
+
+        layoutButtons = QtGui.QHBoxLayout()
+        layoutButtons.addWidget(self._btnClear)
+        layoutButtons.addWidget(self._btnRun)
 
         layoutMain = QtGui.QVBoxLayout(self)
         layoutMain.setMargin(0)
         layoutMain.addWidget(self._table)
-        layoutMain.addWidget(self._btnClear)
+        layoutMain.addLayout(layoutButtons)
     #END __init__()
 
     clearClicked = QtCore.pyqtSignal()
+
+    runClicked = QtCore.pyqtSignal()
 #END class
