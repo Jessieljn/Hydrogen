@@ -34,7 +34,7 @@ class NaoMotion(QtCore.QObject):
         return self._times
     #END getTimes()
 
-    def applyRepeat(self, beginIndex, endIndex, repeats):
+    def applyRepeat(self, beginIndex, endIndex, repeats, repeatTimeModifier = 1.0):
         names = list()
         times = list()
         keys = list()
@@ -54,7 +54,7 @@ class NaoMotion(QtCore.QObject):
             keys.append(list())
 
             if endLength:
-                endIndex = len(self._keys[i])
+                endIndex = len(self._keys[i]) - 1
             #END if
             j = 0
             while j < len(self._keys[i]) and j < beginIndex:
@@ -73,8 +73,8 @@ class NaoMotion(QtCore.QObject):
                 else:
                     timePrevious = self._times[i][j - 1]
                 #END if
-                while j < len(self._keys[i]) and j < endIndex:
-                    timeCurrent = timeCurrent + (self._times[i][j] - timePrevious)
+                while j < len(self._keys[i]) and j <= endIndex:
+                    timeCurrent = timeCurrent + (self._times[i][j] - timePrevious) * repeatTimeModifier
                     timePrevious = self._times[i][j]
                     times[i].append(timeCurrent)
                     keys[i].append(self._keys[i][j])
