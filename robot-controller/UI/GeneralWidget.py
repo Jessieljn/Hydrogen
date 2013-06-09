@@ -85,8 +85,8 @@ class GeneralWidget(QtGui.QWidget):
             self._cbMotions.addItem(NaoMotionList.get(i).name())
         #END for
         self._cbMotionSpeed = QtGui.QComboBox(wgtMotion)
-        self._cbMotionSpeed.addItems(["x" + str(value / 100.0) for value in range(25, 301, 25)])
-        self._cbMotionSpeed.setCurrentIndex(3)
+        self._cbMotionSpeed.addItems(["x" + str(value / 100.0) for value in range(10, 501, 10)])
+        self._cbMotionSpeed.setCurrentIndex(9)
         self._btnRunMotion = QtGui.QPushButton("Run", wgtMotion)
         self._btnRunMotion.clicked.connect(self.on_runMotion_clicked)
 
@@ -99,8 +99,8 @@ class GeneralWidget(QtGui.QWidget):
         self._cbMotionRepeatCount = QtGui.QComboBox(wgtMotion)
         self._cbMotionRepeatCount.addItems([str(value) for value in range(25)])
         self._cbMotionRepeatSpeed = QtGui.QComboBox(wgtMotion)
-        self._cbMotionRepeatSpeed.addItems(["x" + str(value / 100.0) for value in range(25, 301, 25)])
-        self._cbMotionRepeatSpeed.setCurrentIndex(3)
+        self._cbMotionRepeatSpeed.addItems(["x" + str(value / 100.0) for value in range(10, 501, 10)])
+        self._cbMotionRepeatSpeed.setCurrentIndex(9)
         self._cbMotionRepeatBegin = QtGui.QComboBox(wgtMotion)
         self._cbMotionRepeatBegin.addItems([str(value) for value in range(100)])
         self._cbMotionRepeatEnd = QtGui.QComboBox(wgtMotion)
