@@ -25,10 +25,7 @@ class Speech(BaseAction):
     #END __init__()
 
     def execute(self, nao):
-        if self._blocking:
-            nao.say(self.paramToString())
-        else:
-            nao.postSay(self.paramToString())
+        nao.say(self.paramToString(), self._blocking)
     #END execute()
 
     def actionToString(self):

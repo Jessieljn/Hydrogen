@@ -18,7 +18,7 @@ class Empathy(BaseStudy):
         self._buttons.append([
             QtGui.QLabel("INTRODUCTION", self._widgets[len(self._widgets) - 1]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Testing", [ \
-                    Motion("DisagreeGesture"),
+                    Motion("DisagreeGesture", 3.0),
                 ]),
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Welcome", [ \
                     Behavior("StandUp"),

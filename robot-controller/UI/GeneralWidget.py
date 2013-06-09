@@ -1,8 +1,8 @@
 from PyQt4 import QtCore
 from PyQt4 import QtGui
-from Action.Action import Action
-from Action.Behavior import Behavior
-from Action.Speech import Speech
+from Action import BaseAction
+from Action import Behavior
+from Action import Speech
 from ActionPushButton import ActionPushButton
 
 
@@ -111,7 +111,7 @@ class GeneralWidget(QtGui.QWidget):
         layoutMain.addWidget(self._grpBehaviors)
     #END __init__()
 
-    playAction = QtCore.pyqtSignal(Action)
+    playAction = QtCore.pyqtSignal(BaseAction)
 
     def on_button_clicked(self):
         for action in self.sender().getRobotActions():

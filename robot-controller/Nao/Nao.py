@@ -17,10 +17,12 @@ class Nao(QtCore.QObject):
         super(Nao, self).__init__()
         self._isConnected = False
         self._naoBroker = None
-        self.speechProxy = None
         self._camera = NaoCamera()
-        self.behaviorProxy = None
-        self.motionProxy = None
+        self._behaviorProxy = None
+        self._motionProxy = None
+        self._speechProxy = None
+        self._ledProxy = None
+        self._stiffness = 0.0
         NaoMotionList.initialize()
     # END __init__()
 
@@ -36,21 +38,21 @@ class Nao(QtCore.QObject):
         self._naoBroker = naoqi.ALBroker("NaoBroker", "0.0.0.0", 0, ipAddress, port)
 
         print " > Loading Text To Speech..."
-        self.speechProxy = naoqi.ALProxy("ALTextToSpeech")
-        self.speechProxy.setVolume(0.85)
-        print " > " + str(self.speechProxy)
+        self._speechProxy = naoqi.ALProxy("ALTextToSpeech")
+        self._speechProxy.setVolume(0.85)
+        print " > " + str(self._speechProxy)
         print " > Loading Camera..."
         self._camera.start()
         print " > " + str(self._camera.getCameraProxy())
         print " > Loading Behaviors..."
-        self.behaviorProxy = naoqi.ALProxy("ALBehaviorManager")
-        print " > " + str(self.behaviorProxy)
+        self._behaviorProxy = naoqi.ALProxy("ALBehaviorManager")
+        print " > " + str(self._behaviorProxy)
         print " > Loading Motion..."
-        self.motionProxy = naoqi.ALProxy("ALMotion")
-        print " > " + str(self.motionProxy)
+        self._motionProxy = naoqi.ALProxy("ALMotion")
+        print " > " + str(self._motionProxy)
         print " > Loading LEDs..."
-        self.ledProxy = naoqi.ALProxy("ALLeds")
-        print " > " + str(self.ledProxy)
+        self._ledProxy = naoqi.ALProxy("ALLeds")
+        print " > " + str(self._ledProxy)
 
         self._isConnected = True
         self.connected.emit()
@@ -58,12 +60,12 @@ class Nao(QtCore.QObject):
     # END connect()
 
     def disconnect(self):
-        self._camera.stop()
-        self.speechProxy = None
-        self.behaviorProxy = None
-        self.motionProxy = None
-        self.ledProxy = None
         self._isConnected = False
+        self._camera.stop()
+        self._ledProxy = None
+        self._speechProxy = None
+        self._motionProxy = None
+        self._behaviorProxy = None
         self._naoBroker.shutdown()
         self._naoBroker = None
         self.disconnected.emit()
@@ -72,6 +74,10 @@ class Nao(QtCore.QObject):
     def isConnected(self):
         return self._isConnected
     # END isConnected()
+
+    def getCamera(self):
+        return self._camera
+    # END getCamera()
 
     def makeJitter(self, bhvName, boxName, startFrame = 0, endFrame = -1, joints = []):
         data = ""
@@ -94,20 +100,37 @@ class Nao(QtCore.QObject):
             sck.close()
     # END makeJitter
 
-    def behavior(self, bhv):
-        self.behaviorProxy.runBehavior(bhv)
+    def behavior(self, bhv, post):
+        if not post:
+            self._behaviorProxy.runBehavior(bhv)
+        else:
+            self._behaviorProxy.post.runBehavior(bhv)
+        #END if
     # END behavior()
 
-    def motion(self, motion):
-        if motion.getMethod() == NaoMotion.METHOD_BEZIER:
-            self.motionProxy.angleInterpolationBezier(motion.getNames(), motion.getTimes(), motion.getKeys());
+    def motion(self, motion, post):
+        proxy = naoqi.ALProxy("ALMotion")
+        if not post:
+            if motion.getMethod() == NaoMotion.METHOD_BEZIER:
+                proxy.angleInterpolationBezier(motion.getNames(), motion.getTimes(), motion.getKeys());
+            else:
+                proxy.angleInterpolation(motion.getNames(), motion.getKeys(), motion.getTimes(), True);
+            #END if
         else:
-            self.motionProxy.angleInterpolation(motion.getNames(), motion.getKeys(), motion.getTimes(), True);
+            if motion.getMethod() == NaoMotion.METHOD_BEZIER:
+                proxy.post.angleInterpolationBezier(motion.getNames(), motion.getTimes(), motion.getKeys());
+            else:
+                proxy.post.angleInterpolation(motion.getNames(), motion.getKeys(), motion.getTimes(), True);
+            #END if
         #END if
     # END motion()
 
-    def say(self, msg):
-        self.speechProxy.say(msg)
+    def say(self, msg, post):
+        if not post:
+            self._speechProxy.say(msg)
+        else:
+            self._speechProxy.post.say(msg)
+        #END if
     # END say()
 
     def LEDNormal(self):
@@ -117,79 +140,81 @@ class Nao(QtCore.QObject):
         self.postLEDfadeRGB(LEDNames.RightEar, 0x00ff6100, 0.5)
     # END LEDNormal()
 
-    def LEDfadeIntensity(self, name, intensity, seconds):
-        self.ledProxy.fade(name, intensity, seconds)
+    def LEDfadeIntensity(self, name, intensity, seconds, post):
+        if not post:
+            self._ledProxy.fade(name, intensity, seconds)
+        else:
+            self._ledProxy.post.fade(name, intensity, seconds)
+        #END if
     # END LEDfadeIntensity()
 
-    def LEDfadeRGB(self, name, rgb, seconds):
-        self.ledProxy.fadeRGB(name, rgb, seconds)
+    def LEDfadeRGB(self, name, rgb, seconds, post):
+        if not post:
+            self._ledProxy.fadeRGB(name, rgb, seconds)
+        else:
+            self._ledProxy.post.fadeRGB(name, rgb, seconds)
+        #END if
     # END LEDfadeRGB()
 
-    def LEDsetIntensity(self, name, intensity):
-        self.ledProxy.setIntensity(name, intensity)
+    def LEDsetIntensity(self, name, intensity, post):
+        if not post:
+            self._ledProxy.setIntensity(name, intensity)
+        else:
+            self._ledProxy.post.setIntensity(name, intensity)
+        #END if
     # END LEDsetIntensity()
 
-    def LEDrandomEyes(self, duration):
-        self.ledProxy.randomEyes(duration)
+    def LEDrandomEyes(self, duration, post):
+        if not post:
+            self._ledProxy.randomEyes(duration)
+        else:
+            self._ledProxy.post.randomEyes(duration)
+        #END if
     # END LEDrandomEyes()
 
-    def postBehavior(self, bhv):
-        self.behaviorProxy.post.runBehavior(bhv)
-    # END postBehavior()
-
-    def postSay(self, msg):
-        self.speechProxy.post.say(msg)
-    # END postSay()
-
-    def postLEDfadeIntensity(self, name, intensity, seconds):
-        self.ledProxy.post.fade(name, intensity, seconds)
-    # END postLEDfadeIntensity()
-
-    def postLEDfadeRGB(self, name, rgb, seconds):
-        self.ledProxy.post.fadeRGB(name, rgb, seconds)
-    # END postLEDfadeRGB()
-
-    def postLEDsetIntensity(self, name, intensity):
-        self.ledProxy.post.setIntensity(name, intensity)
-    # END postLEDsetIntensity()
-
-    def postLEDrandomEyes(self, duration):
-        self.ledProxy.post.randomEyes(duration)
-    # END postLEDrandomEyes()
-
     def tiltHeadUp(self):
-        self.motionProxy.changeAngles("HeadPitch", -0.20, 0.10)
+        self._motionProxy.changeAngles("HeadPitch", -0.20, 0.10)
     # END tiltHeadUp()
 
     def tiltHeadDown(self):
-        self.motionProxy.changeAngles("HeadPitch", 0.20, 0.10)
+        self._motionProxy.changeAngles("HeadPitch", 0.20, 0.10)
     # END tiltHeadDown()
 
     def turnHeadLeft(self):
-        self.motionProxy.changeAngles("HeadYaw", 0.20, 0.10)
+        self._motionProxy.changeAngles("HeadYaw", 0.20, 0.10)
     # END turnHeadLeft()
 
     def turnHeadRight(self):
-        self.motionProxy.changeAngles("HeadYaw", -0.20, 0.10)
+        self._motionProxy.changeAngles("HeadYaw", -0.20, 0.10)
     # END turnHeadRight()
 
-    def getCamera(self):
-        return self._camera
-    # END getCamera()
-
-    def setCameraResolution(self, value):
-        self._camera.setResolution(value)
-    # END setCameraResolution()
-
-    def setCameraSource(self, value):
-        self._camera.setParam(value)
-    # END setCameraSource()
-
     def setStiffness(self, stiffness):
-        self.motionProxy.setStiffnesses("Body", stiffness)
+        if self._stiffness < stiffness:
+            if stiffness > 1.0:
+                stiffness = 1.0
+            #END if
+            while self._stiffness < stiffness:
+                self._stiffness = self._stiffness + 0.05
+                if self._stiffness > 1.0:
+                    self._stiffness = 1.0
+                #END if
+                self._motionProxy.setStiffnesses("Body", self._stiffness)
+            #END while
+        else:
+            if stiffness < 0.0:
+                stiffness = 0.0
+            #END if
+            while self._stiffness > stiffness:
+                self._stiffness = self._stiffness - 0.05
+                if self._stiffness < 0.0:
+                    self._stiffness = 0.0
+                #END if
+                self._motionProxy.setStiffnesses("Body", self._stiffness)
+            #END while
+        #END if
     # END setStiffness()
 
     def setVolume(self, volume):
-        self.speechProxy.setVolume(volume)
+        self._speechProxy.setVolume(volume)
     # END setVolume()
 # END Nao

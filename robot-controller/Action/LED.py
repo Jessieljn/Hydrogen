@@ -18,29 +18,13 @@ class LED(BaseAction):
 
     def execute(self, nao):
         if self._action == LED.ACTION_FADE_RGB:
-            if self._blocking:
-                nao.LEDfadeRGB(self._ledname, int(self._value), self._seconds)
-            else:
-                nao.postLEDfadeRGB(self._ledname, int(self._value), self._seconds)
-            #END if
+            nao.LEDfadeRGB(self._ledname, int(self._value), self._seconds, not self._blocking)
         elif self._action == LED.ACTION_FADE_INTENSITY:
-            if self._blocking:
-                nao.LEDfadeIntensity(self._ledname, float(self._value), self._seconds)
-            else:
-                nao.postLEDfadeIntensity(self._ledname, float(self._value), self._seconds)
-            #END if
+            nao.LEDfadeIntensity(self._ledname, float(self._value), self._seconds, not self._blocking)
         elif self._action == LED.ACTION_SET_INTENSITY:
-            if self._blocking:
-                nao.LEDsetIntensity(self._ledname, float(self._value))
-            else:
-                nao.postLEDsetIntensity(self._ledname, float(self._value))
-            #END if
+            nao.LEDsetIntensity(self._ledname, float(self._value), not self._blocking)
         elif self._action == LED.ACTION_RANDOM_EYES:
-            if self._blocking:
-                nao.LEDrandomEyes(self._seconds)
-            else:
-                nao.postLEDrandomEyes(self._seconds)
-            #END if
+            nao.LEDrandomEyes(self._seconds, not self._blocking)
         #END if
     #END execute()
 

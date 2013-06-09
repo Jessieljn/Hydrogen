@@ -9,10 +9,7 @@ class Behavior(BaseAction):
     #END __init__()
 
     def execute(self, nao):
-        if self._blocking:
-            nao.behavior(self._bhvName)
-        else:
-            nao.postBehavior(self._bhvName)
+        nao.behavior(self._bhvName, not self._blocking)
     #END execute()
 
     def actionToString(self):

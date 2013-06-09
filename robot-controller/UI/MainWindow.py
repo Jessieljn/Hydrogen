@@ -90,7 +90,7 @@ class MainWindow(QtGui.QMainWindow):
 
         self._wgtCamera = CameraWidget(splitterLeft, self._nao.getCamera())
         self._wgtCamera.setMinimumHeight(385)
-        self._wgtCamera.cameraChanged.connect(self._nao.setCameraSource)
+        self._wgtCamera.cameraChanged.connect(self._nao.getCamera().setCameraSource)
         self._wgtCamera.moveHead.connect(self.on_moveHead)
 
         self._wgtActionList = ActionListWidget(splitterLeft, self._actionQueue)

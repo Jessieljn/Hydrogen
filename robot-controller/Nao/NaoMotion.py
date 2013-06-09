@@ -34,12 +34,103 @@ class NaoMotion(QtCore.QObject):
         return self._times
     #END getTimes()
 
-    def _init(self, names, times, keys):
-        for v in names:
-            self._names.append(v)
-        for v in times:
-            self._times.append(v)
-        for v in keys:
-            self._keys.append(v)
+    def applyRepeat(self, beginIndex, endIndex, repeats):
+        names = list()
+        times = list()
+        keys = list()
+
+        endLength = False
+        if beginIndex < 0:
+            beginIndex = 0
+        #END if
+        if endIndex < 0:
+            endLength = True
+        #END if
+
+        i = 0
+        while i < len(self._names):
+            names.append(self._names[i])
+            times.append(list())
+            keys.append(list())
+
+            if endLength:
+                endIndex = len(self._keys[i])
+            #END if
+            j = 0
+            while j < len(self._keys[i]) and j < beginIndex:
+                times[i].append(self._times[i][j])
+                keys[i].append(self._keys[i][j])
+                j = j + 1
+            #END while
+
+            timeCurrent = self._times[i][j]
+            timePrevious = 0
+            k = 0
+            while k < repeats:
+                j = beginIndex
+                if j <= 0:
+                    timePrevious = 0
+                else:
+                    timePrevious = self._times[i][j - 1]
+                #END if
+                while j < len(self._keys[i]) and j < endIndex:
+                    timeCurrent = timeCurrent + (self._times[i][j] - timePrevious)
+                    timePrevious = self._times[i][j]
+                    times[i].append(timeCurrent)
+                    keys[i].append(self._keys[i][j])
+                    j = j + 1
+                #END while
+                k = k + 1
+            #END while
+
+            while j < len(self._keys[i]):
+                timeCurrent = timeCurrent + (self._times[i][j] - timePrevious)
+                timePrevious = self._times[i][j]
+                times[i].append(timeCurrent)
+                keys[i].append(self._keys[i][j])
+                j = j + 1
+            #END while
+
+            i = i + 1
+        #END while
+
+        motion = NaoMotion(self._name)
+        motion.init(names, times, keys, self._method)
+        return motion
+    #END applyRepeat()
+
+    def applySpeed(self, timeModifier):
+        names = list()
+        times = list()
+        keys = list()
+
+        i = 0
+        while i < len(self._names):
+            names.append(self._names[i])
+            time = list()
+            for v in self._times[i]:
+                time.append(v * timeModifier)
+            #END for
+            times.append(time)
+            keys.append(self._keys[i])
+            i = i + 1
+        #END while
+
+        motion = NaoMotion(self._name)
+        motion.init(names, times, keys, self._method)
+        return motion
+    #END applySpeed()
+
+    def init(self, names, times, keys, method):
+        for value in names:
+            self._names.append(value)
+        #END for
+        for value in times:
+            self._times.append(value)
+        #END for
+        for value in keys:
+            self._keys.append(value)
+        #END for
+        self._method = method
     #END _init()
 #END class
