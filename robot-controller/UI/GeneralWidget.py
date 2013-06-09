@@ -97,7 +97,7 @@ class GeneralWidget(QtGui.QWidget):
         layoutMotionList.addWidget(self._btnRunMotion)
 
         self._cbMotionRepeatCount = QtGui.QComboBox(wgtMotion)
-        self._cbMotionRepeatCount.addItems([str(value) for value in range(25)])
+        self._cbMotionRepeatCount.addItems([str(value) for value in range(26)])
         self._cbMotionRepeatSpeed = QtGui.QComboBox(wgtMotion)
         self._cbMotionRepeatSpeed.addItems(["x" + str(value / 100.0) for value in range(10, 501, 10)])
         self._cbMotionRepeatSpeed.setCurrentIndex(9)
