@@ -25,7 +25,7 @@ class MainWindow(QtGui.QMainWindow):
         super(MainWindow, self).__init__()
         self._nao = Nao()
         self._actionQueue = ActionModel(self, self._nao)
-        self._blinkLEDTime = QtCore.QTime.currentTime()
+        self._LEDTime = QtCore.QTime.currentTime()
         self._keys = dict()
         self._keys[Direction.Up] = False
         self._keys[Direction.Down] = False
@@ -270,13 +270,14 @@ class MainWindow(QtGui.QMainWindow):
     # END keyReleaseEvent()
 
     def timerEvent(self, event):
-        if self._wgtSpeech.isSpeechTextEmpty() and self._actionQueue.rowCount(None) <= 0:
-            self._nao.LEDNormal()
-        else:
-            if self._blinkLEDTime < QtCore.QTime.currentTime():
-                self._nao.LEDrandomEyes(0.5, True)
-                self._blinkLEDTime = QtCore.QTime.currentTime().addSecs(0.5)
+        if self._LEDTime < QtCore.QTime.currentTime():
+            if self._wgtSpeech.isSpeechTextEmpty() and (self._actionQueue.rowCount(None) <= 0 or self._actionQueue.isRunning()):
+                self._nao.LEDNormal()
+                self._LEDTime = QtCore.QTime.currentTime().addSecs(60.0)
+            else:
+                self._nao.LEDrandomEyes(1.5, True)
             # END if
+            self._LEDTime = QtCore.QTime.currentTime().addSecs(1.5)
         # END if
 
         if self._keys[Direction.Up]:

@@ -47,6 +47,10 @@ class ActionModel(QtCore.QAbstractTableModel):
         self._list.clear()
     #END clearActions()
 
+    def isRunning(self):
+        return self._list.isRunning()
+    #END isRunning()
+
     def runActions(self):
         self._list.setRunning(True)
     #END runActions()

@@ -65,6 +65,10 @@ class ActionQueue(QtCore.QObject):
         return item
     #END get()
 
+    def isRunning(self):
+        return self._running
+    #END isRunning()
+
     def length(self):
         self._mutex.lock()
         length = len(self._list)
