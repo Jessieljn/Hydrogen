@@ -11,10 +11,10 @@ class ActionListWidget(QtGui.QWidget):
         self._table.setColumnWidth(0, 100)
         self._table.setColumnWidth(1, 180)
 
-        self._btnClear = QtGui.QPushButton("Clear", self)
+        self._btnClear = QtGui.QPushButton("Clear (Ctrl+Space)", self)
         self._btnClear.setShortcut("Ctrl+Space")
         self._btnClear.clicked.connect(self.clearClicked)
-        self._btnRun = QtGui.QPushButton("Run", self)
+        self._btnRun = QtGui.QPushButton("Run (Ctrl+R)", self)
         self._btnRun.setShortcut("Ctrl+R")
         self._btnRun.clicked.connect(self.runClicked)
 
