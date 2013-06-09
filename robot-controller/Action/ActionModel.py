@@ -32,7 +32,7 @@ class ActionModel(QtCore.QAbstractTableModel):
             self._list.enqueue(actions)
         else:
             for act in actions:
-                if isinstance(actions, AutoRunAction):
+                if isinstance(act, AutoRunAction):
                     self._list.setRunning(True)
                 else:
                     self._timer.addToThread(act)
