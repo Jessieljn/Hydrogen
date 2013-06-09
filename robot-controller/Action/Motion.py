@@ -7,7 +7,6 @@ class Motion(BaseAction):
         super(Motion, self).__init__()
         self._motionName = str(motionName)
         speed = float(speed)
-        print speed
         if speed <= 0.0:
             self._speed = 0.0001
         elif speed >= 3.0:
@@ -24,7 +23,6 @@ class Motion(BaseAction):
     def execute(self, nao):
         motion = NaoMotionList.find(self._motionName)
         if motion is not None:
-            print str(motion)
             if self._speed != 1.0:
                 motion = motion.applySpeed(self._speed)
             #END if

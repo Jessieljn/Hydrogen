@@ -187,7 +187,6 @@ class MainWindow(QtGui.QMainWindow):
     # END on_moveHead()
 
     def on_playSpeech(self, value):
-        print Speech(value, blocking = False).paramToString()
         self._actionQueue.addActions(Speech(value, blocking = False))
     # END on_playSpeech()
 
