@@ -31,4 +31,8 @@ class ActionListWidget(QtGui.QWidget):
     clearClicked = QtCore.pyqtSignal()
 
     runClicked = QtCore.pyqtSignal()
+
+    def resizeEvent(self, event):
+        self._table.setColumnWidth(1, self._table.width() - self._table.columnWidth(0) - 44)
+    #END resizeEvent()
 #END class
