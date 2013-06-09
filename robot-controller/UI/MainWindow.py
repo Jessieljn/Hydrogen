@@ -103,7 +103,6 @@ class MainWindow(QtGui.QMainWindow):
 
         self._wgtSpeech = SpeechWidget(wgtRight)
         self._wgtSpeech.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.Maximum)
-        self._wgtSpeech.textEditing.connect(self.on_changingLEDs)
         self._wgtSpeech.textInputCancelled.connect(self.grab_keyboard)
         self._wgtSpeech.textSubmitted.connect(self.on_playSpeech)
         self._wgtSpeech.volumeChanged.connect(self._nao.setVolume)
@@ -158,19 +157,6 @@ class MainWindow(QtGui.QMainWindow):
         self.show()
         self.grabKeyboard()
     # END __init__()
-
-    def on_changingLEDs(self):
-        if self._nao.isConnected():
-            if self._wgtSpeech.isSpeechTextEmpty():
-                self._nao.LEDNormal()
-            else:
-                if self._blinkLEDTime < QtCore.QTime.currentTime():
-                    self._nao.postLEDrandomEyes(1)
-                    self._blinkLEDTime = QtCore.QTime.currentTime().addSecs(1)
-                # END if
-            # END if
-        # END if
-    # END on_changingLEDs()
 
     def on_moveHead(self, direction):
         if self._nao.isConnected():
@@ -235,6 +221,7 @@ class MainWindow(QtGui.QMainWindow):
                 print "FAILED"
             # END if
             print "==================================="
+            self._wgtGeneral.init_behaviorList(self._nao)
         # END if
     # END on_dlgConnect_accepted()
 
@@ -283,6 +270,15 @@ class MainWindow(QtGui.QMainWindow):
     # END keyReleaseEvent()
 
     def timerEvent(self, event):
+        if self._wgtSpeech.isSpeechTextEmpty() and self._actionQueue.rowCount(None) <= 0:
+            self._nao.LEDNormal()
+        else:
+            if self._blinkLEDTime < QtCore.QTime.currentTime():
+                self._nao.LEDrandomEyes(0.5, True)
+                self._blinkLEDTime = QtCore.QTime.currentTime().addSecs(0.5)
+            # END if
+        # END if
+
         if self._keys[Direction.Up]:
             self._nao.tiltHeadUp()
         #END if

@@ -4,7 +4,6 @@ from NaoCamera import NaoCamera
 from NaoMotion import NaoMotion
 from NaoMotionList import NaoMotionList
 import naoqi
-import socket
 
 
 ##
@@ -79,26 +78,9 @@ class Nao(QtCore.QObject):
         return self._camera
     # END getCamera()
 
-    def makeJitter(self, bhvName, boxName, startFrame = 0, endFrame = -1, joints = []):
-        data = ""
-        data += "in=/home/nao/behaviors/" + bhvName + "/behavior.xar|"
-        data += "out=/home/nao/behaviors/jitter/behavior.xar|"
-        data += "box=" + boxName + "|"
-        data += "start=" + str(startFrame) + "|"
-        data += "end=" + str(endFrame) + "|"
-        for j in joints:
-            data += "joint=" + j[0] + "," + str(j[1]) + "," + str(j[2]) + "|"
-        # END for
-
-        sck = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        try:
-            sck.connect((self._naoBroker.getIP(), self._naoBroker.getPort()))
-            sck.send(data)
-            # Disconnect Signal
-            sck.send("\0")
-        finally:
-            sck.close()
-    # END makeJitter
+    def getInstalledBehaviors(self):
+        return self._behaviorProxy.getInstalledBehaviors()
+    # END getInstalledBehaviors()
 
     def behavior(self, bhv, post):
         if not post:
@@ -134,10 +116,10 @@ class Nao(QtCore.QObject):
     # END say()
 
     def LEDNormal(self):
-        self.postLEDsetIntensity(LEDNames.Face, 1.0)
-        self.postLEDfadeRGB(LEDNames.Chest, 0x0000ff00, 0.5)
-        self.postLEDfadeRGB(LEDNames.LeftEar, 0x00ff6100, 0.5)
-        self.postLEDfadeRGB(LEDNames.RightEar, 0x00ff6100, 0.5)
+        self.LEDsetIntensity(LEDNames.Face, 1.0, True)
+        self.LEDfadeRGB(LEDNames.Chest, 0x0000ff00, 0.5, True)
+        self.LEDfadeRGB(LEDNames.LeftEar, 0x00ff6100, 0.5, True)
+        self.LEDfadeRGB(LEDNames.RightEar, 0x00ff6100, 0.5, True)
     # END LEDNormal()
 
     def LEDfadeIntensity(self, name, intensity, seconds, post):

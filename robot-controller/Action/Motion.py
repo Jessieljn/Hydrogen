@@ -18,10 +18,10 @@ class Motion(BaseAction):
         motion = NaoMotionList.find(self._motionName)
         if motion is not None:
             if self._speed != 1.0:
-                motion = motion.applySpeed(self._speedToTimeModifier(self._speed))
+                motion = motion.applySpeed(Motion.speedToTimeModifier(self._speed))
             #END if
             if self._repeat > 0:
-                motion = motion.applyRepeat(self._repeatBegin, self._repeatEnd, self._repeat, self._speedToTimeModifier(self._repeatSpeed))
+                motion = motion.applyRepeat(self._repeatBegin, self._repeatEnd, self._repeat, Motion.speedToTimeModifier(self._repeatSpeed))
             #END if
             nao.motion(motion, not self._blocking)
         #END if
@@ -46,7 +46,8 @@ class Motion(BaseAction):
         return ret
     #END paramToString()
 
-    def _speedToTimeModifier(self, speed):
+    @staticmethod
+    def speedToTimeModifier(speed):
         if speed <= 0.0:
             # slowest
             return 5.0
@@ -55,7 +56,7 @@ class Motion(BaseAction):
             return 5.0 * speed
         elif speed > 1.0:
             # faster
-            return 1.0 / self._speed
+            return 1.0 / speed
         else:
             return speed
         #END if
