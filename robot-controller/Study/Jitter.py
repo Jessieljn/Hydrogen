@@ -1,5 +1,6 @@
 from PyQt4 import QtCore, QtGui
 from UI.FocusableLineEdit import FocusableLineEdit
+from Nao import Nao
 
 
 class Jitter(QtGui.QWidget):
@@ -13,19 +14,26 @@ class Jitter(QtGui.QWidget):
         self.hbox2 = QtGui.QHBoxLayout()  # End Frame Box
         self.setLayout(self.vbox)
 
-        self.combo = QtGui.QComboBox()
-        self.label = QtGui.QLabel("HeadYaw")  # Add to vbox
+        self.motions = QtGui.QComboBox()
+        self.behaviors = QtGui.QComboBox()
+        self.motionLabel = QtGui.QLabel("HeadYaw")  # Add to vbox
+        self.behaviorLabel = QtGui.QLabel("chinScratch")
 
         motionList = ['HeadYaw', 'HeadPitch', 'LShoulderPitch', 'LShoulderRoll', 'LElbowYaw', 'LElbowRoll', 'LWristYaw',
                       'LHand', 'LHipYawPitch', 'LHipRoll', 'LHipPitch', 'LKneePitch', 'LAnklePitch', 'LAnkleRoll',
                       'RHipYawPitch', 'RHipRoll', 'RHipPitch', 'RKneePitch', 'RAnklePitch', 'RAnkleRoll',
                       'RShoulderPitch', 'RShoulderRoll', 'RElbowYaw', 'RElbowRoll', 'RWristYaw', 'RHand']
 
+        behaviorList = ['chinScratch', 'dance', 'hand', 'headNod']
+
         # - LHipYawPitch uses the same more as RHipYawPitch, they move simultaneously and symmetrically. In case of
         # conflicting orders, LHipYawPitch takes priority.
 
         # - LWristYaw, LHand, RWristYaw, RHand, do no exist in model "H21".
-        self.combo.addItems(motionList)
+        self.motions.addItems(motionList)
+        self.behaviors.addItems(behaviorList)
+
+        self.nao = Nao()
 
         self._startFrame = FocusableLineEdit(self)
         self._startFrame.setText('0')
@@ -38,7 +46,8 @@ class Jitter(QtGui.QWidget):
 
         self._addButton = QtGui.QPushButton('Add', self)
 
-        self.vbox.addWidget(self.combo)
+        self.vbox.addWidget(self.behaviors)
+        self.vbox.addWidget(self.motions)
         self.hbox1.addWidget(self._startLabel)
         self.hbox1.addWidget(self._startFrame)
         self.hbox2.addWidget(self._endLabel)
@@ -47,12 +56,30 @@ class Jitter(QtGui.QWidget):
         self.vbox.addLayout(self.hbox2)
         self.vbox.addWidget(self._addButton)
 
-        self.connect(self.combo, QtCore.SIGNAL('activated(QString)'), self.combo_chosen)
+        self.connect(self.motions, QtCore.SIGNAL('activated(QString)'), self.motion_chosen)
+        self.connect(self.behaviors, QtCore.SIGNAL('activated(QString)'), self.behavior_chosen)
+
+        self.joints = [self.motionLabel.text(), self._startFrame.text(), self._endFrame.text()]
+
+        self._addButton.clicked.connect(self.nao.makeJitter(self.behaviorLabel.text(), self.behaviorLabel.text(), self._startFrame.text(), self._endFrame.text(), self.joints))
+
+        #self._addButton.clicked.connect(self.on__btnConnect_triggered(self.behaviorLabel.text(),
+           #                                                           self.behaviorLabel.text(),
+            #                                                          self._startFrame.text(),
+           #                                                           self._endFrame.text(),
+            #                                                          self.joints))
     # END __init__()
 
-    def combo_chosen(self, text):
-        self.label.setText(text)
-    # END combo_chosen()
+    def on__btnConnect_triggered(self, bhvName, boxName, startFrame, endFrame, joint):
+        self.nao.makeJitter(bhvName, boxName, startFrame, endFrame, joint)
+    # END on__btnConnect_triggered()
+
+    def motion_chosen(self, text):
+        self.motionLabel.setText(text)
+    # END motion_chosen()
+
+    def behavior_chosen(self, text):
+        self.behaviorLabel.setText(text)
 
     def setActionQueue(self, actionQueue):
         self._actionQueue = actionQueue

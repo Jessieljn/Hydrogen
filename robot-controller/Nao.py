@@ -102,12 +102,13 @@ class Nao(QtCore.QObject):
         data += "start=" + str(startFrame) + "|"
         data += "end=" + str(endFrame) + "|"
         for j in joints:
-            data += "joint=" + j[0] + "," + str(j[1]) + "," + str(j[2]) + "|"
+            data += "joint=" + joints[0] + "," + str(joints[1]) + "," + str(joints[2]) + "|"
         # END for
 
         sck = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            sck.connect((self._naoBroker.getIP(), self._naoBroker.getPort()))
+            sck.connect(("127.0.0.1", 9555))
+            #sck.connect((self._naoBroker.getIP(), self._naoBroker.getPort()))
             sck.send(data)
             # Disconnect Signal
             sck.send("\0")

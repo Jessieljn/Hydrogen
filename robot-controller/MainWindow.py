@@ -57,6 +57,7 @@ class MainWindow(QtGui.QMainWindow):
 
         loadMenu = menubar.addMenu('Load')
         self._loadActions = []
+
         for i in range(len(Study.TASKS)):
             actLoad = QtGui.QAction(QtGui.QIcon(), "Load " + Study.TASKS[i][Study.TASK_NAME], self)
             actLoad.setShortcut("Ctrl+" + str(i + 1))
