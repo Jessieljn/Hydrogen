@@ -29,21 +29,21 @@ class SpeechWidget(QtGui.QGroupBox):
         self._sldVolume = QtGui.QSlider(QtCore.Qt.Vertical)
         self._sldVolume.setMaximumHeight(60)
         self._sldVolume.setRange(0, 100)
-        self._sldVolume.setValue(50)
+        self._sldVolume.setValue(85)
         self._sldVolume.valueChanged.connect(self.on__sldVolume_valueChanged)
 
         self._lSpeed = QtGui.QLabel("Speed")
         self._sldSpeed = QtGui.QSlider(QtCore.Qt.Vertical)
         self._sldSpeed.setMaximumHeight(60)
-        self._sldSpeed.setRange(0, 100)
-        self._sldSpeed.setValue(50)
+        self._sldSpeed.setRange(50, 200)
+        self._sldSpeed.setValue(90)
         self._sldSpeed.valueChanged.connect(self.on_sldSpeed_valueChanged)
 
         self._lShape = QtGui.QLabel("Shape")
         self._sldShape = QtGui.QSlider(QtCore.Qt.Vertical)
         self._sldShape.setMaximumHeight(60)
-        self._sldShape.setRange(0, 100)
-        self._sldShape.setValue(50)
+        self._sldShape.setRange(50, 150)
+        self._sldShape.setValue(100)
         self._sldShape.valueChanged.connect(self.on_sldShape_valueChanged)
 
         layoutVolume = QtGui.QVBoxLayout()
@@ -69,6 +69,14 @@ class SpeechWidget(QtGui.QGroupBox):
     def isSpeechTextEmpty(self):
         return str(self._message.toPlainText()) == ""
     #END isSpeechTextEmpty
+
+    def getShaping(self):
+        return self._sldShape.value()
+    #END getShaping()
+
+    def getSpeed(self):
+        return self._sldSpeed.value()
+    #END getSpeed()
 
     def setTextEditFocus(self):
         self._message.setFocus(QtCore.Qt.OtherFocusReason)

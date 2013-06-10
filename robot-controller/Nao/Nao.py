@@ -39,8 +39,6 @@ class Nao(QtCore.QObject):
         print " > Loading Text To Speech..."
         self._speechProxy = naoqi.ALProxy("ALTextToSpeech")
         self._speechProxy.setVolume(0.85)
-        self._speechProxy.setSpeed(0.85)
-        self._speechProxy.setShape(0.85)
         print " > " + str(self._speechProxy)
         print " > Loading Camera..."
         self._camera.start()
@@ -201,12 +199,4 @@ class Nao(QtCore.QObject):
     def setVolume(self, volume):
         self._speechProxy.setVolume(volume)
     # END setVolume()
-
-    def setSpeed(self, value):
-        self._speechProxy.setSpeed(value)
-    #END setSpeed()
-
-    def setShape(self, value):
-        self._speechProxy.setShape(value)
-    #END setShape()
 # END Nao
