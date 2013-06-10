@@ -1,7 +1,6 @@
 from PyQt4 import QtCore, QtGui
 from BaseStudy import BaseStudy
 from UI.FocusableLineEdit import FocusableLineEdit
-from Nao import Nao
 
 
 class Jitter(BaseStudy):
@@ -35,7 +34,7 @@ class Jitter(BaseStudy):
         self.behaviors.addItems(behaviorList)
 
         # noinspection PyCallingNonCallable
-        self.nao = Nao()
+        #self.nao = Nao()
 
         self._startFrame = FocusableLineEdit(self)
         self._startFrame.setText('0')
