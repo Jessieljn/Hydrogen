@@ -108,6 +108,8 @@ class MainWindow(QtGui.QMainWindow):
         self._wgtSpeech.textInputCancelled.connect(self.grab_keyboard)
         self._wgtSpeech.textSubmitted.connect(self.on_playSpeech)
         self._wgtSpeech.volumeChanged.connect(self._nao.setVolume)
+        self._wgtSpeech.speedChanged.connect(self._nao.setSpeed)
+        self._wgtSpeech.shapeChanged.connect(self._nao.setShape)
         layoutSpeech = QtGui.QHBoxLayout()
         layoutSpeech.setMargin(0)
         layoutSpeech.addWidget(self._wgtSpeech)
