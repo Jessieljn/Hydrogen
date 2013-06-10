@@ -28,8 +28,9 @@ class NaoCamera(QtCore.QObject):
             self._running = True
             self._thread = QtCore.QThread()
             self.moveToThread(self._thread)
-            self.connect(self._thread, QtCore.SIGNAL("started()"), self._process);
+            self.connect(self._thread, QtCore.SIGNAL("started()"), self._process)
             self._cameraProxy = naoqi.ALProxy("ALVideoDevice")
+            # noinspection PyBroadException
             try:
                 self._cameraProxy.unsubscribe(VIDEO_SUBSCRIBE_NAME)
             except:

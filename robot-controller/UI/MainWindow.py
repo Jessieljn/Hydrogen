@@ -23,6 +23,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
+        # noinspection PyCallingNonCallable
         self._nao = Nao()
         self._actionQueue = ActionModel(self, self._nao)
         self._LEDTime = QtCore.QTime.currentTime()
@@ -47,7 +48,7 @@ class MainWindow(QtGui.QMainWindow):
         actDisconnect.setShortcut('Ctrl+D')
         actDisconnect.triggered.connect(self.on_actDisconnect_triggered)
 
-        actExit = QtGui.QAction(QtGui.QIcon('images/exit.png'), 'E&xit', self)
+        actExit = QtGui.QAction(QtGui.QIcon('images/exit.png'), '&Exit', self)
         actExit.setShortcut('Ctrl+X')
         actExit.setStatusTip('Exit application')
         actExit.triggered.connect(self.close)
@@ -79,12 +80,12 @@ class MainWindow(QtGui.QMainWindow):
         ##################################################
         self._wgtMain = QtGui.QWidget(self)
         splitter = QtGui.QSplitter(self._wgtMain)
-        splitter.setOrientation(QtCore.Qt.Horizontal);
+        splitter.setOrientation(QtCore.Qt.Horizontal)
 
         wgtLeft = QtGui.QWidget(splitter)
         wgtLeft.setMinimumWidth(350)
         splitterLeft = QtGui.QSplitter(wgtLeft)
-        splitterLeft.setOrientation(QtCore.Qt.Vertical);
+        splitterLeft.setOrientation(QtCore.Qt.Vertical)
         layoutLeft = QtGui.QHBoxLayout(wgtLeft)
         layoutLeft.setMargin(0)
         layoutLeft.addWidget(splitterLeft)

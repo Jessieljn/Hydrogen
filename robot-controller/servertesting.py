@@ -19,7 +19,7 @@ if __name__ == "__main__":
                 print PRINT_HEADER, "connection from ", addrCli
             else:
                 data = sck.recv(2048)
-                if data is None or not isinstance(data, (str)) or (data == "" or data == "\0"):
+                if data is None or not isinstance(data, str) or (data == "" or data == "\0"):
                     print PRINT_HEADER, "connection closing. . ."
                     sck.close()
                     sckList.remove(sck)

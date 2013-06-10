@@ -94,16 +94,16 @@ class Nao(QtCore.QObject):
         proxy = naoqi.ALProxy("ALMotion")
         if not post:
             if motion.getMethod() == NaoMotion.METHOD_BEZIER:
-                proxy.angleInterpolationBezier(motion.getNames(), motion.getTimes(), motion.getKeys());
+                proxy.angleInterpolationBezier(motion.getNames(), motion.getTimes(), motion.getKeys())
             else:
-                proxy.angleInterpolation(motion.getNames(), motion.getKeys(), motion.getTimes(), True);
-            #END if
+                proxy.angleInterpolation(motion.getNames(), motion.getKeys(), motion.getTimes(), True)
+                #END if
         else:
             if motion.getMethod() == NaoMotion.METHOD_BEZIER:
-                proxy.post.angleInterpolationBezier(motion.getNames(), motion.getTimes(), motion.getKeys());
+                proxy.post.angleInterpolationBezier(motion.getNames(), motion.getTimes(), motion.getKeys())
             else:
-                proxy.post.angleInterpolation(motion.getNames(), motion.getKeys(), motion.getTimes(), True);
-            #END if
+                proxy.post.angleInterpolation(motion.getNames(), motion.getKeys(), motion.getTimes(), True)
+                #END if
         #END if
     # END motion()
 
@@ -176,7 +176,7 @@ class Nao(QtCore.QObject):
                 stiffness = 1.0
             #END if
             while self._stiffness < stiffness:
-                self._stiffness = self._stiffness + 0.05
+                self._stiffness += 0.05
                 if self._stiffness > 1.0:
                     self._stiffness = 1.0
                 #END if
@@ -187,7 +187,7 @@ class Nao(QtCore.QObject):
                 stiffness = 0.0
             #END if
             while self._stiffness > stiffness:
-                self._stiffness = self._stiffness - 0.05
+                self._stiffness -= 0.05
                 if self._stiffness < 0.0:
                     self._stiffness = 0.0
                 #END if

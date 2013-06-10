@@ -7,8 +7,9 @@ class Camera:
     Top, \
     Bottom, \
     Both \
- = range(3)
+        = range(3)
 #END class
+
 
 class CameraResolution:
     # In order of resolution
@@ -20,8 +21,9 @@ class CameraResolution:
     QVGA, \
     VGA, \
     FOUR_VGA \
- = range(4)
+        = range(4)
 #END class
+
 
 class Direction:
     Neutral, \
@@ -29,8 +31,9 @@ class Direction:
     Down, \
     Left, \
     Right \
- = range(5)
+        = range(5)
 #END class
+
 
 class LEDNames:
     All = "AllLeds"
