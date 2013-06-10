@@ -1,21 +1,21 @@
 from Definitions import Direction
-from Action import Action
+from BaseAction import BaseAction
 
 
-class HeadMotion(Action):
-    def __init__(self, param):
+class HeadMotion(BaseAction):
+    def __init__(self, direction):
         super(HeadMotion, self).__init__()
-        self.parameter = param
+        self._direction = direction
     #END __init__()
 
     def execute(self, nao):
-        if self.parameter == Direction.Up:
+        if self._direction == Direction.Up:
             nao.tiltHeadUp()
-        elif self.parameter == Direction.Down:
+        elif self._direction == Direction.Down:
             nao.tiltHeadDown()
-        elif self.parameter == Direction.Left:
+        elif self._direction == Direction.Left:
             nao.turnHeadLeft()
-        elif self.parameter == Direction.Right:
+        elif self._direction == Direction.Right:
             nao.turnHeadRight()
         else:
             pass
@@ -26,13 +26,13 @@ class HeadMotion(Action):
     #END actionToString()
 
     def paramToString(self):
-        if self.parameter == Direction.Up:
+        if self._direction == Direction.Up:
             return "Up"
-        elif self.parameter == Direction.Down:
+        elif self._direction == Direction.Down:
             return "Down"
-        elif self.parameter == Direction.Left:
+        elif self._direction == Direction.Left:
             return "Left"
-        elif self.parameter == Direction.Right:
+        elif self._direction == Direction.Right:
             return "Right"
         else:
             return "Neutral"

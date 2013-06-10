@@ -1,16 +1,17 @@
 from Definitions import Direction
-from PyQt4 import QtCore, QtGui
+from PyQt4 import QtCore
+from PyQt4 import QtGui
+from Action import ActionModel
+from Action import Speech
 from Nao import Nao
-from Action.ActionModel import ActionModel
-from Action.Speech import Speech
 from Study import Study
-from UI.AboutWindow import AboutWindow
-from UI.ActionListWidget import ActionListWidget
-from UI.CameraWidget import CameraWidget
-from UI.ConnectDialog import ConnectDialog
-from UI.GeneralWidget import GeneralWidget
-from UI.SpeechWidget import SpeechWidget
-from UI.StiffnessWidget import StiffnessWidget
+from AboutWindow import AboutWindow
+from ActionListWidget import ActionListWidget
+from CameraWidget import CameraWidget
+from ConnectDialog import ConnectDialog
+from GeneralWidget import GeneralWidget
+from SpeechWidget import SpeechWidget
+from StiffnessWidget import StiffnessWidget
 
 
 ##
@@ -22,8 +23,9 @@ class MainWindow(QtGui.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
-        self._actionQueue = ActionModel(self)
-        self._actionQueue.execute.connect(self.on__actionQueue_execute)
+        self._nao = Nao()
+        self._actionQueue = ActionModel(self, self._nao)
+        self._LEDTime = QtCore.QTime.currentTime()
         self._keys = dict()
         self._keys[Direction.Up] = False
         self._keys[Direction.Down] = False
@@ -45,10 +47,10 @@ class MainWindow(QtGui.QMainWindow):
         actDisconnect.setShortcut('Ctrl+D')
         actDisconnect.triggered.connect(self.on_actDisconnect_triggered)
 
-        actExit = QtGui.QAction(QtGui.QIcon('images/exit.png'), '&Exit', self)
+        actExit = QtGui.QAction(QtGui.QIcon('images/exit.png'), 'E&xit', self)
         actExit.setShortcut('Ctrl+X')
         actExit.setStatusTip('Exit application')
-        actExit.triggered.connect(QtGui.qApp.quit)
+        actExit.triggered.connect(self.close)
 
         fileMenu = menubar.addMenu('File')
         fileMenu.addAction(actConnect)
@@ -84,38 +86,40 @@ class MainWindow(QtGui.QMainWindow):
         splitterLeft = QtGui.QSplitter(wgtLeft)
         splitterLeft.setOrientation(QtCore.Qt.Vertical);
         layoutLeft = QtGui.QHBoxLayout(wgtLeft)
+        layoutLeft.setMargin(0)
         layoutLeft.addWidget(splitterLeft)
 
-        self._wgtCamera = CameraWidget(splitterLeft)
+        self._wgtCamera = CameraWidget(splitterLeft, self._nao.getCamera())
         self._wgtCamera.setMinimumHeight(385)
-        self._wgtCamera.cameraChanged.connect(self.on_cameraChanged)
+        self._wgtCamera.cameraChanged.connect(self._nao.getCamera().setCameraSource)
         self._wgtCamera.moveHead.connect(self.on_moveHead)
 
         self._wgtActionList = ActionListWidget(splitterLeft, self._actionQueue)
         self._wgtActionList.setMinimumHeight(120)
+        self._wgtActionList.clearClicked.connect(self._actionQueue.clearActions)
+        self._wgtActionList.runClicked.connect(self._actionQueue.runActions)
 
         wgtRight = QtGui.QWidget(splitter)
         wgtRight.setMinimumWidth(380)
 
         self._wgtSpeech = SpeechWidget(wgtRight)
         self._wgtSpeech.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.Maximum)
-        self._wgtSpeech.textEditing.connect(self.on_changingLEDs)
         self._wgtSpeech.textInputCancelled.connect(self.grab_keyboard)
         self._wgtSpeech.textSubmitted.connect(self.on_playSpeech)
-        self._wgtSpeech.volumeChanged.connect(self.on_changingVolume)
+        self._wgtSpeech.volumeChanged.connect(self._nao.setVolume)
         layoutSpeech = QtGui.QHBoxLayout()
         layoutSpeech.setMargin(0)
         layoutSpeech.addWidget(self._wgtSpeech)
 
         self._wgtStiffness = StiffnessWidget(wgtRight)
-        self._wgtStiffness.stiffnessChanged.connect(self.on_changingStiffness)
+        self._wgtStiffness.stiffnessChanged.connect(self._nao.setStiffness)
 
         layoutTextStiff = QtGui.QHBoxLayout()
         layoutTextStiff.addLayout(layoutSpeech)
         layoutTextStiff.addWidget(self._wgtStiffness)
 
         self._wgtGeneral = GeneralWidget(wgtRight)
-        self._wgtGeneral.playAction.connect(self.on_playAction)
+        self._wgtGeneral.playAction.connect(self._actionQueue.addActions)
 
         self._wgtTaskPanel = QtGui.QFrame(wgtRight)
         self._wgtTaskPanel.setFrameShape(QtGui.QFrame.Panel)
@@ -150,58 +154,27 @@ class MainWindow(QtGui.QMainWindow):
         self.setMinimumSize(800, 600)
         self.setWindowIcon(QtGui.QIcon("images/icon.png"))
         self.setWindowTitle('NAO Robotic Controller')
-        self.resize(800, 600)
+        self.resize(1024, 768)
         self.show()
         self.grabKeyboard()
-
-        self._nao = Nao()
-        self._nao.frameAvailable.connect(self._wgtCamera.setImage)
     # END __init__()
 
-    def on__actionQueue_execute(self, action):
-        if self._nao.isConnected():
-            action.execute(self._nao)
-        # END if
-    # END on__actionQueue_execute()
-
-    def on_cameraChanged(self, which):
-        self._nao.setCameraSource(which)
-    # END on_cameraChanged()
-
-    def on_changingLEDs(self):
-        if self._wgtSpeech.isSpeechTextEmpty():
-            self._nao.setLEDsNormal()
-        else:
-            self._nao.setLEDsProcessing()
-        # END if
-    # END on_changingLEDs()
-
-    def on_changingStiffness(self, value):
-        self._nao.setStiffness(value)
-    # END on_changingStiffness()
-
-    def on_changingVolume(self, value):
-        self._nao.setVolume(value)
-    # END on_changingVolume()
-
     def on_moveHead(self, direction):
-        if direction == Direction.Up:
-            self._nao.tiltHeadUp()
-        elif direction == Direction.Down:
-            self._nao.tiltHeadDown()
-        elif direction == Direction.Left:
-            self._nao.turnHeadLeft()
-        elif direction == Direction.Right:
-            self._nao.turnHeadRight()
+        if self._nao.isConnected():
+            if direction == Direction.Up:
+                self._nao.tiltHeadUp()
+            elif direction == Direction.Down:
+                self._nao.tiltHeadDown()
+            elif direction == Direction.Left:
+                self._nao.turnHeadLeft()
+            elif direction == Direction.Right:
+                self._nao.turnHeadRight()
+            #END if
         #END if
     # END on_moveHead()
 
-    def on_playAction(self, action):
-        self._actionQueue.enqueue(action)
-    # END on_playSpeech()
-
     def on_playSpeech(self, value):
-        self._actionQueue.enqueue(Speech(value))
+        self._actionQueue.addActions(Speech(value, blocking = False))
     # END on_playSpeech()
 
     def on_actConnect_triggered(self):
@@ -219,6 +192,7 @@ class MainWindow(QtGui.QMainWindow):
             print "Disconnecting from Nao"
             self._nao.disconnect()
             print "==================================="
+            self._wgtCamera.setDefaultImage()
         # END if
     # END on_actDisconnect_triggered()
 
@@ -243,17 +217,18 @@ class MainWindow(QtGui.QMainWindow):
             print "==================================="
             print "Connecting to Nao (" + ipAddress + ":" + port + ")"
             if self._nao.connect(ipAddress, int(port)):
-                self._nao.startCamera()
                 self._timerID = self.startTimer(50)
             else:
                 print "FAILED"
             # END if
             print "==================================="
+            self._wgtGeneral.init_behaviorList(self._nao)
         # END if
     # END on_dlgConnect_accepted()
 
     def closeEvent(self, event):
         self.on_actDisconnect_triggered()
+        self._actionQueue.dispose()
     # END closeEvent()
 
     def focusInEvent(self, event):
@@ -296,6 +271,16 @@ class MainWindow(QtGui.QMainWindow):
     # END keyReleaseEvent()
 
     def timerEvent(self, event):
+        if self._LEDTime < QtCore.QTime.currentTime():
+            if self._wgtSpeech.isSpeechTextEmpty() and (self._actionQueue.rowCount(None) <= 0 or self._actionQueue.isRunning()):
+                self._nao.LEDNormal()
+                self._LEDTime = QtCore.QTime.currentTime().addSecs(60.0)
+            else:
+                self._nao.LEDrandomEyes(1.5, True)
+            # END if
+            self._LEDTime = QtCore.QTime.currentTime().addSecs(1.5)
+        # END if
+
         if self._keys[Direction.Up]:
             self._nao.tiltHeadUp()
         #END if

@@ -1,7 +1,6 @@
 import sys
 from PyQt4 import QtGui
-from MainWindow import MainWindow
-
+from UI import MainWindow
 
 ##
 # main.py
@@ -14,7 +13,6 @@ def main():
     window.show()
     sys.exit(app.exec_())
 #END main()
-
 
 if __name__ == '__main__':
     main()

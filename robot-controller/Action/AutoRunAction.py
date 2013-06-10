@@ -1,25 +1,20 @@
-from abc import ABCMeta, abstractmethod
+from BaseAction import BaseAction
 
 
-class Action(object):
-    __metaclass__ = ABCMeta
-
+class AutoRunAction(BaseAction):
     def __init__(self):
-        self.parameter = None
+        super(AutoRunAction, self).__init__()
     #END __init__()
 
-    @abstractmethod
     def execute(self, nao):
         pass
     #END execute()
 
-    @abstractmethod
     def actionToString(self):
-        pass
+        return "AutoRunAction"
     #END actionToString()
 
-    @abstractmethod
     def paramToString(self):
-        pass
+        return "Run current action queue automatically"
     #END paramToString()
 #END class

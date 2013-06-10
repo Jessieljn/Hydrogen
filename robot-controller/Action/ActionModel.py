@@ -1,40 +1,62 @@
 from PyQt4 import QtCore
-from Action import Action
+from ActionQueue import ActionQueue
+from AutoRunAction import AutoRunAction
+from BaseAction import BaseAction
+from ThreadTimer import ThreadTimer
 
 
 class ActionModel(QtCore.QAbstractTableModel):
-    def __init__(self, parent):
+    def __init__(self, parent, nao):
         super(ActionModel, self).__init__(parent)
-        self._list = []
-        self._timerID = self.startTimer(250)
+        self._list = ActionQueue(nao)
+        self._list.cleared.connect(self.on__list_cleared)
+        self._list.dequeued.connect(self.on__list_dequeued)
+        self._list.enqueued.connect(self.on__list_enqueued)
+        self._timer = ThreadTimer()
+        self._timer.start()
+        self._timer.addToThread(self._list)
+        self._timer.timeElapsed.connect(self._list.execute)
     #END __init__()
 
-    def __del__(self):
-        self.killTimer(self._timerID)
-    #END __del()
+    def dispose(self):
+        self._timer.stop()
+    #END dispose()
 
-    execute = QtCore.pyqtSignal(Action)
-
-    def enqueue(self, action):
-        parentIndex = QtCore.QModelIndex()
-        self.beginInsertRows(parentIndex, len(self._list), len(self._list))
-        self._list.append(action)
-        self.endInsertRows()
-    #END enqueue()
-
-    def dequeue(self):
-        parentIndex = QtCore.QModelIndex()
-        self.beginRemoveRows(parentIndex, 0, 0)
-        item = None
-        if len(self._list) > 0:
-            item = self._list.pop(0)
+    def addActions(self, actions):
+        if actions is None:
+            pass
+        elif isinstance(actions, AutoRunAction):
+            self._list.setRunning(True)
+        elif isinstance(actions, BaseAction):
+            self._timer.addToThread(actions)
+            self._list.enqueue(actions)
+        else:
+            for act in actions:
+                if isinstance(act, AutoRunAction):
+                    self._list.setRunning(True)
+                else:
+                    self._timer.addToThread(act)
+                    self._list.enqueue(act)
+                #END if
+            #END for
         #END if
-        self.endRemoveRows()
-        return item
-    #END dequeue()
+    #END addAction()
+
+    def clearActions(self):
+        self._list.setRunning(False)
+        self._list.clear()
+    #END clearActions()
+
+    def isRunning(self):
+        return self._list.isRunning()
+    #END isRunning()
+
+    def runActions(self):
+        self._list.setRunning(True)
+    #END runActions()
 
     def rowCount(self, parent):
-        return len(self._list)
+        return self._list.length()
     #END rowCount()
 
     def columnCount(self, parent):
@@ -43,12 +65,11 @@ class ActionModel(QtCore.QAbstractTableModel):
 
     def data(self, index, role):
         if role == QtCore.Qt.DisplayRole:
-            if index.row() < len(self._list):
-                if index.column() == 0:
-                    return self._list[index.row()].actionToString()
-                else:
-                    return self._list[index.row()].paramToString()
-                #END if
+            item = self._list.get(index.row())
+            if index.column() == 0:
+                return item.actionToString()
+            else:
+                return item.paramToString()
             #END if
         #END if
         return QtCore.QVariant()
@@ -68,9 +89,21 @@ class ActionModel(QtCore.QAbstractTableModel):
         return QtCore.QVariant()
     #END headerData()
 
-    def timerEvent(self, event):
-        item = self.dequeue()
-        if item is not None:
-            self.execute.emit(item)
-    #END timerEvent
+    def on__list_cleared(self, length):
+        parentIndex = QtCore.QModelIndex()
+        self.beginRemoveRows(parentIndex, 0, length - 1)
+        self.endRemoveRows()
+    #END on__list_cleared()
+
+    def on__list_dequeued(self, index):
+        parentIndex = QtCore.QModelIndex()
+        self.beginRemoveRows(parentIndex, 0, 0)
+        self.endRemoveRows()
+    #END on__list_dequeued()
+
+    def on__list_enqueued(self, index):
+        parentIndex = QtCore.QModelIndex()
+        self.beginInsertRows(parentIndex, index, index)
+        self.endInsertRows()
+    #END on__list_enqueued()
 #END class
