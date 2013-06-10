@@ -33,7 +33,7 @@ class LED(BaseAction):
     #END actionToString()
 
     def paramToString(self):
-        ret = self._action + ": ";
+        ret = self._action + ": "
         if self._action == LED.ACTION_FADE_RGB:
             return ret + self._ledname + " with RGB " + str(self._value) + " and duration " + str(self._seconds)
         elif self._action == LED.ACTION_FADE_INTENSITY:

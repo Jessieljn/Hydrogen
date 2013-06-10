@@ -7,11 +7,11 @@
     <file path="/CameraWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1369756607017" ignored="false" />
     <file path="/ConnectionWinClass.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1367948061079" ignored="false" />
     <file path="/controller.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1367948189745" ignored="false" />
-    <file path="/GeneralWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368216191094" ignored="false" />
+    <file path="/GeneralWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370883378919" ignored="false" />
     <file path="/GestureWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368550072244" ignored="false" />
     <file path="/LogWidClass.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1367948755704" ignored="false" />
     <file path="/main.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368727769515" ignored="false" />
-    <file path="/MainWindow.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370453560939" ignored="false" />
+    <file path="/MainWindow.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370883363679" ignored="false" />
     <file path="/Nao.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370877996644" ignored="false" />
     <file path="/server.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1367949229800" ignored="false" />
     <file path="/StiffnessWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368722368907" ignored="false" />
@@ -28,7 +28,7 @@
     <file path="/About.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1369763831152" ignored="false" />
     <file path="/AboutWindow.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370443545255" ignored="false" />
     <file path="/JitterWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370450180936" ignored="false" />
-    <file path="/Jitter.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370877386779" ignored="false" />
+    <file path="/Jitter.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370881942731" ignored="false" />
     <file path="/__init__.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370453733239" ignored="false" />
     <file path="/servertesting.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370544126102" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -50,22 +50,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Jitter.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Study/Jitter.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="63" column="0" selection-start="2606" selection-end="2606" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#31#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Nao.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Nao.py">
+        <entry file="file://$PROJECT_DIR$/Nao/Nao.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="111" column="26" selection-start="3602" selection-end="3602" vertical-scroll-proportion="0.662963">
-              <folding />
+            <state line="201" column="9" selection-start="6286" selection-end="6286" vertical-scroll-proportion="1.5083488">
+              <folding>
+                <element signature="e#0#32#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -80,22 +71,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/UI/AboutWindow.py" />
-        <option value="$PROJECT_DIR$/Action/ActionModel.py" />
-        <option value="$PROJECT_DIR$/Action/HeadMotion.py" />
-        <option value="$PROJECT_DIR$/Action/Speech.py" />
-        <option value="$PROJECT_DIR$/Action/Action.py" />
-        <option value="$PROJECT_DIR$/UI/Test.py" />
-        <option value="$PROJECT_DIR$/UI/GeneralWidget.py" />
+        <option value="$PROJECT_DIR$/Action/__init__.py" />
+        <option value="$PROJECT_DIR$/Nao/__init__.py" />
+        <option value="$PROJECT_DIR$/Nao/Nao.py" />
+        <option value="$PROJECT_DIR$/Nao/NaoMotionList.py" />
         <option value="$PROJECT_DIR$/Study/__init__.py" />
-        <option value="$PROJECT_DIR$/UI/JitterWidget.py" />
-        <option value="$PROJECT_DIR$/Definitions.py" />
-        <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/UI/ConnectDialog.py" />
-        <option value="$PROJECT_DIR$/MainWindow.py" />
-        <option value="$PROJECT_DIR$/servertesting.py" />
+        <option value="$PROJECT_DIR$/Study/BaseStudy.py" />
+        <option value="$PROJECT_DIR$/Study/General.py" />
+        <option value="$PROJECT_DIR$/UI/GeneralWidget.py" />
+        <option value="$PROJECT_DIR$/Study/Empathy.py" />
         <option value="$PROJECT_DIR$/Study/Jitter.py" />
-        <option value="$PROJECT_DIR$/Nao.py" />
+        <option value="$PROJECT_DIR$/Action/LED.py" />
+        <option value="$PROJECT_DIR$/Action/ThreadTimer.py" />
+        <option value="$PROJECT_DIR$/UI/MainWindow.py" />
+        <option value="$PROJECT_DIR$/servertesting.py" />
+        <option value="$PROJECT_DIR$/Nao/NaoMotion.py" />
+        <option value="$PROJECT_DIR$/Nao/NaoCamera.py" />
       </list>
     </option>
   </component>
@@ -131,7 +122,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -174,12 +164,41 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="Study" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="robot-controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="robot-controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Nao" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="robot-controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="robot-controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="Action" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -206,27 +225,6 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
-    <configuration default="false" name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="robot-controller" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-      <option name="PARAMETERS" value="" />
-      <RunnerSettings RunnerId="PyDebugRunner" />
-      <RunnerSettings RunnerId="PythonRunner" />
-      <ConfigurationWrapper RunnerId="PyDebugRunner" />
-      <ConfigurationWrapper RunnerId="PythonRunner" />
-      <method />
-    </configuration>
     <configuration default="false" name="jitter" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -303,6 +301,25 @@
       <ConfigurationWrapper RunnerId="PythonRunner" />
       <method />
     </configuration>
+    <configuration default="false" name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="robot-controller" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <RunnerSettings RunnerId="PythonRunner" />
+      <ConfigurationWrapper RunnerId="PythonRunner" />
+      <method />
+    </configuration>
     <configuration default="true" type="tests" factoryName="Nosetests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -363,18 +380,18 @@
       <method />
     </configuration>
     <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="Python.main" />
-      <item index="1" class="java.lang.String" itemvalue="Python.jitter" />
-      <item index="2" class="java.lang.String" itemvalue="Python.asdf" />
-      <item index="3" class="java.lang.String" itemvalue="Python.Test" />
-      <item index="4" class="java.lang.String" itemvalue="Python.servertesting" />
+      <item index="0" class="java.lang.String" itemvalue="Python.jitter" />
+      <item index="1" class="java.lang.String" itemvalue="Python.asdf" />
+      <item index="2" class="java.lang.String" itemvalue="Python.Test" />
+      <item index="3" class="java.lang.String" itemvalue="Python.servertesting" />
+      <item index="4" class="java.lang.String" itemvalue="Python.main" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.main" />
-        <item index="1" class="java.lang.String" itemvalue="Python.servertesting" />
-        <item index="2" class="java.lang.String" itemvalue="Python.Test" />
-        <item index="3" class="java.lang.String" itemvalue="Python.asdf" />
+        <item index="1" class="java.lang.String" itemvalue="Python.main" />
+        <item index="2" class="java.lang.String" itemvalue="Python.main" />
+        <item index="3" class="java.lang.String" itemvalue="Python.servertesting" />
         <item index="4" class="java.lang.String" itemvalue="Python.Test" />
       </list>
     </recent_temporary>
@@ -407,14 +424,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1358" y="-8" width="1936" height="1096" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943678" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2145144" sideWeight="0.60148776" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3985122" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21878335" sideWeight="0.60042506" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39834026" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3995749" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32695374" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20828906" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -422,10 +441,8 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3995749" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -494,99 +511,138 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/UI/FocusableTextEdit.py">
+    <entry file="file://$PROJECT_DIR$/Nao/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="3" column="56" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UI/FocusableLineEdit.py">
+    <entry file="file://$PROJECT_DIR$/Nao/NaoMotionList.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI/ConnectDialog.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="36" selection-start="1896" selection-end="2145" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Study/MentalChallenge.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI/ActionListWidget.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Action/Wait.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Action/Action.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Action/ActionModel.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.0593472" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI/AboutWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.13501483" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI/GeneralWidget.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/MainWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="0" selection-start="2006" selection-end="2006" vertical-scroll-proportion="0.6216617">
-          <folding />
+        <state line="188" column="4" selection-start="54119" selection-end="54119" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1370883335033" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1370883335033" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Study/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="483" selection-end="483" vertical-scroll-proportion="0.45400593">
+        <state line="20" column="10" selection-start="557" selection-end="557" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#0#27#0" expanded="false" />
+            <element signature="e#0#27#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://C:/Python27/Lib/socket.py">
+    <entry file="file://$PROJECT_DIR$/Study/BaseStudy.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="223" column="0" selection-start="7712" selection-end="7712" vertical-scroll-proportion="0.33240613">
-          <folding />
+        <state line="47" column="10" selection-start="1526" selection-end="1526" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Study/General.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="0" selection-start="278" selection-end="278" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Action/ActionModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="107" column="18" selection-start="3220" selection-end="3220" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/servertesting.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="32" selection-start="534" selection-end="534" vertical-scroll-proportion="0.0">
+        <state line="21" column="16" selection-start="769" selection-end="769" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Nao/NaoMotion.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="62" column="16" selection-start="1566" selection-end="1566" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Study/Empathy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="451" column="26" selection-start="22387" selection-end="22387" vertical-scroll-proportion="0.29398906">
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UI/GeneralWidget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="25" selection-start="655" selection-end="655" vertical-scroll-proportion="0.19562842">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Nao/NaoCamera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="12" selection-start="815" selection-end="815" vertical-scroll-proportion="0.19562842">
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UI/MainWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="82" column="53" selection-start="2914" selection-end="2914" vertical-scroll-proportion="0.19562842">
+          <folding>
+            <element signature="e#0#33#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Action/LED.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="33" selection-start="1293" selection-end="1293" vertical-scroll-proportion="0.6502732">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Action/ThreadTimer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="30" selection-start="717" selection-end="717" vertical-scroll-proportion="0.29398906">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Study/Jitter.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="63" column="0" selection-start="2606" selection-end="2606" vertical-scroll-proportion="0.0">
+        <state line="36" column="8" selection-start="1589" selection-end="1589" vertical-scroll-proportion="0.19562842">
           <folding>
             <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Nao.py">
+    <entry file="file://$PROJECT_DIR$/Nao/Nao.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="26" selection-start="3602" selection-end="3602" vertical-scroll-proportion="0.662963">
-          <folding />
+        <state line="201" column="9" selection-start="6286" selection-end="6286" vertical-scroll-proportion="1.5083488">
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

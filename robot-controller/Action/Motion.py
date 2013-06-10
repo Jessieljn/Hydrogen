@@ -37,7 +37,7 @@ class Motion(BaseAction):
             ret = ret + " x" + str(self._speed)
         #END if
         if self._repeat > 0:
-            ret = ret + " repeating key frames "
+            ret += " repeating key frames "
             if self._repeatSpeed != 1.0:
                 ret = ret + " x" + str(self._repeatSpeed) + " "
             #END if

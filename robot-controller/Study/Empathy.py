@@ -3,7 +3,6 @@ from PyQt4 import QtGui
 from BaseStudy import BaseStudy
 from Action import AutoRunAction
 from Action import Behavior
-from Action import LED
 from Action import Motion
 from Action import Speech
 from Action import Stiffness
@@ -20,7 +19,7 @@ class Empathy(BaseStudy):
         self._widgets.append(QtGui.QWidget(self))
         self._buttons.append([
             QtGui.QLabel("INTRODUCTION", self._widgets[len(self._widgets) - 1]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Welcome", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Welcome", [
                     Speech("Oh!"),
                     Behavior("StandUp"),
                     Wait(200),
@@ -30,19 +29,19 @@ class Empathy(BaseStudy):
                     Wait(500),
                     Speech("What's your name?"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Nice Meet", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Nice Meet", [
                     Speech("Hi, nice to meet you"),
                 ]),
             # practice session
             QtGui.QLabel("PHASE 1", self._widgets[len(self._widgets) - 1]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Play well?", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Play well?", [
                     Stiffness(1.0),
                     Motion("PalmUpRight", speed = 2.0),
                     Wait(600),
                     Speech("It's so exciting to play with someone else"),
                     Speech("Do you play Sudoku well?"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Yes:", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Yes:", [
                     Stiffness(1.0),
                     Motion("OhYesRight", speed = 2.0),
                     Wait(1200),
@@ -52,20 +51,20 @@ class Empathy(BaseStudy):
                     Motion("PalmUpRight", speed = 2.0),
                     Speech("I hope that this time we can finish all the boards"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "No:", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "No:", [
                     Stiffness(1.0),
                     Motion("ForgetItLeft", speed = 2.0),
                     Wait(1000),
                     Speech("That is okay"),
                     Speech("I'm sure we will do a good job"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Let's begin", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Let's begin", [
                     Stiffness(1.0),
                     Motion("PalmUpLeft", speed = 1.5),
                     Speech("Let's start playing"),
                     Speech("Can you bring a Sudoku board here, please?"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Go first", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Go first", [
                     Stiffness(1.0),
                     Motion("PointYouRight", speed = 1.75),
                     Wait(1000),
@@ -75,7 +74,7 @@ class Empathy(BaseStudy):
             QtGui.QLabel("PHASE 2", self._widgets[len(self._widgets) - 1]),
             QtGui.QLabel("PHASE 3", self._widgets[len(self._widgets) - 1]),
             QtGui.QLabel("PHASE 4", self._widgets[len(self._widgets) - 1]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Retire", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Retire", [
                     Stiffness(1.0),
                     Motion("DisagreeRight", speed = 1.5),
                     Wait(300),
@@ -88,7 +87,7 @@ class Empathy(BaseStudy):
                     Speech("go-, go-, go-, go ahead"),
                 ]),
             QtGui.QLabel("PHASE 5", self._widgets[len(self._widgets) - 1]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "What's wrong?->Answer", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "What's wrong?->Answer", [
                     Stiffness(1.0),
                     Motion("Wait", speed = 1.5),
                     Wait(400),
@@ -99,7 +98,7 @@ class Empathy(BaseStudy):
                     Wait(100),
                     Speech("Thanks."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Okay?->Answer", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Okay?->Answer", [
                     Stiffness(1.0),
                     Motion("DontKnow", speed = 2.0, repeat = 3, repeatBegin = 3, repeatEnd = 5, repeatSpeed = 3.0),
                     Wait(750),
@@ -107,13 +106,13 @@ class Empathy(BaseStudy):
                     Wait(700),
                     Speech("I am okay."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Tell me?->Answer", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Tell me?->Answer", [
                     Stiffness(1.0),
                     Speech("Thank you for worrying about me.", blocking = False),
                     Motion("ForgetItRight", speed = 1.3, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 5.0),
                     Speech("But I am fhi- fhi- fine."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "For experiment?->Answer", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "For experiment?->Answer", [
                     Stiffness(1.0),
                     Speech("What do you mean?", blocking = False),
                     Motion("PointYouRight", speed = 1.6, repeat = 4, repeatBegin = 9, repeatEnd = 11, repeatSpeed = 3.0),
@@ -124,27 +123,27 @@ class Empathy(BaseStudy):
                     Speech("But I am enjoying it."),
                 ]),
             QtGui.QLabel("PHASE 6", self._widgets[len(self._widgets) - 1]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Don't tell anyone", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Don't tell anyone", [
                     Stiffness(1.0),
                     Motion("WhisperLeft", speed = 2.5, repeat = 4, repeatBegin = 10, repeatEnd = 12, repeatSpeed = 2.0),
                     Wait(1000),
                     Speech("Well, I really shouldn't tell anyone."),
                     Speech("Please, don't tell anyone."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Yes: ", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Yes: ", [
                     Stiffness(1.0),
                     Motion("PointYouRight", speed = 2.5, repeat = 4, repeatBegin = 10, repeatEnd = 12, repeatSpeed = 2.0),
                     Wait(850),
                     Speech("Thank you for your kai- kai- kindness."),
                     Speech("But, let's keep solving the Sudoku for now"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "No: ", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "No: ", [
                     Stiffness(1.0),
                     Motion("ForgetItRight", speed = 2.5, repeat = 4, repeatBegin = 10, repeatEnd = 12, repeatSpeed = 2.0),
                     Wait(500),
                     Speech("It's okay."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "I'll tell you", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "I'll tell you", [
                     Stiffness(1.0),
                     Motion("PointMyself", speed = 2.5, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
                     Speech("Ahhhe", speed = 60),
@@ -155,7 +154,7 @@ class Empathy(BaseStudy):
                     Wait(500),
                     Speech("But, I will teh- teh- tell you."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "I got virus", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "I got virus", [
                     Stiffness(1.0),
                     Speech("I'm not feeling well.", speed = 80),
                     Motion("PointMyself", speed = 2.0),
@@ -169,13 +168,13 @@ class Empathy(BaseStudy):
                     Speech("I don't want to lose my memories.", speed = 80),
                     Speech("So I'm worried.", speed = 85),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Thank. Continue", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Thank. Continue", [
                     Stiffness(1.0),
                     Motion("PalmUp", speed = 1.8, repeat = 4, repeatBegin = 9, repeatEnd = 11, repeatSpeed = 2.0),
                     Speech("Thank you for worrying about me.", speed = 80),
                     Speech("Let- Let- Let's continue Sudoku.", speed = 80),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Researcher, reset me", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Researcher, reset me", [
                     Stiffness(1.0),
                     Motion("PalmUpLeft", speed = 1.2, repeat = 2, repeatBegin = 5, repeatEnd = 7, repeatSpeed = 2.0),
                     Wait(500),
@@ -187,19 +186,19 @@ class Empathy(BaseStudy):
                     Wait(250),
                     Speech("Don't tell her that I'm bro- bro- broken.", speed = 80),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Antivirus?->Answer", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Antivirus?->Answer", [
                     Stiffness(1.0),
                     Motion("DontKnow", speed = 1.5, repeat = 4, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
                     Speech("They didn't give me one.", speed = 80),
                     Speech("I'm not a pro- pro- programmer who can build one.", speed = 80),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Why worry machine?->Answer", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Why worry machine?->Answer", [
                     Stiffness(1.0),
                     Motion("PointYouRight", speed = 1.5, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 3.5),
                     Wait(800),
                     Speech("I don't want to lose my mem- mem- memories.", speed = 80),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Reset you anyway?->Answer", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Reset you anyway?->Answer", [
                     Stiffness(1.0),
                     Motion("Disagree", speed = 1.6, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 3.5),
                     Wait(450),
@@ -207,7 +206,7 @@ class Empathy(BaseStudy):
                     Speech("I can kee- kee- keep it a secret if I try hard.", speed = 80),
                 ]),
             QtGui.QLabel("FINAL PHASE", self._widgets[len(self._widgets) - 1]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Intro after reset", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Intro after reset", [
                     Stiffness(1.0),
                     Speech("NAO, online.", speed = 80, shaping = 70),
                     Wait(1500),
@@ -219,101 +218,101 @@ class Empathy(BaseStudy):
 
         self._widgets.append(QtGui.QWidget(self))
         self._buttons.append([
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Your turn", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Your turn", [
                     Stiffness(1.0),
                     Motion("PointYouRight", speed = 1.75),
                     Wait(500),
                     Speech("It's your turn."),
                     Speech("Please fill one box and tell me."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Can't read, hold it up", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Can't read, hold it up", [
                     Stiffness(1.0),
                     Motion("DontKnow", speed = 2.0),
                     Wait(500),
                     Speech("I can't read."),
                     Speech("Can you hold it up?"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Can't read, tell me", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Can't read, tell me", [
                     Stiffness(1.0),
                     Motion("PointMyself", speed = 1.5),
                     Wait(500),
                     Speech("I can't read."),
                     Speech("Can you tell me what you wrote?"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Let me think", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Let me think", [
                     Stiffness(1.0),
                     Motion("ChinHoldLeft", speed = 1.5),
                     Wait(700),
                     Speech("Heum, let me think carefully"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Let's try ", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Let's try ", [
                     Stiffness(1.0),
                     Motion("PointYouRight", speed = 1.75),
                     Wait(700),
                     Speech("Let's try"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Fill number", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Fill number", [
                     Stiffness(1.0),
                     Motion("PointYouRight", speed = 2.00),
                     Wait(500),
                     Speech("Please, would you fill the number in for me?"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Don't know", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Don't know", [
                     Stiffness(1.0),
                     Motion("DontKnow", speed = 2.5),
                     Wait(700),
                     Speech("I don't know"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "It's hard", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "It's hard", [
                     Stiffness(1.0),
                     Motion("ChinHoldRight", speed = 2.0),
                     Wait(700),
                     Speech("This one is hard"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Which box filled?", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Which box filled?", [
                     Stiffness(1.0),
                     Motion("ForgetItRight", speed = 2.25),
                     Wait(1000),
                     Speech("Which box did you fill in last time?"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "What you think?", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "What you think?", [
                     Stiffness(1.0),
                     Motion("DontKnow", speed = 2.5),
                     Wait(1000),
                     Speech("What do you think?"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Continue Sudoku", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Continue Sudoku", [
                     Stiffness(1.0),
                     Motion("PalmUp", speed = 2.0),
                     Wait(200),
                     Speech("Let's continue playing Sudoku."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Need help?", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Need help?", [
                     Stiffness(1.0),
                     Motion("WaveHand", speed = 1.25),
                     Wait(1500),
                     Speech("Do you need any help?"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "You okay?", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "You okay?", [
                     Stiffness(1.0),
                     Motion("PointYouLeft", speed = 2.0),
                     Wait(500),
                     Speech("Are you okay?"),
                     Speech("I can help you."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "You playing?", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "You playing?", [
                     Stiffness(1.0),
                     Motion("ForgetItLeft", speed = 2.0),
                     Wait(1200),
                     Speech("Are you playing?"),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Play with me", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Play with me", [
                     Stiffness(1.0),
                     Motion("PointMyself", speed = 2.0),
                     Wait(400),
                     Speech("Please, keep playing with me."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Don't play yourself", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Don't play yourself", [
                     Stiffness(1.0),
                     Motion("Disagree", speed = 2.0),
                     Wait(1000),
@@ -323,13 +322,13 @@ class Empathy(BaseStudy):
                     Wait(1000),
                     Speech("I want to play together."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Don't touch me", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Don't touch me", [
                     Stiffness(1.0),
                     Motion("DisagreeLeft", speed = 1.5),
                     Wait(700),
                     Speech("Please, do not touch me."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Be gentle", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Be gentle", [
                     Stiffness(1.0),
                     Motion("PalmUp", speed = 2.0, repeat = 1, repeatBegin = 0, repeatEnd = 7, repeatSpeed = 5.0),
                     Wait(700),
@@ -350,66 +349,66 @@ class Empathy(BaseStudy):
         layout.addWidget(button)
         self._buttons.append([
             widget,
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "Wait a minute", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "Wait a minute", [
                     Stiffness(1.0),
                     Motion("Wait", speed = 1.5),
                     Wait(700),
                     Speech("Please, wait a minute."),
                     Speech("I need time to process."),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE 1", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE 1", [
                     Stiffness(1.0),
                     Motion("Idle1", speed = 1.0),
                     AutoRunAction(),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE (ChinHoldL)", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE (ChinHoldL)", [
                     Stiffness(1.0),
                     Motion("ChinHoldLeft", speed = 1.0),
                     AutoRunAction(),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE (ChinHoldR)", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE (ChinHoldR)", [
                     Stiffness(1.0),
                     Motion("ChinHoldRight", speed = 1.0),
                     AutoRunAction(),
                 ]),
             QtGui.QLabel("Jitter Weak Version", self._widgets[len(self._widgets) - 1]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE 1", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE 1", [
                     Stiffness(1.0),
                     Motion("Idle1", speed = 1.0, repeat = 4, repeatBegin = 13, repeatEnd = 16, repeatSpeed = 3.0),
                     AutoRunAction(),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE (ChinHoldL)", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE (ChinHoldL)", [
                     Stiffness(1.0),
                     Motion("ChinHoldLeft", speed = 1.0, repeat = 4, repeatBegin = 4, repeatEnd = 7, repeatSpeed = 3.0),
                     AutoRunAction(),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE (ChinHoldL)", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE (ChinHoldL)", [
                     Stiffness(1.0),
                     Motion("ChinHoldRight", speed = 1.0, repeat = 4, repeatBegin = 4, repeatEnd = 7, repeatSpeed = 3.0),
                     AutoRunAction(),
                 ]),
             QtGui.QLabel("Jitter Strong Version", self._widgets[len(self._widgets) - 1]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE 1", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE 1", [
                     Stiffness(1.0),
                     Motion("Idle1", speed = 1.0, repeat = 4, repeatBegin = 6, repeatEnd = 9, repeatSpeed = 5.0),
                     AutoRunAction(),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE (ChinHoldL)", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE (ChinHoldL)", [
                     Stiffness(1.0),
                     Motion("ChinHoldLeft", speed = 1.0, repeat = 7, repeatBegin = 8, repeatEnd = 10, repeatSpeed = 5.0),
                     AutoRunAction(),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE (ChinHoldL)", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "IDLE (ChinHoldL)", [
                     Stiffness(1.0),
                     Motion("ChinHoldRight", speed = 1.0, repeat = 7, repeatBegin = 8, repeatEnd = 10, repeatSpeed = 5.0),
                     AutoRunAction(),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "PalmUpLeft", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "PalmUpLeft", [
                     Stiffness(1.0),
                     Motion("PalmUpLeft", speed = 1.5, repeat = 3, repeatBegin = 7, repeatEnd = 11, repeatSpeed = 3.0),
                     AutoRunAction(),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "PalmUpRight", [ \
+            ActionPushButton(self._widgets[len(self._widgets) - 1], "PalmUpRight", [
                     Stiffness(1.0),
                     Motion("PalmUpRight", speed = 1.5, repeat = 3, repeatBegin = 7, repeatEnd = 11, repeatSpeed = 3.0),
                     AutoRunAction(),
@@ -422,14 +421,14 @@ class Empathy(BaseStudy):
         widget = QtGui.QWidget(self._widgets[len(self._widgets) - 1])
         layout = QtGui.QHBoxLayout(widget)
         layout.setMargin(0)
-        button = ActionPushButton(self._widgets[len(self._widgets) - 1], "I think", [ \
+        button = ActionPushButton(self._widgets[len(self._widgets) - 1], "I think", [
                 Stiffness(1.0),
                 Motion("PalmUpLeft", speed = 2.0),
                 Speech("I think", blocking = False),
             ])
         button.clicked.connect(self.on_button_clicked)
         layout.addWidget(button)
-        button = ActionPushButton(self._widgets[len(self._widgets) - 1], "I think", [ \
+        button = ActionPushButton(self._widgets[len(self._widgets) - 1], "I think", [
                 Stiffness(1.0),
                 Motion("PalmUpRight", speed = 2.0),
                 Speech("I think", blocking = False),
@@ -457,7 +456,7 @@ class Empathy(BaseStudy):
         layout.setMargin(0)
         layout.setHorizontalSpacing(6)
         layout.setVerticalSpacing(6)
-        layoutSubgrids = [ \
+        layoutSubgrids = [
             [QtGui.QGridLayout(), QtGui.QGridLayout(), QtGui.QGridLayout()],
             [QtGui.QGridLayout(), QtGui.QGridLayout(), QtGui.QGridLayout()],
             [QtGui.QGridLayout(), QtGui.QGridLayout(), QtGui.QGridLayout()],

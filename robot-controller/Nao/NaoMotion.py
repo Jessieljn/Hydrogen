@@ -60,7 +60,7 @@ class NaoMotion(QtCore.QObject):
             while j < len(self._keys[i]) and j < beginIndex:
                 times[i].append(self._times[i][j])
                 keys[i].append(self._keys[i][j])
-                j = j + 1
+                j += 1
             #END while
 
             timeCurrent = self._times[i][j]
@@ -74,24 +74,24 @@ class NaoMotion(QtCore.QObject):
                     timePrevious = self._times[i][j - 1]
                 #END if
                 while j < len(self._keys[i]) and j <= endIndex:
-                    timeCurrent = timeCurrent + (self._times[i][j] - timePrevious) * repeatTimeModifier
+                    timeCurrent += (self._times[i][j] - timePrevious) * repeatTimeModifier
                     timePrevious = self._times[i][j]
                     times[i].append(timeCurrent)
                     keys[i].append(self._keys[i][j])
-                    j = j + 1
+                    j += 1
                 #END while
-                k = k + 1
+                k += 1
             #END while
 
             while j < len(self._keys[i]):
-                timeCurrent = timeCurrent + (self._times[i][j] - timePrevious)
+                timeCurrent += self._times[i][j] - timePrevious
                 timePrevious = self._times[i][j]
                 times[i].append(timeCurrent)
                 keys[i].append(self._keys[i][j])
-                j = j + 1
+                j += 1
             #END while
 
-            i = i + 1
+            i += 1
         #END while
 
         motion = NaoMotion(self._name)
@@ -113,7 +113,7 @@ class NaoMotion(QtCore.QObject):
             #END for
             times.append(time)
             keys.append(self._keys[i])
-            i = i + 1
+            i += 1
         #END while
 
         motion = NaoMotion(self._name)

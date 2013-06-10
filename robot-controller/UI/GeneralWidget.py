@@ -22,7 +22,7 @@ class GeneralWidget(QtGui.QWidget):
         ##################################################
         # General Speech
         ##################################################
-        self._speechs = [ \
+        self._speechs = [
                 ActionPushButton(None, "Hello", Speech("Hello")),
                 ActionPushButton(None, "Thanks", Speech("Thank you")),
                 ActionPushButton(None, "Sorry", Speech("I'm sorry")),

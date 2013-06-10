@@ -28,7 +28,7 @@ class ThreadTimer(QtCore.QObject):
     #END isRunning()
 
     def setInterval(self, value):
-        self._interval = value;
+        self._interval = value
     #END setInterval()
 
     def start(self):
@@ -36,7 +36,7 @@ class ThreadTimer(QtCore.QObject):
             self._running = True
             self._thread = QtCore.QThread()
             self.moveToThread(self._thread)
-            self.connect(self._thread, QtCore.SIGNAL("started()"), self._process);
+            self.connect(self._thread, QtCore.SIGNAL("started()"), self._process)
             self._thread.start()
         #END if
     #END start()
