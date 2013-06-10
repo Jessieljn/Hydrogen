@@ -441,12 +441,27 @@ class Empathy(BaseStudy):
             widget = QtGui.QWidget(self._widgets[len(self._widgets) - 1])
             layout = QtGui.QHBoxLayout(widget)
             layout.setMargin(0)
+
             button = ActionPushButton(self._widgets[len(self._widgets) - 1], "# should be " + str(i), Speech("the number should be " + str(i) + ","))
+            button.setMaximumWidth(85)
             button.clicked.connect(self.on_button_clicked)
             layout.addWidget(button)
+
             button = ActionPushButton(self._widgets[len(self._widgets) - 1], "# could be " + str(i), Speech("the number could be " + str(i) + ","))
+            button.setMaximumWidth(85)
             button.clicked.connect(self.on_button_clicked)
             layout.addWidget(button)
+
+            button = ActionPushButton(self._widgets[len(self._widgets) - 1], str(i) + " not be", [
+                    Stiffness(1.0),
+                    Motion("PalmUp", speed = 2.0),
+                    Speech("I am sorry."),
+                    Speech("But, " + str(i) + ", cannot be"),
+                ])
+            button.setMaximumWidth(85)
+            button.clicked.connect(self.on_button_clicked)
+            layout.addWidget(button)
+
             self._buttons[len(self._buttons) - 1].append(widget)
         #END for
 

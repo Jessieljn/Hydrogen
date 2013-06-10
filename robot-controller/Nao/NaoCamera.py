@@ -72,11 +72,15 @@ class NaoCamera(QtCore.QObject):
     #END getCameraProxy()
 
     def setCameraResolution(self, value):
-        self._cameraProxy.setResolution(self.cameraProxyID, value)
+        if self._cameraProxy is not None:
+            self._cameraProxy.setResolution(self.cameraProxyID, value)
+        #END if
     #END setCameraResolution()
 
     def setCameraSource(self, value):
-        self._cameraProxy.setParam(NaoCamera.CAMERA_PARAM_SELECT, value)
+        if self._cameraProxy is not None:
+            self._cameraProxy.setParam(NaoCamera.CAMERA_PARAM_SELECT, value)
+        #END if
     #END setCameraSource()
 
     def _process(self):
