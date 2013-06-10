@@ -33,7 +33,7 @@ class GeneralWidget(QtGui.QWidget):
                 ActionPushButton(None, "Hmmm", Speech("Heum,")),
                 None,
                 ActionPushButton(None, "Louder", Speech("Please speak louder")),
-                ActionPushButton(None, "Say again?", Speech("Could you say one more time?")),
+                ActionPushButton(None, "Say again?", Speech("Can you say one more time?")),
                 ActionPushButton(None, "Repeat?", Speech("Would you like me to repeat that?")),
                 ActionPushButton(None, "Understood?", Speech("Do you understand?")),
                 ActionPushButton(None, "Don't Understand", Speech("I don't understand")),
