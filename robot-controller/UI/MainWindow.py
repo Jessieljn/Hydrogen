@@ -153,7 +153,7 @@ class MainWindow(QtGui.QMainWindow):
         self.setMinimumSize(800, 600)
         self.setWindowIcon(QtGui.QIcon("images/icon.png"))
         self.setWindowTitle('NAO Robotic Controller')
-        self.resize(800, 600)
+        self.resize(1024, 768)
         self.show()
         self.grabKeyboard()
     # END __init__()
