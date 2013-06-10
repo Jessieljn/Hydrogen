@@ -34,7 +34,7 @@ class Jitter(BaseStudy):
         self.motions.addItems(motionList)
         self.behaviors.addItems(behaviorList)
 
-        self.nao = Nao()
+        #self.nao = Nao()
 
         self._startFrame = FocusableLineEdit(self)
         self._startFrame.setText('0')
