@@ -406,11 +406,6 @@ class Empathy(BaseStudy):
                     Motion("PalmUpRight", speed = 1.5, repeat = 3, repeatBegin = 7, repeatEnd = 11, repeatSpeed = 3.0),
                     AutoRunAction(),
                 ]),
-            ActionPushButton(self._widgets[len(self._widgets) - 1], "PalmUpRight", [ \
-                    Stiffness(1.0),
-                    Motion("PalmUpRight", speed = 1.5, repeat = 3, repeatBegin = 7, repeatEnd = 11, repeatSpeed = 3.0),
-                    AutoRunAction(),
-                ]),
         ])
 
         self._widgets.append(QtGui.QWidget(self))

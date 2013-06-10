@@ -62,7 +62,7 @@ class Jitter(BaseStudy):
 
         self.joints = [self.motionLabel.text(), self._startFrame.text(), self._endFrame.text()]
 
-        self._addButton.clicked.connect(self.nao.makeJitter(self.behaviorLabel.text(), self.behaviorLabel.text(), self._startFrame.text(), self._endFrame.text(), self.joints))
+        #self._addButton.clicked.connect(self.nao.makeJitter(self.behaviorLabel.text(), self.behaviorLabel.text(), self._startFrame.text(), self._endFrame.text(), self.joints))
 
         #self._addButton.clicked.connect(self.on__btnConnect_triggered(self.behaviorLabel.text(),
            #                                                           self.behaviorLabel.text(),
