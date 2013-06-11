@@ -26,9 +26,9 @@ class Empathy(BaseStudy):
 
     def LEDNormal(self, nao):
         rgb = 0x00000000
-        if self._currPhase <= 0:
+        if self._currPhase <= 1:
             rgb = 0x0087ceeb
-        elif self._currPhase <= 2:
+        elif self._currPhase <= 3:
             rgb = 0x00ff7f50
         elif self._currPhase <= 4:
             rgb = 0x007b3503
