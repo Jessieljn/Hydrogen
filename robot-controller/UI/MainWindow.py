@@ -201,7 +201,7 @@ class MainWindow(QtGui.QMainWindow):
         for i in range(len(self._loadActions)):
             if self._loadActions[i] == self.sender():
                 self._layoutTaskPanel.setCurrentIndex(i)
-                self._wgtCurrentStudy = Study.TASKS[0][Study.TASK_WIDGET]
+                self._wgtCurrentStudy = Study.TASKS[i][Study.TASK_WIDGET]
                 return
             # END if
         # END for
@@ -276,13 +276,13 @@ class MainWindow(QtGui.QMainWindow):
         if self._LEDTime < QtCore.QTime.currentTime():
             if self._wgtSpeech.isSpeechTextEmpty() and (self._actionQueue.rowCount(None) <= 0 or self._actionQueue.isRunning()):
                 if "LEDNormal" in dir(self._wgtCurrentStudy):
-                    self._wgtCurrentStudy.LEDNormal()
+                    self._wgtCurrentStudy.LEDNormal(self._nao)
                 else:
                     self._nao.LEDNormal()
                 #END if
             else:
                 if "LEDActive" in dir(self._wgtCurrentStudy):
-                    self._wgtCurrentStudy.LEDActive()
+                    self._wgtCurrentStudy.LEDActive(self._nao)
                 else:
                     self._nao.LEDrandomEyes(1.5, True)
                 #END if
