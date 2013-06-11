@@ -28,12 +28,16 @@ class Empathy(BaseStudy):
         rgb = 0x00000000
         if self._currPhase <= 1:
             rgb = 0x0087ceeb
+        elif self._currPhase <= 2:
+            rgb = 0x0000FF7F
         elif self._currPhase <= 3:
-            rgb = 0x00ff7f50
+            rgb = 0x003CB371
         elif self._currPhase <= 4:
-            rgb = 0x007b3503
+            rgb = 0x00008B45
+        elif self._currPhase <= 5:
+            rgb = 0x00228B22
         elif self._currPhase <= 6:
-            rgb = 0x00ff0000
+            rgb = 0x0000ff00
         else:
             rgb = 0x0087ceeb
         #END if
@@ -113,32 +117,36 @@ class Empathy(BaseStudy):
                         Stiffness(1.0),
                         Motion("DontKnow", speed = 2.5, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
                         Wait(700),
-                        Speech("I don't know"),
+                        Speech("I don't noh- know"),
                     ]),
                 ActionPushButton(None, "Don't know", [
                         Stiffness(1.0),
                         Motion("DontKnow", speed = 2.5, repeat = 4, repeatBegin = 5, repeatEnd = 9, repeatSpeed = 5.0),
                         Wait(900),
-                        Speech("I don't no- no- know"),
+                        Speech("I don't no- no- noh- "),
+                        Speech("No. \RST\ \RSPD=90\ I don't know", speed = 50),
                     ]),
             ], [
                 ActionPushButton(None, "It's hard", [
                         Stiffness(1.0),
                         Motion("ChinHoldRight", speed = 2.0),
                         Wait(700),
-                        Speech("This one is hard"),
+                        Speech("This one is difficult"),
                     ]),
                 ActionPushButton(None, "It's hard", [
                         Stiffness(1.0),
                         Motion("ChinHoldRight", speed = 2.0, repeat = 3, repeatBegin = 2, repeatEnd = 4, repeatSpeed = 2.0),
                         Wait(700),
-                        Speech("This one- one is hard"),
+                        Speech("This one- one- one-"),
+                        Speech("This one is difficult"),
                     ]),
                 ActionPushButton(None, "It's hard", [
                         Stiffness(1.0),
                         Motion("ChinHoldRight", speed = 2.0, repeat = 5, repeatBegin = 3, repeatEnd = 6, repeatSpeed = 4.0),
                         Wait(700),
-                        Speech("This one is ha- ha- hard"),
+                        Speech("This one is diff- diff- diff- "),
+                        Speech("Ahhhe, sorry"),
+                        Speech("This one is difficult", speed = 70),
                     ]),
             ], [
                 ActionPushButton(None, "Can't read, tell me", [
@@ -153,14 +161,14 @@ class Empathy(BaseStudy):
                         Motion("PointMyself", speed = 1.5, repeat = 3, repeatBegin = 5, repeatEnd = 7, repeatSpeed = 2.0),
                         Wait(500),
                         Speech("I can't read."),
-                        Speech("Can you teh- teh- tell me what you wrote?"),
+                        Speech("Can you \RST\ \RSPD=90\ \VCT=140\ teh- teh- \RST\ \RSPD=90\ \VCT=100\ tell me what you wrote?"),
                     ]),
                 ActionPushButton(None, "Can't read, tell me", [
                         Stiffness(1.0),
                         Motion("PointMyself", speed = 1.5, repeat = 6, repeatBegin = 5, repeatEnd = 7, repeatSpeed = 5.0),
-                        Wait(500),
+                        Wait(200),
                         Speech("I can't read."),
-                        Speech("Can you teh- teh- teh-."),
+                        Speech("Can you \RST\ \RSPD=90\ \VCT=140\ teh- teh- teh- teh- "),
                         Speech("Sorry."),
                         Speech("Tell me what you wrote?"),
                     ]),
@@ -181,10 +189,11 @@ class Empathy(BaseStudy):
                     ]),
                 ActionPushButton(None, "Can't read, hold it up", [
                         Stiffness(1.0),
-                        Motion("DontKnow", speed = 1.7, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 3.0),
-                        Speech("I can't "),
-                        Speech("read.", shaping = 80),
-                        Speech("Can you ho- hold it up?"),
+                        Motion("DontKnow", speed = 1.7, repeat = 7, repeatBegin = 7, repeatEnd = 10, repeatSpeed = 7.0),
+                        Speech("I can't \RST\ \RSPD=90\ \VCT=140\ read. "),
+                        Wait(200),
+                        Speech("Can you hohohol- "),
+                        Speech("Can you hold it up?"),
                     ]),
             ], [
                 ActionPushButton(None, "Which box filled?", [
@@ -217,13 +226,15 @@ class Empathy(BaseStudy):
                         Stiffness(1.0),
                         Motion("DontKnow", speed = 2.5, repeat = 3, repeatBegin = 5, repeatEnd = 6, repeatSpeed = 2.0),
                         Wait(1000),
-                        Speech("What do you think?"),
+                        Speech("What do you thiin- thiin- thii- "),
+                        Speech("Ahhhe, what do you think?"),
                     ]),
                 ActionPushButton(None, "What you think?", [
                         Stiffness(1.0),
-                        Motion("DontKnow", speed = 2.5, repeat = 5, repeatBegin = 5, repeatEnd = 7, repeatSpeed = 3.0),
+                        Motion("DontKnow", speed = 2.5, repeat = 8, repeatBegin = 5, repeatEnd = 7, repeatSpeed = 5.0),
                         Wait(1000),
-                        Speech("What do you thi- thin- think?"),
+                        Speech("What do you thiin- thiin- thii- "),
+                        Speech("Ahhhe. Sorry. what do you think?"),
                     ]),
             ], [
                 ActionPushButton(None, "Need help?", [
@@ -236,13 +247,15 @@ class Empathy(BaseStudy):
                         Stiffness(1.0),
                         Motion("WaveHand", speed = 1.25),
                         Wait(1500),
-                        Speech("Do you need any he- help?"),
+                        Speech("Do you need any heh- help?"),
                     ]),
                 ActionPushButton(None, "Need help?", [
                         Stiffness(1.0),
-                        Motion("WaveHand", speed = 1.25, repeat = 3, repeatBegin = 2, repeatEnd = 3, repeatSpeed = 2.0),
+                        Motion("WaveHand", speed = 1.25, repeat = 3, repeatBegin = 3, repeatEnd = 4, repeatSpeed = 2.0),
                         Wait(1300),
-                        Speech("Do you need any he- help?", speed = 80),
+                        Speech("Do you need any heh- heh- heh- heh-"),
+                        Speech("Sorry."),
+                        Speech("Do you need any help?", speed = 80),
                     ]),
             ], [
                 ActionPushButton(None, "You okay?", [
@@ -254,8 +267,8 @@ class Empathy(BaseStudy):
                     ]),
                 ActionPushButton(None, "You okay?", [
                         Stiffness(1.0),
-                        Motion("PointYouLeft", speed = 2.0),
-                        Wait(500),
+                        Motion("PointYouLeft", speed = 2.0, repeat = 3, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 2.0),
+                        Wait(750),
                         Speech("Are you oh- okay?"),
                         Speech("I can help you."),
                     ]),
@@ -264,7 +277,8 @@ class Empathy(BaseStudy):
                         Motion("PointYouLeft", speed = 2.0, repeat = 4, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 4.0),
                         Wait(500),
                         Speech("Are you okay?"),
-                        Speech("I can he- heh- help you."),
+                        Speech("I can he- heh- "),
+                        Speech("I can help you."),
                     ]),
             ], [
                 ActionPushButton(None, "You playing?", [
@@ -281,9 +295,10 @@ class Empathy(BaseStudy):
                     ]),
                 ActionPushButton(None, "You playing?", [
                         Stiffness(1.0),
-                        Motion("ForgetItLeft", speed = 2.0, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.5),
+                        Motion("ForgetItLeft", speed = 2.0, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 5.0),
                         Wait(1500),
-                        Speech("Are you ple- playing?", speed = 75),
+                        Speech("Are you ple- ple-", speed = 75),
+                        Speech("Are you playing?"),
                     ]),
             ], [
                 ActionPushButton(None, "Play with me", [
@@ -321,9 +336,9 @@ class Empathy(BaseStudy):
                         Motion("Disagree", speed = 2.0),
                         Wait(1000),
                         Speech("Don't play by yourself."),
-                        Wait(400),
-                        Motion("PointYouRight", speed = 2.2, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
-                        Wait(1500),
+                        Motion("PointYouRight", speed = 2.7, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
+                        Wait(2250),
+                        Speech("I want to ple- ple- ple- "),
                         Speech("I want to play together."),
                     ]),
                 ActionPushButton(None, "Don't play yourself", [
@@ -334,8 +349,10 @@ class Empathy(BaseStudy):
                         Wait(400),
                         Motion("PointYouRight", speed = 2.0, repeat = 5, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 3.0),
                         Wait(1300),
-                        Speech("I want to ", shaping = 80),
-                        Speech("ple- play together."),
+                        Speech("I want to ", shaping = 130),
+                        Wait(200),
+                        Speech("ple- ple- ple- ple- ple- "),
+                        Speech("I want to play together."),
                     ]),
             ],
         ])
@@ -351,13 +368,13 @@ class Empathy(BaseStudy):
                         Stiffness(1.0),
                         Motion("PalmUp", speed = 2.0),
                         Wait(200),
-                        Speech("Let's cont- continue playing Sudoku."),
+                        Speech("Let's \RST\ \RSPD=50\ continue \RST\ \RSPD=90\ playing Sudoku."),
                     ]),
                 ActionPushButton(None, "Continue Sudoku", [
                         Stiffness(1.0),
                         Motion("PalmUp", speed = 2.0, repeat = 3, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 3.0),
                         Wait(200),
-                        Speech("Let's continue playing Sudoku.", speed = 75),
+                        Speech("Let's \RST\ \RSPD=50\ \VCT=120\ cont- cont- \RST\ \RSPD=90\ \VCT=100\ continue playing Sudoku.", speed = 75),
                     ]),
             ], [
                 ActionPushButton(None, "I think (L)", [
@@ -368,12 +385,12 @@ class Empathy(BaseStudy):
                 ActionPushButton(None, "I think (L)", [
                         Stiffness(1.0),
                         Motion("PalmUpLeft", speed = 2.0),
-                        Speech("I thin- think", blocking = False),
+                        Speech("I think", shaping = 110, blocking = False),
                     ]),
                 ActionPushButton(None, "I think (L)", [
                         Stiffness(1.0),
                         Motion("PalmUpLeft", speed = 2.0, repeat = 4, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 4.0),
-                        Speech("I thin- think", shaping = 110, blocking = False),
+                        Speech("I think", shaping = 130, blocking = False),
                     ]),
             ], [
                 ActionPushButton(None, "I think (R)", [
@@ -384,12 +401,32 @@ class Empathy(BaseStudy):
                 ActionPushButton(None, "I think (R)", [
                         Stiffness(1.0),
                         Motion("PalmUpRight", speed = 2.0),
-                        Speech("I thin- think", blocking = False),
+                        Speech("I think", shaping = 110, blocking = False),
                     ]),
                 ActionPushButton(None, "I think (R)", [
                         Stiffness(1.0),
                         Motion("PalmUpRight", speed = 2.0, repeat = 4, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 4.0),
-                        Speech("I thin- think", shaping = 110, blocking = False),
+                        Speech("I think", shaping = 130, blocking = False),
+                    ]),
+            ], [
+                ActionPushButton(None, "Bring next board", [
+                        Stiffness(1.0),
+                        Motion("PalmUpRight", speed = 2.5),
+                        Wait(200),
+                        Speech("Can you bring next Sudoku board?"),
+                    ]),
+                ActionPushButton(None, "Bring next board", [
+                        Stiffness(1.0),
+                        Motion("PalmUp", speed = 2.5, repeat = 3, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 1.0),
+                        Wait(400),
+                        Speech("Can you \RST\ \RSPD=50\ bri- bri- \RST\ \RSPD=90\ next Sudoku board?"),
+                    ]),
+                ActionPushButton(None, "Bring next board", [
+                        Stiffness(1.0),
+                        Motion("PalmUp", speed = 2.0, repeat = 3, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 3.0),
+                        Wait(400),
+                        Speech("Can you \RST\ \RSPD=50\ bri- bri- brih-"),
+                        Speech("Sorry. \RST\ \RSPD=90\ \VCT=100\ Can you bring next Sudoku board?", speed = 50, shaping = 130),
                     ]),
             ], [
                 ActionPushButton(None, "Your turn", [
@@ -401,16 +438,16 @@ class Empathy(BaseStudy):
                     ]),
                 ActionPushButton(None, "Your turn", [
                         Stiffness(1.0),
-                        Motion("PointYouRight", speed = 1.75),
+                        Motion("PointYouRight", speed = 1.75, repeat = 2, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 3.0),
                         Wait(500),
                         Speech("It's your turn.", speed = 60),
                         Speech("Please fill one box and tell me."),
                     ]),
                 ActionPushButton(None, "Your turn", [
                         Stiffness(1.0),
-                        Motion("PointYouRight", speed = 1.75, repeat = 2, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 4.0),
+                        Motion("PointYouRight", speed = 1.75, repeat = 5, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 4.0),
                         Wait(500),
-                        Speech("It's your turn.", shaping = 125),
+                        Speech("It's your turn.", speed = 60, shaping = 125),
                         Speech("Please fill one box and tell me."),
                     ]),
             ], [
@@ -426,14 +463,14 @@ class Empathy(BaseStudy):
                         Motion("Wait", speed = 1.5),
                         Wait(700),
                         Speech("Please, wait a minute."),
-                        Speech("I need time to pro- pro- process."),
+                        Speech("I need time to pro- proh-. process."),
                     ]),
                 ActionPushButton(None, "Wait a minute", [
                         Stiffness(1.0),
                         Motion("Wait", speed = 1.5),
                         Wait(700),
                         Speech("Please, wait a minute."),
-                        Speech("I need time to pro- pro- "),
+                        Speech("I need time to pro- proh- "),
                         Speech("process.", speed = 50, shaping = 150),
                     ]),
             ], [
@@ -445,14 +482,16 @@ class Empathy(BaseStudy):
                     ]),
                 ActionPushButton(None, "Let me think", [
                         Stiffness(1.0),
-                        Motion("ChinHoldLeft", speed = 1.5),
+                        Motion("ChinHoldLeft", speed = 1.5, repeat = 3, repeatBegin = 4, repeatEnd = 7, repeatSpeed = 3.0),
                         Wait(700),
-                        Speech("Let me think care- carefully"),
+                        Speech("Let me think care- care- care- "),
+                        Speech("Let me think carefully"),
                     ]),
                 ActionPushButton(None, "Let me think", [
                         Stiffness(1.0),
-                        Motion("ChinHoldLeft", speed = 1.5, repeat = 3, repeatBegin = 4, repeatEnd = 7, repeatSpeed = 3.0),
+                        Motion("ChinHoldLeft", speed = 1.5, repeat = 7, repeatBegin = 4, repeatEnd = 7, repeatSpeed = 5.0),
                         Wait(700),
+                        Speech("Let me think care- care- \RST\ \RSPD=50\ \VCT=140\ care- care- "),
                         Speech("Let me think care- carefully"),
                     ]),
             ], [
@@ -464,14 +503,17 @@ class Empathy(BaseStudy):
                     ]),
                 ActionPushButton(None, "Let's try ", [
                         Stiffness(1.0),
-                        Motion("PointYouRight", speed = 1.75),
-                        Wait(700),
-                        Speech("Let's try", speed = 75),
+                        Motion("PointYouRight", speed = 1.75, repeat = 4, repeatBegin = 4, repeatEnd = 7, repeatSpeed = 5.0),
+                        Wait(1000),
+                        Speech("Let's tra- tra- try"),
+                        Speech("Let's try", speed = 70),
                     ]),
                 ActionPushButton(None, "Let's try ", [
                         Stiffness(1.0),
-                        Motion("PointYouRight", speed = 1.75),
-                        Wait(700),
+                        Motion("PointYouRight", speed = 1.75, repeat = 4, repeatBegin = 4, repeatEnd = 8, repeatSpeed = 7.0),
+                        Wait(1000),
+                        Speech("Let's tra- tra- try", shaping = 110),
+                        Speech("Sorry."),
                         Speech("Let's try", speed = 75, shaping = 110),
                     ]),
             ], [
@@ -506,7 +548,7 @@ class Empathy(BaseStudy):
                         Stiffness(1.0),
                         Motion("DisagreeLeft", speed = 1.5),
                         Wait(700),
-                        Speech("Please, do not thou- touch me."),
+                        Speech("Please, do not theh- touch me."),
                     ]),
                 ActionPushButton(None, "Don't touch me", [
                         Stiffness(1.0),
@@ -538,22 +580,25 @@ class Empathy(BaseStudy):
             ],
         ])
 
-        wgtGeneral = QtGui.QSplitter()
-        wgtGeneral.setOrientation(QtCore.Qt.Horizontal)
-
         strTabNames = ["Normal", "Weak", "Strong"]
-        tabWidget = QtGui.QTabWidget(wgtGeneral)
-        for i in range(len(strTabNames)):
-            tabPage = QtGui.QWidget(tabWidget)
-            tabLayout = QtGui.QHBoxLayout(tabPage)
-            tabLayout.setMargin(0)
+        tabGeneral = QtGui.QTabWidget()
+        for index in range(len(strTabNames)):
+            tabPage = QtGui.QWidget(tabGeneral)
+
+            splitter = QtGui.QSplitter(tabPage)
+            splitter.setOrientation(QtCore.Qt.Horizontal)
+
+            widgetActions = QtGui.QWidget(splitter)
+            layoutActions = QtGui.QHBoxLayout(widgetActions)
+            layoutActions.setMargin(0)
+            layoutActions.setSpacing(3)
             for buttonGroups in wgtButtons:
-                widgetButtons = QtGui.QWidget(tabPage)
+                widgetButtons = QtGui.QWidget(widgetActions)
                 layoutButtons = QtGui.QVBoxLayout(widgetButtons)
                 layoutButtons.setMargin(0)
                 for buttons in buttonGroups:
-                    buttons[i].clicked.connect(self.on_button_clicked)
-                    layoutButtons.addWidget(buttons[i])
+                    buttons[index].clicked.connect(self.on_button_clicked)
+                    layoutButtons.addWidget(buttons[index])
                 #END for
                 scroll = QtGui.QScrollArea()
                 scroll.setAlignment(QtCore.Qt.AlignCenter)
@@ -561,74 +606,111 @@ class Empathy(BaseStudy):
                 layoutScroll = QtGui.QHBoxLayout()
                 layoutScroll.setMargin(0)
                 layoutScroll.addWidget(scroll)
-                tabLayout.addLayout(layoutScroll)
+                layoutActions.addLayout(layoutScroll)
             #END for
-            tabWidget.addTab(tabPage, strTabNames[i])
-        #END for
 
-        widgetNumbers = QtGui.QWidget(wgtGeneral)
-        layoutNumbers = QtGui.QVBoxLayout(widgetNumbers)
-        layoutNumbers.setMargin(0)
-        for i in range(1, 10):
+            widgetNumbers = QtGui.QWidget(splitter)
+            layoutNumbers = QtGui.QVBoxLayout(widgetNumbers)
+            layoutNumbers.setMargin(0)
+            for i in range(1, 10):
+                widget = QtGui.QWidget(widgetNumbers)
+                layout = QtGui.QHBoxLayout(widget)
+                layout.setMargin(0)
+
+                if index == 0:
+                    button = ActionPushButton(None, "# should be " + str(i), Speech("the number should be " + str(i) + ","))
+                elif index == 1:
+                    button = ActionPushButton(None, "# should be " + str(i), Speech("the number should be " + str(i) + ",", speed = 75))
+                else:
+                    button = ActionPushButton(None, "# should be " + str(i), Speech("the number should be " + str(i) + ",", speed = 65, shaping = 110))
+                #END if
+                button.setMaximumWidth(85)
+                button.clicked.connect(self.on_button_clicked)
+                layout.addWidget(button)
+
+                if index == 0:
+                    button = ActionPushButton(None, "# could be " + str(i), Speech("the number can be " + str(i) + ","))
+                elif index == 1:
+                    button = ActionPushButton(None, "# could be " + str(i), Speech("the number can be " + str(i) + ",", speed = 75))
+                else:
+                    button = ActionPushButton(None, "# could be " + str(i), Speech("the number can be " + str(i) + ",", speed = 65, shaping = 110))
+                #END if
+                button.setMaximumWidth(85)
+                button.clicked.connect(self.on_button_clicked)
+                layout.addWidget(button)
+
+                if index == 0:
+                    button = ActionPushButton(None, str(i) + " not be", [
+                            Stiffness(1.0),
+                            Motion("PalmUp", speed = 2.0),
+                            Speech("I am sorry."),
+                            Speech("But, " + str(i) + ", cannot be"),
+                        ])
+                elif index == 1:
+                    button = ActionPushButton(None, str(i) + " not be", [
+                            Stiffness(1.0),
+                            Motion("PalmUp", speed = 2.0, repeat = 3, repeatBegin = 4, repeatEnd = 7, repeatSpeed = 2.5),
+                            Speech("I am sorry."),
+                            Speech("But, " + str(i) + ", cannot be"),
+                        ])
+                else:
+                    button = ActionPushButton(None, str(i) + " not be", [
+                            Stiffness(1.0),
+                            Motion("PalmUp", speed = 2.0, repeat = 5, repeatBegin = 4, repeatEnd = 7, repeatSpeed = 5.0),
+                            Speech("I am sorry."),
+                            Speech("Bah- bah- but, " + str(i) + ", cannot be"),
+                        ])
+                #END if
+                button.setMaximumWidth(85)
+                button.clicked.connect(self.on_button_clicked)
+                layout.addWidget(button)
+
+                layoutNumbers.addWidget(widget)
+            #END for
+
             widget = QtGui.QWidget(widgetNumbers)
-            layout = QtGui.QHBoxLayout(widget)
+            layout = QtGui.QGridLayout(widget)
+            layout.setContentsMargins(0, 0, 0, 0)
             layout.setMargin(0)
-
-            button = ActionPushButton(None, "# should be " + str(i), Speech("the number should be " + str(i) + ","))
-            button.setMaximumWidth(85)
-            button.clicked.connect(self.on_button_clicked)
-            layout.addWidget(button)
-
-            button = ActionPushButton(None, "# could be " + str(i), Speech("the number could be " + str(i) + ","))
-            button.setMaximumWidth(85)
-            button.clicked.connect(self.on_button_clicked)
-            layout.addWidget(button)
-
-            button = ActionPushButton(None, str(i) + " not be", [
-                    Stiffness(1.0),
-                    Motion("PalmUp", speed = 2.0),
-                    Speech("I am sorry."),
-                    Speech("But, " + str(i) + ", cannot be"),
-                ])
-            button.setMaximumWidth(85)
-            button.clicked.connect(self.on_button_clicked)
-            layout.addWidget(button)
-
-            layoutNumbers.addWidget(widget)
-        #END for
-
-        widget = QtGui.QWidget(widgetNumbers)
-        layout = QtGui.QGridLayout(widget)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setMargin(0)
-        layout.setHorizontalSpacing(6)
-        layout.setVerticalSpacing(6)
-        layoutSubgrids = [
-            [QtGui.QGridLayout(), QtGui.QGridLayout(), QtGui.QGridLayout()],
-            [QtGui.QGridLayout(), QtGui.QGridLayout(), QtGui.QGridLayout()],
-            [QtGui.QGridLayout(), QtGui.QGridLayout(), QtGui.QGridLayout()],
-        ]
-        for i in range(3):
-            for j in range(3):
-                layoutSubgrids[i][j].setContentsMargins(0, 0, 0, 0)
-                layoutSubgrids[i][j].setMargin(0)
-                layoutSubgrids[i][j].setHorizontalSpacing(0)
-                layoutSubgrids[i][j].setVerticalSpacing(0)
-                for x in range(3):
-                    for y in range(3):
-                        text = str(chr(ord('A') + (j * 3 + x))) + str(i * 3 + y + 1)
-                        button = ActionPushButton(widget, text, Speech("aet " + text, speed = 70))
-                        button.setMaximumWidth(35)
-                        button.clicked.connect(self.on_button_clicked)
-                        layoutSubgrids[i][j].addWidget(button, y, x, 1, 1, QtCore.Qt.AlignCenter)
+            layout.setHorizontalSpacing(6)
+            layout.setVerticalSpacing(6)
+            layoutSubgrids = [
+                [QtGui.QGridLayout(), QtGui.QGridLayout(), QtGui.QGridLayout()],
+                [QtGui.QGridLayout(), QtGui.QGridLayout(), QtGui.QGridLayout()],
+                [QtGui.QGridLayout(), QtGui.QGridLayout(), QtGui.QGridLayout()],
+            ]
+            for i in range(3):
+                for j in range(3):
+                    layoutSubgrids[i][j].setContentsMargins(0, 0, 0, 0)
+                    layoutSubgrids[i][j].setMargin(0)
+                    layoutSubgrids[i][j].setHorizontalSpacing(0)
+                    layoutSubgrids[i][j].setVerticalSpacing(0)
+                    for x in range(3):
+                        for y in range(3):
+                            text = str(chr(ord('A') + (j * 3 + x))) + str(i * 3 + y + 1)
+                            if index == 0:
+                                button = ActionPushButton(widget, text, Speech("aet " + text))
+                            elif index == 1:
+                                button = ActionPushButton(widget, text, Speech("aet " + text, speed = 75))
+                            else:
+                                button = ActionPushButton(widget, text, Speech("aet " + text, speed = 65, shaping = 110))
+                            #END if
+                            button.setMaximumWidth(35)
+                            button.clicked.connect(self.on_button_clicked)
+                            layoutSubgrids[i][j].addWidget(button, y, x, 1, 1, QtCore.Qt.AlignCenter)
+                        #END for
                     #END for
+                    layout.addLayout(layoutSubgrids[i][j], i, j)
                 #END for
-                layout.addLayout(layoutSubgrids[i][j], i, j)
             #END for
-        #END for
-        layoutNumbers.addWidget(widget)
+            layoutNumbers.addWidget(widget)
 
-        return wgtGeneral
+            tabLayout = QtGui.QHBoxLayout(tabPage)
+            tabLayout.setMargin(0)
+            tabLayout.addWidget(splitter)
+            tabGeneral.addTab(tabPage, strTabNames[index])
+        #END for
+        return tabGeneral
     #END _initGeneral()
 
     def _initPhase(self):
