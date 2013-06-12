@@ -15,13 +15,17 @@ class ActionListWidget(QtGui.QWidget):
         self._table.setModel(model)
         self._table.setColumnWidth(0, 100)
         self._table.setColumnWidth(1, 180)
+        self._table.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
+        self._table.setSelectionMode(QtGui.QAbstractItemView.SingleSelection)
+        self._table.verticalHeader().setVisible(False)
 
         self._cbAuto = QtGui.QCheckBox("Auto Run (Ctrl+T)", self)
         self._cbAuto.setShortcut("Ctrl+T")
+        self._cbAuto.clicked.connect(lambda: model.setAutoRun(self._cbAuto.isChecked()))
 
         self._btnRun = QtGui.QPushButton("Run (Ctrl+R)", self)
         self._btnRun.setShortcut("Ctrl+R")
-        self._btnRun.clicked.connect(self.runClicked)
+        self._btnRun.clicked.connect(model.runActions)
 
         layoutRunButtons = QtGui.QHBoxLayout()
         layoutRunButtons.addWidget(self._cbAuto)
@@ -29,15 +33,15 @@ class ActionListWidget(QtGui.QWidget):
 
         self._btnClear = QtGui.QPushButton("Clear (Ctrl+Space)", self)
         self._btnClear.setShortcut("Ctrl+Space")
-        self._btnClear.clicked.connect(self.clearClicked)
+        self._btnClear.clicked.connect(model.clearActions)
 
         self._btnDelete = QtGui.QPushButton("Delete (Ctrl+D)", self)
         self._btnDelete.setShortcut("Ctrl+D")
-        self._btnDelete.clicked.connect(self.clearClicked)
+        self._btnDelete.clicked.connect(lambda: model.removeAction(self._table.currentIndex().row()))
 
         self._btnEdit = QtGui.QPushButton("Edit (Ctrl+E)", self)
         self._btnEdit.setShortcut("Ctrl+E")
-        self._btnEdit.clicked.connect(self.clearClicked)
+        self._btnEdit.clicked.connect(self.editClicked)
 
         layoutModifyButtons = QtGui.QHBoxLayout()
         layoutModifyButtons.addWidget(self._btnClear)
@@ -51,11 +55,9 @@ class ActionListWidget(QtGui.QWidget):
         layoutMain.addLayout(layoutModifyButtons)
     #END __init__()
 
-    clearClicked = QtCore.pyqtSignal()
-
-    runClicked = QtCore.pyqtSignal()
+    editClicked = QtCore.pyqtSignal()
 
     def resizeEvent(self, event):
-        self._table.setColumnWidth(1, self._table.width() - self._table.columnWidth(0) - 44)
+        self._table.setColumnWidth(1, self._table.width() - self._table.columnWidth(0) - 24)
     #END resizeEvent()
 #END ActionListWidget

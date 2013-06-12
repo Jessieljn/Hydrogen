@@ -10,6 +10,9 @@ class BaseStudy(QtGui.QWidget):
     #END __init__()
 
     def _setupBegin(self):
+        #self._wgtGeneral = GeneralWidget(wgtRight)
+        #self._wgtGeneral.playAction.connect(self._actionQueue.addActions)
+
         self._widgets = []
         self._buttons = []
     #END _setupBegin()

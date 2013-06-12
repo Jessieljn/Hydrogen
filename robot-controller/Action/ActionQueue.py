@@ -2,7 +2,7 @@ from PyQt4 import QtCore
 
 
 class ActionQueue(QtCore.QObject):
-    def __init__(self, nao = None):
+    def __init__(self, nao):
         super(ActionQueue, self).__init__()
         self._list = []
         self._mutex = QtCore.QMutex()
@@ -15,6 +15,8 @@ class ActionQueue(QtCore.QObject):
     dequeued = QtCore.pyqtSignal(int)
 
     enqueued = QtCore.pyqtSignal(int)
+
+    removed = QtCore.pyqtSignal(int)
 
     def clear(self):
         self._mutex.lock()
@@ -80,9 +82,16 @@ class ActionQueue(QtCore.QObject):
         return self.get(0)
     #END peek()
 
-    def setNao(self, nao):
-        self._nao = nao
-    #END setNao()
+    def remove(self, index):
+        if 0 <= index:
+            self._mutex.lock()
+            if index < len(self._list):
+                self._list.pop(index)
+            #END if
+            self._mutex.unlock()
+            self.removed.emit(index)
+        #END if
+    #END remove()
 
     def setRunning(self, value):
         self._running = value

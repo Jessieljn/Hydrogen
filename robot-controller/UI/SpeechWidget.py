@@ -16,16 +16,17 @@ class SpeechWidget(QtGui.QGroupBox):
         self._message = SubmittableTextEdit(self)
         self._message.setMaximumHeight(85)
         self._message.textChanged.connect(self.textEditing)
+        self._message.textSubmitted.connect(lambda: self.textSubmitted.emit(self.getText()))
         self._message.textSubmitted.connect(self._message.clear)
-        self._message.textSubmitted.connect(lambda: self.textSubmitted(self._message.text()))
-        self._message.inputCancelled.connect(self._message.clear)
         self._message.inputCancelled.connect(self.inputCancelled)
+        self._message.inputCancelled.connect(self._message.clear)
 
         self._btnSay = QtGui.QPushButton('Say')
         self._btnSay.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
         self._btnSay.setFixedWidth(100)
         self._btnSay.setMaximumHeight(85)
-        self._btnSay.clicked.connect(self.on__message_textSubmitted)
+        self._btnSay.clicked.connect(lambda: self.textSubmitted.emit(self.getText()))
+        self._btnSay.clicked.connect(self._message.clear)
 
         self._lVolume = QtGui.QLabel("Volume")
         self._sldVolume = QtGui.QSlider(QtCore.Qt.Vertical)
@@ -40,7 +41,7 @@ class SpeechWidget(QtGui.QGroupBox):
         self._sldSpeed.setMaximumHeight(60)
         self._sldSpeed.setRange(50, 200)
         self._sldSpeed.setValue(90)
-        self._sldSpeed.valueChanged.connect(self.on_sldSpeed_valueChanged)
+        self._sldSpeed.valueChanged.connect(self.on__sldSpeed_valueChanged)
         self._SpeedLabel = QtGui.QLabel(str(self._sldSpeed.value()))
 
         self._lShape = QtGui.QLabel("Shape")
@@ -48,7 +49,7 @@ class SpeechWidget(QtGui.QGroupBox):
         self._sldShape.setMaximumHeight(60)
         self._sldShape.setRange(50, 150)
         self._sldShape.setValue(100)
-        self._sldShape.valueChanged.connect(self.on_sldShape_valueChanged)
+        self._sldShape.valueChanged.connect(self.on__sldShape_valueChanged)
         self._ShapeLabel = QtGui.QLabel(str(self._sldShape.value()))
 
         layoutVolume = QtGui.QVBoxLayout()
@@ -74,9 +75,17 @@ class SpeechWidget(QtGui.QGroupBox):
         layoutMain.addLayout(layoutShape)
     #END __init__()
 
-    def isSpeechTextEmpty(self):
-        return str(self._message.toPlainText()) == ""
-    #END isSpeechTextEmpty
+    inputCancelled = QtCore.pyqtSignal()
+
+    shapeChanged = QtCore.pyqtSignal(float)
+
+    speedChanged = QtCore.pyqtSignal(float)
+
+    textEditing = QtCore.pyqtSignal()
+
+    textSubmitted = QtCore.pyqtSignal(str)
+
+    volumeChanged = QtCore.pyqtSignal(float)
 
     def getShaping(self):
         return self._sldShape.value()
@@ -86,33 +95,30 @@ class SpeechWidget(QtGui.QGroupBox):
         return self._sldSpeed.value()
     #END getSpeed()
 
-    def setTextEditFocus(self):
+    def getText(self):
+        return str(self._message.toPlainText())
+    #END getText
+
+    def setInputFocus(self):
         self._message.setFocus(QtCore.Qt.OtherFocusReason)
-        self._message.grabKeyboard()
-    #END setTextEditFocus()
+    #END setInputFocus()
 
-    inputCancelled = QtCore.pyqtSignal()
+    def setText(self, text):
+        self._message.setPlainText(text)
+    #END setText
 
-    textEditing = QtCore.pyqtSignal()
+    def on__sldShape_valueChanged(self, value):
+        self._ShapeLabel.setText(str(value))
+        self.shapeChanged.emit(float(value) / 100)
+    #END on__sldShape_valueChanged()
 
-    textSubmitted = QtCore.pyqtSignal(str)
-
-    volumeChanged = QtCore.pyqtSignal(float)
-    speedChanged = QtCore.pyqtSignal(float)
-    shapeChanged = QtCore.pyqtSignal(float)
+    def on__sldSpeed_valueChanged(self, value):
+        self._SpeedLabel.setText(str(value))
+        self.speedChanged.emit(float(value) / 100)
+    #END on__sldSpeed_valueChanged()
 
     def on__sldVolume_valueChanged(self, value):
-        self.volumeChanged.emit(float(value) / 100)
         self._VolumeLabel.setText(str(value))
+        self.volumeChanged.emit(float(value) / 100)
     #END on__sldVolume_valueChanged()
-
-    def on_sldSpeed_valueChanged(self, value):
-        self.speedChanged.emit(float(value) / 100)
-        self._SpeedLabel.setText(str(value))
-    #END on_sldSpeed_valueChanged()
-
-    def on_sldShape_valueChanged(self, value):
-        self.shapeChanged.emit(float(value) / 100)
-        self._ShapeLabel.setText(str(value))
-    #END on_sldShape_valueChanged()
 #END SpeechWidget
