@@ -2,6 +2,11 @@ from PyQt4 import QtCore
 from PyQt4 import QtGui
 
 
+###
+# AboutWindow.py
+#
+# An about window, with link to HCI website.
+###
 class AboutWindow(QtGui.QDialog):
     def __init__(self, parent):
         super(AboutWindow, self).__init__(parent)

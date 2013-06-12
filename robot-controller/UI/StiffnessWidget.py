@@ -45,4 +45,4 @@ class StiffnessWidget(QtGui.QGroupBox):
             self.stiffnessChanged.emit(1.0)
         #END if
     #END on__btnGrp_buttonClicked()
-#END class
+#END StiffnessWidget

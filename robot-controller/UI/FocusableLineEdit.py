@@ -10,4 +10,4 @@ class FocusableLineEdit(QtGui.QLineEdit):
         super(FocusableLineEdit, self).mousePressEvent(event)
         self.grabKeyboard()
     #END mousePressEvent()
-#END class
+#END FocusableLineEdit

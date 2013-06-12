@@ -963,6 +963,7 @@ class Empathy(BaseStudy):
 
             layout = QtGui.QHBoxLayout(tabPages[index])
             layout.setMargin(0)
+
             layout.addLayout(layoutScroll)
             wgtPhase.addTab(tabPages[index], strTabNames[index])
         #END for
