@@ -5,8 +5,8 @@ VIDEO_SUBSCRIBE_NAME = "NaoVideo"
 
 class Camera:
     Top, \
-    Bottom, \
-    Both \
+        Bottom, \
+        Both \
         = range(3)
 #END class
 
@@ -18,19 +18,19 @@ class CameraResolution:
     # 640*480px
     # 1280*960px
     QQVGA, \
-    QVGA, \
-    VGA, \
-    FOUR_VGA \
+        QVGA, \
+        VGA, \
+        FOUR_VGA \
         = range(4)
 #END class
 
 
 class Direction:
     Neutral, \
-    Up, \
-    Down, \
-    Left, \
-    Right \
+        Up, \
+        Down, \
+        Left, \
+        Right \
         = range(5)
 #END class
 

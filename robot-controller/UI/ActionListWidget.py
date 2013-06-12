@@ -2,6 +2,11 @@ from PyQt4 import QtCore
 from PyQt4 import QtGui
 
 
+###
+# ActionListWidget.py
+#
+# Creates the list of current actions being pushed to the NAO.
+###
 class ActionListWidget(QtGui.QWidget):
     def __init__(self, parent, model):
         super(ActionListWidget, self).__init__(parent)
@@ -35,4 +40,4 @@ class ActionListWidget(QtGui.QWidget):
     def resizeEvent(self, event):
         self._table.setColumnWidth(1, self._table.width() - self._table.columnWidth(0) - 44)
     #END resizeEvent()
-#END class
+#END ActionListWidget

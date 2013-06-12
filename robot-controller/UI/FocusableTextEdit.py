@@ -8,7 +8,6 @@ class FocusableTextEdit(QtGui.QTextEdit):
     #END __init__()
 
     textSubmitted = QtCore.pyqtSignal()
-
     inputCancelled = QtCore.pyqtSignal()
 
     def mousePressEvent(self, event):
@@ -26,4 +25,4 @@ class FocusableTextEdit(QtGui.QTextEdit):
             super(FocusableTextEdit, self).keyPressEvent(event)
         #END if
     #END keyPressEvent()
-#END class
+#END FocusableTextEdit

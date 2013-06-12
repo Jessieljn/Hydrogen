@@ -10,6 +10,7 @@ if __name__ == "__main__":
     sckServer.listen(1)
     print PRINT_HEADER, "listening on ", addrSrv
     sckList = [sckServer]
+
     while True:
         readable, writable, error = select.select(sckList, [], [], 5)
         for sck in readable:

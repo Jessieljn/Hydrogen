@@ -81,6 +81,7 @@ class CameraWidget(QtGui.QGroupBox):
 
     def setDefaultImage(self):
         self._lCamera.setPixmap(QtGui.QPixmap('images/image.png'))
+        self._lCamera.setScaledContents(True)
     #END setDefaultImage()
 
     def on__btnUp_clicked(self):

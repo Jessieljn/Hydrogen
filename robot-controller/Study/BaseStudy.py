@@ -45,4 +45,4 @@ class BaseStudy(QtGui.QWidget):
             self._actionQueue.addActions(self.sender().getRobotActions())
         #END if
     #END on_button_clicked()
-#END class
+#END BaseStudy

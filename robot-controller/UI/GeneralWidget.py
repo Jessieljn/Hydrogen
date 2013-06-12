@@ -23,23 +23,23 @@ class GeneralWidget(QtGui.QWidget):
         # General Speech
         ##################################################
         self._speechs = [
-                ActionPushButton(None, "Hello", Speech("Hello")),
-                ActionPushButton(None, "Thanks", Speech("Thank you")),
-                ActionPushButton(None, "Sorry", Speech("I'm sorry")),
-                ActionPushButton(None, "Good", Speech("Good!")),
-                ActionPushButton(None, "Okay", Speech("Okay")),
-                ActionPushButton(None, "Yes", Speech("Yes")),
-                ActionPushButton(None, "No", Speech("No")),
-                ActionPushButton(None, "Hmmm", Speech("Heum,")),
-                None,
-                ActionPushButton(None, "Louder", Speech("Please speak louder")),
-                ActionPushButton(None, "Say again?", Speech("Can you say one more time?")),
-                ActionPushButton(None, "Repeat?", Speech("Would you like me to repeat that?")),
-                ActionPushButton(None, "Understood?", Speech("Do you understand?")),
-                ActionPushButton(None, "Don't Understand", Speech("I don't understand")),
-                ActionPushButton(None, "Greeting", Speech("Hello, my name is NAO, nice to meet you")),
-                ActionPushButton(None, "End Experiment", Speech("Thank you for participating in our experiment")),
-            ]
+            ActionPushButton(None, "Hello", Speech("Hello")),
+            ActionPushButton(None, "Thanks", Speech("Thank you")),
+            ActionPushButton(None, "Sorry", Speech("I'm sorry")),
+            ActionPushButton(None, "Good", Speech("Good!")),
+            ActionPushButton(None, "Okay", Speech("Okay")),
+            ActionPushButton(None, "Yes", Speech("Yes")),
+            ActionPushButton(None, "No", Speech("No")),
+            ActionPushButton(None, "Hmmm", Speech("Heum,")),
+            None,
+            ActionPushButton(None, "Louder", Speech("Please speak louder")),
+            ActionPushButton(None, "Say again?", Speech("Can you say one more time?")),
+            ActionPushButton(None, "Repeat?", Speech("Would you like me to repeat that?")),
+            ActionPushButton(None, "Understood?", Speech("Do you understand?")),
+            ActionPushButton(None, "Don't Understand", Speech("I don't understand")),
+            ActionPushButton(None, "Greeting", Speech("Hello, my name is NAO, nice to meet you")),
+            ActionPushButton(None, "End Experiment", Speech("Thank you for participating in our experiment")),
+        ]
 
         self._grpSpeech = QtGui.QGroupBox(self)
         self._grpSpeech.setTitle("General Speech")
@@ -59,8 +59,8 @@ class GeneralWidget(QtGui.QWidget):
                 item.setParent(widget)
                 item.clicked.connect(self.on_runSpeech_clicked)
                 layout.addWidget(item)
-            #END if
-        #END for
+                #END if
+            #END for
         layoutSpeech.addWidget(widget)
 
         ##################################################
@@ -83,7 +83,7 @@ class GeneralWidget(QtGui.QWidget):
         self._cbMotions = QtGui.QComboBox(wgtMotion)
         for i in range(NaoMotionList.length()):
             self._cbMotions.addItem(NaoMotionList.get(i).name())
-        #END for
+            #END for
         self._cbMotionSpeed = QtGui.QComboBox(wgtMotion)
         self._cbMotionSpeed.addItems(["x" + str(value / 100.0) for value in range(10, 501, 10)])
         self._cbMotionSpeed.setCurrentIndex(9)
@@ -132,7 +132,7 @@ class GeneralWidget(QtGui.QWidget):
         layoutMain.setMargin(0)
         layoutMain.addWidget(self._grpSpeech)
         layoutMain.addWidget(self._grpBehaviors)
-    #END __init__()
+        #END __init__()
 
     playAction = QtCore.pyqtSignal(BaseAction)
 
@@ -140,13 +140,13 @@ class GeneralWidget(QtGui.QWidget):
         self._cbBehaviors.clear()
         self._cbBehaviors.addItems(nao.getInstalledBehaviors())
         self._cbBehaviors.setCurrentIndex(0)
-    #END init_behaviorList()
+        #END init_behaviorList()
 
     def on_runBehavior_clicked(self):
         self.playAction.emit(Stiffness(1.0))
         self.playAction.emit(Behavior(self._cbBehaviors.currentText(), blocking = False))
         self.playAction.emit(AutoRunAction())
-    #END on_runBehavior_clicked()
+        #END on_runBehavior_clicked()
 
     def on_runMotion_clicked(self):
         speed = float(self._cbMotionSpeed.currentText()[1:])
@@ -157,12 +157,12 @@ class GeneralWidget(QtGui.QWidget):
         self.playAction.emit(Stiffness(1.0))
         self.playAction.emit(Motion(self._cbMotions.currentText(), speed, repeatCount, repeatBegin, repeatEnd, repeatSpeed, blocking = False))
         self.playAction.emit(AutoRunAction())
-    #END on_runMotion_clicked()
+        #END on_runMotion_clicked()
 
     def on_runSpeech_clicked(self):
         for action in self.sender().getRobotActions():
             self.playAction.emit(action)
-        #END for
+            #END for
         self.playAction.emit(AutoRunAction())
-    #END on_runSpeech_clicked()
+        #END on_runSpeech_clicked()
 #END GeneralWidget
