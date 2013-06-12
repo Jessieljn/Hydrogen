@@ -85,7 +85,7 @@ class MainWindow(QtGui.QMainWindow):
         self._wgtCamera = CameraWidget(splitterLeft, self._nao.getCamera())
         self._wgtCamera.setMinimumHeight(385)
         self._wgtCamera.cameraChanged.connect(self._nao.getCamera().setCameraSource)
-        self._wgtCamera.moveHead.connect(self.on_moveHead)
+        self._wgtCamera.moveHead.connect(self.on__wgtCamera_moveHead)
 
         self._wgtActionList = ActionListWidget(splitterLeft, self._actionQueue)
         self._wgtActionList.setMinimumHeight(120)
@@ -98,27 +98,13 @@ class MainWindow(QtGui.QMainWindow):
         wgtRight = QtGui.QWidget(splitter)
         wgtRight.setMinimumWidth(380)
 
-        self._wgtSpeech = SpeechWidget(wgtRight)
-        self._wgtSpeech.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.Maximum)
-        self._wgtSpeech.inputCancelled.connect(self.setFocus)
-        self._wgtSpeech.textSubmitted.connect(self.on_playSpeech)
-        self._wgtSpeech.volumeChanged.connect(self._nao.setVolume)
+        splitterRight = QtGui.QSplitter(wgtRight)
+        splitterRight.setOrientation(QtCore.Qt.Vertical)
 
-        layoutSpeech = QtGui.QHBoxLayout()
-        layoutSpeech.setMargin(0)
-        layoutSpeech.addWidget(self._wgtSpeech)
-
-        self._wgtStiffness = StiffnessWidget(wgtRight)
-        self._wgtStiffness.stiffnessChanged.connect(self._nao.setStiffness)
-
-        layoutTextStiff = QtGui.QHBoxLayout()
-        layoutTextStiff.addLayout(layoutSpeech)
-        layoutTextStiff.addWidget(self._wgtStiffness)
-
-        self._wgtTaskPanel = QtGui.QFrame(wgtRight)
+        self._wgtTaskPanel = QtGui.QFrame(splitterRight)
         self._wgtTaskPanel.setFrameShape(QtGui.QFrame.Panel)
         self._wgtTaskPanel.setFrameShadow(QtGui.QFrame.Plain)
-        self._wgtTaskPanel.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
+        self._wgtTaskPanel.setMinimumHeight(400)
 
         self._layoutTaskPanel = QtGui.QStackedLayout(self._wgtTaskPanel)
         self._layoutTaskPanel.setMargin(0)
@@ -130,10 +116,26 @@ class MainWindow(QtGui.QMainWindow):
         self._layoutTaskPanel.setCurrentIndex(0)
         self._wgtCurrentStudy = Study.TASKS[0][Study.TASK_WIDGET]
 
-        layoutRight = QtGui.QVBoxLayout(wgtRight)
+        widgetTextStiff = QtGui.QWidget(splitterRight)
+        widgetTextStiff.setMinimumHeight(120)
+
+        self._wgtSpeech = SpeechWidget(splitterRight)
+        self._wgtSpeech.setInputFocus()
+        self._wgtSpeech.inputCancelled.connect(self.setFocus)
+        self._wgtSpeech.textSubmitted.connect(self.on__wgtSpeech_playSpeech)
+        self._wgtSpeech.volumeChanged.connect(self._nao.setVolume)
+
+        self._wgtStiffness = StiffnessWidget(splitterRight)
+        self._wgtStiffness.stiffnessChanged.connect(self._nao.setStiffness)
+
+        layoutTextStiff = QtGui.QHBoxLayout(widgetTextStiff)
+        layoutTextStiff.setMargin(0)
+        layoutTextStiff.addWidget(self._wgtSpeech)
+        layoutTextStiff.addWidget(self._wgtStiffness)
+
+        layoutRight = QtGui.QHBoxLayout(wgtRight)
         layoutRight.setMargin(0)
-        layoutRight.addWidget(self._wgtTaskPanel)
-        layoutRight.addLayout(layoutTextStiff)
+        layoutRight.addWidget(splitterRight)
 
         layoutMain = QtGui.QHBoxLayout(self._wgtMain)
         layoutMain.addWidget(splitter)
@@ -151,28 +153,10 @@ class MainWindow(QtGui.QMainWindow):
         self.show()
     # END __init__()
 
-    def on_moveHead(self, direction):
-        if self._nao.isConnected():
-            if direction == Direction.Up:
-                self._nao.tiltHeadUp()
-            elif direction == Direction.Down:
-                self._nao.tiltHeadDown()
-            elif direction == Direction.Left:
-                self._nao.turnHeadLeft()
-            elif direction == Direction.Right:
-                self._nao.turnHeadRight()
-            #END if
-        #END if
-    # END on_moveHead()
-
-    def on_playSpeech(self, value):
-        self._actionQueue.addActions(Speech(value, speed = self._wgtSpeech.getSpeed(), shaping = self._wgtSpeech.getShaping(), blocking = False))
-    # END on_playSpeech()
-
     def on_actConnect_triggered(self):
         if not self._nao.isConnected():
             self._dlgConnect = ConnectDialog(self)
-            self._dlgConnect.accepted.connect(self.on_dlgConnect_accepted)
+            self._dlgConnect.accepted.connect(self.on__dlgConnect_accepted)
             self._dlgConnect.show()
         # END if
     # END on_actConnect_triggered()
@@ -203,7 +187,7 @@ class MainWindow(QtGui.QMainWindow):
         dlgAbout.show()
     # END on_actAbout_triggered()
 
-    def on_dlgConnect_accepted(self):
+    def on__dlgConnect_accepted(self):
         if not self._nao.isConnected():
             ipAddress = str(self._dlgConnect.ipAddress)
             port = str(self._dlgConnect.port)
@@ -215,17 +199,35 @@ class MainWindow(QtGui.QMainWindow):
                 print "FAILED"
             # END if
             print "==================================="
-            self._wgtGeneral.init_behaviorList(self._nao)
+            self._dlgConnect = None
         # END if
-    # END on_dlgConnect_accepted()
+    # END on__dlgConnect_accepted()
 
     def on__wgtActionList_editClicked(self):
         QtGui.QMessageBox.information(self, "Information", "Not implemented", QtGui.QMessageBox.Ok, QtGui.QMessageBox.NoButton)
     # END on__wgtActionList_editClicked()
 
+    def on__wgtCamera_moveHead(self, direction):
+        if self._nao.isConnected():
+            if direction == Direction.Up:
+                self._nao.tiltHeadUp()
+            elif direction == Direction.Down:
+                self._nao.tiltHeadDown()
+            elif direction == Direction.Left:
+                self._nao.turnHeadLeft()
+            elif direction == Direction.Right:
+                self._nao.turnHeadRight()
+            #END if
+        #END if
+    # END on__wgtCamera_moveHead()
+
+    def on__wgtSpeech_playSpeech(self, value):
+        self._actionQueue.addActions(Speech(value, speed = self._wgtSpeech.getSpeed(), shaping = self._wgtSpeech.getShaping(), blocking = False))
+    # END on__wgtSpeech_playSpeech()
+
     def closeEvent(self, event):
-        self.on_actDisconnect_triggered()
         self._actionQueue.dispose()
+        self.on_actDisconnect_triggered()
     # END closeEvent()
 
     def timerEvent(self, event):
