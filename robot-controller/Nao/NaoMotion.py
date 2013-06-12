@@ -63,11 +63,11 @@ class NaoMotion(QtCore.QObject):
                 j += 1
             #END while
 
-            timeCurrent = self._times[i][j]
+            timeCurrent = self._times[i][min(j, len(self._keys[i]) - 1)]
             timePrevious = 0
             k = 0
             while k < repeats:
-                j = beginIndex
+                j = min(beginIndex, len(self._keys[i]) - 1)
                 if j <= 0:
                     timePrevious = 0
                 else:

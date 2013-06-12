@@ -23,7 +23,6 @@ class MainWindow(QtGui.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
-        # noinspection PyCallingNonCallable
         self._nao = Nao()
         self._actionQueue = ActionModel(self, self._nao)
         self._LEDTime = QtCore.QTime.currentTime()
@@ -137,6 +136,7 @@ class MainWindow(QtGui.QMainWindow):
         # END for
 
         self._layoutTaskPanel.setCurrentIndex(0)
+        self._wgtCurrentStudy = Study.TASKS[0][Study.TASK_WIDGET]
 
         layoutRight = QtGui.QVBoxLayout(wgtRight)
         layoutRight.setMargin(0)
@@ -201,6 +201,7 @@ class MainWindow(QtGui.QMainWindow):
         for i in range(len(self._loadActions)):
             if self._loadActions[i] == self.sender():
                 self._layoutTaskPanel.setCurrentIndex(i)
+                self._wgtCurrentStudy = Study.TASKS[i][Study.TASK_WIDGET]
                 return
             # END if
         # END for
@@ -274,10 +275,17 @@ class MainWindow(QtGui.QMainWindow):
     def timerEvent(self, event):
         if self._LEDTime < QtCore.QTime.currentTime():
             if self._wgtSpeech.isSpeechTextEmpty() and (self._actionQueue.rowCount(None) <= 0 or self._actionQueue.isRunning()):
-                self._nao.LEDNormal()
-                self._LEDTime = QtCore.QTime.currentTime().addSecs(60.0)
+                if "LEDNormal" in dir(self._wgtCurrentStudy):
+                    self._wgtCurrentStudy.LEDNormal(self._nao)
+                else:
+                    self._nao.LEDNormal()
+                #END if
             else:
-                self._nao.LEDrandomEyes(1.5, True)
+                if "LEDActive" in dir(self._wgtCurrentStudy):
+                    self._wgtCurrentStudy.LEDActive(self._nao)
+                else:
+                    self._nao.LEDrandomEyes(1.5, True)
+                #END if
             # END if
             self._LEDTime = QtCore.QTime.currentTime().addSecs(1.5)
         # END if

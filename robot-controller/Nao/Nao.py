@@ -194,6 +194,8 @@ class Nao(QtCore.QObject):
                 self._motionProxy.setStiffnesses("Body", self._stiffness)
             #END while
         #END if
+        self._stiffness = stiffness
+        self._motionProxy.setStiffnesses("Body", self._stiffness)
     # END setStiffness()
 
     def setVolume(self, volume):
