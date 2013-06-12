@@ -11,3 +11,4 @@ from StiffnessWidget import StiffnessWidget as StiffnessWidget
 from ActionPushButton import ActionPushButton as ActionPushButton
 from FocusableLineEdit import FocusableLineEdit as FocusableLineEdit
 from FocusableTextEdit import FocusableTextEdit as FocusableTextEdit
+from SubmittableTextEdit import SubmittableTextEdit as SubmittableTextEdit

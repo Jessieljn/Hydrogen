@@ -11,21 +11,39 @@ class ActionListWidget(QtGui.QWidget):
         self._table.setColumnWidth(0, 100)
         self._table.setColumnWidth(1, 180)
 
-        self._btnClear = QtGui.QPushButton("Clear (Ctrl+Space)", self)
-        self._btnClear.setShortcut("Ctrl+Space")
-        self._btnClear.clicked.connect(self.clearClicked)
+        self._cbAuto = QtGui.QCheckBox("Auto Run (Ctrl+T)", self)
+        self._cbAuto.setShortcut("Ctrl+T")
+
         self._btnRun = QtGui.QPushButton("Run (Ctrl+R)", self)
         self._btnRun.setShortcut("Ctrl+R")
         self._btnRun.clicked.connect(self.runClicked)
 
-        layoutButtons = QtGui.QHBoxLayout()
-        layoutButtons.addWidget(self._btnClear)
-        layoutButtons.addWidget(self._btnRun)
+        layoutRunButtons = QtGui.QHBoxLayout()
+        layoutRunButtons.addWidget(self._cbAuto)
+        layoutRunButtons.addWidget(self._btnRun)
+
+        self._btnClear = QtGui.QPushButton("Clear (Ctrl+Space)", self)
+        self._btnClear.setShortcut("Ctrl+Space")
+        self._btnClear.clicked.connect(self.clearClicked)
+
+        self._btnDelete = QtGui.QPushButton("Delete (Ctrl+D)", self)
+        self._btnDelete.setShortcut("Ctrl+D")
+        self._btnDelete.clicked.connect(self.clearClicked)
+
+        self._btnEdit = QtGui.QPushButton("Edit (Ctrl+E)", self)
+        self._btnEdit.setShortcut("Ctrl+E")
+        self._btnEdit.clicked.connect(self.clearClicked)
+
+        layoutModifyButtons = QtGui.QHBoxLayout()
+        layoutModifyButtons.addWidget(self._btnClear)
+        layoutModifyButtons.addWidget(self._btnDelete)
+        layoutModifyButtons.addWidget(self._btnEdit)
 
         layoutMain = QtGui.QVBoxLayout(self)
         layoutMain.setMargin(0)
         layoutMain.addWidget(self._table)
-        layoutMain.addLayout(layoutButtons)
+        layoutMain.addLayout(layoutRunButtons)
+        layoutMain.addLayout(layoutModifyButtons)
     #END __init__()
 
     clearClicked = QtCore.pyqtSignal()

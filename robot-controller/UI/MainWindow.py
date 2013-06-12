@@ -26,11 +26,6 @@ class MainWindow(QtGui.QMainWindow):
         self._nao = Nao()
         self._actionQueue = ActionModel(self, self._nao)
         self._LEDTime = QtCore.QTime.currentTime()
-        self._keys = dict()
-        self._keys[Direction.Up] = False
-        self._keys[Direction.Down] = False
-        self._keys[Direction.Left] = False
-        self._keys[Direction.Right] = False
 
         Study.setup()
 
@@ -40,15 +35,15 @@ class MainWindow(QtGui.QMainWindow):
         menubar = self.menuBar()
 
         actConnect = QtGui.QAction(QtGui.QIcon(), '&Connect', self)
-        actConnect.setShortcut('Ctrl+C')
+        actConnect.setShortcut('Ctrl+Alt+C')
         actConnect.triggered.connect(self.on_actConnect_triggered)
 
         actDisconnect = QtGui.QAction(QtGui.QIcon(), '&Disconnect', self)
-        actDisconnect.setShortcut('Ctrl+D')
+        actDisconnect.setShortcut('Ctrl+Alt+D')
         actDisconnect.triggered.connect(self.on_actDisconnect_triggered)
 
         actExit = QtGui.QAction(QtGui.QIcon('images/exit.png'), '&Exit', self)
-        actExit.setShortcut('Ctrl+X')
+        actExit.setShortcut('Ctrl+Alt+X')
         actExit.setStatusTip('Exit application')
         actExit.triggered.connect(self.close)
 
@@ -62,7 +57,7 @@ class MainWindow(QtGui.QMainWindow):
 
         for i in range(len(Study.TASKS)):
             actLoad = QtGui.QAction(QtGui.QIcon(), "Load " + Study.TASKS[i][Study.TASK_NAME], self)
-            actLoad.setShortcut("Ctrl+" + str(i + 1))
+            actLoad.setShortcut("Ctrl+Alt+" + str(i + 1))
             actLoad.triggered.connect(self.on_actLoad_specific)
             loadMenu.addAction(actLoad)
             self._loadActions.append(actLoad)
@@ -70,6 +65,7 @@ class MainWindow(QtGui.QMainWindow):
 
         actAboutBox = QtGui.QAction(QtGui.QIcon(), '&About', self)
         actAboutBox.triggered.connect(self.on_actAbout_triggered)
+        actAboutBox.setShortcut("Ctrl+Alt+H")
 
         aboutMenu = menubar.addMenu('Help')
         aboutMenu.addAction(actAboutBox)
@@ -104,7 +100,6 @@ class MainWindow(QtGui.QMainWindow):
 
         self._wgtSpeech = SpeechWidget(wgtRight)
         self._wgtSpeech.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.Maximum)
-        self._wgtSpeech.textInputCancelled.connect(self.grab_keyboard)
         self._wgtSpeech.textSubmitted.connect(self.on_playSpeech)
         self._wgtSpeech.volumeChanged.connect(self._nao.setVolume)
         layoutSpeech = QtGui.QHBoxLayout()
@@ -157,7 +152,6 @@ class MainWindow(QtGui.QMainWindow):
         self.setWindowTitle('NAO Robotic Controller')
         self.resize(1024, 768)
         self.show()
-        self.grabKeyboard()
     # END __init__()
 
     def on_moveHead(self, direction):
@@ -233,45 +227,6 @@ class MainWindow(QtGui.QMainWindow):
         self._actionQueue.dispose()
     # END closeEvent()
 
-    def focusInEvent(self, event):
-        self.grabKeyboard()
-    # END focusInEvent()
-
-    def grab_keyboard(self):
-        self.setFocus(QtCore.Qt.OtherFocusReason)
-    # END grab_keyboard()
-
-    def keyPressEvent(self, event):
-        if event.key() == QtCore.Qt.Key_Up:
-            self._keys[Direction.Up] = True
-        elif event.key() == QtCore.Qt.Key_Down:
-            self._keys[Direction.Down] = True
-        elif event.key() == QtCore.Qt.Key_Left:
-            self._keys[Direction.Left] = True
-        elif event.key() == QtCore.Qt.Key_Right:
-            self._keys[Direction.Right] = True
-        elif event.key() == QtCore.Qt.Key_Escape:
-            self.releaseKeyboard()
-            self._wgtSpeech.setTextEditFocus()
-        else:
-            super(MainWindow, self).keyPressEvent(event)
-        # END if
-    # END keyPressEvent()
-
-    def keyReleaseEvent(self, event):
-        if event.key() == QtCore.Qt.Key_Up:
-            self._keys[Direction.Up] = False
-        elif event.key() == QtCore.Qt.Key_Down:
-            self._keys[Direction.Down] = False
-        elif event.key() == QtCore.Qt.Key_Left:
-            self._keys[Direction.Left] = False
-        elif event.key() == QtCore.Qt.Key_Right:
-            self._keys[Direction.Right] = False
-        else:
-            super(MainWindow, self).keyReleaseEvent(event)
-        # END if
-    # END keyReleaseEvent()
-
     def timerEvent(self, event):
         if self._LEDTime < QtCore.QTime.currentTime():
             if self._wgtSpeech.isSpeechTextEmpty() and (self._actionQueue.rowCount(None) <= 0 or self._actionQueue.isRunning()):
@@ -289,18 +244,5 @@ class MainWindow(QtGui.QMainWindow):
             # END if
             self._LEDTime = QtCore.QTime.currentTime().addSecs(1.5)
         # END if
-
-        if self._keys[Direction.Up]:
-            self._nao.tiltHeadUp()
-        #END if
-        if self._keys[Direction.Down]:
-            self._nao.tiltHeadDown()
-        #END if
-        if self._keys[Direction.Left]:
-            self._nao.turnHeadLeft()
-        #END if
-        if self._keys[Direction.Right]:
-            self._nao.turnHeadRight()
-        #END if
     # END timerEvent()
 # END MainWindow

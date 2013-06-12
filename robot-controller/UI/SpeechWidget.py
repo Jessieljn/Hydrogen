@@ -1,6 +1,6 @@
 from PyQt4 import QtCore
 from PyQt4 import QtGui
-from FocusableTextEdit import FocusableTextEdit
+from SubmittableTextEdit import SubmittableTextEdit
 
 
 ##
@@ -13,11 +13,13 @@ class SpeechWidget(QtGui.QGroupBox):
         super(SpeechWidget, self).__init__(parent)
         self.setTitle("Text To Speech")
 
-        self._message = FocusableTextEdit(self)
+        self._message = SubmittableTextEdit(self)
         self._message.setMaximumHeight(85)
-        self._message.textChanged.connect(self.on__message_textChanged)
-        self._message.textSubmitted.connect(self.on__message_textSubmitted)
-        self._message.inputCancelled.connect(self.on__message_inputCancelled)
+        self._message.textChanged.connect(self.textEditing)
+        self._message.textSubmitted.connect(self._message.clear)
+        self._message.textSubmitted.connect(lambda: self.textSubmitted(self._message.text()))
+        self._message.inputCancelled.connect(self._message.clear)
+        self._message.inputCancelled.connect(self.inputCancelled)
 
         self._btnSay = QtGui.QPushButton('Say')
         self._btnSay.setSizePolicy(QtGui.QSizePolicy.Expanding, QtGui.QSizePolicy.Expanding)
@@ -83,26 +85,15 @@ class SpeechWidget(QtGui.QGroupBox):
         self._message.grabKeyboard()
     #END setTextEditFocus()
 
+    inputCancelled = QtCore.pyqtSignal()
+
     textEditing = QtCore.pyqtSignal()
-    textInputCancelled = QtCore.pyqtSignal()
+
     textSubmitted = QtCore.pyqtSignal(str)
+
     volumeChanged = QtCore.pyqtSignal(float)
     speedChanged = QtCore.pyqtSignal(float)
     shapeChanged = QtCore.pyqtSignal(float)
-
-    def on__message_textChanged(self):
-        self.textEditing.emit()
-    #END on__message_textChanged()
-
-    def on__message_textSubmitted(self):
-        self.textSubmitted.emit(self._message.toPlainText())
-        self._message.clear()
-    #END on__message_textSubmitted()
-
-    def on__message_inputCancelled(self):
-        self._message.clear()
-        self.textInputCancelled.emit()
-    #END on__message_inputCancelled()
 
     def on__sldVolume_valueChanged(self, value):
         self.volumeChanged.emit(float(value) / 100)

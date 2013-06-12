@@ -28,16 +28,20 @@ class CameraWidget(QtGui.QGroupBox):
         self._wgtButtons.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.Maximum)
         self._btnUp = QtGui.QPushButton("^", self._wgtButtons)
         self._btnUp.setFixedSize(25, 25)
-        self._btnUp.clicked.connect(self.on__btnUp_clicked)
+        self._btnUp.setShortcut("Up")
+        self._btnUp.clicked.connect(lambda: self.moveHead.emit(Direction.Up))
         self._btnDown = QtGui.QPushButton("v", self._wgtButtons)
         self._btnDown.setFixedSize(25, 25)
-        self._btnDown.clicked.connect(self.on__btnDown_clicked)
+        self._btnDown.setShortcut("Down")
+        self._btnDown.clicked.connect(lambda: self.moveHead.emit(Direction.Down))
         self._btnLeft = QtGui.QPushButton("<", self._wgtButtons)
         self._btnLeft.setFixedSize(25, 25)
-        self._btnLeft.clicked.connect(self.on__btnLeft_clicked)
+        self._btnLeft.setShortcut("Left")
+        self._btnLeft.clicked.connect(lambda: self.moveHead.emit(Direction.Left))
         self._btnRight = QtGui.QPushButton(">", self._wgtButtons)
         self._btnRight.setFixedSize(25, 25)
-        self._btnRight.clicked.connect(self.on__btnRight_clicked)
+        self._btnRight.setShortcut("Right")
+        self._btnRight.clicked.connect(lambda: self.moveHead.emit(Direction.Right))
         layoutButtons = QtGui.QGridLayout(self._wgtButtons)
         layoutButtons.setContentsMargins(10, 10, 10, 10)
         layoutButtons.setSpacing(6)
@@ -50,7 +54,9 @@ class CameraWidget(QtGui.QGroupBox):
         self._wgtCamSel.setSizePolicy(QtGui.QSizePolicy.MinimumExpanding, QtGui.QSizePolicy.Maximum)
         self._rdbtnTopCamera = QtGui.QRadioButton("Top", self._wgtCamSel)
         self._rdbtnTopCamera.setChecked(True)
+        self._rdbtnTopCamera.setShortcut("Ctrl+Up")
         self._rdbtnBottomCamera = QtGui.QRadioButton("Bottom", self._wgtCamSel)
+        self._rdbtnBottomCamera.setShortcut("Ctrl+Down")
         self._btnGrpCamera = QtGui.QButtonGroup()
         self._btnGrpCamera.addButton(self._rdbtnTopCamera)
         self._btnGrpCamera.addButton(self._rdbtnBottomCamera)
@@ -82,22 +88,6 @@ class CameraWidget(QtGui.QGroupBox):
     def setDefaultImage(self):
         self._lCamera.setPixmap(QtGui.QPixmap('images/image.png'))
     #END setDefaultImage()
-
-    def on__btnUp_clicked(self):
-        self.moveHead.emit(Direction.Up)
-    #END on__btnUp_clicked()
-
-    def on__btnDown_clicked(self):
-        self.moveHead.emit(Direction.Down)
-    #END on__btnDown_clicked()
-
-    def on__btnLeft_clicked(self):
-        self.moveHead.emit(Direction.Left)
-    #END on__btnLeft_clicked()
-
-    def on__btnRight_clicked(self):
-        self.moveHead.emit(Direction.Right)
-    #END on__btnRight_clicked()
 
     def on__btnGrpCamera_buttonClicked(self, button):
         if button == self._rdbtnTopCamera:

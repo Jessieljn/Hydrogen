@@ -1,4 +1,4 @@
-DEFAULT_IP = '140.193.228.26'
+DEFAULT_IP = "192.168.0.100"#'140.193.228.26'
 DEFAULT_PORT = 9559
 VIDEO_SUBSCRIBE_NAME = "NaoVideo"
 
@@ -7,7 +7,7 @@ class Camera:
     Top, \
     Bottom, \
     Both \
-        = range(3)
+ = range(3)
 #END class
 
 
@@ -21,7 +21,7 @@ class CameraResolution:
     QVGA, \
     VGA, \
     FOUR_VGA \
-        = range(4)
+ = range(4)
 #END class
 
 
@@ -31,7 +31,7 @@ class Direction:
     Down, \
     Left, \
     Right \
-        = range(5)
+ = range(5)
 #END class
 
 

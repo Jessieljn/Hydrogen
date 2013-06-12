@@ -2,7 +2,6 @@ from Definitions import DEFAULT_IP
 from Definitions import DEFAULT_PORT
 from PyQt4 import QtCore
 from PyQt4 import QtGui
-from FocusableLineEdit import FocusableLineEdit
 
 
 ##
@@ -19,12 +18,12 @@ class ConnectDialog(QtGui.QDialog):
         self.port = str(DEFAULT_PORT)
 
         self._lIPAddr = QtGui.QLabel('IP address:', self)
-        self._leIPAddr = FocusableLineEdit(self)
+        self._leIPAddr = QtGui.QLineEdit(self)
         self._leIPAddr.setText(self.ipAddress)
         self._leIPAddr.setFocusPolicy(QtCore.Qt.StrongFocus)
 
         self._lPort = QtGui.QLabel('Port number:', self)
-        self._lePort = FocusableLineEdit(self)
+        self._lePort = QtGui.QLineEdit(self)
         self._lePort.setText(self.port)
         self._lePort.setFocusPolicy(QtCore.Qt.StrongFocus)
 
