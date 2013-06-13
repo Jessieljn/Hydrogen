@@ -2,8 +2,6 @@ from PyQt4 import QtCore
 from ActionStart import ActionStart
 from ActionStop import ActionStop
 from BaseAction import BaseAction
-from StopMotion import StopMotion
-from StopSpeech import StopSpeech
 
 
 class ActionQueue(QtCore.QObject):
