@@ -7,7 +7,8 @@ from UI.ActionPushButton import ActionPushButton
 class Tedium(BaseStudy):
     def __init__(self):
         super(Tedium, self).__init__()
-        self._setupBegin()
+        self._widgets = []
+        self._buttons = []
 
         self._widgets.append(QtGui.QWidget(self))
         self._buttons.append([
@@ -62,6 +63,6 @@ class Tedium(BaseStudy):
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Next Task", Speech("We will now move onto the next task.")),
         ])
 
-        self._setupEnd()
+        self._setupUi(True)
     #END __init__()
 #END class

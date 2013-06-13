@@ -24,7 +24,7 @@ class Empathy(BaseStudy):
         self._currPhase = 0
     #END __init__()
 
-    def LEDNormal(self, nao):
+    def LEDNormal(self):
         rgb = 0x00000000
         if self._currPhase <= 1:
             rgb = 0x0087ceeb
@@ -41,10 +41,10 @@ class Empathy(BaseStudy):
         else:
             rgb = 0x0087ceeb
         #END if
-        nao.LEDfadeRGB(LEDNames.Face, rgb, 0.5, True)
-        nao.LEDfadeRGB(LEDNames.Chest, 0x0000ff00, 0.5, True)
-        nao.LEDfadeRGB(LEDNames.LeftEar, 0x00ff6100, 0.5, True)
-        nao.LEDfadeRGB(LEDNames.RightEar, 0x00ff6100, 0.5, True)
+        self._nao.LEDfadeRGB(LEDNames.Face, rgb, 0.5, True)
+        self._nao.LEDfadeRGB(LEDNames.Chest, 0x0000ff00, 0.5, True)
+        self._nao.LEDfadeRGB(LEDNames.LeftEar, 0x00ff6100, 0.5, True)
+        self._nao.LEDfadeRGB(LEDNames.RightEar, 0x00ff6100, 0.5, True)
     #END LEDNormal()
 
     def on_participantName(self):

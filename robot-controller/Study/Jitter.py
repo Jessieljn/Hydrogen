@@ -1,18 +1,16 @@
 from PyQt4 import QtCore, QtGui
 from BaseStudy import BaseStudy
-from UI.FocusableLineEdit import FocusableLineEdit
 
 
 class Jitter(BaseStudy):
     def __init__(self):
         super(Jitter, self).__init__()
-        self._actionQueue = None
-
         self.setWindowTitle("Jitter Function")
-        self.vbox = QtGui.QVBoxLayout()   # General Box
+
+        widget = QtGui.QWidget()
+        self.vbox = QtGui.QVBoxLayout(widget)   # General Box
         self.hbox1 = QtGui.QHBoxLayout()  # Start Frame Box
         self.hbox2 = QtGui.QHBoxLayout()  # End Frame Box
-        self.setLayout(self.vbox)
 
         self.motions = QtGui.QComboBox()
         self.behaviors = QtGui.QComboBox()
@@ -36,16 +34,16 @@ class Jitter(BaseStudy):
         # noinspection PyCallingNonCallable
         #self.nao = Nao()
 
-        self._startFrame = FocusableLineEdit(self)
+        self._startFrame = QtGui.QLineEdit(widget)
         self._startFrame.setText('0')
 
-        self._endFrame = FocusableLineEdit(self)
+        self._endFrame = QtGui.QLineEdit(widget)
         self._endFrame.setText('0')
 
         self._startLabel = QtGui.QLabel("Start Frame: ")
         self._endLabel = QtGui.QLabel("End Frame: ")
 
-        self._addButton = QtGui.QPushButton('Add', self)
+        self._addButton = QtGui.QPushButton('Add', widget)
 
         self.vbox.addWidget(self.behaviors)
         self.vbox.addWidget(self.motions)
@@ -70,6 +68,8 @@ class Jitter(BaseStudy):
         #                                                          self._startFrame.text(),
         #                                                           self._endFrame.text(),
         #                                                          self.joints))
+
+        self._setupUi(True, widget)
     # END __init__()
 
     def on__btnConnect_triggered(self, bhvName, boxName, startFrame, endFrame, joint):

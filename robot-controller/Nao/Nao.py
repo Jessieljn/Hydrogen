@@ -18,10 +18,13 @@ class Nao(QtCore.QObject):
         self._naoBroker = None
         self._camera = NaoCamera()
         self._behaviorProxy = None
+        self._motion = None
         self._motionProxy = None
         self._speechProxy = None
         self._ledProxy = None
         self._stiffness = 0.0
+        self._motionId = 0
+        self._sayId = 0
         NaoMotionList.initialize()
     # END __init__()
 
@@ -83,37 +86,47 @@ class Nao(QtCore.QObject):
     # END getInstalledBehaviors()
 
     def behavior(self, bhv, post):
+        postId = self._behaviorProxy.post.runBehavior(bhv)
         if not post:
-            self._behaviorProxy.runBehavior(bhv)
-        else:
-            self._behaviorProxy.post.runBehavior(bhv)
+            self._behaviorProxy.wait(postId, 0)
         #END if
     # END behavior()
 
     def motion(self, motion, post):
-        proxy = naoqi.ALProxy("ALMotion")
-        if not post:
-            if motion.getMethod() == NaoMotion.METHOD_BEZIER:
-                proxy.angleInterpolationBezier(motion.getNames(), motion.getTimes(), motion.getKeys())
-            else:
-                proxy.angleInterpolation(motion.getNames(), motion.getKeys(), motion.getTimes(), True)
-                #END if
+        self._motion = naoqi.ALProxy("ALMotion")
+        if motion.getMethod() == NaoMotion.METHOD_BEZIER:
+            self._motionId = self._motion.post.angleInterpolationBezier(motion.getNames(), motion.getTimes(), motion.getKeys())
         else:
-            if motion.getMethod() == NaoMotion.METHOD_BEZIER:
-                proxy.post.angleInterpolationBezier(motion.getNames(), motion.getTimes(), motion.getKeys())
-            else:
-                proxy.post.angleInterpolation(motion.getNames(), motion.getKeys(), motion.getTimes(), True)
-                #END if
+            self._motionId = self._motion.post.angleInterpolation(motion.getNames(), motion.getKeys(), motion.getTimes(), True)
+        #END if
+        if not post:
+            self._motion.wait(self._motionId, 0)
         #END if
     # END motion()
 
     def say(self, msg, post):
+        self._sayId = self._speechProxy.post.say(msg)
         if not post:
-            self._speechProxy.say(msg)
-        else:
-            self._speechProxy.post.say(msg)
+            self._speechProxy.wait(self._sayId, 0)
         #END if
     # END say()
+
+    def stopMoving(self):
+        self._motion.wait(self._motionId, 0)
+    # END stopMoving()
+
+    def stopSaying(self):
+        self._speechProxy.stopAll()
+    # END stopSaying()
+
+    def wait(self, moving = True, saying = True):
+        if moving:
+            self._speechProxy.wait(self._sayId, 0)
+        #END if
+        if saying:
+            self._speechProxy.wait(self._sayId, 0)
+        #END if
+    # END wait
 
     def LEDNormal(self):
         self.LEDsetIntensity(LEDNames.Face, 1.0, True)

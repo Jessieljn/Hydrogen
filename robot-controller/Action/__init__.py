@@ -1,7 +1,7 @@
 from ActionQueue import ActionQueue as ActionQueue
 from ActionModel import ActionModel as ActionModel
 
-from AutoRunAction import AutoRunAction as AutoRunAction
+from ActionStart import ActionStart as ActionStart
 from BaseAction import BaseAction as BaseAction
 from Behavior import Behavior as Behavior
 from HeadMotion import HeadMotion as HeadMotion

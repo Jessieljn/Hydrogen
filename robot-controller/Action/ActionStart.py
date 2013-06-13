@@ -1,9 +1,9 @@
 from BaseAction import BaseAction
 
 
-class AutoRunAction(BaseAction):
+class ActionStart(BaseAction):
     def __init__(self):
-        super(AutoRunAction, self).__init__()
+        super(ActionStart, self).__init__()
     #END __init__()
 
     def execute(self, nao):
@@ -11,10 +11,10 @@ class AutoRunAction(BaseAction):
     #END execute()
 
     def actionToString(self):
-        return "AutoRunAction"
+        return "ActionStart"
     #END actionToString()
 
     def paramToString(self):
-        return "Run current action queue automatically"
+        return "Start current action queue immediately"
     #END paramToString()
 #END class

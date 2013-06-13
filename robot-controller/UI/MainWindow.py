@@ -101,9 +101,7 @@ class MainWindow(QtGui.QMainWindow):
         splitterRight = QtGui.QSplitter(wgtRight)
         splitterRight.setOrientation(QtCore.Qt.Vertical)
 
-        self._wgtTaskPanel = QtGui.QFrame(splitterRight)
-        self._wgtTaskPanel.setFrameShape(QtGui.QFrame.Panel)
-        self._wgtTaskPanel.setFrameShadow(QtGui.QFrame.Plain)
+        self._wgtTaskPanel = QtGui.QWidget(splitterRight)
         self._wgtTaskPanel.setMinimumHeight(400)
 
         self._layoutTaskPanel = QtGui.QStackedLayout(self._wgtTaskPanel)
@@ -111,13 +109,12 @@ class MainWindow(QtGui.QMainWindow):
         for i in range(len(Study.TASKS)):
             Study.TASKS[i][Study.TASK_WIDGET].setParent(self._wgtTaskPanel)
             Study.TASKS[i][Study.TASK_WIDGET].setActionQueue(self._actionQueue)
+            Study.TASKS[i][Study.TASK_WIDGET].setNao(self._nao)
             self._layoutTaskPanel.addWidget(Study.TASKS[i][Study.TASK_WIDGET])
         # END for
-        self._layoutTaskPanel.setCurrentIndex(0)
-        self._wgtCurrentStudy = Study.TASKS[0][Study.TASK_WIDGET]
 
         widgetTextStiff = QtGui.QWidget(splitterRight)
-        widgetTextStiff.setMinimumHeight(120)
+        widgetTextStiff.setMinimumHeight(160)
 
         self._wgtSpeech = SpeechWidget(splitterRight)
         self._wgtSpeech.setInputFocus()
@@ -176,7 +173,6 @@ class MainWindow(QtGui.QMainWindow):
         for i in range(len(self._loadActions)):
             if self._loadActions[i] == self.sender():
                 self._layoutTaskPanel.setCurrentIndex(i)
-                self._wgtCurrentStudy = Study.TASKS[i][Study.TASK_WIDGET]
                 return
             # END if
         # END for
@@ -222,7 +218,8 @@ class MainWindow(QtGui.QMainWindow):
     # END on__wgtCamera_moveHead()
 
     def on__wgtSpeech_playSpeech(self, value):
-        self._actionQueue.addActions(Speech(value, speed = self._wgtSpeech.getSpeed(), shaping = self._wgtSpeech.getShaping(), blocking = False))
+        speech = Speech(value, speed = self._wgtSpeech.getSpeed(), shaping = self._wgtSpeech.getShaping(), blocking = False)
+        self._actionQueue.addActions(speech)
     # END on__wgtSpeech_playSpeech()
 
     def closeEvent(self, event):
@@ -233,17 +230,9 @@ class MainWindow(QtGui.QMainWindow):
     def timerEvent(self, event):
         if self._LEDTime < QtCore.QTime.currentTime():
             if self._wgtSpeech.getText() == "" and (self._actionQueue.rowCount(None) <= 0 or self._actionQueue.isRunning()):
-                if "LEDNormal" in dir(self._wgtCurrentStudy):
-                    self._wgtCurrentStudy.LEDNormal(self._nao)
-                else:
-                    self._nao.LEDNormal()
-                #END if
+                Study.TASKS[self._layoutTaskPanel.currentIndex()][Study.TASK_WIDGET].LEDNormal()
             else:
-                if "LEDActive" in dir(self._wgtCurrentStudy):
-                    self._wgtCurrentStudy.LEDActive(self._nao)
-                else:
-                    self._nao.LEDrandomEyes(1.5, True)
-                #END if
+                Study.TASKS[self._layoutTaskPanel.currentIndex()][Study.TASK_WIDGET].LEDActive()
             # END if
             self._LEDTime = QtCore.QTime.currentTime().addSecs(1.5)
         # END if

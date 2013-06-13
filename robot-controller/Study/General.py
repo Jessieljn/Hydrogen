@@ -8,7 +8,8 @@ from UI.ActionPushButton import ActionPushButton
 class General(BaseStudy):
     def __init__(self):
         super(General, self).__init__()
-        self._setupBegin()
+        self._widgets = []
+        self._buttons = []
 
         self._widgets.append(QtGui.QWidget(self))
         self._buttons.append([
@@ -37,6 +38,7 @@ class General(BaseStudy):
                 Behavior("scratchHeadRight"),
             ]),
         ])
-        self._setupEnd()
+
+        self._setupUi(True)
     #END __init__()
 #END class

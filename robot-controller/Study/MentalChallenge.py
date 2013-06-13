@@ -7,7 +7,8 @@ from UI.ActionPushButton import ActionPushButton
 class MentalChallenge(BaseStudy):
     def __init__(self):
         super(MentalChallenge, self).__init__()
-        self._setupBegin()
+        self._widgets = []
+        self._buttons = []
 
         self._widgets.append(QtGui.QWidget(self))
         self._buttons.append([
@@ -33,6 +34,6 @@ class MentalChallenge(BaseStudy):
             ActionPushButton(self._widgets[len(self._widgets) - 1], "Done", Speech("Thank you, that should be good for now.")),
         ])
 
-        self._setupEnd()
+        self._setupUi(True)
     #END __init__()
 #END class
