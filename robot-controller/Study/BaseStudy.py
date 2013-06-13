@@ -1,6 +1,5 @@
 from PyQt4 import QtCore
 from PyQt4 import QtGui
-from Action import AutoRunAction
 from Action import Behavior
 from Action import Motion
 from Action import Speech
@@ -231,11 +230,7 @@ class BaseStudy(QtGui.QWidget):
 
     def on_runBehavior_clicked(self):
         if self._actionQueue is not None:
-            self._actionQueue.addActions([
-                    Stiffness(1.0),
-                    Behavior(self._cbBehaviors.currentText(), blocking = False),
-                    AutoRunAction()
-                ])
+            self._actionQueue.addActions(Behavior(self._cbBehaviors.currentText(), blocking = False))
         #END if
     #END on_runBehavior_clicked()
 
@@ -249,7 +244,6 @@ class BaseStudy(QtGui.QWidget):
             self._actionQueue.addActions([
                     Stiffness(1.0),
                     Motion(self._cbMotions.currentText(), speed, repeatCount, repeatBegin, repeatEnd, repeatSpeed, blocking = False),
-                    AutoRunAction()
                 ])
         #END if
     #END on_runMotion_clicked()
@@ -257,7 +251,6 @@ class BaseStudy(QtGui.QWidget):
     def on_runSpeech_clicked(self):
         if self._actionQueue is not None:
             self._actionQueue.addActions(self.sender().getRobotActions())
-            self._actionQueue.addActions(AutoRunAction())
         #END if
     #END on_runSpeech_clicked()
 #END BaseStudy

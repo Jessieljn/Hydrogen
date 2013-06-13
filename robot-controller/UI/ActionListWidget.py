@@ -21,15 +21,20 @@ class ActionListWidget(QtGui.QWidget):
 
         self._cbAuto = QtGui.QCheckBox("Auto Run (Ctrl+T)", self)
         self._cbAuto.setShortcut("Ctrl+T")
-        self._cbAuto.clicked.connect(lambda: model.setAutoRun(self._cbAuto.isChecked()))
+        self._cbAuto.clicked.connect(lambda: model.setAutorun(self._cbAuto.isChecked()))
 
         self._btnRun = QtGui.QPushButton("Run (Ctrl+R)", self)
         self._btnRun.setShortcut("Ctrl+R")
-        self._btnRun.clicked.connect(model.runActions)
+        self._btnRun.clicked.connect(lambda: model.setRunning(True))
 
-        layoutRunButtons = QtGui.QHBoxLayout()
-        layoutRunButtons.addWidget(self._cbAuto)
-        layoutRunButtons.addWidget(self._btnRun)
+        self._btnStop = QtGui.QPushButton("Stop (Ctrl+S)", self)
+        self._btnStop.setShortcut("Ctrl+S")
+        self._btnStop.clicked.connect(lambda: model.setRunning(False))
+
+        layoutControls = QtGui.QHBoxLayout()
+        layoutControls.addWidget(self._cbAuto)
+        layoutControls.addWidget(self._btnRun)
+        layoutControls.addWidget(self._btnStop)
 
         self._btnClear = QtGui.QPushButton("Clear (Ctrl+Space)", self)
         self._btnClear.setShortcut("Ctrl+Space")
@@ -43,16 +48,16 @@ class ActionListWidget(QtGui.QWidget):
         self._btnEdit.setShortcut("Ctrl+E")
         self._btnEdit.clicked.connect(self.editClicked)
 
-        layoutModifyButtons = QtGui.QHBoxLayout()
-        layoutModifyButtons.addWidget(self._btnClear)
-        layoutModifyButtons.addWidget(self._btnDelete)
-        layoutModifyButtons.addWidget(self._btnEdit)
+        layoutModifiers = QtGui.QHBoxLayout()
+        layoutModifiers.addWidget(self._btnClear)
+        layoutModifiers.addWidget(self._btnDelete)
+        layoutModifiers.addWidget(self._btnEdit)
 
         layoutMain = QtGui.QVBoxLayout(self)
         layoutMain.setMargin(0)
         layoutMain.addWidget(self._table)
-        layoutMain.addLayout(layoutRunButtons)
-        layoutMain.addLayout(layoutModifyButtons)
+        layoutMain.addLayout(layoutControls)
+        layoutMain.addLayout(layoutModifiers)
     #END __init__()
 
     editClicked = QtCore.pyqtSignal()

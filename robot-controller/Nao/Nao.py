@@ -112,21 +112,27 @@ class Nao(QtCore.QObject):
     # END say()
 
     def stopMoving(self):
-        self._motion.wait(self._motionId, 0)
+        if self._motion is not None:
+            self._motion.stopMove()
+            self._motion = None
+        #END if
     # END stopMoving()
 
     def stopSaying(self):
-        self._speechProxy.stopAll()
+        if self._speechProxy is not None:
+            self._speechProxy.stop(self._sayId)
+        #END if
     # END stopSaying()
 
     def wait(self, moving = True, saying = True):
         if moving:
-            self._speechProxy.wait(self._sayId, 0)
+            self._motion.wait(self._motionId, 0)
+            self._motion = None
         #END if
         if saying:
             self._speechProxy.wait(self._sayId, 0)
         #END if
-    # END wait
+    # END wait()
 
     def LEDNormal(self):
         self.LEDsetIntensity(LEDNames.Face, 1.0, True)

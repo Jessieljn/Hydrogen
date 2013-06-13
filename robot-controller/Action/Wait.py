@@ -9,7 +9,11 @@ class Wait(BaseAction):
     #END __init__()
 
     def execute(self, nao):
-        QtCore.QThread.msleep(self._msecs)
+        if self._msecs == 0:
+            nao.wait()
+        else:
+            QtCore.QThread.msleep(self._msecs)
+        #END if
     #END execute()
 
     def actionToString(self):

@@ -1,14 +1,11 @@
 from PyQt4 import QtCore
 from ActionQueue import ActionQueue
-from AutoRunAction import AutoRunAction
-from BaseAction import BaseAction
 from ThreadTimer import ThreadTimer
 
 
 class ActionModel(QtCore.QAbstractTableModel):
     def __init__(self, parent, nao):
         super(ActionModel, self).__init__(parent)
-        self._autorun = False
         self._list = ActionQueue(nao)
         self._list.cleared.connect(self.on__list_cleared)
         self._list.dequeued.connect(self.on__list_dequeued)
@@ -25,31 +22,10 @@ class ActionModel(QtCore.QAbstractTableModel):
     #END dispose()
 
     def addActions(self, actions):
-        run_queue = self._autorun
-        if actions is None:
-            pass
-        elif isinstance(actions, AutoRunAction):
-            run_queue = True
-        elif isinstance(actions, BaseAction):
-            self._timer.addToThread(actions)
-            self._list.enqueue(actions)
-        else:
-            for act in actions:
-                if isinstance(act, AutoRunAction):
-                    run_queue = True
-                else:
-                    self._timer.addToThread(act)
-                    self._list.enqueue(act)
-                #END if
-            #END for
-        #END if
-        if run_queue:
-            self._list.setRunning(True)
-        #END if
-    #END addAction()
+        self._list.enqueue(actions)
+    #END addActions()
 
     def clearActions(self):
-        self._list.setRunning(False)
         self._list.clear()
     #END clearActions()
 
@@ -61,17 +37,13 @@ class ActionModel(QtCore.QAbstractTableModel):
         self._list.remove(index)
     #END removeAction()
 
-    def runActions(self):
-        self._list.setRunning(True)
-    #END runActions()
+    def setAutorun(self, value):
+        self._list.setAutorun(value)
+    #END setAutorun()
 
-    def setAutoRun(self, enabled):
-        self._autorun = enabled
-    #END setAutoRun()
-
-    def rowCount(self, parent):
-        return self._list.length()
-    #END rowCount()
+    def setRunning(self, value):
+        self._list.setRunning(value)
+    #END setRunning()
 
     def columnCount(self, parent):
         return 2
@@ -103,21 +75,25 @@ class ActionModel(QtCore.QAbstractTableModel):
         return QtCore.QVariant()
     #END headerData()
 
+    def rowCount(self, parent):
+        return self._list.length()
+    #END rowCount()
+
     def on__list_cleared(self, length):
-        parentIndex = QtCore.QModelIndex()
-        self.beginRemoveRows(parentIndex, 0, length - 1)
+        parent = QtCore.QModelIndex()
+        self.beginRemoveRows(parent, 0, length - 1)
         self.endRemoveRows()
     #END on__list_cleared()
 
     def on__list_dequeued(self, index):
-        parentIndex = QtCore.QModelIndex()
-        self.beginRemoveRows(parentIndex, index, index)
+        parent = QtCore.QModelIndex()
+        self.beginRemoveRows(parent, index, index)
         self.endRemoveRows()
     #END on__list_dequeued()
 
     def on__list_enqueued(self, index):
-        parentIndex = QtCore.QModelIndex()
-        self.beginInsertRows(parentIndex, index, index)
+        parent = QtCore.QModelIndex()
+        self.beginInsertRows(parent, index, index)
         self.endInsertRows()
     #END on__list_enqueued()
 #END class

@@ -2,7 +2,7 @@ from PyQt4 import QtCore
 from PyQt4 import QtGui
 from Definitions import LEDNames
 from BaseStudy import BaseStudy
-from Action import AutoRunAction
+from Action import ActionStart
 from Action import Behavior
 from Action import Motion
 from Action import Speech
@@ -62,49 +62,49 @@ class Empathy(BaseStudy):
                 ActionPushButton(None, "IDLE 1", [
                         Stiffness(1.0),
                         Motion("Idle1", speed = 2.2),
-                        AutoRunAction(),
+                        ActionStart(),
                     ]),
                 ActionPushButton(None, "IDLE 1", [
                         Stiffness(1.0),
                         Motion("Idle1", speed = 2.2, repeat = 4, repeatBegin = 13, repeatEnd = 16, repeatSpeed = 3.0),
-                        AutoRunAction(),
+                        ActionStart(),
                     ]),
                 ActionPushButton(None, "IDLE 1", [
                         Stiffness(1.0),
                         Motion("Idle1", speed = 2.2, repeat = 4, repeatBegin = 6, repeatEnd = 9, repeatSpeed = 5.0),
-                        AutoRunAction(),
+                        ActionStart(),
                     ]),
             ], [
                 ActionPushButton(None, "ChinHoldLeft", [
                         Stiffness(1.0),
                         Motion("ChinHoldLeft", speed = 1.0),
-                        AutoRunAction(),
+                        ActionStart(),
                     ]),
                 ActionPushButton(None, "ChinHoldLeft", [
                         Stiffness(1.0),
                         Motion("ChinHoldLeft", speed = 1.0, repeat = 4, repeatBegin = 4, repeatEnd = 7, repeatSpeed = 3.0),
-                        AutoRunAction(),
+                        ActionStart(),
                     ]),
                 ActionPushButton(None, "ChinHoldLeft", [
                         Stiffness(1.0),
                         Motion("ChinHoldLeft", speed = 1.0, repeat = 7, repeatBegin = 8, repeatEnd = 10, repeatSpeed = 5.0),
-                        AutoRunAction(),
+                        ActionStart(),
                     ]),
             ], [
                 ActionPushButton(None, "ChinHoldRight", [
                         Stiffness(1.0),
                         Motion("ChinHoldRight", speed = 1.0),
-                        AutoRunAction(),
+                        ActionStart(),
                     ]),
                 ActionPushButton(None, "ChinHoldRight", [
                         Stiffness(1.0),
                         Motion("ChinHoldRight", speed = 1.0, repeat = 4, repeatBegin = 4, repeatEnd = 7, repeatSpeed = 3.0),
-                        AutoRunAction(),
+                        ActionStart(),
                     ]),
                 ActionPushButton(None, "ChinHoldRight", [
                         Stiffness(1.0),
                         Motion("ChinHoldRight", speed = 1.0, repeat = 7, repeatBegin = 8, repeatEnd = 10, repeatSpeed = 5.0),
-                        AutoRunAction(),
+                        ActionStart(),
                     ]),
             ], [
                 ActionPushButton(None, "Don't know", [
