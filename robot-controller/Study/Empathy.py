@@ -196,6 +196,10 @@ class Empathy(QtGui.QWidget):
         #END if
     #END setNao()
 
+    def _on_actionbutton_clicked(self):
+        self._actionQueue.addActions(self.sender().getRobotActions())
+    #END _on_actionbutton_clicked()
+
     def _on_behaviorbutton_clicked(self):
         self._actionQueue.addActions(self.sender().getRobotActions(self.getJitterLevel()))
     #END _on_behaviorbutton_clicked()
@@ -602,7 +606,7 @@ class Empathy(QtGui.QWidget):
         layout.setMargin(0)
         for comp in components:
             if isinstance(comp, ActionPushButton):
-                comp.clicked.connect(self._on_behaviorbutton_clicked)
+                comp.clicked.connect(self._on_actionbutton_clicked)
             #END if
             layout.addWidget(comp)
         #END for

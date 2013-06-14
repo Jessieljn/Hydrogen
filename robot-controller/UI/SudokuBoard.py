@@ -73,7 +73,7 @@ class SudokuBoard(QtGui.QWidget):
 
     def solveOne(self):
         # TODO
-        self.valueChanged(0, 0, 0)
+        self.valueChanged.emit(0, 0, 0)
     #END solveOne()
 
     def set(self, i, j, value):
