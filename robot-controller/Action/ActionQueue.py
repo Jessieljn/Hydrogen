@@ -18,7 +18,7 @@ class ActionQueue(QtCore.QObject):
 
     dequeued = QtCore.pyqtSignal(int)
 
-    enqueued = QtCore.pyqtSignal(int)
+    enqueued = QtCore.pyqtSignal(int, int)
 
     removed = QtCore.pyqtSignal(int)
 
@@ -106,6 +106,8 @@ class ActionQueue(QtCore.QObject):
     #END setRunning()
 
     def _enqueue(self, actions, prior):
+        beginIndex = 0
+        endIndex = 0
         run_queue = False
         self._mutex.lock()
         if actions is None:
@@ -114,11 +116,22 @@ class ActionQueue(QtCore.QObject):
             run_queue = True
         elif isinstance(actions, BaseAction):
             if prior:
+                beginIndex = 0
+                endIndex = 0
                 self._list.insert(0, actions)
             else:
+                beginIndex = len(self._list)
+                endIndex = len(self._list)
                 self._list.append(actions)
             #END if
         else:
+            if prior:
+                beginIndex = 0
+                endIndex = len(actions) - 1
+            else:
+                beginIndex = len(self._list)
+                endIndex = len(self._list) + len(actions) - 1
+            #END if
             for action in actions:
                 if action is None:
                     return
@@ -133,6 +146,6 @@ class ActionQueue(QtCore.QObject):
         #END if
         self._mutex.unlock()
         self._running = self._autorun or self._running or run_queue
-        self.enqueued.emit(0)
+        self.enqueued.emit(beginIndex, endIndex)
     #END _enqueue()
 #END class

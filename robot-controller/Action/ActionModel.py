@@ -91,9 +91,9 @@ class ActionModel(QtCore.QAbstractTableModel):
         self.endRemoveRows()
     #END on__list_dequeued()
 
-    def on__list_enqueued(self, index):
+    def on__list_enqueued(self, beginIndex, endIndex):
         parent = QtCore.QModelIndex()
-        self.beginInsertRows(parent, index, index)
+        self.beginInsertRows(parent, beginIndex, endIndex)
         self.endInsertRows()
     #END on__list_enqueued()
 #END class
