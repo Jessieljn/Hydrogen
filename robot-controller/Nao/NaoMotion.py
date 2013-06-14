@@ -34,7 +34,8 @@ class NaoMotion(QtCore.QObject):
         return self._times
     #END getTimes()
 
-    def applyRepeat(self, beginIndex, endIndex, repeats, repeatTimeModifier = 1.0):
+    def applyRepeat(self, beginIndex, endIndex, repeats, repeatSpeed = 1.0):
+        repeatTimeModifier = NaoMotion.speedToTimeModifier(repeatSpeed)
         names = list()
         times = list()
         keys = list()
@@ -99,7 +100,8 @@ class NaoMotion(QtCore.QObject):
         return motion
     #END applyRepeat()
 
-    def applySpeed(self, timeModifier):
+    def applySpeed(self, speed):
+        timeModifier = NaoMotion.speedToTimeModifier(speed)
         names = list()
         times = list()
         keys = list()
@@ -133,4 +135,20 @@ class NaoMotion(QtCore.QObject):
         #END for
         self._method = method
     #END _init()
+
+    @staticmethod
+    def speedToTimeModifier(speed):
+        if speed <= 0.0:
+            # slowest
+            return 5.0
+        elif speed < 1.0:
+            # slower
+            return 5.0 * speed
+        elif speed > 1.0:
+            # faster
+            return 1.0 / speed
+        else:
+            return speed
+        #END if
+    #END _speedToTimeModifier()
 #END class

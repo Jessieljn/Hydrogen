@@ -66,6 +66,11 @@ class SudokuBoard(QtGui.QWidget):
         self._subgrids[i][j].setPalette(palette)
     #END highlightSubgrid()
 
+    def solveOne(self):
+        # TODO
+        return 0, 0, 0
+    #END solveOne()
+
     def set(self, i, j, value):
         value = value % 10
         if value == 0:

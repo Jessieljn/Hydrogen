@@ -1,9 +1,10 @@
 from BaseAction import BaseAction
+from Nao import NaoMotion
 from Nao import NaoMotionList
 
 
 class Motion(BaseAction):
-    def __init__(self, motionName, speed = 1.0, repeat = 0, repeatBegin = 0, repeatEnd = -1, repeatSpeed = 1.0, motion = None, blocking = False):
+    def __init__(self, motionName = "", speed = 1.0, repeat = 0, repeatBegin = 0, repeatEnd = -1, repeatSpeed = 1.0, motion = None, blocking = False):
         super(Motion, self).__init__()
         self._motionName = str(motionName)
         self._speed = float(speed)
@@ -16,11 +17,13 @@ class Motion(BaseAction):
         if self._motion is None:
             self._motion = NaoMotionList.find(self._motionName)
             if self._speed != 1.0:
-                self._motion = self._motion.applySpeed(Motion.speedToTimeModifier(self._speed))
+                self._motion = self._motion.applySpeed(self._speed)
             #END if
             if self._repeat > 0:
-                self._motion = self._motion.applyRepeat(self._repeatBegin, self._repeatEnd, self._repeat, Motion.speedToTimeModifier(self._repeatSpeed))
+                self._motion = self._motion.applyRepeat(self._repeatBegin, self._repeatEnd, self._repeat, self._repeatSpeed)
             #END if
+        else:
+            self._motionName = "[Predefined] " + self._motion.name()
         #END if
     #END __init__()
 
@@ -46,20 +49,4 @@ class Motion(BaseAction):
         #END if
         return ret
     #END paramToString()
-
-    @staticmethod
-    def speedToTimeModifier(speed):
-        if speed <= 0.0:
-            # slowest
-            return 5.0
-        elif speed < 1.0:
-            # slower
-            return 5.0 * speed
-        elif speed > 1.0:
-            # faster
-            return 1.0 / speed
-        else:
-            return speed
-        #END if
-    #END _speedToTimeModifier()
 #END class
