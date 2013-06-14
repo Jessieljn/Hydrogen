@@ -54,13 +54,13 @@ class SudokuBoard(QtGui.QWidget):
         return int(self._boxes[i][j].text())
     #END get()
 
-    def highlightBox(self, i, j, color = QtGui.QColor()):
+    def highlightBox(self, i, j, color = QtGui.QColor(255, 255, 255)):
         palette = QtGui.QPalette(self.palette())
         palette.setColor(QtGui.QPalette.Base, color)
         self._boxes[i][j].setPalette(palette)
     #END highlightSubgrid()
 
-    def highlightSubgrid(self, i, j, color = QtGui.QColor()):
+    def highlightSubgrid(self, i, j, color = QtGui.QColor(255, 255, 255)):
         palette = QtGui.QPalette(self.palette())
         palette.setColor(QtGui.QPalette.Window, color)
         self._subgrids[i][j].setPalette(palette)
