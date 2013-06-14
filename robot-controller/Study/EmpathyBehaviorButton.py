@@ -387,13 +387,37 @@ class EmpathyBehaviorButton(QtGui.QPushButton):
         bhv.add(0, [Speech("I agree.")])
         bhv.add(0, [Speech("You are right.")])
         for i in range(bhv.maxLevel() + 1):
-            bhv.add(i, motion = str(i) + "_PointMyself")
             bhv.add(i, motion = str(i) + "_PointMyselfLeft")
             bhv.add(i, motion = str(i) + "_PointMyselfRight")
+            bhv.add(i, motion = str(i) + "_PointYouLeft")
+            bhv.add(i, motion = str(i) + "_PointYouRight")
             bhv.add(i, motion = str(i) + "_PalmUpLeft")
             bhv.add(i, motion = str(i) + "_PalmUpRight")
-            bhv.add(i, motion = str(i) + "_PointMyselfLeft")
-            bhv.add(i, motion = str(i) + "_PointMyselfRight")
+        #END for
+        EmpathyBehaviorButton._behaviours.append(bhv)
+
+        bhv = EmpathyBehaviorButton("How are you?")
+        bhv.add(0, [Speech("How are you today?")])
+        bhv.add(0, [Speech("How is it going?")])
+        for i in range(bhv.maxLevel() + 1):
+            bhv.add(i, motion = str(i) + "_DontKnowLeft")
+            bhv.add(i, motion = str(i) + "_DontKnowRight")
+            bhv.add(i, motion = str(i) + "_PalmUpLeft")
+            bhv.add(i, motion = str(i) + "_PalmUpRight")
+        #END for
+        EmpathyBehaviorButton._behaviours.append(bhv)
+
+        bhv = EmpathyBehaviorButton("Weather?")
+        bhv.add(0, [Speech("How's the weather today?")])
+        bhv.add(0, [Speech("Is the weather good today?")])
+        bhv.add(0, [Speech("Is it sunny day?")])
+        for i in range(bhv.maxLevel() + 1):
+            bhv.add(i, motion = str(i) + "_DontKnow")
+            bhv.add(i, motion = str(i) + "_DontKnowLeft")
+            bhv.add(i, motion = str(i) + "_DontKnowRight")
+            bhv.add(i, motion = str(i) + "_PalmUp")
+            bhv.add(i, motion = str(i) + "_PalmUpLeft")
+            bhv.add(i, motion = str(i) + "_PalmUpRight")
         #END for
         EmpathyBehaviorButton._behaviours.append(bhv)
 
