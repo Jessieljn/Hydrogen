@@ -9,3 +9,4 @@ from StiffnessWidget import StiffnessWidget as StiffnessWidget
 
 from ActionPushButton import ActionPushButton as ActionPushButton
 from SubmittableTextEdit import SubmittableTextEdit as SubmittableTextEdit
+from SudokuBoard import SudokuBoard as SudokuBoard
