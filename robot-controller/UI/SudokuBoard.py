@@ -1,5 +1,6 @@
 from PyQt4 import QtCore
 from PyQt4 import QtGui
+from SubmittableLineEdit import SubmittableLineEdit
 
 
 class SudokuBoard(QtGui.QWidget):
@@ -11,11 +12,13 @@ class SudokuBoard(QtGui.QWidget):
         for i in range(9):
             self._boxes.append([])
             for j in range(9):
-                self._boxes[i].append(QtGui.QLineEdit())
+                self._boxes[i].append(SubmittableLineEdit())
                 self._boxes[i][j].setAlignment(QtCore.Qt.AlignCenter)
                 self._boxes[i][j].setFixedSize(30, 30)
                 self._boxes[i][j].setInputMask("0")
                 self._boxes[i][j].setMaxLength(1)
+                self._boxes[i][j].inputCancelled.connect(self._on_box_inputCancelled)
+                self._boxes[i][j].textSubmitted.connect(self._on_box_textSubmitted)
             #END for
         #END for
 
@@ -44,6 +47,8 @@ class SudokuBoard(QtGui.QWidget):
         #END for
     #END __init__()
 
+    valueChanged = QtCore.pyqtSignal(int, int, int)
+
     def focus(self, i, j):
         self._boxes[i][j].setFocus()
     #END focus()
@@ -68,7 +73,7 @@ class SudokuBoard(QtGui.QWidget):
 
     def solveOne(self):
         # TODO
-        return 0, 0, 0
+        self.valueChanged(0, 0, 0)
     #END solveOne()
 
     def set(self, i, j, value):
@@ -79,4 +84,25 @@ class SudokuBoard(QtGui.QWidget):
             self._boxes[i][j].setText(str(value))
         #END if
     #END set()
+
+    def _on_box_inputCancelled(self):
+        self.setFocus()
+    #END _on_box_inputCancelled()
+
+    def _on_box_textSubmitted(self):
+        for i in range(9):
+            for j in range(9):
+                if self.sender() == self._boxes[i][j]:
+                    txt = self._boxes[i][j].text()
+                    if txt == "":
+                        self.valueChanged.emit(i, j, 0)
+                    else:
+                        self.valueChanged.emit(i, j, int(txt))
+                    #END if
+                    self.setFocus()
+                    return
+                #END if
+            #END for
+        #END for
+    #END _on_box_textSubmitted()
 #END class

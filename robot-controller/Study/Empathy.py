@@ -134,11 +134,9 @@ class Empathy(QtGui.QWidget):
                 [0, 0, 0, 9, 4, 7, 5, 0, 2],
                 [0, 0, 0, 2, 6, 8, 0, 0, 4],
             ]]
-        self._timerID = self.startTimer(10000)
     #END __init__()
 
     def __del__(self):
-        self.killTimer(self._timerID)
         EmpathyBehaviorButton.destroy()
     #END __del__()
 
@@ -262,16 +260,12 @@ class Empathy(QtGui.QWidget):
         EmpathySpeech.ParticipantName = str(self._participantName.text())
     #END _on_participantName_edited()
 
-    def _on_solveone_clicked(self):
+    def _on_sudoku_valueChanged(self, i, j, value):
         if self._currSubgrid is not None:
             self._wgtSudoku.highlightSubgrid(self._currSubgrid[0], self._currSubgrid[1])
             self._currSubgrid = None
         #END if
-        i, j, value = self._wgtSudoku.solveOne()
-        if value == 0:
-            # TODO: don't know the answer
-            pass
-        else:
+        if value != 0:
             txt = str(value) + ", aet "
             if j == 0:
                 txt = txt + "ay,"
@@ -297,19 +291,30 @@ class Empathy(QtGui.QWidget):
             actions.append(Speech(txt))
             self._actionQueue.addActions(actions)
         #END if
+    #END _on_sudoku_valueChanged()
+
+    def _on_solveone_clicked(self):
+        self._wgtSudoku.solveOne()
     #END _on_solveone_clicked()
 
+    def hideEvent(self, event):
+        self.killTimer(self._timerID)
+    #END hideEvent()
+
+    def showEvent(self, event):
+        self._timerID = self.startTimer(10000)
+    #END showEvent()
+
     def timerEvent(self, event):
+        if self._idleCount <= 5:
+            actions = EmpathyBehaviorButton.getBehavior(EmpathyBehaviorButton.INDEX_SMALL_IDLE).getRobotActions(self.getJitterLevel())
+        else:
+            actions = EmpathyBehaviorButton.getBehavior(EmpathyBehaviorButton.INDEX_BIG_IDLE).getRobotActions(self.getJitterLevel())
+        #END if
+        actions.append(ActionStart())
         if not self._actionQueue.isRunning() and self._actionQueue.rowCount(None) <= 0:
-            if self._idleCount <= 5:
-                self._idleCount = self._idleCount + 1
-                actions = EmpathyBehaviorButton.getBehavior(EmpathyBehaviorButton.INDEX_SMALL_IDLE).getRobotActions(self.getJitterLevel())
-            else:
-                self._idleCount = 0
-                actions = EmpathyBehaviorButton.getBehavior(EmpathyBehaviorButton.INDEX_BIG_IDLE).getRobotActions(self.getJitterLevel())
-            #END if
-            actions.append(ActionStart())
             self._actionQueue.addActions(actions)
+            self._idleCount = (self._idleCount + 1) % 5
         #END if
     #END timerEvent()
 
@@ -348,8 +353,23 @@ class Empathy(QtGui.QWidget):
         layoutBehaviors.setMargin(0)
         for i in range(EmpathyBehaviorButton.lengthBehaviors()):
             button = EmpathyBehaviorButton.getBehavior(i)
-            button.clicked.connect(self._on_behaviorbutton_clicked)
-            layoutBehaviors.addWidget(button)
+            if str(button.text()) == "\\CUT\\":
+                scroll = QtGui.QScrollArea()
+                scroll.setAlignment(QtCore.Qt.AlignCenter)
+                scroll.setWidget(widgetBehaviors)
+                layoutScroll = QtGui.QHBoxLayout()
+                layoutScroll.setMargin(0)
+                layoutScroll.addWidget(scroll)
+                widget = QtGui.QWidget(splitter)
+                widget.setLayout(layoutScroll)
+
+                widgetBehaviors = QtGui.QWidget()
+                layoutBehaviors = QtGui.QVBoxLayout(widgetBehaviors)
+                layoutBehaviors.setMargin(0)
+            else:
+                button.clicked.connect(self._on_behaviorbutton_clicked)
+                layoutBehaviors.addWidget(button)
+            #END if
         #END for
         scroll = QtGui.QScrollArea()
         scroll.setAlignment(QtCore.Qt.AlignCenter)
@@ -597,6 +617,7 @@ class Empathy(QtGui.QWidget):
 
     def _setupSudokuUi(self):
         self._wgtSudoku = SudokuBoard()
+        self._wgtSudoku.valueChanged.connect(self._on_sudoku_valueChanged)
         self._actShortcuts = []
         self._btnGames = []
         for i in range(1, 10):

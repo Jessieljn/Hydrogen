@@ -3,7 +3,7 @@ from PyQt4 import QtGui
 
 
 class SubmittableTextEdit(QtGui.QTextEdit):
-    def __init__(self, parent):
+    def __init__(self, parent = None):
         super(SubmittableTextEdit, self).__init__(parent)
     #END __init__()
 
