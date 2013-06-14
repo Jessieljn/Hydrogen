@@ -1,5 +1,4 @@
 from BaseAction import BaseAction
-from Nao import NaoMotion
 from Nao import NaoMotionList
 
 

@@ -22,6 +22,7 @@ class MainWindow(QtGui.QMainWindow):
 
     def __init__(self):
         super(MainWindow, self).__init__()
+        # noinspection PyCallingNonCallable
         self._nao = Nao()
         self._actionQueue = ActionModel(self, self._nao)
         self._LEDTime = QtCore.QTime.currentTime()
@@ -140,7 +141,7 @@ class MainWindow(QtGui.QMainWindow):
         ##################################################
         # MainWindow
         ##################################################
-        self.installEventFilter(self);
+        self.installEventFilter(self)
         self.setCentralWidget(self._wgtMain)
         self.setFocusPolicy(QtCore.Qt.StrongFocus)
         self.setMinimumSize(800, 600)

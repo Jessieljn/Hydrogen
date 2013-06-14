@@ -72,7 +72,7 @@ class SudokuBoard(QtGui.QWidget):
     #END solveOne()
 
     def set(self, i, j, value):
-        value = value % 10
+        value %= 10
         if value == 0:
             self._boxes[i][j].setText("")
         else:

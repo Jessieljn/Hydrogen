@@ -175,7 +175,7 @@ class Empathy(QtGui.QWidget):
         if jlv <= 0:
             jlv = 0
         elif jlv <= 6:
-            jlv = jlv - 1
+            jlv -= 1
         else:
             jlv = 0
         #END if
@@ -274,25 +274,25 @@ class Empathy(QtGui.QWidget):
         else:
             txt = str(value) + ", aet "
             if j == 0:
-                txt = txt + "ay,"
+                txt += "ay,"
             elif j == 1:
-                txt = txt + "bee,"
+                txt += "bee,"
             elif j == 2:
-                txt = txt + "see,"
+                txt += "see,"
             elif j == 3:
-                txt = txt + "d,"
+                txt += "d,"
             elif j == 4:
-                txt = txt + "e,"
+                txt += "e,"
             elif j == 5:
-                txt = txt + "f,"
+                txt += "f,"
             elif j == 6:
-                txt = txt + "g,"
+                txt += "g,"
             elif j == 7:
-                txt = txt + "h,"
+                txt += "h,"
             else:
-                txt = txt + "ayi,"
+                txt += "ayi,"
             #END if
-            txt = txt + str(i + 1)
+            txt += str(i + 1)
             actions = EmpathyBehaviorButton.getBehavior(EmpathyBehaviorButton.INDEX_SUDOKU_ANSWER).getRobotActions(self.getJitterLevel())
             actions.append(Speech(txt))
             self._actionQueue.addActions(actions)
@@ -302,7 +302,7 @@ class Empathy(QtGui.QWidget):
     def timerEvent(self, event):
         if not self._actionQueue.isRunning() and self._actionQueue.rowCount(None) <= 0:
             if self._idleCount <= 5:
-                self._idleCount = self._idleCount + 1
+                self._idleCount += 1
                 actions = EmpathyBehaviorButton.getBehavior(EmpathyBehaviorButton.INDEX_SMALL_IDLE).getRobotActions(self.getJitterLevel())
             else:
                 self._idleCount = 0

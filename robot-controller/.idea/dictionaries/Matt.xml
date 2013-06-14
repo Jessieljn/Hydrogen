@@ -2,6 +2,8 @@
   <dictionary name="Matt">
     <words>
       <w>addr</w>
+      <w>behaviorbutton</w>
+      <w>boardshortcut</w>
       <w>dequeue</w>
       <w>dequeued</w>
       <w>dfade</w>
@@ -10,6 +12,7 @@
       <w>dset</w>
       <w>enqueued</w>
       <w>focusable</w>
+      <w>gamebutton</w>
       <w>hbox</w>
       <w>heum</w>
       <w>hmmm</w>
@@ -19,14 +22,20 @@
       <w>mainwindow</w>
       <w>menubar</w>
       <w>metaclass</w>
+      <w>motionbutton</w>
       <w>nao's</w>
       <w>qqvga</w>
+      <w>quadcount</w>
+      <w>quadfinder</w>
       <w>qvga</w>
       <w>rdbtn</w>
       <w>rspd</w>
+      <w>solveone</w>
       <w>speechs</w>
+      <w>subgrid</w>
       <w>subgrids</w>
       <w>submenu</w>
+      <w>subsquare</w>
       <w>sudoku</w>
       <w>thats</w>
       <w>umanitoba</w>
