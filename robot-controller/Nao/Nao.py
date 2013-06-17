@@ -125,7 +125,7 @@ class Nao(QtCore.QObject):
     # END stopSaying()
 
     def wait(self, moving = True, saying = True):
-        if moving:
+        if moving and self._motion is not None:
             self._motion.wait(self._motionId, 0)
             self._motion = None
         #END if

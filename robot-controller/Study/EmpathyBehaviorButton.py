@@ -4,6 +4,7 @@ from Action import Motion
 from Action import Speech
 from Action import Stiffness
 from Action import Wait
+from Action import WaitMotion
 from Nao import NaoMotionList
 import random
 
@@ -12,20 +13,21 @@ class EmpathyBehaviorButton(QtGui.QPushButton):
     INDEX_ACTIONS = 0
     INDEX_MOTION = 1
 
-    INDEX_BIG_IDLE = 0
-    INDEX_SMALL_IDLE = 1
-    INDEX_SUDOKU_ANSWER = 2
+    INDEX_FILLER = 0
+    INDEX_BIG_IDLE = 1
+    INDEX_SMALL_IDLE = 2
+    INDEX_SUDOKU_ANSWER = 3
 
     _behaviours = []
     _motions = dict()
 
-    def __init__(self, label, motion_blocks = False):
+    def __init__(self, label, idle = False):
         super(EmpathyBehaviorButton, self).__init__(label)
         # The list list of action-motion.
         # action-motion contains list of actions and corresponding motion IDs
         self._list = dict()
         self._maxLevel = 0
-        self._motion_blocks = motion_blocks
+        self._idle = idle
     #END __init__()
 
     def add(self, jlv, actions = None, motion = None):
@@ -59,7 +61,10 @@ class EmpathyBehaviorButton(QtGui.QPushButton):
         if len(self._list[jlv][EmpathyBehaviorButton.INDEX_MOTION]) > 0:
             val = random.randint(0, len(self._list[jlv][EmpathyBehaviorButton.INDEX_MOTION]) - 1)
             actions.append(Stiffness(1.0))
-            actions.append(Motion(motion = self._list[jlv][EmpathyBehaviorButton.INDEX_MOTION][val], blocking = self._motion_blocks))
+            actions.append(Motion(motion = self._list[jlv][EmpathyBehaviorButton.INDEX_MOTION][val], blocking = False))
+            if self._idle:
+                actions.append(WaitMotion())
+            #END if
         #END if
         if len(self._list[jlv][EmpathyBehaviorButton.INDEX_ACTIONS]) > 0:
             val = random.randint(0, len(self._list[jlv][EmpathyBehaviorButton.INDEX_ACTIONS]) - 1)
@@ -122,18 +127,9 @@ class EmpathyBehaviorButton(QtGui.QPushButton):
     def _initMotions():
         # The number in front of motion name refers jitter level.
         # If the level is 0, it should be normal.
+        EmpathyBehaviorButton._motions["0_Idle0"] = NaoMotionList.find("Idle0").applySpeed(1.0)
         EmpathyBehaviorButton._motions["0_Idle1"] = NaoMotionList.find("Idle1").applySpeed(1.0)
-        EmpathyBehaviorButton._motions["1_Idle1"] = NaoMotionList.find("Idle1").applySpeed(1.0).applyRepeat(2, 3, repeats = 3, repeatSpeed = 2.0)
-        EmpathyBehaviorButton._motions["2_Idle1"] = NaoMotionList.find("Idle1").applySpeed(1.0).applyRepeat(3, 4, repeats = 4, repeatSpeed = 4.2)
-        EmpathyBehaviorButton._motions["3_Idle1"] = NaoMotionList.find("Idle1").applySpeed(1.0).applyRepeat(3, 6, repeats = 4, repeatSpeed = 4.2)
-        EmpathyBehaviorButton._motions["4_Idle1"] = NaoMotionList.find("Idle1").applySpeed(1.3).applyRepeat(3, 6, repeats = 6, repeatSpeed = 5.0)
-        EmpathyBehaviorButton._motions["5_Idle1"] = NaoMotionList.find("Idle1").applySpeed(1.6).applyRepeat(1, 5, repeats = 4, repeatSpeed = 4.0)
         EmpathyBehaviorButton._motions["0_Idle2"] = NaoMotionList.find("Idle2").applySpeed(1.0)
-        EmpathyBehaviorButton._motions["1_Idle2"] = NaoMotionList.find("Idle2").applySpeed(1.0).applyRepeat(2, 3, repeats = 3, repeatSpeed = 2.0)
-        EmpathyBehaviorButton._motions["2_Idle2"] = NaoMotionList.find("Idle2").applySpeed(1.0).applyRepeat(3, 4, repeats = 4, repeatSpeed = 4.2)
-        EmpathyBehaviorButton._motions["3_Idle2"] = NaoMotionList.find("Idle2").applySpeed(1.0).applyRepeat(3, 6, repeats = 4, repeatSpeed = 4.2)
-        EmpathyBehaviorButton._motions["4_Idle2"] = NaoMotionList.find("Idle2").applySpeed(1.3).applyRepeat(3, 6, repeats = 6, repeatSpeed = 5.0)
-        EmpathyBehaviorButton._motions["5_Idle2"] = NaoMotionList.find("Idle2").applySpeed(1.6).applyRepeat(1, 5, repeats = 4, repeatSpeed = 4.0)
         EmpathyBehaviorButton._motions["0_Idle3"] = NaoMotionList.find("Idle3").applySpeed(1.0)
         EmpathyBehaviorButton._motions["1_Idle3"] = NaoMotionList.find("Idle3").applySpeed(1.0).applyRepeat(2, 3, repeats = 3, repeatSpeed = 2.0)
         EmpathyBehaviorButton._motions["2_Idle3"] = NaoMotionList.find("Idle3").applySpeed(1.0).applyRepeat(3, 4, repeats = 4, repeatSpeed = 4.2)
@@ -146,6 +142,18 @@ class EmpathyBehaviorButton(QtGui.QPushButton):
         EmpathyBehaviorButton._motions["3_Idle4"] = NaoMotionList.find("Idle4").applySpeed(1.0).applyRepeat(3, 6, repeats = 4, repeatSpeed = 4.2)
         EmpathyBehaviorButton._motions["4_Idle4"] = NaoMotionList.find("Idle4").applySpeed(1.3).applyRepeat(3, 6, repeats = 6, repeatSpeed = 5.0)
         EmpathyBehaviorButton._motions["5_Idle4"] = NaoMotionList.find("Idle4").applySpeed(1.6).applyRepeat(1, 5, repeats = 4, repeatSpeed = 4.0)
+        EmpathyBehaviorButton._motions["0_Idle5"] = NaoMotionList.find("Idle5").applySpeed(1.0)
+        EmpathyBehaviorButton._motions["1_Idle5"] = NaoMotionList.find("Idle5").applySpeed(1.0).applyRepeat(2, 3, repeats = 3, repeatSpeed = 2.0)
+        EmpathyBehaviorButton._motions["2_Idle5"] = NaoMotionList.find("Idle5").applySpeed(1.0).applyRepeat(3, 4, repeats = 4, repeatSpeed = 4.2)
+        EmpathyBehaviorButton._motions["3_Idle5"] = NaoMotionList.find("Idle5").applySpeed(1.0).applyRepeat(3, 6, repeats = 4, repeatSpeed = 4.2)
+        EmpathyBehaviorButton._motions["4_Idle5"] = NaoMotionList.find("Idle5").applySpeed(1.3).applyRepeat(3, 6, repeats = 6, repeatSpeed = 5.0)
+        EmpathyBehaviorButton._motions["5_Idle5"] = NaoMotionList.find("Idle5").applySpeed(1.6).applyRepeat(1, 5, repeats = 4, repeatSpeed = 4.0)
+        EmpathyBehaviorButton._motions["0_Idle6"] = NaoMotionList.find("Idle6").applySpeed(1.0)
+        EmpathyBehaviorButton._motions["1_Idle6"] = NaoMotionList.find("Idle6").applySpeed(1.0).applyRepeat(2, 3, repeats = 3, repeatSpeed = 2.0)
+        EmpathyBehaviorButton._motions["2_Idle6"] = NaoMotionList.find("Idle6").applySpeed(1.0).applyRepeat(3, 4, repeats = 4, repeatSpeed = 4.2)
+        EmpathyBehaviorButton._motions["3_Idle6"] = NaoMotionList.find("Idle6").applySpeed(1.0).applyRepeat(3, 6, repeats = 4, repeatSpeed = 4.2)
+        EmpathyBehaviorButton._motions["4_Idle6"] = NaoMotionList.find("Idle6").applySpeed(1.3).applyRepeat(3, 6, repeats = 6, repeatSpeed = 5.0)
+        EmpathyBehaviorButton._motions["5_Idle6"] = NaoMotionList.find("Idle6").applySpeed(1.6).applyRepeat(1, 5, repeats = 4, repeatSpeed = 4.0)
         EmpathyBehaviorButton._motions["0_Disagree"] = NaoMotionList.find("Disagree").applySpeed(1.3)
         EmpathyBehaviorButton._motions["1_Disagree"] = NaoMotionList.find("Disagree").applySpeed(1.4).applyRepeat(1, 3, repeats = 3, repeatSpeed = 1.7)
         EmpathyBehaviorButton._motions["2_Disagree"] = NaoMotionList.find("Disagree").applySpeed(1.4).applyRepeat(1, 3, repeats = 3, repeatSpeed = 2.4)
@@ -273,6 +281,14 @@ class EmpathyBehaviorButton(QtGui.QPushButton):
 
     @staticmethod
     def _initBehaviors():
+        bhv = EmpathyBehaviorButton("Conv. Filler")
+        bhv.add(0, [Speech("ahhhr,", speed = 50)])
+        bhv.add(0, [Speech("awwwh,", speed = 50)])
+        bhv.add(0, [Speech("ehhhh,", speed = 50)])
+        bhv.add(0, [Speech("errrh,", speed = 50)])
+        bhv.add(0, [Speech("ummmh,", speed = 50)])
+        EmpathyBehaviorButton._behaviours.append(bhv)
+
         bhv = EmpathyBehaviorButton("Idle (Big)", True)
         for i in range(10):
             bhv.add(i, motion = str(i) + "_ChinHoldLeft")
@@ -297,75 +313,45 @@ class EmpathyBehaviorButton(QtGui.QPushButton):
         bhv.add(0, [Speech("I believe the answer is,")])
         bhv.add(0, [Speech("I believe the number is,")])
         bhv.add(0, [Speech("I believe the value is,")])
-        bhv.add(0, [Speech("I guess the answer is,")])
-        bhv.add(0, [Speech("I guess the number is,")])
-        bhv.add(0, [Speech("I guess the value is,")])
         bhv.add(0, [Speech("I think the answer is,")])
         bhv.add(0, [Speech("I think the number is,")])
         bhv.add(0, [Speech("I think the value is,")])
-        bhv.add(0, [Speech("The answer is,")])
         bhv.add(0, [Speech("The number is,")])
-        bhv.add(0, [Speech("The value is,")])
         bhv.add(1, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(110) + "the answer is,", speed = 50)])
         bhv.add(1, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(110) + "the number is,", speed = 50)])
         bhv.add(1, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(110) + "the value is,", speed = 50)])
-        bhv.add(1, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(110) + "the answer is,", speed = 50)])
-        bhv.add(1, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(110) + "the number is,", speed = 50)])
-        bhv.add(1, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(110) + "the value is,", speed = 50)])
         bhv.add(1, [Speech("I think" + EmpathyBehaviorButton._markSpeech(110) + "the answer is,", speed = 50)])
         bhv.add(1, [Speech("I think" + EmpathyBehaviorButton._markSpeech(110) + "the number is,", speed = 50)])
         bhv.add(1, [Speech("I think" + EmpathyBehaviorButton._markSpeech(110) + "the value is,", speed = 50)])
-        bhv.add(1, [Speech("The answer" + EmpathyBehaviorButton._markSpeech(110) + "is,", speed = 50)])
         bhv.add(1, [Speech("The number" + EmpathyBehaviorButton._markSpeech(110) + "is,", speed = 50)])
-        bhv.add(1, [Speech("The value" + EmpathyBehaviorButton._markSpeech(110) + "is,", speed = 50)])
         bhv.add(2, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(110) + "the answer is,", speed = 50, shaping = 110)])
         bhv.add(2, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(110) + "the number is,", speed = 50, shaping = 110)])
         bhv.add(2, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(110) + "the value is,", speed = 50, shaping = 110)])
-        bhv.add(2, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(110) + "the answer is,", speed = 50, shaping = 110)])
-        bhv.add(2, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(110) + "the number is,", speed = 50, shaping = 110)])
-        bhv.add(2, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(110) + "the value is,", speed = 50, shaping = 110)])
         bhv.add(2, [Speech("I think" + EmpathyBehaviorButton._markSpeech(110) + "the answer is,", speed = 50, shaping = 110)])
         bhv.add(2, [Speech("I think" + EmpathyBehaviorButton._markSpeech(110) + "the number is,", speed = 50, shaping = 110)])
         bhv.add(2, [Speech("I think" + EmpathyBehaviorButton._markSpeech(110) + "the value is,", speed = 50, shaping = 110)])
-        bhv.add(2, [Speech("The answer" + EmpathyBehaviorButton._markSpeech(110) + "is,", speed = 50, shaping = 110)])
         bhv.add(2, [Speech("The number" + EmpathyBehaviorButton._markSpeech(110) + "is,", speed = 50, shaping = 110)])
-        bhv.add(2, [Speech("The value" + EmpathyBehaviorButton._markSpeech(110) + "is,", speed = 50, shaping = 110)])
         bhv.add(3, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(115) + "the answer is,", speed = 50, shaping = 110)])
         bhv.add(3, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(115) + "the number is,", speed = 50, shaping = 110)])
         bhv.add(3, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(115) + "the value is,", speed = 50, shaping = 110)])
-        bhv.add(3, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(115) + "the answer is,", speed = 50, shaping = 110)])
-        bhv.add(3, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(115) + "the number is,", speed = 50, shaping = 110)])
-        bhv.add(3, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(115) + "the value is,", speed = 50, shaping = 110)])
         bhv.add(3, [Speech("I think" + EmpathyBehaviorButton._markSpeech(115) + "the answer is,", speed = 50, shaping = 110)])
         bhv.add(3, [Speech("I think" + EmpathyBehaviorButton._markSpeech(115) + "the number is,", speed = 50, shaping = 110)])
         bhv.add(3, [Speech("I think" + EmpathyBehaviorButton._markSpeech(115) + "the value is,", speed = 50, shaping = 110)])
-        bhv.add(3, [Speech("The answer" + EmpathyBehaviorButton._markSpeech(115) + "is,", speed = 50, shaping = 110)])
         bhv.add(3, [Speech("The number" + EmpathyBehaviorButton._markSpeech(115) + "is,", speed = 50, shaping = 110)])
-        bhv.add(3, [Speech("The value" + EmpathyBehaviorButton._markSpeech(115) + "is,", speed = 50, shaping = 110)])
         bhv.add(4, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(120) + "the answer is,", speed = 50, shaping = 115)])
         bhv.add(4, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(120) + "the number is,", speed = 50, shaping = 115)])
         bhv.add(4, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(120) + "the value is,", speed = 50, shaping = 115)])
-        bhv.add(4, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(120) + "the answer is,", speed = 50, shaping = 115)])
-        bhv.add(4, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(120) + "the number is,", speed = 50, shaping = 115)])
-        bhv.add(4, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(120) + "the value is,", speed = 50, shaping = 115)])
         bhv.add(4, [Speech("I think" + EmpathyBehaviorButton._markSpeech(120) + "the answer is,", speed = 50, shaping = 115)])
         bhv.add(4, [Speech("I think" + EmpathyBehaviorButton._markSpeech(120) + "the number is,", speed = 50, shaping = 115)])
         bhv.add(4, [Speech("I think" + EmpathyBehaviorButton._markSpeech(120) + "the value is,", speed = 50, shaping = 115)])
-        bhv.add(4, [Speech("The answer" + EmpathyBehaviorButton._markSpeech(120) + "is,", speed = 50, shaping = 115)])
         bhv.add(4, [Speech("The number" + EmpathyBehaviorButton._markSpeech(120) + "is,", speed = 50, shaping = 115)])
-        bhv.add(4, [Speech("The value" + EmpathyBehaviorButton._markSpeech(120) + "is,", speed = 50, shaping = 115)])
         bhv.add(5, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(125) + "the answer is,", speed = 70, shaping = 120)])
         bhv.add(5, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(125) + "the number is,", speed = 70, shaping = 120)])
         bhv.add(5, [Speech("I believe" + EmpathyBehaviorButton._markSpeech(125) + "the value is,", speed = 70, shaping = 120)])
-        bhv.add(5, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(125) + "the answer is,", speed = 70, shaping = 120)])
-        bhv.add(5, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(125) + "the number is,", speed = 70, shaping = 120)])
-        bhv.add(5, [Speech("I guess" + EmpathyBehaviorButton._markSpeech(125) + "the value is,", speed = 70, shaping = 120)])
         bhv.add(5, [Speech("I think" + EmpathyBehaviorButton._markSpeech(125) + "the answer is,", speed = 70, shaping = 120)])
         bhv.add(5, [Speech("I think" + EmpathyBehaviorButton._markSpeech(125) + "the number is,", speed = 70, shaping = 120)])
         bhv.add(5, [Speech("I think" + EmpathyBehaviorButton._markSpeech(125) + "the value is,", speed = 70, shaping = 120)])
-        bhv.add(5, [Speech("The answer" + EmpathyBehaviorButton._markSpeech(125) + "is,", speed = 70, shaping = 120)])
         bhv.add(5, [Speech("The number" + EmpathyBehaviorButton._markSpeech(125) + "is,", speed = 70, shaping = 120)])
-        bhv.add(5, [Speech("The value" + EmpathyBehaviorButton._markSpeech(125) + "is,", speed = 70, shaping = 120)])
         for i in range(bhv.maxLevel() + 1):
             bhv.add(i, motion = str(i) + "_PointMyself")
             bhv.add(i, motion = str(i) + "_PointMyselfLeft")
@@ -394,6 +380,18 @@ class EmpathyBehaviorButton(QtGui.QPushButton):
             bhv.add(i, motion = str(i) + "_PalmUpLeft")
             bhv.add(i, motion = str(i) + "_PalmUpRight")
         #END for
+        EmpathyBehaviorButton._behaviours.append(bhv)
+
+        bhv = EmpathyBehaviorButton("Okay")
+        bhv.add(0, [Speech("Okay")])
+        EmpathyBehaviorButton._behaviours.append(bhv)
+
+        bhv = EmpathyBehaviorButton("Yes")
+        bhv.add(0, [Speech("Yes")])
+        EmpathyBehaviorButton._behaviours.append(bhv)
+
+        bhv = EmpathyBehaviorButton("No")
+        bhv.add(0, [Speech("No")])
         EmpathyBehaviorButton._behaviours.append(bhv)
 
         bhv = EmpathyBehaviorButton("How are you?")

@@ -1,6 +1,7 @@
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 from SubmittableLineEdit import SubmittableLineEdit
+from SudokuSolver import SudokuSolver
 
 
 class SudokuBoard(QtGui.QWidget):
@@ -27,6 +28,28 @@ class SudokuBoard(QtGui.QWidget):
         layout.setHorizontalSpacing(5)
         layout.setVerticalSpacing(5)
         for i in range(3):
+            widgetLabel = QtGui.QWidget()
+            widgetLabel.setMaximumHeight(20)
+            layoutLabel = QtGui.QGridLayout(widgetLabel)
+            layoutLabel.setMargin(1)
+            layoutLabel.setHorizontalSpacing(1)
+            layoutLabel.setVerticalSpacing(1)
+            layoutLabel.addWidget(QtGui.QLabel(chr(ord('A') + i * 3 + 0)), 0, 0, 1, 1, QtCore.Qt.AlignHCenter)
+            layoutLabel.addWidget(QtGui.QLabel(chr(ord('A') + i * 3 + 1)), 0, 1, 1, 1, QtCore.Qt.AlignHCenter)
+            layoutLabel.addWidget(QtGui.QLabel(chr(ord('A') + i * 3 + 2)), 0, 2, 1, 1, QtCore.Qt.AlignHCenter)
+            layout.addWidget(widgetLabel, 0, i + 1, 1, 1)
+
+            widgetLabel = QtGui.QWidget()
+            widgetLabel.setMaximumWidth(20)
+            layoutLabel = QtGui.QGridLayout(widgetLabel)
+            layoutLabel.setMargin(1)
+            layoutLabel.setHorizontalSpacing(1)
+            layoutLabel.setVerticalSpacing(1)
+            layoutLabel.addWidget(QtGui.QLabel(str(i * 3 + 1)), 0, 0, 1, 1, QtCore.Qt.AlignVCenter)
+            layoutLabel.addWidget(QtGui.QLabel(str(i * 3 + 2)), 1, 0, 1, 1, QtCore.Qt.AlignVCenter)
+            layoutLabel.addWidget(QtGui.QLabel(str(i * 3 + 3)), 2, 0, 1, 1, QtCore.Qt.AlignVCenter)
+            layout.addWidget(widgetLabel, i + 1, 0, 1, 1)
+
             self._subgrids.append([])
             for j in range(3):
                 self._subgrids[i].append(QtGui.QFrame(self))
@@ -42,7 +65,7 @@ class SudokuBoard(QtGui.QWidget):
                         layoutGrid.addWidget(self._boxes[k][l], k % 3, l % 3, 1, 1)
                     #END for
                 #END for
-                layout.addWidget(self._subgrids[i][j], i, j, 1, 1)
+                layout.addWidget(self._subgrids[i][j], i + 1, j + 1, 1, 1)
             #END for
         #END for
     #END __init__()
@@ -72,8 +95,24 @@ class SudokuBoard(QtGui.QWidget):
     #END highlightSubgrid()
 
     def solveOne(self):
-        # TODO
-        self.valueChanged.emit(0, 0, 0)
+        solver = SudokuSolver()
+        for i in range(9):
+            for j in range(9):
+                txt = self._boxes[i][j].text()
+                value = 0
+                if txt != "":
+                    value = int(txt)
+                #END if
+                solver.set(j + 1, i + 1, value)
+            #END for
+        #END for
+        j, i, value = solver.solveOne()
+        if value == 0:
+            self.valueChanged.emit(0, 0, 0)
+        else:
+            self._boxes[i - 1][j - 1].setText(str(value))
+            self.valueChanged.emit(i - 1, j - 1, value)
+        #END if
     #END solveOne()
 
     def set(self, i, j, value):
