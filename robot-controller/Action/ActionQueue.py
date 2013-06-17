@@ -116,30 +116,29 @@ class ActionQueue(QtCore.QObject):
             run_queue = True
         elif isinstance(actions, BaseAction):
             if prior:
-                beginIndex = 0
-                endIndex = 0
                 self._list.insert(0, actions)
             else:
                 beginIndex = len(self._list)
                 endIndex = len(self._list)
                 self._list.append(actions)
             #END if
+        elif len(actions) <= 0:
+            return
         else:
-            if prior:
-                beginIndex = 0
-                endIndex = len(actions) - 1
-            else:
+            if not prior:
                 beginIndex = len(self._list)
-                endIndex = len(self._list) + len(actions) - 1
             #END if
+            endIndex = beginIndex - 1
             for action in actions:
                 if action is None:
                     return
                 elif isinstance(action, ActionStart):
                     run_queue = True
                 elif prior:
+                    endIndex = endIndex + 1
                     self._list.insert(0, action)
                 else:
+                    endIndex = endIndex + 1
                     self._list.append(action)
                 #END if
             #END for

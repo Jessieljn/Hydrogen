@@ -11,4 +11,6 @@ from Stiffness import Stiffness as Stiffness
 from StopMotion import StopMotion as StopMotion
 from StopSpeech import StopSpeech as StopSpeech
 from Wait import Wait as Wait
+from WaitMotion import WaitMotion as WaitMotion
+from WaitSpeech import WaitSpeech as WaitSpeech
 from ThreadTimer import ThreadTimer as ThreadTimer

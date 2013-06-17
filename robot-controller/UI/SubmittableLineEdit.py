@@ -2,9 +2,9 @@ from PyQt4 import QtCore
 from PyQt4 import QtGui
 
 
-class SubmittableTextEdit(QtGui.QTextEdit):
+class SubmittableLineEdit(QtGui.QLineEdit):
     def __init__(self, parent = None):
-        super(SubmittableTextEdit, self).__init__(parent)
+        super(SubmittableLineEdit, self).__init__(parent)
     #END __init__()
 
     inputCancelled = QtCore.pyqtSignal()
@@ -17,7 +17,7 @@ class SubmittableTextEdit(QtGui.QTextEdit):
         elif event.key() == QtCore.Qt.Key_Escape:
             self.inputCancelled.emit()
         else:
-            super(SubmittableTextEdit, self).keyPressEvent(event)
+            super(SubmittableLineEdit, self).keyPressEvent(event)
         #END if
     #END keyPressEvent()
 #END class

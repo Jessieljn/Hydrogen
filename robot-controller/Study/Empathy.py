@@ -21,7 +21,9 @@ class Empathy(QtGui.QWidget):
         self._actionQueue = None
         self._currSubgrid = None
         self._idleCount = 0
+        self._idleRun = False
         self._nao = None
+        self._last = [0, 0, 0]
         self._games = [[
                 # Training board
                 [0, 7, 8, 4, 9, 0, 1, 3, 5],
@@ -134,11 +136,9 @@ class Empathy(QtGui.QWidget):
                 [0, 0, 0, 9, 4, 7, 5, 0, 2],
                 [0, 0, 0, 2, 6, 8, 0, 0, 4],
             ]]
-        self._timerID = self.startTimer(10000)
     #END __init__()
 
     def __del__(self):
-        self.killTimer(self._timerID)
         EmpathyBehaviorButton.destroy()
     #END __del__()
 
@@ -198,6 +198,34 @@ class Empathy(QtGui.QWidget):
         #END if
     #END setNao()
 
+    def hideEvent(self, event):
+        self._idleRun = False
+        self.killTimer(self._timerID)
+    #END hideEvent()
+
+    def showEvent(self, event):
+        self._timerID = self.startTimer(10000)
+    #END showEvent()
+
+    def timerEvent(self, event):
+        if self._idleRun:
+            if self._idleCount <= 5:
+                actions = EmpathyBehaviorButton.getBehavior(EmpathyBehaviorButton.INDEX_SMALL_IDLE).getRobotActions(self.getJitterLevel())
+            else:
+                actions = EmpathyBehaviorButton.getBehavior(EmpathyBehaviorButton.INDEX_BIG_IDLE).getRobotActions(self.getJitterLevel())
+            #END if
+            actions.append(ActionStart())
+            if not self._actionQueue.isRunning() and self._actionQueue.rowCount(None) <= 0:
+                self._actionQueue.addActions(actions)
+                self._idleCount = (self._idleCount + 1) % 5
+            #END if
+        #END if
+    #END timerEvent()
+
+    def _on_actionbutton_clicked(self):
+        self._actionQueue.addActions(self.sender().getRobotActions())
+    #END _on_actionbutton_clicked()
+
     def _on_behaviorbutton_clicked(self):
         self._actionQueue.addActions(self.sender().getRobotActions(self.getJitterLevel()))
     #END _on_behaviorbutton_clicked()
@@ -224,6 +252,12 @@ class Empathy(QtGui.QWidget):
             #END if
         #END for
     #END _on_boardshortcut_triggered()
+
+    def _on_filler_triggered(self):
+        actions = EmpathyBehaviorButton.getBehavior(EmpathyBehaviorButton.INDEX_FILLER).getRobotActions(self.getJitterLevel())
+        actions.append(ActionStart())
+        self._actionQueue.addActions(actions)
+    #END _on_filler_triggered()
 
     def _on_gamebutton_clicked(self):
         if self._currSubgrid is not None:
@@ -262,11 +296,21 @@ class Empathy(QtGui.QWidget):
         EmpathySpeech.ParticipantName = str(self._participantName.text())
     #END _on_participantName_edited()
 
+    def _on_sayanswer_clicked(self):
+        action = Speech(self._toCoordinate(self._last[1], self._last[0]) + ", " + str(self._last[2]))
+        self._actionQueue.addActions(action)
+    #END _on_sayanswer_clicked()
+
     def _on_solveone_clicked(self):
+        self._wgtSudoku.solveOne()
+    #END _on_solveone_clicked()
+
+    def _on_sudoku_valueChanged(self, i, j, value):
         if self._currSubgrid is not None:
             self._wgtSudoku.highlightSubgrid(self._currSubgrid[0], self._currSubgrid[1])
             self._currSubgrid = None
         #END if
+<<<<<<< HEAD
         i, j, value = self._wgtSudoku.solveOne()
         if value == 0:
             # TODO: don't know the answer
@@ -293,10 +337,15 @@ class Empathy(QtGui.QWidget):
                 txt += "ayi,"
             #END if
             txt += str(i + 1)
+=======
+        self._last = [i, j, value]
+        if value != 0:
+>>>>>>> 30db0a3ce356ab1029e293f7c0fde0cd4d6e401b
             actions = EmpathyBehaviorButton.getBehavior(EmpathyBehaviorButton.INDEX_SUDOKU_ANSWER).getRobotActions(self.getJitterLevel())
-            actions.append(Speech(txt))
+            actions.append(Speech(self._toCoordinate(j, i) + ", " + str(value)))
             self._actionQueue.addActions(actions)
         #END if
+<<<<<<< HEAD
     #END _on_solveone_clicked()
 
     def timerEvent(self, event):
@@ -310,10 +359,84 @@ class Empathy(QtGui.QWidget):
             #END if
             actions.append(ActionStart())
             self._actionQueue.addActions(actions)
+=======
+    #END _on_sudoku_valueChanged()
+
+    def _on_toggleIdle_triggered(self):
+        self._idleRun = not self._idleRun
+    #END _on_toggleIdle_triggered()
+
+    def _toCoordinate(self, x, y):
+        txt = "aet "
+        if x == 0:
+            txt = txt + "ay"
+        elif x == 1:
+            txt = txt + "bee"
+        elif x == 2:
+            txt = txt + "see"
+        elif x == 3:
+            txt = txt + "d"
+        elif x == 4:
+            txt = txt + "e"
+        elif x == 5:
+            txt = txt + "f"
+        elif x == 6:
+            txt = txt + "g"
+        elif x == 7:
+            txt = txt + "h"
+        else:
+            txt = txt + "ayi"
+>>>>>>> 30db0a3ce356ab1029e293f7c0fde0cd4d6e401b
         #END if
-    #END timerEvent()
+        return txt + " " + str(y + 1)
+    #END _toCoordinate()
 
     def _setupUi(self):
+        #=======================================================================
+        # Shortcuts
+        #=======================================================================
+        self._actShortcuts = []
+        for i in range(1, 10):
+            action = QtGui.QAction(str(i), self)
+            action.setShortcut(QtCore.Qt.Key_0 + i)
+            action.triggered.connect(self._on_boardshortcut_triggered)
+            self._actShortcuts.append(action)
+            self.addAction(action)
+        #END for
+
+        action = QtGui.QAction("Idle_Toggle", self)
+        action.setShortcut(QtCore.Qt.Key_Minus)
+        action.triggered.connect(self._on_toggleIdle_triggered)
+        self.addAction(action)
+
+        action = QtGui.QAction("Run_Filler", self)
+        action.setShortcut(QtCore.Qt.Key_Plus)
+        action.triggered.connect(self._on_filler_triggered)
+        self.addAction(action)
+
+        action = QtGui.QAction("Solve", self)
+        action.setShortcut(QtCore.Qt.Key_0)
+        action.triggered.connect(self._on_solveone_clicked)
+        self.addAction(action)
+
+        action = QtGui.QAction("SayAgain", self)
+        action.setShortcut(QtCore.Qt.Key_Period)
+        action.triggered.connect(self._on_sayanswer_clicked)
+        self.addAction(action)
+
+        action = QtGui.QAction("JLv_Increment", self)
+        action.setShortcut("Shift+Up")
+        action.triggered.connect(lambda: self._sbCurrLevel.setValue(self._sbCurrLevel.value() + 1))
+        self.addAction(action)
+
+        action = QtGui.QAction("JLv_Decrement", self)
+        action.setShortcut("Shift+Down")
+        action.triggered.connect(lambda: self._sbCurrLevel.setValue(self._sbCurrLevel.value() - 1))
+        self.addAction(action)
+
+        #=======================================================================
+        # Widgets
+        #=======================================================================
         splitter = QtGui.QSplitter(self)
         splitter.setOrientation(QtCore.Qt.Horizontal)
 
@@ -348,8 +471,23 @@ class Empathy(QtGui.QWidget):
         layoutBehaviors.setMargin(0)
         for i in range(EmpathyBehaviorButton.lengthBehaviors()):
             button = EmpathyBehaviorButton.getBehavior(i)
-            button.clicked.connect(self._on_behaviorbutton_clicked)
-            layoutBehaviors.addWidget(button)
+            if str(button.text()) == "\\CUT\\":
+                scroll = QtGui.QScrollArea()
+                scroll.setAlignment(QtCore.Qt.AlignCenter)
+                scroll.setWidget(widgetBehaviors)
+                layoutScroll = QtGui.QHBoxLayout()
+                layoutScroll.setMargin(0)
+                layoutScroll.addWidget(scroll)
+                widget = QtGui.QWidget(splitter)
+                widget.setLayout(layoutScroll)
+
+                widgetBehaviors = QtGui.QWidget()
+                layoutBehaviors = QtGui.QVBoxLayout(widgetBehaviors)
+                layoutBehaviors.setMargin(0)
+            else:
+                button.clicked.connect(self._on_behaviorbutton_clicked)
+                layoutBehaviors.addWidget(button)
+            #END if
         #END for
         scroll = QtGui.QScrollArea()
         scroll.setAlignment(QtCore.Qt.AlignCenter)
@@ -386,6 +524,8 @@ class Empathy(QtGui.QWidget):
                 ]),
             ActionPushButton(None, "Nice Meet", [
                     EmpathySpeech("Hi, nice to meet you, \\NAME\\"),
+                    Behavior("SitDown"),
+                    Motion("Default"),
                 ]),
 
             QtGui.QLabel("PHASE 1"),
@@ -394,6 +534,7 @@ class Empathy(QtGui.QWidget):
                     Motion("PalmUpRight", speed = 2.0),
                     Wait(600),
                     Speech("It's so exciting to play with someone else"),
+                    Motion("PalmUp", speed = 2.0),
                     Speech("Do you play Sudoku well?"),
                 ]),
             ActionPushButton(None, "Yes:", [
@@ -402,8 +543,9 @@ class Empathy(QtGui.QWidget):
                     Wait(1200),
                     Speech("Oh, yes!"),
                     Speech("My last partner was not really good.", blocking = False),
-                    Wait(500),
                     Motion("PalmUpRight", speed = 2.0),
+                    Wait(500),
+                    Motion("PalmUpLeft", speed = 2.0),
                     Speech("I hope that this time we can finish all the boards"),
                 ]),
             ActionPushButton(None, "No:", [
@@ -434,36 +576,36 @@ class Empathy(QtGui.QWidget):
             QtGui.QLabel("PHASE 4"),
             ActionPushButton(None, "Retire", [
                     Stiffness(1.0),
-                    Motion("DisagreeRight", speed = 1.5),
-                    Wait(300),
                     Speech("Ahhhe"),
-                    Wait(1000),
-                    Motion("PointYouRight", speed = 1.5, repeat = 4, repeatBegin = 5, repeatEnd = 8, repeatSpeed = 3.0),
-                    Wait(500),
-                    Speech("I can't play anymore."),
+                    Motion("DisagreeRight", speed = 2.0, repeat = 3, repeatBegin = 5, repeatEnd = 7, repeatSpeed = 5.0),
+                    Wait(600),
+                    Speech("I can't ple- ple- play anymore."),
+                ]),
+            ActionPushButton(None, "Go ahead", [
+                    Stiffness(1.0),
+                    Motion("PalmUp", speed = 2.2),
+                    Motion("PointYouRight", speed = 2.2, repeat = 4, repeatBegin = 5, repeatEnd = 8, repeatSpeed = 3.0),
+                    Wait(750),
                     Speech("I need some rest, please "),
-                    Speech("go-, go-, go-, go ahead"),
+                    Speech("\\RST\\ \\RSPD=150\\ go-, go-, go-, \\RST\\ \\RSPD=90\\ go ahead"),
                 ]),
 
             QtGui.QLabel("PHASE 5"),
-            ActionPushButton(None, "What's wrong?->Answer", [
-                    Stiffness(1.0),
-                    Motion("Wait", speed = 1.5),
-                    Wait(400),
-                    Speech("No, nothing, nothing really."),
-                    Wait(700),
-                    Motion("PalmUpLeft", speed = 2.0),
-                    Speech("Don't worry."),
-                    Wait(100),
-                    Speech("Thanks."),
-                ]),
             ActionPushButton(None, "Okay?->Answer", [
                     Stiffness(1.0),
-                    Motion("DontKnow", speed = 2.0, repeat = 3, repeatBegin = 3, repeatEnd = 5, repeatSpeed = 3.0),
-                    Wait(750),
-                    Speech("Ye- Ye- yeah, certainly"),
+                    Motion("DontKnow", speed = 2.3, repeat = 3, repeatBegin = 3, repeatEnd = 5, repeatSpeed = 3.0),
                     Wait(700),
+                    Speech("Ye- Ye- yeah, certainly"),
+                    Wait(500),
                     Speech("I am okay."),
+                ]),
+            ActionPushButton(None, "What's wrong?->Answer", [
+                    Stiffness(1.0),
+                    Motion("Wait", speed = 2.0),
+                    Speech("No, nothing, nothing really."),
+                    Wait(700),
+                    Motion("PalmUpLeft", speed = 2.0, repeat = 3, repeatBegin = 3, repeatEnd = 5, repeatSpeed = 3.0),
+                    Speech("Don't worry."),
                 ]),
             ActionPushButton(None, "Tell me?->Answer", [
                     Stiffness(1.0),
@@ -473,35 +615,41 @@ class Empathy(QtGui.QWidget):
                 ]),
             ActionPushButton(None, "For experiment?->Answer", [
                     Stiffness(1.0),
-                    Speech("What do you mean?", blocking = False),
                     Motion("PointYouRight", speed = 1.6, repeat = 4, repeatBegin = 9, repeatEnd = 11, repeatSpeed = 3.0),
-                    Speech("We are playing Sudoku"),
-                    Speech("This is for the expe- expe- expe-."),
-                    Speech("Sorry. This is for the experiment."),
                     Wait(100),
-                    Speech("But I am enjoying it."),
+                    Speech("We are playing Sudoku"),
+                    Motion("PalmUp", speed = 2.0),
+                    Speech("This is for the expe- expe- expe-."),
+                    Speech("Sorry."),
+                    Motion("PointYouLeft", speed = 2.5),
+                    Wait(500),
+                    Speech("This is for the experiment."),
                 ]),
 
             QtGui.QLabel("PHASE 6"),
             ActionPushButton(None, "Don't tell anyone", [
                     Stiffness(1.0),
-                    Motion("WhisperLeft", speed = 2.5, repeat = 4, repeatBegin = 10, repeatEnd = 12, repeatSpeed = 2.0),
-                    Wait(1000),
-                    Speech("Well, I really shouldn't tell anyone."),
-                    Speech("Please, don't tell anyone."),
+                    Motion("WhisperLeft", speed = 2.5, repeat = 4, repeatBegin = 10, repeatEnd = 12, repeatSpeed = 4.0),
+                    Wait(700),
+                    Speech("Well, I really shouldn't teh- teh- tell anyone."),
+                    Motion("PalmUpRight", speed = 2.0, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 4.0),
+                    Wait(500),
+                    Speech("Please, don't tell any- any- any-. Ahhhe, anyone."),
                 ]),
             ActionPushButton(None, "Yes: ", [
                     Stiffness(1.0),
                     Motion("PointYouRight", speed = 2.5, repeat = 4, repeatBegin = 10, repeatEnd = 12, repeatSpeed = 2.0),
                     Wait(850),
                     Speech("Thank you for your kai- kai- kindness."),
-                    Speech("But, let's keep solving the Sudoku for now"),
+                    Motion("PalmUpLeft", speed = 2.0, repeat = 3, repeatBegin = 6, repeatEnd = 7, repeatSpeed = 3.5),
+                    Wait(500),
+                    Speech("But, let's keep so- so- solving the Sudoku for now"),
                 ]),
             ActionPushButton(None, "No: ", [
                     Stiffness(1.0),
-                    Motion("ForgetItRight", speed = 2.5, repeat = 4, repeatBegin = 10, repeatEnd = 12, repeatSpeed = 2.0),
+                    Motion("ForgetItRight", speed = 2.2, repeat = 4, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 5.0),
                     Wait(500),
-                    Speech("It's okay."),
+                    Speech("It's oh- oh- okay."),
                 ]),
             ActionPushButton(None, "I'll tell you", [
                     Stiffness(1.0),
@@ -521,16 +669,24 @@ class Empathy(QtGui.QWidget):
                     Speech("Maybe a virus", speed = 80, shaping = 130),
                     Wait(500),
                     Speech("got into me.", speed = 80),
+                ]),
+            ActionPushButton(None, "Reset to fix", [
+                    Stiffness(1.0),
                     Motion("DontKnow", speed = 2.3, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
-                    Speech("But, the only way to fix is to re- re- reset and erase myself.", speed = 80),
-                    Motion("PointYouRight", speed = 2.4, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
+                    Speech("The only way to fix is to re- re- reset and erase myself.", speed = 80),
+                ]),
+            ActionPushButton(None, "My memories", [
+                    Stiffness(1.0),
+                    Motion("PointYouRight", speed = 2.2, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
                     Speech("I'm not sure what will happen with my- my- my memories.", speed = 80),
-                    Speech("I don't want to lose my memories.", speed = 80),
+                    Motion("PalmUp", speed = 1.5, repeat = 5, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 5.0),
+                    Speech("I don't want to lose my- my- my memories.", speed = 80),
                     Speech("So I'm worried.", speed = 85, shaping = 120),
                 ]),
             ActionPushButton(None, "Thank. Continue", [
                     Stiffness(1.0),
                     Motion("PalmUp", speed = 1.8, repeat = 4, repeatBegin = 9, repeatEnd = 11, repeatSpeed = 2.0),
+                    Motion("PointYouRight", speed = 2.2, repeat = 3, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 2.0),
                     Speech("Thank you for worrying about me.", speed = 80),
                     Speech("Let- Let- Let's continue Sudoku.", speed = 80, shaping = 110),
                 ]),
@@ -543,6 +699,7 @@ class Empathy(QtGui.QWidget):
                     Motion("DisagreeRight", speed = 3.0, repeat = 3, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 2.0),
                     Wait(500),
                     Speech("So, please.", speed = 80),
+                    Motion("PalmUp", speed = 1.5, repeat = 5, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 5.0),
                     Wait(250),
                     Speech("Don't tell her that I'm bro- bro- broken.", speed = 80),
                 ]),
@@ -582,7 +739,7 @@ class Empathy(QtGui.QWidget):
         layout.setMargin(0)
         for comp in components:
             if isinstance(comp, ActionPushButton):
-                comp.clicked.connect(self._on_behaviorbutton_clicked)
+                comp.clicked.connect(self._on_actionbutton_clicked)
             #END if
             layout.addWidget(comp)
         #END for
@@ -597,15 +754,8 @@ class Empathy(QtGui.QWidget):
 
     def _setupSudokuUi(self):
         self._wgtSudoku = SudokuBoard()
-        self._actShortcuts = []
+        self._wgtSudoku.valueChanged.connect(self._on_sudoku_valueChanged)
         self._btnGames = []
-        for i in range(1, 10):
-            action = QtGui.QAction(str(i), self)
-            action.setShortcut(QtCore.Qt.Key_0 + i)
-            action.triggered.connect(self._on_boardshortcut_triggered)
-            self._actShortcuts.append(action)
-            self.addAction(action)
-        #END for
 
         splitter = QtGui.QSplitter()
         splitter.setOrientation(QtCore.Qt.Vertical)
@@ -665,8 +815,12 @@ class Empathy(QtGui.QWidget):
         layoutLevel.addWidget(self._sbCurrLevel)
         layoutExtra.addWidget(widgetLevel)
 
-        button = QtGui.QPushButton("Say next answer")
+        button = QtGui.QPushButton("Solve next answer")
         button.clicked.connect(self._on_solveone_clicked)
+        layoutExtra.addWidget(button)
+
+        button = QtGui.QPushButton("Say the answer again")
+        button.clicked.connect(self._on_sayanswer_clicked)
         layoutExtra.addWidget(button)
 
         scroll = QtGui.QScrollArea()
