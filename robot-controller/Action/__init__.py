@@ -6,6 +6,7 @@ from Behavior import Behavior as Behavior
 from HeadMotion import HeadMotion as HeadMotion
 from LED import LED as LED
 from Motion import Motion as Motion
+from ReplaceableSpeech import ReplaceableSpeech as ReplaceableSpeech
 from Speech import Speech as Speech
 from Stiffness import Stiffness as Stiffness
 from StopMotion import StopMotion as StopMotion

@@ -4,6 +4,7 @@ from Definitions import LEDNames
 from Action import ActionStart
 from Action import Behavior
 from Action import Motion
+from Action import ReplaceableSpeech
 from Action import Speech
 from Action import Stiffness
 from Action import Wait
@@ -313,7 +314,11 @@ class Empathy(QtGui.QWidget):
         self._last = [i, j, value]
         if value != 0:
             actions = EmpathyBehaviorButton.getBehavior(EmpathyBehaviorButton.INDEX_SUDOKU_ANSWER).getRobotActions(self.getJitterLevel())
-            actions.append(Speech(self._toCoordinate(j, i) + ", " + str(value)))
+            for action in actions:
+                if isinstance(action, ReplaceableSpeech):
+                    action.replace(self._toCoordinate(j, i), str(value))
+                #END if
+            #END for
             self._actionQueue.addActions(actions)
         #END if
     #END _on_sudoku_valueChanged()
@@ -337,7 +342,7 @@ class Empathy(QtGui.QWidget):
         elif x == 5:
             txt = txt + "f"
         elif x == 6:
-            txt = txt + "g"
+            txt = txt + "geeh"
         elif x == 7:
             txt = txt + "h"
         else:
@@ -478,7 +483,7 @@ class Empathy(QtGui.QWidget):
                     Speech("What's your name?"),
                 ]),
             ActionPushButton(None, "Nice Meet", [
-                    EmpathySpeech("Hi, nice to meet you, \\NAME\\"),
+                    EmpathySpeech("Hi, nice to meet you, " + EmpathySpeech.NAME_MARKER),
                     Behavior("SitDown"),
                     Motion("Default"),
                 ]),
@@ -497,11 +502,9 @@ class Empathy(QtGui.QWidget):
                     Motion("OhYesRight", speed = 2.0),
                     Wait(1200),
                     Speech("Oh, yes!"),
-                    Speech("My last partner was not really good.", blocking = False),
                     Motion("PalmUpRight", speed = 2.0),
                     Wait(500),
-                    Motion("PalmUpLeft", speed = 2.0),
-                    Speech("I hope that this time we can finish all the boards"),
+                    Speech("That's good. It should be fun."),
                 ]),
             ActionPushButton(None, "No:", [
                     Stiffness(1.0),
@@ -519,9 +522,10 @@ class Empathy(QtGui.QWidget):
             ActionPushButton(None, "Go first", [
                     Stiffness(1.0),
                     Motion("PointYouRight", speed = 1.75),
-                    Wait(1000),
+                    Wait(500),
+                    Speech("Thank you."),
                     Speech("You can go first."),
-                    Speech("When you filled in one box, tell me."),
+                    Speech("Show me once you filled in one box."),
                 ]),
 
             QtGui.QLabel("PHASE 2"),
