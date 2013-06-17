@@ -1,5 +1,5 @@
 from Definitions import Camera
-from Definitions import CameraResolution
+from Definitions import VIDEO_QUALITY
 from Definitions import VIDEO_SUBSCRIBE_NAME
 from PyQt4 import QtCore
 from PyQt4 import QtGui
@@ -36,7 +36,7 @@ class NaoCamera(QtCore.QObject):
             except:
                 pass
             self._cameraProxy.setParam(NaoCamera.CAMERA_PARAM_SELECT, Camera.Top)
-            self._cameraProxyID = self._cameraProxy.subscribe(VIDEO_SUBSCRIBE_NAME, CameraResolution.VGA, 11, 20)
+            self._cameraProxyID = self._cameraProxy.subscribe(VIDEO_SUBSCRIBE_NAME, VIDEO_QUALITY, 11, 20)
             self._thread.start()
         #END if
     #END start()

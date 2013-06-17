@@ -1,8 +1,3 @@
-DEFAULT_IP = '140.193.228.26'
-DEFAULT_PORT = 9559
-VIDEO_SUBSCRIBE_NAME = "NaoVideo"
-
-
 class Camera:
     Top, \
     Bottom, \
@@ -47,3 +42,10 @@ class LEDNames:
     Chest = "ChestLeds"
     Feet = "FeetLeds"
 #END class
+
+
+#DEFAULT_IP = "192.168.0.100"
+DEFAULT_IP = '140.193.228.26'
+DEFAULT_PORT = 9559
+VIDEO_QUALITY = CameraResolution.VGA
+VIDEO_SUBSCRIBE_NAME = "NaoVideo"
