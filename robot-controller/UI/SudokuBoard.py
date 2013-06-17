@@ -123,9 +123,6 @@ class SudokuBoard(QtGui.QWidget):
             self._boxes[i][j].setText(str(value))
         #END if
     #END set()
-<<<<<<< HEAD
-#END class
-=======
 
     def _on_box_inputCancelled(self):
         self.setFocus()
@@ -148,4 +145,3 @@ class SudokuBoard(QtGui.QWidget):
         #END for
     #END _on_box_textSubmitted()
 #END class
->>>>>>> 30db0a3ce356ab1029e293f7c0fde0cd4d6e401b

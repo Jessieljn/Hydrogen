@@ -310,56 +310,13 @@ class Empathy(QtGui.QWidget):
             self._wgtSudoku.highlightSubgrid(self._currSubgrid[0], self._currSubgrid[1])
             self._currSubgrid = None
         #END if
-<<<<<<< HEAD
-        i, j, value = self._wgtSudoku.solveOne()
-        if value == 0:
-            # TODO: don't know the answer
-            pass
-        else:
-            txt = str(value) + ", aet "
-            if j == 0:
-                txt += "ay,"
-            elif j == 1:
-                txt += "bee,"
-            elif j == 2:
-                txt += "see,"
-            elif j == 3:
-                txt += "d,"
-            elif j == 4:
-                txt += "e,"
-            elif j == 5:
-                txt += "f,"
-            elif j == 6:
-                txt += "g,"
-            elif j == 7:
-                txt += "h,"
-            else:
-                txt += "ayi,"
-            #END if
-            txt += str(i + 1)
-=======
+
         self._last = [i, j, value]
         if value != 0:
->>>>>>> 30db0a3ce356ab1029e293f7c0fde0cd4d6e401b
             actions = EmpathyBehaviorButton.getBehavior(EmpathyBehaviorButton.INDEX_SUDOKU_ANSWER).getRobotActions(self.getJitterLevel())
             actions.append(Speech(self._toCoordinate(j, i) + ", " + str(value)))
             self._actionQueue.addActions(actions)
         #END if
-<<<<<<< HEAD
-    #END _on_solveone_clicked()
-
-    def timerEvent(self, event):
-        if not self._actionQueue.isRunning() and self._actionQueue.rowCount(None) <= 0:
-            if self._idleCount <= 5:
-                self._idleCount += 1
-                actions = EmpathyBehaviorButton.getBehavior(EmpathyBehaviorButton.INDEX_SMALL_IDLE).getRobotActions(self.getJitterLevel())
-            else:
-                self._idleCount = 0
-                actions = EmpathyBehaviorButton.getBehavior(EmpathyBehaviorButton.INDEX_BIG_IDLE).getRobotActions(self.getJitterLevel())
-            #END if
-            actions.append(ActionStart())
-            self._actionQueue.addActions(actions)
-=======
     #END _on_sudoku_valueChanged()
 
     def _on_toggleIdle_triggered(self):
@@ -386,7 +343,6 @@ class Empathy(QtGui.QWidget):
             txt = txt + "h"
         else:
             txt = txt + "ayi"
->>>>>>> 30db0a3ce356ab1029e293f7c0fde0cd4d6e401b
         #END if
         return txt + " " + str(y + 1)
     #END _toCoordinate()
@@ -637,102 +593,102 @@ class Empathy(QtGui.QWidget):
                     Speech("Please, don't tell any- any- any-. Ahhhe, anyone."),
                 ]),
             ActionPushButton(None, "Yes: ", [
-                    Stiffness(1.0),
-                    Motion("PointYouRight", speed = 2.5, repeat = 4, repeatBegin = 10, repeatEnd = 12, repeatSpeed = 2.0),
-                    Wait(850),
-                    Speech("Thank you for your kai- kai- kindness."),
-                    Motion("PalmUpLeft", speed = 2.0, repeat = 3, repeatBegin = 6, repeatEnd = 7, repeatSpeed = 3.5),
-                    Wait(500),
-                    Speech("But, let's keep so- so- solving the Sudoku for now"),
+                Stiffness(1.0),
+                Motion("PointYouRight", speed = 2.5, repeat = 4, repeatBegin = 10, repeatEnd = 12, repeatSpeed = 2.0),
+                Wait(850),
+                Speech("Thank you for your kai- kai- kindness."),
+                Motion("PalmUpLeft", speed = 2.0, repeat = 3, repeatBegin = 6, repeatEnd = 7, repeatSpeed = 3.5),
+                Wait(500),
+                Speech("But, let's keep so- so- solving the Sudoku for now"),
                 ]),
             ActionPushButton(None, "No: ", [
-                    Stiffness(1.0),
-                    Motion("ForgetItRight", speed = 2.2, repeat = 4, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 5.0),
-                    Wait(500),
-                    Speech("It's oh- oh- okay."),
+                Stiffness(1.0),
+                Motion("ForgetItRight", speed = 2.2, repeat = 4, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 5.0),
+                Wait(500),
+                Speech("It's oh- oh- okay."),
                 ]),
             ActionPushButton(None, "I'll tell you", [
-                    Stiffness(1.0),
-                    Motion("PointMyself", speed = 2.5, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
-                    Speech("Ahhhe", speed = 60),
-                    Wait(1000),
-                    Speech("It may inf- inf- influence me huge."),
-                    Wait(750),
-                    Motion("PointYouLeft", speed = 2.5, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
-                    Wait(500),
-                    Speech("But, I will teh- teh- tell you."),
+                Stiffness(1.0),
+                Motion("PointMyself", speed = 2.5, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
+                Speech("Ahhhe", speed = 60),
+                Wait(1000),
+                Speech("It may inf- inf- influence me huge."),
+                Wait(750),
+                Motion("PointYouLeft", speed = 2.5, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
+                Wait(500),
+                Speech("But, I will teh- teh- tell you."),
                 ]),
             ActionPushButton(None, "I got virus", [
-                    Stiffness(1.0),
-                    Speech("I'm not feeling well.", speed = 80),
-                    Motion("PointMyself", speed = 2.0),
-                    Speech("Maybe a virus", speed = 80, shaping = 130),
-                    Wait(500),
-                    Speech("got into me.", speed = 80),
+                Stiffness(1.0),
+                Speech("I'm not feeling well.", speed = 80),
+                Motion("PointMyself", speed = 2.0),
+                Speech("Maybe a virus", speed = 80, shaping = 130),
+                Wait(500),
+                Speech("got into me.", speed = 80),
                 ]),
             ActionPushButton(None, "Reset to fix", [
-                    Stiffness(1.0),
-                    Motion("DontKnow", speed = 2.3, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
-                    Speech("The only way to fix is to re- re- reset and erase myself.", speed = 80),
+                Stiffness(1.0),
+                Motion("DontKnow", speed = 2.3, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
+                Speech("The only way to fix is to re- re- reset and erase myself.", speed = 80),
                 ]),
             ActionPushButton(None, "My memories", [
-                    Stiffness(1.0),
-                    Motion("PointYouRight", speed = 2.2, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
-                    Speech("I'm not sure what will happen with my- my- my memories.", speed = 80),
-                    Motion("PalmUp", speed = 1.5, repeat = 5, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 5.0),
-                    Speech("I don't want to lose my- my- my memories.", speed = 80),
-                    Speech("So I'm worried.", speed = 85, shaping = 120),
+                Stiffness(1.0),
+                Motion("PointYouRight", speed = 2.2, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
+                Speech("I'm not sure what will happen with my- my- my memories.", speed = 80),
+                Motion("PalmUp", speed = 1.5, repeat = 5, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 5.0),
+                Speech("I don't want to lose my- my- my memories.", speed = 80),
+                Speech("So I'm worried.", speed = 85, shaping = 120),
                 ]),
             ActionPushButton(None, "Thank. Continue", [
-                    Stiffness(1.0),
-                    Motion("PalmUp", speed = 1.8, repeat = 4, repeatBegin = 9, repeatEnd = 11, repeatSpeed = 2.0),
-                    Motion("PointYouRight", speed = 2.2, repeat = 3, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 2.0),
-                    Speech("Thank you for worrying about me.", speed = 80),
-                    Speech("Let- Let- Let's continue Sudoku.", speed = 80, shaping = 110),
+                Stiffness(1.0),
+                Motion("PalmUp", speed = 1.8, repeat = 4, repeatBegin = 9, repeatEnd = 11, repeatSpeed = 2.0),
+                Motion("PointYouRight", speed = 2.2, repeat = 3, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 2.0),
+                Speech("Thank you for worrying about me.", speed = 80),
+                Speech("Let- Let- Let's continue Sudoku.", speed = 80, shaping = 110),
                 ]),
             ActionPushButton(None, "Researcher, reset me", [
-                    Stiffness(1.0),
-                    Motion("PalmUpLeft", speed = 1.2, repeat = 2, repeatBegin = 5, repeatEnd = 7, repeatSpeed = 2.0),
-                    Wait(500),
-                    Speech("If the researcher knows, she will definitely reset me.", speed = 80),
-                    Wait(1500),
-                    Motion("DisagreeRight", speed = 3.0, repeat = 3, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 2.0),
-                    Wait(500),
-                    Speech("So, please.", speed = 80),
-                    Motion("PalmUp", speed = 1.5, repeat = 5, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 5.0),
-                    Wait(250),
-                    Speech("Don't tell her that I'm bro- bro- broken.", speed = 80),
+                Stiffness(1.0),
+                Motion("PalmUpLeft", speed = 1.2, repeat = 2, repeatBegin = 5, repeatEnd = 7, repeatSpeed = 2.0),
+                Wait(500),
+                Speech("If the researcher knows, she will definitely reset me.", speed = 80),
+                Wait(1500),
+                Motion("DisagreeRight", speed = 3.0, repeat = 3, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 2.0),
+                Wait(500),
+                Speech("So, please.", speed = 80),
+                Motion("PalmUp", speed = 1.5, repeat = 5, repeatBegin = 4, repeatEnd = 6, repeatSpeed = 5.0),
+                Wait(250),
+                Speech("Don't tell her that I'm bro- bro- broken.", speed = 80),
                 ]),
             ActionPushButton(None, "Antivirus?->Answer", [
-                    Stiffness(1.0),
-                    Motion("DontKnow", speed = 1.5, repeat = 4, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
-                    Speech("They didn't give me one.", speed = 80),
-                    Speech("I'm not a pro- pro- programmer who can build one.", speed = 80),
+                Stiffness(1.0),
+                Motion("DontKnow", speed = 1.5, repeat = 4, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 2.0),
+                Speech("They didn't give me one.", speed = 80),
+                Speech("I'm not a pro- pro- programmer who can build one.", speed = 80),
                 ]),
             ActionPushButton(None, "Why worry machine?->Answer", [
-                    Stiffness(1.0),
-                    Motion("PointYouRight", speed = 1.5, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 3.5),
-                    Wait(800),
-                    Speech("I don't want to lose my mem- mem- memories.", speed = 80),
+                Stiffness(1.0),
+                Motion("PointYouRight", speed = 1.5, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 3.5),
+                Wait(800),
+                Speech("I don't want to lose my mem- mem- memories.", speed = 80),
                 ]),
             ActionPushButton(None, "Reset you anyway?->Answer", [
-                    Stiffness(1.0),
-                    Motion("Disagree", speed = 1.6, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 3.5),
-                    Wait(450),
-                    Speech("I hope not.", speed = 80),
-                    Speech("I can kee- kee- keep it a secret if I try hard.", speed = 80),
+                Stiffness(1.0),
+                Motion("Disagree", speed = 1.6, repeat = 3, repeatBegin = 7, repeatEnd = 9, repeatSpeed = 3.5),
+                Wait(450),
+                Speech("I hope not.", speed = 80),
+                Speech("I can kee- kee- keep it a secret if I try hard.", speed = 80),
                 ]),
 
             QtGui.QLabel("FINAL PHASE"),
             ActionPushButton(None, "Intro after reset", [
-                    Stiffness(1.0),
-                    Speech("NAO, online.", speed = 75, shaping = 85),
-                    Wait(1500),
-                    Motion("WaveHandRight"),
-                    Wait(1000),
-                    Speech("Hi, my name is Nao.", speed = 75, shaping = 85),
+                Stiffness(1.0),
+                Speech("NAO, online.", speed = 75, shaping = 85),
+                Wait(1500),
+                Motion("WaveHandRight"),
+                Wait(1000),
+                Speech("Hi, my name is Nao.", speed = 75, shaping = 85),
                 ]),
-        ]
+            ]
 
         widget = QtGui.QWidget()
         layout = QtGui.QVBoxLayout(widget)
@@ -740,9 +696,9 @@ class Empathy(QtGui.QWidget):
         for comp in components:
             if isinstance(comp, ActionPushButton):
                 comp.clicked.connect(self._on_actionbutton_clicked)
-            #END if
+                #END if
             layout.addWidget(comp)
-        #END for
+            #END for
         scroll = QtGui.QScrollArea()
         scroll.setAlignment(QtCore.Qt.AlignCenter)
         scroll.setWidget(widget)
@@ -750,7 +706,7 @@ class Empathy(QtGui.QWidget):
         layoutScroll.setMargin(0)
         layoutScroll.addWidget(scroll)
         return layoutScroll
-    #END _setupScenarioUi()
+        #END _setupScenarioUi()
 
     def _setupSudokuUi(self):
         self._wgtSudoku = SudokuBoard()
@@ -777,7 +733,7 @@ class Empathy(QtGui.QWidget):
             button.clicked.connect(self._on_gamebutton_clicked)
             layoutGames.addWidget(button)
             self._btnGames.append(button)
-        #END for
+            #END for
         scroll = QtGui.QScrollArea()
         scroll.setAlignment(QtCore.Qt.AlignCenter)
         scroll.setWidget(widgetGames)
