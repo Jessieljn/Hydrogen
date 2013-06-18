@@ -76,7 +76,7 @@
       <file leaf-file-name="SudokuBoard.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/UI/SudokuBoard.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="146" column="10" selection-start="5573" selection-end="5573" vertical-scroll-proportion="1.7083334">
+            <state line="105" column="26" selection-start="4347" selection-end="4355" vertical-scroll-proportion="0.26442307">
               <folding />
             </state>
           </provider>
@@ -410,7 +410,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39744952" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32695374" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3092455" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3092455" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -561,7 +561,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/UI/SudokuBoard.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="146" column="10" selection-start="5573" selection-end="5573" vertical-scroll-proportion="1.7083334">
+        <state line="105" column="26" selection-start="4347" selection-end="4355" vertical-scroll-proportion="0.26442307">
           <folding />
         </state>
       </provider>
