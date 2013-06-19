@@ -245,9 +245,9 @@ class Empathy(QtGui.QWidget):
     def _setupUi(self):
         splitter = QtGui.QSplitter(self)
         splitter.setOrientation(QtCore.Qt.Horizontal)
+        EmpathyGUI.setupScenario(self, splitter)
         EmpathyGUI.setupMotions(self, splitter)
         EmpathyGUI.setupInteractions(self, splitter)
-        EmpathyGUI.setupScenario(self, splitter)
         EmpathyGUI.setupSudokuUi(self, splitter)
         layout = QtGui.QHBoxLayout(self)
         layout.setMargin(0)
