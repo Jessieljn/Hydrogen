@@ -98,10 +98,6 @@ class CameraWidget(QtGui.QGroupBox):
         #END if
     #END on__btnGrpCamera_buttonClicked()
 
-    def resizeEvent(self, event):
-        self._lCamera.setFixedSize(self._wgtImage.size())
-    #END resizeEvent()
-
     def timerEvent(self, event):
         image = self._naoCamera.frame()
         if image is not None:
