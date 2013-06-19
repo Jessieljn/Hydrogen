@@ -56,7 +56,7 @@ class SudokuSolver(object):
                 value = 0
                 for k in range(1, 10):
                     if self._cans[i][j][k]:
-                        count = count + 1
+                        count += 1
                         value = k
                     #END if
                 #END for
@@ -100,7 +100,7 @@ class SudokuSolver(object):
     #END _rebuildCandidates()
 
     def _removeCandidates(self, y, x, value):
-        if 1 <= value and value <= 9:
+        if 1 <= value <= 9:
             for i in range(1, 10):
                 self._cans[y][x][i] = False
             #END for

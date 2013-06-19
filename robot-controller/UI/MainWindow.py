@@ -170,6 +170,7 @@ class MainWindow(QtGui.QMainWindow):
         # END if
     # END on_actDisconnect_triggered()
 
+    # noinspection PyUnusedLocal
     def on_actLoad_specific(self, studyShortName):
         for i in range(len(self._loadActions)):
             if self._loadActions[i] == self.sender():
@@ -223,11 +224,13 @@ class MainWindow(QtGui.QMainWindow):
         self._actionQueue.addActions(speech)
     # END on__wgtSpeech_playSpeech()
 
+    # noinspection PyUnusedLocal
     def closeEvent(self, event):
         self._actionQueue.dispose()
         self.on_actDisconnect_triggered()
     # END closeEvent()
 
+    # noinspection PyUnusedLocal
     def timerEvent(self, event):
         if self._LEDTime < QtCore.QTime.currentTime():
             if self._wgtSpeech.getText() == "" and (self._actionQueue.rowCount(None) <= 0 or self._actionQueue.isRunning()):

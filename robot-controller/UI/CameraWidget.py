@@ -98,6 +98,7 @@ class CameraWidget(QtGui.QGroupBox):
         #END if
     #END on__btnGrpCamera_buttonClicked()
 
+    # noinspection PyUnusedLocal
     def timerEvent(self, event):
         image = self._naoCamera.frame()
         if image is not None:

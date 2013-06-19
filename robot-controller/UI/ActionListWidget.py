@@ -62,6 +62,7 @@ class ActionListWidget(QtGui.QWidget):
 
     editClicked = QtCore.pyqtSignal()
 
+    # noinspection PyUnusedLocal
     def resizeEvent(self, event):
         self._table.setColumnWidth(1, self._table.width() - self._table.columnWidth(0) - 24)
     #END resizeEvent()

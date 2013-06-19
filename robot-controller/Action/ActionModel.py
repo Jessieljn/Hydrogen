@@ -45,6 +45,7 @@ class ActionModel(QtCore.QAbstractTableModel):
         self._list.setRunning(value)
     #END setRunning()
 
+    # noinspection PyUnusedLocal
     def columnCount(self, parent):
         return 2
     #END columnCount()
@@ -75,6 +76,7 @@ class ActionModel(QtCore.QAbstractTableModel):
         return QtCore.QVariant()
     #END headerData()
 
+    # noinspection PyUnusedLocal
     def rowCount(self, parent):
         return self._list.length()
     #END rowCount()

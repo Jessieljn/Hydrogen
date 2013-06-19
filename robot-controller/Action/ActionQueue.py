@@ -135,10 +135,10 @@ class ActionQueue(QtCore.QObject):
                 elif isinstance(action, ActionStart):
                     run_queue = True
                 elif prior:
-                    endIndex = endIndex + 1
+                    endIndex += 1
                     self._list.insert(0, action)
                 else:
-                    endIndex = endIndex + 1
+                    endIndex += 1
                     self._list.append(action)
                 #END if
             #END for

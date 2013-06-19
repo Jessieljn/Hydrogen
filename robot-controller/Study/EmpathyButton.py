@@ -1,10 +1,11 @@
+import random
+
 from PyQt4 import QtGui
+
 from Action import BaseAction
 from Action import Motion
 from Action import Stiffness
-from Action import WaitMotion
 from EmpathyMotionList import EmpathyMotionList
-import random
 
 
 class EmpathyButton(QtGui.QPushButton):
@@ -50,8 +51,8 @@ class EmpathyButton(QtGui.QPushButton):
 
     def getRobotActions(self, jlv):
         while not jlv in self._list:
-            jlv = jlv - 1 # try to use less jittery version if we don't have corresponding version of actions
-        #END while
+            jlv -= 1# try to use less jittery version if we don't have corresponding version of actions
+            #END while
         if jlv < 0:
             return [] # if there is no version of actions, return empty list
         #END if
