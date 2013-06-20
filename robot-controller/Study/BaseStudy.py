@@ -17,6 +17,7 @@ class BaseStudy(QtGui.QWidget):
         wgtGeneral = None
         if general_panel:
             wgtGeneral = QtGui.QWidget()
+            wgtGeneral.setMaximumHeight(80)
             wgtGeneral.setMinimumHeight(80)
 
             ##################################################
@@ -96,7 +97,6 @@ class BaseStudy(QtGui.QWidget):
             layout.addWidget(splitter)
             if wgtGeneral is not None:
                 wgtGeneral.setParent(splitter)
-                wgtGeneral.resize(100, 80)
             #END if
             if wgtButtons is not None:
                 wgtButtons.setParent(splitter)
