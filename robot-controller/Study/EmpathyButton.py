@@ -42,22 +42,30 @@ class EmpathyButton(QtGui.QPushButton):
     #END add()
 
     def getRobotActions(self, jlv):
-        actions = []
-        while len(actions) <= 0 and jlv >= 0:
-            if jlv in self._list:
-                if len(self._list[jlv][EmpathyButton.INDEX_MOTION]) > 0:
-                    val = random.randint(0, len(self._list[jlv][EmpathyButton.INDEX_MOTION]) - 1)
-                    actions.append(Stiffness(1.0))
-                    actions.append(Motion(motion = self._list[jlv][EmpathyButton.INDEX_MOTION][val], blocking = False))
-                #END if
-                if len(self._list[jlv][EmpathyButton.INDEX_ACTIONS]) > 0:
-                    val = random.randint(0, len(self._list[jlv][EmpathyButton.INDEX_ACTIONS]) - 1)
-                    actions = actions + self._list[jlv][EmpathyButton.INDEX_ACTIONS][val]
+        motions = []
+        level = jlv
+        while len(motions) <= 0 and level >= 0:
+            if level in self._list:
+                if len(self._list[level][EmpathyButton.INDEX_MOTION]) > 0:
+                    val = random.randint(0, len(self._list[level][EmpathyButton.INDEX_MOTION]) - 1)
+                    motions.append(Stiffness(1.0))
+                    motions.append(Motion(motion = self._list[level][EmpathyButton.INDEX_MOTION][val], blocking = False))
                 #END if
             #END if
-            jlv = jlv - 1 # try to use less jittery version if we don't have corresponding version of actions
+            level = level - 1
         #END while
-        return actions
+        actions = []
+        level = jlv
+        while len(actions) <= 0 and level >= 0:
+            if level in self._list:
+                if len(self._list[level][EmpathyButton.INDEX_ACTIONS]) > 0:
+                    val = random.randint(0, len(self._list[level][EmpathyButton.INDEX_ACTIONS]) - 1)
+                    actions = actions + self._list[level][EmpathyButton.INDEX_ACTIONS][val]
+                #END if
+            #END if
+            level = level - 1
+        #END while
+        return motions + actions
     #END getRobotActions()
 
     def maxLevel(self):
