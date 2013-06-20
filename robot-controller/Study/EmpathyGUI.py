@@ -19,15 +19,25 @@ class EmpathyGUI(object):
         buttons = []
 
         bhv = EmpathyButton("Conv. Filler")
-        bhv.add(0, [Speech("ahhhr,", speed = 50)])
-        bhv.add(0, [Speech("ehhhh,", speed = 50)])
-        bhv.add(0, [Speech("errrh,", speed = 50)])
-        bhv.add(0, [Speech("ummmh,", speed = 50)])
-        bhv.add(0, [Speech("well,", speed = 50)])
+        bhv.add(0, [Speech(" ehhhh,", speed = 50)])
+        bhv.add(0, [Speech(" hmm,", speed = 50)])
+        bhv.add(0, [Speech(" ummmh,", speed = 50)])
+        bhv.add(0, [Speech(" well,", speed = 50)])
+        bhv.add(0, [Speech(" let me think", speed = 80)])
+        bhv.add(2, [Speech(" ehhhh,", speed = 60, shaping = 110)])
+        bhv.add(2, [Speech(" hmm,", speed = 60, shaping = 110)])
+        bhv.add(2, [Speech(" ummmh,", speed = 60, shaping = 110)])
+        bhv.add(2, [Speech(" well,", speed = 60, shaping = 110)])
+        bhv.add(2, [Speech(" let me think", speed = 90, shaping = 110)])
+        bhv.add(5, [Speech(" ehhhh,", speed = 70, shaping = 130)])
+        bhv.add(5, [Speech(" hmm,", speed = 70, shaping = 130)])
+        bhv.add(5, [Speech(" ummmh,", speed = 70, shaping = 130)])
+        bhv.add(5, [Speech(" well,", speed = 70, shaping = 130)])
+        bhv.add(5, [Speech(" let me" + EmpathyGUI._markSpeech(90, 130) + "think", speed = 90, shaping = 110)])
         buttons.append(bhv)
         parent.bhvFiller = bhv
 
-        bhv = EmpathyButton("Idle (Big)", True)
+        bhv = EmpathyButton("Idle (Big)")
         for i in range(10):
             bhv.add(i, motion = str(i) + "_ChinHoldLeft")
             bhv.add(i, motion = str(i) + "_ChinHoldRight")
@@ -35,14 +45,13 @@ class EmpathyGUI(object):
             bhv.add(i, motion = str(i) + "_Idle1")
             bhv.add(i, motion = str(i) + "_Idle2")
             bhv.add(i, motion = str(i) + "_Idle3")
-            bhv.add(i, motion = str(i) + "_Idle4")
             bhv.add(i, motion = str(i) + "_Idle5")
             bhv.add(i, motion = str(i) + "_Idle6")
         #END for
         buttons.append(bhv)
         parent.bhvIdleBig = bhv
 
-        bhv = EmpathyButton("Idle (Small)", True)
+        bhv = EmpathyButton("Idle (Small)")
         for i in range(10):
             bhv.add(i, motion = str(i) + "_Idle0")
             bhv.add(i, motion = str(i) + "_Idle1")
