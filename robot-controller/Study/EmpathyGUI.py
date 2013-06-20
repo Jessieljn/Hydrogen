@@ -1,6 +1,7 @@
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 from Action import Behavior
+from Action import LED
 from Action import Motion
 from Action import ReplaceableSpeech
 from Action import Speech
@@ -493,15 +494,20 @@ class EmpathyGUI(object):
                     Speech("Ahhhe"),
                     Motion("DisagreeRight", speed = 2.0, repeat = 3, repeatBegin = 5, repeatEnd = 7, repeatSpeed = 5.0),
                     Wait(600),
-                    Speech("I can't ple- ple- play anymore."),
+                    Speech("I can't ple- pleh-. play anymore."),
                 ]),
             ActionPushButton(None, "Go ahead", [
                     Stiffness(1.0),
                     Motion("PalmUp", speed = 2.2),
                     Motion("PointYouRight", speed = 2.2, repeat = 4, repeatBegin = 5, repeatEnd = 8, repeatSpeed = 3.0),
                     Wait(750),
-                    Speech("I need some rest, please "),
-                    Speech("\\RST\\ \\RSPD=150\\ go-, go-, go-, \\RST\\ \\RSPD=90\\ go ahead"),
+                    Speech("I need some rest, please" + EmpathyGUI._markSpeech(50) + "go-, go-, go-," + EmpathyGUI._markSpeech() + "go ahead"),
+                ]),
+            ActionPushButton(None, "No more playing?->Answer", [
+                    Stiffness(1.0),
+                    Motion("Disagree", speed = 1.5, repeat = 4, repeatBegin = 0, repeatEnd = 3, repeatSpeed = 4.0),
+                    Speech("No. Please" + EmpathyGUI._markSpeech(50, 120) + "continue."),
+                    Speech("I just need rest" + EmpathyGUI._markSpeech(50) + "a bit."),
                 ]),
 
             QtGui.QLabel("PHASE 5"),
@@ -635,6 +641,9 @@ class EmpathyGUI(object):
                 ]),
 
             QtGui.QLabel("FINAL PHASE"),
+            ActionPushButton(None, "Resetting", [
+                    LED(LED.ACTION_RANDOM_EYES, "", 0, 5.0),
+                ]),
             ActionPushButton(None, "Intro after reset", [
                     Stiffness(1.0),
                     Speech("NAO, online.", speed = 75, shaping = 85),
@@ -642,6 +651,18 @@ class EmpathyGUI(object):
                     Motion("WaveHandRight"),
                     Wait(1000),
                     Speech("Hi, my name is Nao.", speed = 75, shaping = 85),
+                ]),
+            ActionPushButton(None, "Your name?", [
+                    Stiffness(1.0),
+                    Motion("PointYouRight", speed = 2.0),
+                    Wait(500),
+                    Speech("What's your name?", speed = 75, shaping = 85),
+                ]),
+            ActionPushButton(None, "Nice Meet", [
+                    Stiffness(1.0),
+                    Motion("PalmUp", speed = 2.0),
+                    Wait(500),
+                    EmpathySpeech("Nice to meet you " + EmpathySpeech.NAME_MARKER, speed = 75, shaping = 85),
                 ]),
         ]
 
@@ -789,6 +810,14 @@ class EmpathyGUI(object):
         bhv.add(4, [ReplaceableSpeech("I think" + EmpathyGUI._markSpeech(120) + "the value, %1, is %2.", 50, 115)])
         bhv.add(4, [ReplaceableSpeech("The number" + EmpathyGUI._markSpeech(120) + ", %1, is %2.", 50, 115)])
         bhv.add(4, [ReplaceableSpeech("%1, Let's tra- tra-" + EmpathyGUI._markSpeech(50, 120) + "tra- tra-." + EmpathyGUI._markSpeech(120) + "Sorry. Let's try, the number, %2.", 50, 105)])
+        bhv.add(4, [ReplaceableSpeech("I believe" + EmpathyGUI._markSpeech(120) + "the answer," + EmpathyGUI._markSpeech(50, 120) + "%1, is %2.", 50, 115)])
+        bhv.add(4, [ReplaceableSpeech("I believe" + EmpathyGUI._markSpeech(120) + "the number," + EmpathyGUI._markSpeech(50, 120) + "%1, is %2.", 50, 115)])
+        bhv.add(4, [ReplaceableSpeech("I believe" + EmpathyGUI._markSpeech(120) + "the value," + EmpathyGUI._markSpeech(50, 120) + "%1, is %2.", 50, 115)])
+        bhv.add(4, [ReplaceableSpeech("I think" + EmpathyGUI._markSpeech(120) + "the answer," + EmpathyGUI._markSpeech(50, 120) + "%1, is %2.", 50, 115)])
+        bhv.add(4, [ReplaceableSpeech("I think" + EmpathyGUI._markSpeech(120) + "the number," + EmpathyGUI._markSpeech(50, 120) + "%1, is %2.", 50, 115)])
+        bhv.add(4, [ReplaceableSpeech("I think" + EmpathyGUI._markSpeech(120) + "the value," + EmpathyGUI._markSpeech(50, 120) + "%1, is %2.", 50, 115)])
+        bhv.add(4, [ReplaceableSpeech("The number" + EmpathyGUI._markSpeech(120) + ", %1," + EmpathyGUI._markSpeech(50, 120) + "is %2.", 50, 115)])
+        bhv.add(4, [ReplaceableSpeech("%1, Let's tra- tra-" + EmpathyGUI._markSpeech(50, 120) + "tra- tra-." + EmpathyGUI._markSpeech(120) + "Sorry. Let's" + EmpathyGUI._markSpeech(50, 120) + "try, the number," + EmpathyGUI._markSpeech() + "%2.", 50, 105)])
         bhv.add(5, [ReplaceableSpeech("I believe" + EmpathyGUI._markSpeech(125) + "the answer, %1, is %2.", 70, 120)])
         bhv.add(5, [ReplaceableSpeech("I believe" + EmpathyGUI._markSpeech(125) + "the number, %1, is %2.", 70, 120)])
         bhv.add(5, [ReplaceableSpeech("I believe" + EmpathyGUI._markSpeech(125) + "the value, %1, is %2.", 70, 120)])
@@ -797,6 +826,14 @@ class EmpathyGUI(object):
         bhv.add(5, [ReplaceableSpeech("I think" + EmpathyGUI._markSpeech(125) + "the value, %1, is %2.", 70, 120)])
         bhv.add(5, [ReplaceableSpeech("The number" + EmpathyGUI._markSpeech(125) + ", %1, is %2.", 70, 120)])
         bhv.add(5, [ReplaceableSpeech("%1, Let's tra- tra-" + EmpathyGUI._markSpeech(50, 125) + "tra- tra-." + EmpathyGUI._markSpeech(120) + "Sorry. Let's try, the number, %2.", 50, 105)])
+        bhv.add(5, [ReplaceableSpeech("I believe" + EmpathyGUI._markSpeech(125) + "the answer," + EmpathyGUI._markSpeech(50, 125) + "%1, is %2.", 70, 120)])
+        bhv.add(5, [ReplaceableSpeech("I believe" + EmpathyGUI._markSpeech(125) + "the number," + EmpathyGUI._markSpeech(50, 125) + "%1, is %2.", 70, 120)])
+        bhv.add(5, [ReplaceableSpeech("I believe" + EmpathyGUI._markSpeech(125) + "the value," + EmpathyGUI._markSpeech(50, 125) + "%1, is %2.", 70, 120)])
+        bhv.add(5, [ReplaceableSpeech("I think" + EmpathyGUI._markSpeech(125) + "the answer," + EmpathyGUI._markSpeech(50, 125) + "%1, is %2.", 70, 120)])
+        bhv.add(5, [ReplaceableSpeech("I think" + EmpathyGUI._markSpeech(125) + "the number," + EmpathyGUI._markSpeech(50, 125) + "%1, is %2.", 70, 120)])
+        bhv.add(5, [ReplaceableSpeech("I think" + EmpathyGUI._markSpeech(125) + "the value," + EmpathyGUI._markSpeech(50, 125) + "%1, is %2.", 70, 120)])
+        bhv.add(5, [ReplaceableSpeech("The number" + EmpathyGUI._markSpeech(125) + ", %1," + EmpathyGUI._markSpeech(50, 125) + "is %2.", 70, 120)])
+        bhv.add(5, [ReplaceableSpeech("%1, Let's tra- tra-" + EmpathyGUI._markSpeech(50, 125) + "tra- tra-." + EmpathyGUI._markSpeech(120) + "Sorry. Let's" + EmpathyGUI._markSpeech(50, 125) + "try, the number," + EmpathyGUI._markSpeech() + "%2.", 50, 105)])
         for i in range(bhv.maxLevel() + 1):
             bhv.add(i, motion = str(i) + "_PointMyself")
             bhv.add(i, motion = str(i) + "_PointMyselfLeft")
@@ -839,8 +876,11 @@ class EmpathyGUI(object):
 
         bhv = EmpathyButton("Which box filled?")
         bhv.add(0, [Speech("Which box did you fill?")])
+        bhv.add(0, [Speech("Where was it?")])
         bhv.add(2, [Speech("Which box did you fee- fill?")])
+        bhv.add(2, [Speech("Wheh- wheh- where was it?")])
         bhv.add(4, [Speech("Which box did you" + EmpathyGUI._markSpeech(90, 130) + "fill.")])
+        bhv.add(4, [Speech("Wheh- wheh- wheh-." + EmpathyGUI._markSpeech() + "I am sorry.", 50, 120), Speech("Where was it?")])
         for i in range(bhv.maxLevel() + 1):
             bhv.add(i, motion = str(i) + "_DontKnow")
             bhv.add(i, motion = str(i) + "_DontKnowLeft")
