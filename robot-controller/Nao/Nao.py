@@ -36,6 +36,8 @@ class Nao(QtCore.QObject):
 
     disconnected = QtCore.pyqtSignal()
 
+    stiffnessChanged = QtCore.pyqtSignal(float)
+
     def connect(self, ipAddress, port):
         self._naoBroker = naoqi.ALBroker("NaoBroker", "0.0.0.0", 0, ipAddress, port)
 
@@ -215,6 +217,7 @@ class Nao(QtCore.QObject):
         #END if
         self._stiffness = stiffness
         self._motionProxy.setStiffnesses("Body", self._stiffness)
+        self.stiffnessChanged.emit(stiffness)
     # END setStiffness()
 
     def setVolume(self, volume):
