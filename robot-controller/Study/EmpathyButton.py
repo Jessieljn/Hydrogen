@@ -2,7 +2,6 @@ from PyQt4 import QtGui
 from Action import BaseAction
 from Action import Motion
 from Action import Stiffness
-from Action import WaitMotion
 from EmpathyMotionList import EmpathyMotionList
 import random
 
@@ -11,21 +10,15 @@ class EmpathyButton(QtGui.QPushButton):
     INDEX_ACTIONS = 0
     INDEX_MOTION = 1
 
-    INDEX_FILLER = 0
-    INDEX_BIG_IDLE = 1
-    INDEX_SMALL_IDLE = 2
-    INDEX_SUDOKU_ANSWER = 3
-
     _behaviours = []
     _motions = dict()
 
-    def __init__(self, label, idle = False):
+    def __init__(self, label):
         super(EmpathyButton, self).__init__(label)
         # The list list of action-motion.
         # action-motion contains list of actions and corresponding motion IDs
         self._list = dict()
         self._maxLevel = 0
-        self._idle = idle
         random.seed()
     #END __init__()
 
@@ -49,27 +42,21 @@ class EmpathyButton(QtGui.QPushButton):
     #END add()
 
     def getRobotActions(self, jlv):
-        while not jlv in self._list:
+        actions = []
+        while len(actions) <= 0 and jlv >= 0:
+            if jlv in self._list:
+                if len(self._list[jlv][EmpathyButton.INDEX_MOTION]) > 0:
+                    val = random.randint(0, len(self._list[jlv][EmpathyButton.INDEX_MOTION]) - 1)
+                    actions.append(Stiffness(1.0))
+                    actions.append(Motion(motion = self._list[jlv][EmpathyButton.INDEX_MOTION][val], blocking = False))
+                #END if
+                if len(self._list[jlv][EmpathyButton.INDEX_ACTIONS]) > 0:
+                    val = random.randint(0, len(self._list[jlv][EmpathyButton.INDEX_ACTIONS]) - 1)
+                    actions = actions + self._list[jlv][EmpathyButton.INDEX_ACTIONS][val]
+                #END if
+            #END if
             jlv = jlv - 1 # try to use less jittery version if we don't have corresponding version of actions
         #END while
-        if jlv < 0:
-            return [] # if there is no version of actions, return empty list
-        #END if
-
-        actions = []
-        if len(self._list[jlv][EmpathyButton.INDEX_MOTION]) > 0:
-            val = random.randint(0, len(self._list[jlv][EmpathyButton.INDEX_MOTION]) - 1)
-            actions.append(Stiffness(1.0))
-            actions.append(Motion(motion = self._list[jlv][EmpathyButton.INDEX_MOTION][val], blocking = False))
-            if self._idle:
-                pass
-                #actions.append(WaitMotion())
-            #END if
-        #END if
-        if len(self._list[jlv][EmpathyButton.INDEX_ACTIONS]) > 0:
-            val = random.randint(0, len(self._list[jlv][EmpathyButton.INDEX_ACTIONS]) - 1)
-            actions = actions + self._list[jlv][EmpathyButton.INDEX_ACTIONS][val]
-        #END if
         return actions
     #END getRobotActions()
 
