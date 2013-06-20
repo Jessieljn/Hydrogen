@@ -4,8 +4,8 @@ from ConnectDialog import ConnectDialog as ConnectDialog
 
 from ActionListWidget import ActionListWidget as ActionListWidget
 from CameraWidget import CameraWidget as CameraWidget
+from MovementWidget import MovementWidget as MovementWidget
 from SpeechWidget import SpeechWidget as SpeechWidget
-from StiffnessWidget import StiffnessWidget as StiffnessWidget
 
 from ActionPushButton import ActionPushButton as ActionPushButton
 from SubmittableTextEdit import SubmittableTextEdit as SubmittableTextEdit

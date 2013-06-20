@@ -20,6 +20,7 @@ class CameraWidget(QtGui.QGroupBox):
         self._lCamera = QtGui.QLabel(self._wgtImage)
         self._lCamera.setAlignment(QtCore.Qt.AlignCenter)
         self._lCamera.setFrameStyle(QtGui.QFrame.Panel)
+        self._lCamera.setScaledContents(True)
         layoutCamera = QtGui.QHBoxLayout(self._wgtImage)
         layoutCamera.setMargin(0)
         layoutCamera.addWidget(self._lCamera, 0, QtCore.Qt.AlignCenter)
@@ -86,8 +87,12 @@ class CameraWidget(QtGui.QGroupBox):
     moveHead = QtCore.pyqtSignal(int)
 
     def setDefaultImage(self):
+        image = self._naoCamera.frame()
+        while image is not None:
+            # consume the rest of frames
+            image = self._naoCamera.frame()
+        #END while
         self._lCamera.setPixmap(QtGui.QPixmap('images/image.png'))
-        self._lCamera.setScaledContents(True)
     #END setDefaultImage()
 
     def on__btnGrpCamera_buttonClicked(self, button):
