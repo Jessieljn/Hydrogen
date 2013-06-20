@@ -64,6 +64,7 @@ class Nao(QtCore.QObject):
     # END connect()
 
     def disconnect(self):
+        self.setStiffness(0.0)
         self._isConnected = False
         self._ledProxy = None
         self._speechProxy = None
