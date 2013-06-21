@@ -219,25 +219,25 @@ class Empathy(QtGui.QWidget):
     #END _deselectSubgrid()
 
     def _toCoordinate(self, x, y):
-        txt = "aet "
+        txt = "aet"
         if x == 0:
-            txt = txt + "ay"
+            txt = txt + ", \\RST\\ \\RSPD=50\\ ay. \\RST\\ \\RSPD=90\\"
         elif x == 1:
-            txt = txt + "bee"
+            txt = txt + ", bee,"
         elif x == 2:
-            txt = txt + "see"
+            txt = txt + ", see,"
         elif x == 3:
-            txt = txt + "d"
+            txt = txt + ", dee,"
         elif x == 4:
-            txt = txt + "e"
+            txt = txt + ", \\RST\\ \\RSPD=50\\ eeh. \\RST\\ \\RSPD=90\\"
         elif x == 5:
-            txt = txt + "f"
+            txt = txt + ", f,"
         elif x == 6:
-            txt = txt + "geeh"
+            txt = txt + ", geeh."
         elif x == 7:
-            txt = txt + "h"
+            txt = txt + ", h."
         else:
-            txt = txt + "ayi"
+            txt = txt + ", ai."
         #END if
         return txt + " " + str(y + 1)
     #END _toCoordinate()
