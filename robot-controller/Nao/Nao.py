@@ -36,16 +36,18 @@ class Nao(QtCore.QObject):
 
     disconnected = QtCore.pyqtSignal()
 
+    stiffnessChanged = QtCore.pyqtSignal(float)
+
     def connect(self, ipAddress, port):
         self._naoBroker = naoqi.ALBroker("NaoBroker", "0.0.0.0", 0, ipAddress, port)
 
+        print " > Loading Camera..."
+        self._camera.start()
+        print " > " + str(self._camera.getCameraProxy())
         print " > Loading Text To Speech..."
         self._speechProxy = naoqi.ALProxy("ALTextToSpeech")
         self._speechProxy.setVolume(0.85)
         print " > " + str(self._speechProxy)
-        print " > Loading Camera..."
-        self._camera.start()
-        print " > " + str(self._camera.getCameraProxy())
         print " > Loading Behaviors..."
         self._behaviorProxy = naoqi.ALProxy("ALBehaviorManager")
         print " > " + str(self._behaviorProxy)
@@ -62,12 +64,14 @@ class Nao(QtCore.QObject):
     # END connect()
 
     def disconnect(self):
+        self._motionProxy.setStiffnesses("Body", 0.0)
+        self._motionProxy.setStiffnesses("Head", 0.0)
         self._isConnected = False
-        self._camera.stop()
         self._ledProxy = None
         self._speechProxy = None
         self._motionProxy = None
         self._behaviorProxy = None
+        self._camera.stop()
         self._naoBroker.shutdown()
         self._naoBroker = None
         self.disconnected.emit()
@@ -215,6 +219,7 @@ class Nao(QtCore.QObject):
         #END if
         self._stiffness = stiffness
         self._motionProxy.setStiffnesses("Body", self._stiffness)
+        self.stiffnessChanged.emit(stiffness)
     # END setStiffness()
 
     def setVolume(self, volume):

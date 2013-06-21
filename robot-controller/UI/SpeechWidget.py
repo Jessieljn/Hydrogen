@@ -71,11 +71,11 @@ class SpeechWidget(QtGui.QGroupBox):
         layoutShape.addWidget(self._sldShape, 0, QtCore.Qt.AlignHCenter)
         layoutShape.addWidget(self._ShapeLabel, 0, QtCore.Qt.AlignBottom | QtCore.Qt.AlignHCenter)
 
-        self._btnSay = QtGui.QPushButton('Say')
-        self._btnSay.setFixedSize(120, 30)
-        self._btnSay.setSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
-        self._btnSay.clicked.connect(lambda: self.textSubmitted.emit(self.getText()))
-        self._btnSay.clicked.connect(self._message.clear)
+        btnSay = QtGui.QPushButton('Say')
+        btnSay.setFixedSize(120, 30)
+        btnSay.setSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        btnSay.clicked.connect(lambda: self.textSubmitted.emit(self.getText()))
+        btnSay.clicked.connect(self._message.clear)
 
         layoutOptions = QtGui.QHBoxLayout()
         layoutOptions.setMargin(0)
@@ -86,7 +86,7 @@ class SpeechWidget(QtGui.QGroupBox):
         layoutControls = QtGui.QVBoxLayout()
         layoutControls.setMargin(0)
         layoutControls.addLayout(layoutOptions)
-        layoutControls.addWidget(self._btnSay, 0, QtCore.Qt.AlignHCenter)
+        layoutControls.addWidget(btnSay, 0, QtCore.Qt.AlignHCenter)
 
         layoutMain = QtGui.QHBoxLayout(self)
         layoutMain.addWidget(self._message)

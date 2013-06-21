@@ -12,6 +12,7 @@ class NaoCamera(QtCore.QObject):
 
     def __init__(self):
         super(NaoCamera, self).__init__()
+        self._mainThread = QtCore.QThread.currentThread()
         self._thread = None
         self._interval = 1000 / 30
         self._running = False
@@ -47,6 +48,7 @@ class NaoCamera(QtCore.QObject):
             self._thread.quit()
             self._thread.wait()
             self._thread = None
+            self.moveToThread(self._mainThread)
         #END if
         if self._cameraProxy is not None:
             if self._cameraProxyID is not None:

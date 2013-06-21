@@ -9,8 +9,8 @@ from AboutWindow import AboutWindow
 from ActionListWidget import ActionListWidget
 from CameraWidget import CameraWidget
 from ConnectDialog import ConnectDialog
+from MovementWidget import MovementWidget
 from SpeechWidget import SpeechWidget
-from StiffnessWidget import StiffnessWidget
 
 
 ##
@@ -123,13 +123,14 @@ class MainWindow(QtGui.QMainWindow):
         self._wgtSpeech.textSubmitted.connect(self.on__wgtSpeech_playSpeech)
         self._wgtSpeech.volumeChanged.connect(self._nao.setVolume)
 
-        self._wgtStiffness = StiffnessWidget(splitterRight)
-        self._wgtStiffness.stiffnessChanged.connect(self._nao.setStiffness)
+        self._wgtMovement = MovementWidget(splitterRight)
+        self._wgtMovement.setActionQueue(self._actionQueue)
+        self._wgtMovement.setNao(self._nao)
 
         layoutTextStiff = QtGui.QHBoxLayout(widgetTextStiff)
         layoutTextStiff.setMargin(0)
         layoutTextStiff.addWidget(self._wgtSpeech)
-        layoutTextStiff.addWidget(self._wgtStiffness)
+        layoutTextStiff.addWidget(self._wgtMovement)
 
         layoutRight = QtGui.QHBoxLayout(wgtRight)
         layoutRight.setMargin(0)
