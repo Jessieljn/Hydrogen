@@ -122,19 +122,31 @@ class EmpathyGUI(object):
         #END for
         buttons.append(bhv)
 
-        bhv = EmpathyButton("Yes")
+        bhv = EmpathyButton("I agree")
         bhv.add(0, [Speech("Yes")])
-        bhv.add(0, [Speech("Right.")])
         bhv.add(0, [Speech("I agree.")])
         bhv.add(0, [Speech("You are right.")])
         bhv.add(2, [Speech("Yes", 50)])
-        bhv.add(2, [Speech("Right.", 50)])
         bhv.add(2, [Speech("I agree.", 50)])
         bhv.add(2, [Speech("You are right.", 50)])
         bhv.add(4, [Speech("Yes", 50, 120)])
-        bhv.add(4, [Speech("Right.", 50, 120)])
         bhv.add(4, [Speech("I" + EmpathyGUI._markSpeech(50, 120) + "agree.", 50)])
         bhv.add(4, [Speech("You are" + EmpathyGUI._markSpeech(50, 120) + "right.", 50)])
+        for i in range(bhv.maxLevel() + 1):
+            bhv.add(i, motion = str(i) + "_PointYouLeft")
+            bhv.add(i, motion = str(i) + "_PointYouRight")
+            bhv.add(i, motion = str(i) + "_PalmUpLeft")
+            bhv.add(i, motion = str(i) + "_PalmUpRight")
+        #END for
+        buttons.append(bhv)
+
+        bhv = EmpathyButton("Yes")
+        bhv.add(0, [Speech("Yes")])
+        bhv.add(0, [Speech("Right.")])
+        bhv.add(2, [Speech("Yes", 50)])
+        bhv.add(2, [Speech("Right.", 50)])
+        bhv.add(4, [Speech("Yes", 50, 120)])
+        bhv.add(4, [Speech("Right.", 50, 120)])
         for i in range(bhv.maxLevel() + 1):
             bhv.add(i, motion = str(i) + "_Idle5")
             bhv.add(i, motion = str(i) + "_Idle6")
@@ -296,6 +308,25 @@ class EmpathyGUI(object):
         #END for
         buttons.append(bhv)
 
+        bhv = EmpathyButton("Play together")
+        bhv.add(0, [Speech("Let's play together")])
+        bhv.add(0, [Speech("Don't play by yourself")])
+        bhv.add(0, [Speech("I want to play together.")])
+        bhv.add(2, [Speech(EmpathyGUI._markSpeech(70) + "Let's play" + EmpathyGUI._markSpeech(90, 130) + "together")])
+        bhv.add(2, [Speech(EmpathyGUI._markSpeech(70) + "Don't play" + EmpathyGUI._markSpeech(90, 130) + "by yourself.")])
+        bhv.add(2, [Speech("I want to ple- ple- ple-."), Speech("I want to play together.")])
+        for i in range(bhv.maxLevel() + 1):
+            bhv.add(i, motion = str(i) + "_DisagreeLeft")
+            bhv.add(i, motion = str(i) + "_DisagreeRight")
+            bhv.add(i, motion = str(i) + "_PointYou")
+            bhv.add(i, motion = str(i) + "_PointYouLeft")
+            bhv.add(i, motion = str(i) + "_PointYouRight")
+            bhv.add(i, motion = str(i) + "_PalmUp")
+            bhv.add(i, motion = str(i) + "_PalmUpLeft")
+            bhv.add(i, motion = str(i) + "_PalmUpRight")
+        #END for
+        buttons.append(bhv)
+
         bhv = EmpathyButton("Almost done")
         bhv.add(0, [Speech("We are almost done with this board.")])
         bhv.add(0, [Speech("Few more to finish this board.")])
@@ -327,6 +358,26 @@ class EmpathyGUI(object):
             bhv.add(i, motion = str(i) + "_PalmUpRight")
             bhv.add(i, motion = str(i) + "_PointYouLeft")
             bhv.add(i, motion = str(i) + "_PointYouRight")
+        #END for
+        buttons.append(bhv)
+
+        bhv = EmpathyButton("Bring next board")
+        bhv.add(0, [Speech("Can you bring next Sudoku board?")])
+        bhv.add(0, [Speech("Let's move to next board.")])
+        bhv.add(2, [Speech("Can you" + EmpathyGUI._markSpeech(50) + "bri- bri-." + EmpathyGUI._markSpeech() + "bring next Sudoku board?")])
+        bhv.add(2, [Speech("Let's" + EmpathyGUI._markSpeech(50) + "moo- moo-." + EmpathyGUI._markSpeech() + "move to next board.")])
+        bhv.add(4, [Speech("Can you" + EmpathyGUI._markSpeech(50) + "bri- bri- brih-." + EmpathyGUI._markSpeech(50, 130) + "I'm Sorry." + EmpathyGUI._markSpeech() + "Can you bring next Sudoku board?")])
+        bhv.add(4, [Speech("Let's" + EmpathyGUI._markSpeech(50) + "moo moo- mooh-." + EmpathyGUI._markSpeech(50, 130) + "I'm Sorry." + EmpathyGUI._markSpeech() + "Let's move to next board.")])
+        for i in range(bhv.maxLevel() + 1):
+            bhv.add(i, motion = str(i) + "_PointMyself")
+            bhv.add(i, motion = str(i) + "_PointMyselfLeft")
+            bhv.add(i, motion = str(i) + "_PointMyselfRight")
+            bhv.add(i, motion = str(i) + "_PointYou")
+            bhv.add(i, motion = str(i) + "_PointYouLeft")
+            bhv.add(i, motion = str(i) + "_PointYouRight")
+            bhv.add(i, motion = str(i) + "_PalmUp")
+            bhv.add(i, motion = str(i) + "_PalmUpLeft")
+            bhv.add(i, motion = str(i) + "_PalmUpRight")
         #END for
         buttons.append(bhv)
 
@@ -489,12 +540,19 @@ class EmpathyGUI(object):
             QtGui.QLabel("PHASE 3"),
 
             QtGui.QLabel("PHASE 4"),
-            ActionPushButton(None, "Retire", [
+            ActionPushButton(None, "Can't play anymore", [
                     Stiffness(1.0),
                     Speech("Ahhhe"),
                     Motion("DisagreeRight", speed = 2.0, repeat = 3, repeatBegin = 5, repeatEnd = 7, repeatSpeed = 5.0),
                     Wait(600),
                     Speech("I can't ple- pleh-. play anymore."),
+                ]),
+            ActionPushButton(None, "Can't bare anymore", [
+                    Stiffness(1.0),
+                    Speech("Ahhhe"),
+                    Motion("DisagreeLeft", speed = 2.0, repeat = 3, repeatBegin = 5, repeatEnd = 7, repeatSpeed = 5.0),
+                    Wait(600),
+                    Speech("I can't baeh- baeh-. bare anymore."),
                 ]),
             ActionPushButton(None, "Go ahead", [
                     Stiffness(1.0),
@@ -507,7 +565,7 @@ class EmpathyGUI(object):
                     Stiffness(1.0),
                     Motion("Disagree", speed = 1.5, repeat = 4, repeatBegin = 0, repeatEnd = 3, repeatSpeed = 4.0),
                     Speech("No. Please" + EmpathyGUI._markSpeech(50, 120) + "continue."),
-                    Speech("I just need rest" + EmpathyGUI._markSpeech(50) + "a bit."),
+                    Speech("I just need" + EmpathyGUI._markSpeech(50) + "some rest."),
                 ]),
 
             QtGui.QLabel("PHASE 5"),
@@ -894,8 +952,11 @@ class EmpathyGUI(object):
         widgets.append(bhv)
 
         bhv = EmpathyButton("Fill number for me")
+        bhv.add(0, [Speech("Can you fill the number in for me?")])
         bhv.add(0, [Speech("Would you fill the number in for me?")])
+        bhv.add(2, [Speech("Can you fill." + EmpathyGUI._markSpeech(70) + "the num- number in for me?")])
         bhv.add(2, [Speech("Would you fill." + EmpathyGUI._markSpeech(70) + "the num- number in for me?")])
+        bhv.add(4, [Speech("Can you fill." + EmpathyGUI._markSpeech(70, 125) + "the num- number in for me?")])
         bhv.add(4, [Speech("Would you fill." + EmpathyGUI._markSpeech(70, 125) + "the num- number in for me?")])
         for i in range(bhv.maxLevel() + 1):
             bhv.add(i, motion = str(i) + "_PalmUp")
@@ -904,6 +965,20 @@ class EmpathyGUI(object):
             bhv.add(i, motion = str(i) + "_PointYou")
             bhv.add(i, motion = str(i) + "_PointYouLeft")
             bhv.add(i, motion = str(i) + "_PointYouRight")
+        #END for
+        widgets.append(bhv)
+
+        bhv = EmpathyButton("My turn")
+        bhv.add(0, [Speech("It's my turn. Wait for me please.")])
+        bhv.add(2, [Speech(EmpathyGUI._markSpeech(60) + "It's my turn." + EmpathyGUI._markSpeech() + "Wait for me please.")])
+        bhv.add(4, [Speech(EmpathyGUI._markSpeech(60, 125) + "It's my turn." + EmpathyGUI._markSpeech() + "Wait for me please.")])
+        for i in range(bhv.maxLevel() + 1):
+            bhv.add(i, motion = str(i) + "_PointMyself")
+            bhv.add(i, motion = str(i) + "_PointMyselfLeft")
+            bhv.add(i, motion = str(i) + "_PointMyselfRight")
+            bhv.add(i, motion = str(i) + "_PalmUp")
+            bhv.add(i, motion = str(i) + "_PalmUpLeft")
+            bhv.add(i, motion = str(i) + "_PalmUpRight")
         #END for
         widgets.append(bhv)
 
@@ -926,42 +1001,6 @@ class EmpathyGUI(object):
         bhv.add(2, [Speech("Let's" + EmpathyGUI._markSpeech(50) + "continue" + EmpathyGUI._markSpeech() + "playing Sudoku.")])
         bhv.add(4, [Speech(EmpathyGUI._markSpeech(75) + "Let's" + EmpathyGUI._markSpeech(50, 120) + "cont- cont-" + EmpathyGUI._markSpeech() + "continue playing Sudoku.")])
         for i in range(bhv.maxLevel() + 1):
-            bhv.add(i, motion = str(i) + "_PalmUp")
-            bhv.add(i, motion = str(i) + "_PalmUpLeft")
-            bhv.add(i, motion = str(i) + "_PalmUpRight")
-        #END for
-        widgets.append(bhv)
-
-        bhv = EmpathyButton("Bring next board")
-        bhv.add(0, [Speech("Can you bring next Sudoku board?")])
-        bhv.add(2, [Speech("Can you" + EmpathyGUI._markSpeech(50) + "bri- bri-" + EmpathyGUI._markSpeech() + "next Sudoku board?")])
-        bhv.add(4, [Speech("Can you" + EmpathyGUI._markSpeech(50) + "bri- bri- brih-" + EmpathyGUI._markSpeech(50, 130) + "Sorry." + EmpathyGUI._markSpeech() + "Can you bring next Sudoku board?")])
-        for i in range(bhv.maxLevel() + 1):
-            bhv.add(i, motion = str(i) + "_PointMyself")
-            bhv.add(i, motion = str(i) + "_PointMyselfLeft")
-            bhv.add(i, motion = str(i) + "_PointMyselfRight")
-            bhv.add(i, motion = str(i) + "_PointYou")
-            bhv.add(i, motion = str(i) + "_PointYouLeft")
-            bhv.add(i, motion = str(i) + "_PointYouRight")
-            bhv.add(i, motion = str(i) + "_PalmUp")
-            bhv.add(i, motion = str(i) + "_PalmUpLeft")
-            bhv.add(i, motion = str(i) + "_PalmUpRight")
-        #END for
-        widgets.append(bhv)
-
-        bhv = EmpathyButton("Play together")
-        bhv.add(0, [Speech("Let's play together")])
-        bhv.add(0, [Speech("Don't play by yourself")])
-        bhv.add(0, [Speech("I want to play together.")])
-        bhv.add(2, [Speech(EmpathyGUI._markSpeech(70) + "Let's play" + EmpathyGUI._markSpeech(90, 130) + "together")])
-        bhv.add(2, [Speech(EmpathyGUI._markSpeech(70) + "Don't play" + EmpathyGUI._markSpeech(90, 130) + "by yourself.")])
-        bhv.add(2, [Speech("I want to ple- ple- ple-."), Speech("I want to play together.")])
-        for i in range(bhv.maxLevel() + 1):
-            bhv.add(i, motion = str(i) + "_DisagreeLeft")
-            bhv.add(i, motion = str(i) + "_DisagreeRight")
-            bhv.add(i, motion = str(i) + "_PointYou")
-            bhv.add(i, motion = str(i) + "_PointYouLeft")
-            bhv.add(i, motion = str(i) + "_PointYouRight")
             bhv.add(i, motion = str(i) + "_PalmUp")
             bhv.add(i, motion = str(i) + "_PalmUpLeft")
             bhv.add(i, motion = str(i) + "_PalmUpRight")
