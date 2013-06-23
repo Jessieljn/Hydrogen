@@ -23,8 +23,15 @@ class Empathy(QtGui.QWidget):
         self._idleInterval = 10000
         self._idleTime = QtCore.QTime.currentTime()
         self._jitterLevel = 0
-        self._nao = None
         self._lastSudoku = [0, 0, 0] # x y value
+        self._nao = None
+        self._prevBoard = list()
+        for i in range(9):
+            self._prevBoard.append(dict())
+            for j in range(9):
+                self._prevBoard[i][j] = 0
+            #END for
+        #END for
         self._setupUi()
     #END __init__()
 
@@ -148,6 +155,7 @@ class Empathy(QtGui.QWidget):
             if self.sender() == self._btnGames[index]:
                 for i in range(9):
                     for j in range(9):
+                        self._prevBoard[i][j] = self._wgtSudoku.get(i, j)
                         self._wgtSudoku.set(i, j, SudokuBoards[index][i][j])
                     #END for
                 #END for
@@ -187,6 +195,18 @@ class Empathy(QtGui.QWidget):
     def on_participantName_edited(self, value):
         EmpathySpeech.ParticipantName = value
     #END on_participantName_edited()
+
+    def on_prevBoard_clicked(self):
+        prevBoard = list()
+        for i in range(9):
+            prevBoard.append(dict())
+            for j in range(9):
+                prevBoard[i][j] = self._wgtSudoku.get(i, j)
+                self._wgtSudoku.set(i, j, self._prevBoard[i][j])
+            #END for
+        #END for
+        self._prevBoard = prevBoard
+    #END on_prevBoard_clicked()
 
     def on_sayanswer_clicked(self):
         action = Speech(self._toCoordinate(self._lastSudoku[1], self._lastSudoku[0]) + ", " + str(self._lastSudoku[2]))
