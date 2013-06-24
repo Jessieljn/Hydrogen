@@ -230,6 +230,11 @@ class Empathy(QtGui.QWidget):
         self._actionQueue.addActions(action)
     #END on_sayanswer_clicked()
 
+    def on_sayanswerVerbose_clicked(self):
+        action = Speech(self._toCoordinateVerbose(self._lastSudoku[1], self._lastSudoku[0]) + ", " + str(self._lastSudoku[2]))
+        self._actionQueue.addActions(action)
+    #END on_sayanswerVerbose_clicked()
+
     def on_sudoku_valueChanged(self, i, j, value):
         self._deselectSubgrid()
         self._lastSudoku = [i, j, value]
@@ -278,6 +283,30 @@ class Empathy(QtGui.QWidget):
         #END if
         return txt + " " + str(y + 1)
     #END _toCoordinate()
+
+    def _toCoordinateVerbose(self, x, y):
+        txt = "aet"
+        if x == 0:
+            txt = txt + ", \\RST\\ \\RSPD=50\\ ay. \\RST\\ \\RSPD=90\\ as in ace."
+        elif x == 1:
+            txt = txt + ", bee, as in basement."
+        elif x == 2:
+            txt = txt + ", see, as in car."
+        elif x == 3:
+            txt = txt + ", dee, as in dream."
+        elif x == 4:
+            txt = txt + ", \\RST\\ \\RSPD=50\\ eeh. \\RST\\ \\RSPD=90\\ as in elephant."
+        elif x == 5:
+            txt = txt + ", f, as in feel."
+        elif x == 6:
+            txt = txt + ", geeh. as in genius."
+        elif x == 7:
+            txt = txt + ", h. as in honeybee."
+        else:
+            txt = txt + ", ai. as in identity."
+        #END if
+        return txt + " " + str(y + 1)
+    #END _toCoordinateVerbose()
 
     def _setupUi(self):
         splitter = QtGui.QSplitter(self)
