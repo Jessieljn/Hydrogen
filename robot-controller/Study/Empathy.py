@@ -10,18 +10,21 @@ from EmpathyMotionList import EmpathyMotionList
 from EmpathySpeech import EmpathySpeech
 from EmpathySudoku import SudokuBoards
 from EmpathyGUI import EmpathyGUI
+import random
 
 
 class Empathy(QtGui.QWidget):
     def __init__(self):
         super(Empathy, self).__init__()
         EmpathyMotionList.initialize()
+        random.seed()
         self._actionQueue = None
         self._currSubgrid = None
         self._idleCount = 0
         self._idleRun = False
         self._idleInterval = 10000
         self._idleTime = QtCore.QTime.currentTime()
+        self._itemName = "shirt"
         self._jitterLevel = 0
         self._lastSudoku = [0, 0, 0] # x y value
         self._nao = None
@@ -163,6 +166,20 @@ class Empathy(QtGui.QWidget):
             #END if
         #END for
     #END on_gamebutton_clicked()
+
+    def on_itemLike_clicked(self, bhv):
+        actions = bhv.getRobotActions(self._jitterLevel)
+        for action in actions:
+            if isinstance(action, ReplaceableSpeech):
+                action.replace(self._itemName)
+            #END if
+        #END for
+        self._actionQueue.addActions(actions)
+    #END on_itemLike_clicked()
+
+    def on_itemName_changed(self, value):
+        self._itemName = value
+    #END on_itemName_changed()
 
     def on_jitterLevel_valueChanged(self, value):
         jlv = value

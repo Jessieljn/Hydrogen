@@ -6,15 +6,12 @@ from EmpathyMotionList import EmpathyMotionList
 import random
 
 
-class EmpathyButton(QtGui.QPushButton):
+class EmpathyRandomButton(QtGui.QPushButton):
     INDEX_ACTIONS = 0
     INDEX_MOTION = 1
 
-    _behaviours = []
-    _motions = dict()
-
     def __init__(self, label):
-        super(EmpathyButton, self).__init__(label)
+        super(EmpathyRandomButton, self).__init__(label)
         # The list list of action-motion.
         # action-motion contains list of actions and corresponding motion IDs
         self._list = dict()
@@ -31,12 +28,12 @@ class EmpathyButton(QtGui.QPushButton):
             if isinstance(actions, BaseAction):
                 actions = [actions]
             #END if
-            self._list[jlv][EmpathyButton.INDEX_ACTIONS].append(actions)
+            self._list[jlv][EmpathyRandomButton.INDEX_ACTIONS].append(actions)
         #END if
         if motion is not None:
-            motion = EmpathyMotionList.getByName(motion)
+            motion = EmpathyMotionList.getByName(str(jlv) + "_" + motion)
             if motion is not None:
-                self._list[jlv][EmpathyButton.INDEX_MOTION].append(motion)
+                self._list[jlv][EmpathyRandomButton.INDEX_MOTION].append(motion)
             #END if
         #END if
     #END add()
@@ -46,10 +43,10 @@ class EmpathyButton(QtGui.QPushButton):
         level = jlv
         while len(motions) <= 0 and level >= 0:
             if level in self._list:
-                if len(self._list[level][EmpathyButton.INDEX_MOTION]) > 0:
-                    val = random.randint(0, len(self._list[level][EmpathyButton.INDEX_MOTION]) - 1)
+                if len(self._list[level][EmpathyRandomButton.INDEX_MOTION]) > 0:
+                    val = random.randint(0, len(self._list[level][EmpathyRandomButton.INDEX_MOTION]) - 1)
                     motions.append(Stiffness(1.0))
-                    motions.append(Motion(motion = self._list[level][EmpathyButton.INDEX_MOTION][val], blocking = False))
+                    motions.append(Motion(motion = self._list[level][EmpathyRandomButton.INDEX_MOTION][val], blocking = False))
                 #END if
             #END if
             level = level - 1
@@ -58,9 +55,9 @@ class EmpathyButton(QtGui.QPushButton):
         level = jlv
         while len(actions) <= 0 and level >= 0:
             if level in self._list:
-                if len(self._list[level][EmpathyButton.INDEX_ACTIONS]) > 0:
-                    val = random.randint(0, len(self._list[level][EmpathyButton.INDEX_ACTIONS]) - 1)
-                    actions = actions + self._list[level][EmpathyButton.INDEX_ACTIONS][val]
+                if len(self._list[level][EmpathyRandomButton.INDEX_ACTIONS]) > 0:
+                    val = random.randint(0, len(self._list[level][EmpathyRandomButton.INDEX_ACTIONS]) - 1)
+                    actions = actions + self._list[level][EmpathyRandomButton.INDEX_ACTIONS][val]
                 #END if
             #END if
             level = level - 1
