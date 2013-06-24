@@ -19,10 +19,12 @@ class TimerWidget(QtGui.QGroupBox):
 
         btnStart = QtGui.QPushButton(u"⏯", self)
         btnStart.setMaximumSize(25, 25)
+        btnStart.setShortcut("Ctrl+[")
         btnStart.clicked.connect(self._on_btnStart_clicked)
 
         btnStop = QtGui.QPushButton(u"◼", self)
         btnStop.setMaximumSize(25, 25)
+        btnStop.setShortcut("Ctrl+]")
         btnStop.clicked.connect(self._on_btnStop_clicked)
 
         layout = QtGui.QHBoxLayout(self)
