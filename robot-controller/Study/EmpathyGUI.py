@@ -450,13 +450,13 @@ class EmpathyGUI(object):
         components = list()
 
         widgetName = QtGui.QWidget()
-        lineedit = QtGui.QLineEdit(widgetName)
-        lineedit.setMinimumWidth(80)
-        lineedit.textEdited.connect(lambda: parent.on_participantName_edited(str(lineedit.text())))
+        lineeditName = QtGui.QLineEdit(widgetName)
+        lineeditName.setMinimumWidth(80)
+        lineeditName.textEdited.connect(lambda: parent.on_participantName_edited(str(lineeditName.text())))
         layoutName = QtGui.QHBoxLayout(widgetName)
         layoutName.setMargin(0)
         layoutName.addWidget(QtGui.QLabel("Name:", widgetName))
-        layoutName.addWidget(lineedit)
+        layoutName.addWidget(lineeditName)
         components.append(widgetName)
 
         widgetLevel = QtGui.QWidget()
@@ -579,7 +579,8 @@ class EmpathyGUI(object):
         components.append(ActionPushButton(None, "I got virus", [
                 Stiffness(1.0),
                 Motion("PalmUp", 2.0, 3, 3, 5, 5.0),
-                Speech("Okay. I'm not feeling well.", 80),
+                Speech("Okay."),
+                Speech("I'm not feeling well.", 80),
                 Motion("PointMyself", 2.0, 4, 5, 7, 5.0),
                 Speech("Maybe a virus", 80, 130),
                 Wait(500),
@@ -878,9 +879,9 @@ class EmpathyGUI(object):
         widgets.append(bhv)
 
         bhv = EmpathyRandomButton("My turn")
-        bhv.add(0, [Speech("It's my turn. Wait for me please.")])
-        bhv.add(2, [Speech(EmpathyGUI._markSpeech(60) + "It's my turn." + EmpathyGUI._markSpeech() + "Wait for me please.")])
-        bhv.add(4, [Speech(EmpathyGUI._markSpeech(60, 125) + "It's my turn." + EmpathyGUI._markSpeech() + "Wait for me please.")])
+        bhv.add(0, [Speech("It's my turn."), Speech("Wait for me please.")])
+        bhv.add(2, [Speech("It's my turn.", 60), Speech("Wait for me please.")])
+        bhv.add(4, [Speech("It's my turn.", 60, 125), Speech("Wait for me please.")])
         for i in range(bhv.maxLevel() + 1):
             bhv.add(i, motion = "PointMyself")
             bhv.add(i, motion = "PointMyselfLeft")
@@ -892,9 +893,9 @@ class EmpathyGUI(object):
         widgets.append(bhv)
 
         bhv = EmpathyRandomButton("Your turn")
-        bhv.add(0, [Speech("It's your turn. Please fill one box and tell me.")])
-        bhv.add(2, [Speech(EmpathyGUI._markSpeech(60) + "It's your turn." + EmpathyGUI._markSpeech() + "Please fill one box and tell me.")])
-        bhv.add(4, [Speech(EmpathyGUI._markSpeech(60, 125) + "It's your turn." + EmpathyGUI._markSpeech() + "Please fill one box and tell me.")])
+        bhv.add(0, [Speech("It's your turn."), Speech("Please fill one box and tell me.")])
+        bhv.add(2, [Speech("It's your turn.", 60), Speech("Please fill one box and tell me.")])
+        bhv.add(4, [Speech("It's your turn.", 60, 125), Speech("Please fill one box and tell me.")])
         for i in range(bhv.maxLevel() + 1):
             bhv.add(i, motion = "PointYou")
             bhv.add(i, motion = "PointYouLeft")
