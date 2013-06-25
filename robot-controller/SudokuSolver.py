@@ -40,28 +40,79 @@ class SudokuSolver(object):
     #END get()
 
     def set(self, x, y, value):
-        if self._board[y - 1][x - 1] != 0:
-            # we need to rebuild the map
-            self._board[y - 1][x - 1] = 0
-            self._rebuildCandidates()
+        if 0 <= value and value <= 9:
+            if self._board[y - 1][x - 1] != 0:
+                # we need to rebuild the map
+                self._board[y - 1][x - 1] = 0
+                self._rebuildCandidates()
+            #END if
+            self._board[y - 1][x - 1] = value
+            self._removeCandidates(y - 1, x - 1, value)
         #END if
-        self._board[y - 1][x - 1] = value
-        self._removeCandidates(y - 1, x - 1, value)
     #END set()
 
     def solveOne(self):
+        # pick an obvious number from a subgrid
+        for i in range(3):
+            for j in range(3):
+                count = 0
+                pos = [0, 0]
+                for k in range(i * 3, (i + 1) * 3):
+                    for l in range(j * 3, (j + 1) * 3):
+                        if self._board[k][l] == 0:
+                            pos = [k, l]
+                        else:
+                            count = count + 1
+                        #END if
+                    #END for
+                #END for
+                if count == 8:
+                    value = self._solveOneTryAt(pos[0], pos[1])
+                    if value != 0:
+                        return pos[1] + 1, pos[0] + 1, value
+                    #END if
+                #END if
+            #END for
+        #END for
+        for i in range(9):
+            # pick an obvious number from a row
+            count = 0
+            pos = [0, 0]
+            for j in range(9):
+                if self._board[i][j] == 0:
+                    pos = [i, j]
+                else:
+                    count = count + 1
+                #END if
+            #END for
+            if count == 8:
+                value = self._solveOneTryAt(pos[0], pos[1])
+                if value != 0:
+                    return pos[1] + 1, pos[0] + 1, value
+                #END if
+            #END if
+            # pick an obvious number from a column
+            count = 0
+            pos = [0, 0]
+            for j in range(9):
+                if self._board[j][i] == 0:
+                    pos = [j, i]
+                else:
+                    count = count + 1
+                #END if
+            #END for
+            if count == 8:
+                value = self._solveOneTryAt(pos[0], pos[1])
+                if value != 0:
+                    return pos[1] + 1, pos[0] + 1, value
+                #END if
+            #END if
+        #END for
+
         for i in range(9):
             for j in range(9):
-                count = 0
-                value = 0
-                for k in range(1, 10):
-                    if self._cans[i][j][k]:
-                        count = count + 1
-                        value = k
-                    #END if
-                #END for
-                if count == 1:
-                    self.set(j + 1, i + 1, value)
+                value = self._solveOneTryAt(i, j)
+                if value != 0:
                     return j + 1, i + 1, value
                 #END if
             #END for
@@ -117,4 +168,20 @@ class SudokuSolver(object):
             #END for
         #END if
     #END _removeCandidates()
+
+    def _solveOneTryAt(self, i, j):
+        count = 0
+        value = 0
+        for k in range(1, 10):
+            if self._cans[i][j][k]:
+                count = count + 1
+                value = k
+            #END if
+        #END for
+        if count == 1:
+            self.set(j + 1, i + 1, value)
+            return value
+        #END if
+        return 0
+    #END _solveOneTryAt()
 #END class
