@@ -11,6 +11,10 @@ from CameraWidget import CameraWidget
 from ConnectDialog import ConnectDialog
 from MovementWidget import MovementWidget
 from SpeechWidget import SpeechWidget
+<<<<<<< HEAD
+=======
+from TimerWidget import TimerWidget
+>>>>>>> 77033acf0220a7e608edc1ce38e8f67c8b19d535
 
 
 ##
@@ -82,6 +86,8 @@ class MainWindow(QtGui.QMainWindow):
 
         splitterLeft = QtGui.QSplitter(wgtLeft)
         splitterLeft.setOrientation(QtCore.Qt.Vertical)
+
+        self._wgtTimer = TimerWidget(splitterLeft)
 
         self._wgtCamera = CameraWidget(splitterLeft, self._nao.getCamera())
         self._wgtCamera.setMinimumHeight(385)

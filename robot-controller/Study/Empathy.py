@@ -10,21 +10,31 @@ from EmpathyMotionList import EmpathyMotionList
 from EmpathySpeech import EmpathySpeech
 from EmpathySudoku import SudokuBoards
 from EmpathyGUI import EmpathyGUI
+import random
 
 
 class Empathy(QtGui.QWidget):
     def __init__(self):
         super(Empathy, self).__init__()
         EmpathyMotionList.initialize()
+        random.seed()
         self._actionQueue = None
         self._currSubgrid = None
         self._idleCount = 0
         self._idleRun = False
         self._idleInterval = 10000
         self._idleTime = QtCore.QTime.currentTime()
+        self._itemName = "shirt"
         self._jitterLevel = 0
-        self._nao = None
         self._lastSudoku = [0, 0, 0] # x y value
+        self._nao = None
+        self._prevBoard = list()
+        for i in range(9):
+            self._prevBoard.append(dict())
+            for j in range(9):
+                self._prevBoard[i][j] = 0
+            #END for
+        #END for
         self._setupUi()
     #END __init__()
 
@@ -152,6 +162,7 @@ class Empathy(QtGui.QWidget):
             if self.sender() == self._btnGames[index]:
                 for i in range(9):
                     for j in range(9):
+                        self._prevBoard[i][j] = self._wgtSudoku.get(i, j)
                         self._wgtSudoku.set(i, j, SudokuBoards[index][i][j])
                     #END for
                 #END for
@@ -159,6 +170,20 @@ class Empathy(QtGui.QWidget):
             #END if
         #END for
     #END on_gamebutton_clicked()
+
+    def on_itemLike_clicked(self, bhv):
+        actions = bhv.getRobotActions(self._jitterLevel)
+        for action in actions:
+            if isinstance(action, ReplaceableSpeech):
+                action.replace(self._itemName)
+            #END if
+        #END for
+        self._actionQueue.addActions(actions)
+    #END on_itemLike_clicked()
+
+    def on_itemName_changed(self, value):
+        self._itemName = value
+    #END on_itemName_changed()
 
     def on_jitterLevel_valueChanged(self, value):
         jlv = value
@@ -192,10 +217,27 @@ class Empathy(QtGui.QWidget):
         EmpathySpeech.ParticipantName = value
     #END on_participantName_edited()
 
+    def on_prevBoard_clicked(self):
+        prevBoard = list()
+        for i in range(9):
+            prevBoard.append(dict())
+            for j in range(9):
+                prevBoard[i][j] = self._wgtSudoku.get(i, j)
+                self._wgtSudoku.set(i, j, self._prevBoard[i][j])
+            #END for
+        #END for
+        self._prevBoard = prevBoard
+    #END on_prevBoard_clicked()
+
     def on_sayanswer_clicked(self):
         action = Speech(self._toCoordinate(self._lastSudoku[1], self._lastSudoku[0]) + ", " + str(self._lastSudoku[2]))
         self._actionQueue.addActions(action)
     #END on_sayanswer_clicked()
+
+    def on_sayanswerVerbose_clicked(self):
+        action = Speech(self._toCoordinateVerbose(self._lastSudoku[1], self._lastSudoku[0]) + ", " + str(self._lastSudoku[2]))
+        self._actionQueue.addActions(action)
+    #END on_sayanswerVerbose_clicked()
 
     def on_sudoku_valueChanged(self, i, j, value):
         self._deselectSubgrid()
@@ -227,6 +269,7 @@ class Empathy(QtGui.QWidget):
         txt = "aet"
         if x == 0:
 <<<<<<< HEAD
+<<<<<<< HEAD
             txt += "ay"
         elif x == 1:
             txt += "bee"
@@ -245,6 +288,8 @@ class Empathy(QtGui.QWidget):
         else:
             txt += "ayi"
 =======
+=======
+>>>>>>> 77033acf0220a7e608edc1ce38e8f67c8b19d535
             txt = txt + ", \\RST\\ \\RSPD=50\\ ay. \\RST\\ \\RSPD=90\\"
         elif x == 1:
             txt = txt + ", bee,"
@@ -262,10 +307,37 @@ class Empathy(QtGui.QWidget):
             txt = txt + ", h."
         else:
             txt = txt + ", ai."
+<<<<<<< HEAD
 >>>>>>> a5853cc68c96dabd1a29bc6e1c6f1b853eddef04
+=======
+>>>>>>> 77033acf0220a7e608edc1ce38e8f67c8b19d535
         #END if
         return txt + " " + str(y + 1)
     #END _toCoordinate()
+
+    def _toCoordinateVerbose(self, x, y):
+        txt = "aet"
+        if x == 0:
+            txt = txt + ", \\RST\\ \\RSPD=50\\ ay. \\RST\\ \\RSPD=90\\ as in ace."
+        elif x == 1:
+            txt = txt + ", bee, as in basement."
+        elif x == 2:
+            txt = txt + ", see, as in car."
+        elif x == 3:
+            txt = txt + ", dee, as in dream."
+        elif x == 4:
+            txt = txt + ", \\RST\\ \\RSPD=50\\ eeh. \\RST\\ \\RSPD=90\\ as in elephant."
+        elif x == 5:
+            txt = txt + ", f, as in feel."
+        elif x == 6:
+            txt = txt + ", geeh. as in genius."
+        elif x == 7:
+            txt = txt + ", h. as in honeybee."
+        else:
+            txt = txt + ", ai. as in identity."
+        #END if
+        return txt + " " + str(y + 1)
+    #END _toCoordinateVerbose()
 
     def _setupUi(self):
         splitter = QtGui.QSplitter(self)
