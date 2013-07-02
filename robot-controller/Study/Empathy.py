@@ -26,7 +26,7 @@ class Empathy(QtGui.QWidget):
         self._idleTime = QtCore.QTime.currentTime()
         self._itemName = "shirt"
         self._jitterLevel = 0
-        self._lastSudoku = [0, 0, 0]  # x y value
+        self._lastSudoku = [0, 0, 0] # x y value
         self._nao = None
         self._prevBoard = list()
         for i in range(9):
@@ -48,7 +48,6 @@ class Empathy(QtGui.QWidget):
 
     def LEDNormal(self):
         current_phase = self._jitterLevel
-        # noinspection PyUnusedLocal
         rgb = 0x00000000
         if current_phase <= 1:
             rgb = 0x0087ceeb
@@ -87,18 +86,15 @@ class Empathy(QtGui.QWidget):
         #END if
     #END setNao()
 
-    # noinspection PyUnusedLocal
     def hideEvent(self, event):
         self._idleRun = False
         self.killTimer(self._timerID)
     #END hideEvent()
 
-    # noinspection PyUnusedLocal
     def showEvent(self, event):
         self._timerID = self.startTimer(50)
     #END showEvent()
 
-    # noinspection PyUnusedLocal
     def timerEvent(self, event):
         if self._idleRun and self._idleTime < QtCore.QTime.currentTime():
             if self._idleCount <= 5:
@@ -136,8 +132,7 @@ class Empathy(QtGui.QWidget):
                     x = intValue % 3
                     y = 2 - (intValue / 3)
                     self._currSubgrid = [y, x]
-                    self._wgtSudoku.highlightSubgrid(self._currSubgrid[0], self._currSubgrid[1],
-                                                     QtGui.QColor(0, 255, 0))
+                    self._wgtSudoku.highlightSubgrid(self._currSubgrid[0], self._currSubgrid[1], QtGui.QColor(0, 255, 0))
                 else:
                     # selecting cell
                     x = (self._currSubgrid[1] * 3) + (intValue % 3)
@@ -191,7 +186,7 @@ class Empathy(QtGui.QWidget):
         if jlv <= 0:
             jlv = 0
         elif jlv <= 6:
-            jlv -= 1
+            jlv = jlv - 1
         else:
             jlv = 0
         #END if
@@ -236,15 +231,13 @@ class Empathy(QtGui.QWidget):
     #END on_sayanswer_clicked()
 
     def on_sayanswerVerbose_clicked(self):
-        action = Speech(self._toCoordinateVerbose(self._lastSudoku[1], self._lastSudoku[0]) + ", "
-                        + str(self._lastSudoku[2]))
+        action = Speech(self._toCoordinateVerbose(self._lastSudoku[1], self._lastSudoku[0]) + ", " + str(self._lastSudoku[2]))
         self._actionQueue.addActions(action)
     #END on_sayanswerVerbose_clicked()
 
     def on_sudoku_valueChanged(self, i, j, value):
         self._deselectSubgrid()
         self._lastSudoku = [i, j, value]
-
         if value != 0:
             actions = self.bhvAnswer.getRobotActions(self._jitterLevel)
             for action in actions:
@@ -318,7 +311,10 @@ class Empathy(QtGui.QWidget):
     def _setupUi(self):
         splitter = QtGui.QSplitter(self)
         splitter.setOrientation(QtCore.Qt.Horizontal)
-
+        EmpathyGUI.setupScenario(self, splitter)
+        EmpathyGUI.setupMotions(self, splitter)
+        EmpathyGUI.setupInteractions(self, splitter)
+        EmpathyGUI.setupSudokuUi(self, splitter)
         layout = QtGui.QHBoxLayout(self)
         layout.setMargin(0)
         layout.addWidget(splitter)
