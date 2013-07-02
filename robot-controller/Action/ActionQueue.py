@@ -15,11 +15,8 @@ class ActionQueue(QtCore.QObject):
     #END __init__()
 
     cleared = QtCore.pyqtSignal(int)
-
     dequeued = QtCore.pyqtSignal(int)
-
     enqueued = QtCore.pyqtSignal(int, int)
-
     removed = QtCore.pyqtSignal(int)
 
     def clear(self):

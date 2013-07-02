@@ -40,7 +40,7 @@ class SudokuSolver(object):
     #END get()
 
     def set(self, x, y, value):
-        if 0 <= value and value <= 9:
+        if 0 <= value <= 9:
             if self._board[y - 1][x - 1] != 0:
                 # we need to rebuild the map
                 self._board[y - 1][x - 1] = 0
@@ -56,24 +56,15 @@ class SudokuSolver(object):
         for i in range(3):
             for j in range(3):
                 count = 0
-<<<<<<< HEAD
-                value = 0
-                for k in range(1, 10):
-                    if self._cans[i][j][k]:
-                        count += 1
-                        value = k
-                    #END if
-=======
                 pos = [0, 0]
                 for k in range(i * 3, (i + 1) * 3):
                     for l in range(j * 3, (j + 1) * 3):
                         if self._board[k][l] == 0:
                             pos = [k, l]
                         else:
-                            count = count + 1
+                            count += 1
                         #END if
                     #END for
->>>>>>> 77033acf0220a7e608edc1ce38e8f67c8b19d535
                 #END for
                 if count == 8:
                     value = self._solveOneTryAt(pos[0], pos[1])
@@ -91,7 +82,7 @@ class SudokuSolver(object):
                 if self._board[i][j] == 0:
                     pos = [i, j]
                 else:
-                    count = count + 1
+                    count += 1
                 #END if
             #END for
             if count == 8:
@@ -107,7 +98,7 @@ class SudokuSolver(object):
                 if self._board[j][i] == 0:
                     pos = [j, i]
                 else:
-                    count = count + 1
+                    count += 1
                 #END if
             #END for
             if count == 8:
@@ -183,7 +174,7 @@ class SudokuSolver(object):
         value = 0
         for k in range(1, 10):
             if self._cans[i][j][k]:
-                count = count + 1
+                count += 1
                 value = k
             #END if
         #END for

@@ -69,14 +69,15 @@ class NaoMotionList():
     #END length()
 #END class
 
+
 def Default():
     names = list()
     times = list()
     keys = list()
 
     names.append("LShoulderPitch")
-    times.append([ 0.50000, 1.00000])
-    keys.append([ [ 0.92343, [ 3, -0.16667, 0.00000], [ 3, 0.16667, 0.00000]], [ 0.92343, [ 3, -0.16667, 0.00000], [ 3, 0.16667, 0.00000]]])
+    times.append([0.50000, 1.00000])
+    keys.append([[0.92343, [3, -0.16667, 0.00000], [3, 0.16667, 0.00000]], [0.92343, [3, -0.16667, 0.00000], [3, 0.16667, 0.00000]]])
 
     names.append("LShoulderRoll")
     times.append([ 0.50000, 1.00000])

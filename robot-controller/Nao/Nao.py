@@ -99,9 +99,11 @@ class Nao(QtCore.QObject):
     def motion(self, motion, post):
         self._motion = naoqi.ALProxy("ALMotion")
         if motion.getMethod() == NaoMotion.METHOD_BEZIER:
-            self._motionId = self._motion.post.angleInterpolationBezier(motion.getNames(), motion.getTimes(), motion.getKeys())
+            self._motionId = self._motion.post.angleInterpolationBezier(motion.getNames(), motion.getTimes(),
+                                                                        motion.getKeys())
         else:
-            self._motionId = self._motion.post.angleInterpolation(motion.getNames(), motion.getKeys(), motion.getTimes(), True)
+            self._motionId = self._motion.post.angleInterpolation(motion.getNames(), motion.getKeys(),
+                                                                  motion.getTimes(), True)
         #END if
         if not post:
             self._motion.wait(self._motionId, 0)

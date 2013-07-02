@@ -2,7 +2,9 @@
   <dictionary name="Matt">
     <words>
       <w>addr</w>
+      <w>autorun</w>
       <w>behaviorbutton</w>
+      <w>bezier</w>
       <w>boardshortcut</w>
       <w>dequeue</w>
       <w>dequeued</w>
@@ -13,6 +15,7 @@
       <w>enqueued</w>
       <w>focusable</w>
       <w>gamebutton</w>
+      <w>geeh</w>
       <w>hbox</w>
       <w>heum</w>
       <w>hmmm</w>
@@ -23,6 +26,7 @@
       <w>menubar</w>
       <w>metaclass</w>
       <w>motionbutton</w>
+      <w>msecs</w>
       <w>nao's</w>
       <w>qqvga</w>
       <w>quadcount</w>

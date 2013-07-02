@@ -52,6 +52,7 @@ class TimerWidget(QtGui.QGroupBox):
         self._timerID = None
     #END _on_btnStop_clicked()
 
+    # noinspection PyUnusedLocal
     def timerEvent(self, event):
         if not self._paused:
             elapsed = self._timer.restart()

@@ -32,6 +32,7 @@ sqr_labels = [(board_size / subsquare_width) * (row_labels[i] / subsquare_height
 
 
 def solve(board):
+    # noinspection PyBroadException
     try:
         i = board.index(0)
     except:

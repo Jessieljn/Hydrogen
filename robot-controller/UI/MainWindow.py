@@ -11,10 +11,8 @@ from CameraWidget import CameraWidget
 from ConnectDialog import ConnectDialog
 from MovementWidget import MovementWidget
 from SpeechWidget import SpeechWidget
-<<<<<<< HEAD
-=======
 from TimerWidget import TimerWidget
->>>>>>> 77033acf0220a7e608edc1ce38e8f67c8b19d535
+
 
 
 ##

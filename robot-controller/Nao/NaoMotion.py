@@ -7,10 +7,10 @@ class NaoMotion(QtCore.QObject):
 
     def __init__(self, name):
         super(NaoMotion, self).__init__()
-        self._name = name # motion name
-        self._names = list() # joint names
-        self._times = list() # time in seconds
-        self._keys = list() # angles of joint
+        self._name = name  # motion name
+        self._names = list()  # joint names
+        self._times = list()  # time in seconds
+        self._keys = list()  # angles of joint
         self._method = NaoMotion.METHOD_SIMPLIFIED
     #END __init__()
 

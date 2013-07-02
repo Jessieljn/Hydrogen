@@ -3,7 +3,8 @@ from Nao import NaoMotionList
 
 
 class Motion(BaseAction):
-    def __init__(self, motionName = "", speed = 1.0, repeat = 0, repeatBegin = 0, repeatEnd = -1, repeatSpeed = 1.0, motion = None, blocking = False):
+    def __init__(self, motionName = "", speed = 1.0, repeat = 0, repeatBegin = 0, repeatEnd = -1, repeatSpeed = 1.0,
+                 motion = None, blocking = False):
         super(Motion, self).__init__()
         self._motionName = str(motionName)
         self._speed = float(speed)
@@ -19,7 +20,8 @@ class Motion(BaseAction):
                 self._motion = self._motion.applySpeed(self._speed)
             #END if
             if self._repeat > 0:
-                self._motion = self._motion.applyRepeat(self._repeatBegin, self._repeatEnd, self._repeat, self._repeatSpeed)
+                self._motion = self._motion.applyRepeat(self._repeatBegin, self._repeatEnd, self._repeat,
+                                                        self._repeatSpeed)
             #END if
         else:
             self._motionName = "[Predefined] " + self._motion.name()

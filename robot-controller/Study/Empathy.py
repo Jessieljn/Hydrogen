@@ -26,7 +26,7 @@ class Empathy(QtGui.QWidget):
         self._idleTime = QtCore.QTime.currentTime()
         self._itemName = "shirt"
         self._jitterLevel = 0
-        self._lastSudoku = [0, 0, 0] # x y value
+        self._lastSudoku = [0, 0, 0]  # x y value
         self._nao = None
         self._prevBoard = list()
         for i in range(9):
@@ -136,7 +136,8 @@ class Empathy(QtGui.QWidget):
                     x = intValue % 3
                     y = 2 - (intValue / 3)
                     self._currSubgrid = [y, x]
-                    self._wgtSudoku.highlightSubgrid(self._currSubgrid[0], self._currSubgrid[1], QtGui.QColor(0, 255, 0))
+                    self._wgtSudoku.highlightSubgrid(self._currSubgrid[0], self._currSubgrid[1],
+                                                     QtGui.QColor(0, 255, 0))
                 else:
                     # selecting cell
                     x = (self._currSubgrid[1] * 3) + (intValue % 3)
@@ -235,7 +236,8 @@ class Empathy(QtGui.QWidget):
     #END on_sayanswer_clicked()
 
     def on_sayanswerVerbose_clicked(self):
-        action = Speech(self._toCoordinateVerbose(self._lastSudoku[1], self._lastSudoku[0]) + ", " + str(self._lastSudoku[2]))
+        action = Speech(self._toCoordinateVerbose(self._lastSudoku[1], self._lastSudoku[0]) + ", "
+                        + str(self._lastSudoku[2]))
         self._actionQueue.addActions(action)
     #END on_sayanswerVerbose_clicked()
 
@@ -268,49 +270,23 @@ class Empathy(QtGui.QWidget):
     def _toCoordinate(self, x, y):
         txt = "aet"
         if x == 0:
-<<<<<<< HEAD
-<<<<<<< HEAD
-            txt += "ay"
+            txt += ", \\RST\\ \\RSPD=50\\ ay. \\RST\\ \\RSPD=90\\"
         elif x == 1:
-            txt += "bee"
+            txt += ", bee,"
         elif x == 2:
-            txt += "see"
+            txt += ", see,"
         elif x == 3:
-            txt += "d"
+            txt += ", dee,"
         elif x == 4:
-            txt += "e"
+            txt += ", \\RST\\ \\RSPD=50\\ eeh. \\RST\\ \\RSPD=90\\"
         elif x == 5:
-            txt += "f"
+            txt += ", f,"
         elif x == 6:
-            txt += "geeh"
+            txt += ", geeh."
         elif x == 7:
-            txt += "h"
+            txt += ", h."
         else:
-            txt += "ayi"
-=======
-=======
->>>>>>> 77033acf0220a7e608edc1ce38e8f67c8b19d535
-            txt = txt + ", \\RST\\ \\RSPD=50\\ ay. \\RST\\ \\RSPD=90\\"
-        elif x == 1:
-            txt = txt + ", bee,"
-        elif x == 2:
-            txt = txt + ", see,"
-        elif x == 3:
-            txt = txt + ", dee,"
-        elif x == 4:
-            txt = txt + ", \\RST\\ \\RSPD=50\\ eeh. \\RST\\ \\RSPD=90\\"
-        elif x == 5:
-            txt = txt + ", f,"
-        elif x == 6:
-            txt = txt + ", geeh."
-        elif x == 7:
-            txt = txt + ", h."
-        else:
-            txt = txt + ", ai."
-<<<<<<< HEAD
->>>>>>> a5853cc68c96dabd1a29bc6e1c6f1b853eddef04
-=======
->>>>>>> 77033acf0220a7e608edc1ce38e8f67c8b19d535
+            txt += ", ai."
         #END if
         return txt + " " + str(y + 1)
     #END _toCoordinate()
@@ -318,23 +294,23 @@ class Empathy(QtGui.QWidget):
     def _toCoordinateVerbose(self, x, y):
         txt = "aet"
         if x == 0:
-            txt = txt + ", \\RST\\ \\RSPD=50\\ ay. \\RST\\ \\RSPD=90\\ as in ace."
+            txt += ", \\RST\\ \\RSPD=50\\ ay. \\RST\\ \\RSPD=90\\ as in ace."
         elif x == 1:
-            txt = txt + ", bee, as in basement."
+            txt += ", bee, as in basement."
         elif x == 2:
-            txt = txt + ", see, as in car."
+            txt += ", see, as in car."
         elif x == 3:
-            txt = txt + ", dee, as in dream."
+            txt += ", dee, as in dream."
         elif x == 4:
-            txt = txt + ", \\RST\\ \\RSPD=50\\ eeh. \\RST\\ \\RSPD=90\\ as in elephant."
+            txt += ", \\RST\\ \\RSPD=50\\ eeh. \\RST\\ \\RSPD=90\\ as in elephant."
         elif x == 5:
-            txt = txt + ", f, as in feel."
+            txt += ", f, as in feel."
         elif x == 6:
-            txt = txt + ", geeh. as in genius."
+            txt += ", geeh. as in genius."
         elif x == 7:
-            txt = txt + ", h. as in honeybee."
+            txt += ", h. as in honeybee."
         else:
-            txt = txt + ", ai. as in identity."
+            txt += ", ai. as in identity."
         #END if
         return txt + " " + str(y + 1)
     #END _toCoordinateVerbose()
