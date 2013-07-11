@@ -1,19 +1,13 @@
 from Definitions import DEFAULT_IP
 from Definitions import DEFAULT_PORT
-from PyQt4 import QtCore
 from PyQt4 import QtGui
+from PyQt4 import QtCore
+from SpeechWidget import SpeechWidget
 
 
-##
-# ConnectDialog.py
-#
-# Creates the connection widget in the GUI, for input IP address and port.
-# Default IP Address: 140.193.228.26
-# Default Port: 9559
-##
-class ConnectDialog(QtGui.QDialog):
+class SpeechConnection(QtGui.QDialog):
     def __init__(self, parent):
-        super(ConnectDialog, self).__init__(parent)
+        super(SpeechConnection, self).__init__(parent)
         self.ipAddress = str(DEFAULT_IP)
         self.port = str(DEFAULT_PORT)
 
@@ -53,6 +47,7 @@ class ConnectDialog(QtGui.QDialog):
         self.port = self._lePort.text()
         self.setResult(QtGui.QDialog.Accepted)
         self.accept()
+        SpeechWidget()
         self.close()
     # END on__btnConnect_triggered()
 
@@ -61,4 +56,4 @@ class ConnectDialog(QtGui.QDialog):
         self.reject()
         self.close()
     # END on__btnCancel_triggered()
-# END PanelConnect
+# END SpeechConnection

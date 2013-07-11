@@ -1,7 +1,9 @@
 <component name="ProjectDictionaryState">
   <dictionary name="Matt">
     <words>
+      <w>actionbutton</w>
       <w>addr</w>
+      <w>autoidleint</w>
       <w>autorun</w>
       <w>behaviorbutton</w>
       <w>bezier</w>
@@ -34,6 +36,7 @@
       <w>qvga</w>
       <w>rdbtn</w>
       <w>rspd</w>
+      <w>sayanswer</w>
       <w>solveone</w>
       <w>speechs</w>
       <w>subgrid</w>

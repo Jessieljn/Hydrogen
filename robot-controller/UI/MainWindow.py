@@ -12,7 +12,7 @@ from ConnectDialog import ConnectDialog
 from MovementWidget import MovementWidget
 from SpeechWidget import SpeechWidget
 from TimerWidget import TimerWidget
-
+from SpeechConnection import SpeechConnection
 
 
 ##
@@ -36,6 +36,7 @@ class MainWindow(QtGui.QMainWindow):
         #=======================================================================
         menubar = self.menuBar()
 
+        #-----------------------------File Menu---------------------------------#
         actConnect = QtGui.QAction(QtGui.QIcon(), '&Connect', self)
         actConnect.setShortcut('Ctrl+Alt+C')
         actConnect.triggered.connect(self.on_actConnect_triggered)
@@ -54,6 +55,7 @@ class MainWindow(QtGui.QMainWindow):
         fileMenu.addAction(actDisconnect)
         fileMenu.addAction(actExit)
 
+        #-----------------------------Load Menu---------------------------------#
         loadMenu = menubar.addMenu('Load')
         self._loadActions = []
 
@@ -65,12 +67,18 @@ class MainWindow(QtGui.QMainWindow):
             self._loadActions.append(actLoad)
         # END for
 
+        #---------------------------Option Menu---------------------------------#
         actAboutBox = QtGui.QAction(QtGui.QIcon(), '&About', self)
         actAboutBox.triggered.connect(self.on_actAbout_triggered)
         actAboutBox.setShortcut("Ctrl+Alt+H")
 
-        aboutMenu = menubar.addMenu('Help')
-        aboutMenu.addAction(actAboutBox)
+        actSpeechConnect = QtGui.QAction(QtGui.QIcon(), '&Speech Connection', self)
+        actSpeechConnect.triggered.connect(self.on_actSpeechConnect_triggered)
+        actSpeechConnect.setShortcut("Ctrl+Alt+S")
+
+        optionMenu = menubar.addMenu('Options')
+        optionMenu.addAction(actAboutBox)
+        optionMenu.addAction(actSpeechConnect)
 
         #=======================================================================
         # Create Widgets
@@ -189,6 +197,11 @@ class MainWindow(QtGui.QMainWindow):
         dlgAbout = AboutWindow(self)
         dlgAbout.show()
     # END on_actAbout_triggered()
+
+    def on_actSpeechConnect_triggered(self):
+        speechConnect = ConnectDialog(self)
+        speechConnect.show()
+    # END on_actSpeechConnect_triggered
 
     def on__dlgConnect_accepted(self):
         if not self._nao.isConnected():
