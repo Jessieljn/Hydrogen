@@ -73,13 +73,9 @@ class EmpathyGUI(object):
 
         bhv = EmpathyRandomButton("Thank you")
         bhv.add(0, [Speech("Thank you.", 80)])
-        bhv.add(0, [Speech("I appreciate.", 80)])
         bhv.add(2, [Speech("Thank you.", 50)])
-        bhv.add(2, [Speech("I appreciate.", 50)])
         bhv.add(4, [Speech("Thank you.", 50)])
-        bhv.add(4, [Speech("I appreciate.", 50)])
         bhv.add(4, [Speech("Thank" + EmpathyGUI._markSpeech() + "you.", 50, 120)])
-        bhv.add(4, [Speech("I" + EmpathyGUI._markSpeech(50, 120) + "appreciate.")])
         for i in range(bhv.maxLevel() + 1):
             bhv.add(i, motion = "PointMyselfLeft")
             bhv.add(i, motion = "PointMyselfRight")
@@ -893,9 +889,9 @@ class EmpathyGUI(object):
         widgets.append(bhv)
 
         bhv = EmpathyRandomButton("Your turn")
-        bhv.add(0, [Speech("It's your turn."), Speech("Please fill one box and tell me.")])
-        bhv.add(2, [Speech("It's your turn.", 60), Speech("Please fill one box and tell me.")])
-        bhv.add(4, [Speech("It's your turn.", 60, 125), Speech("Please fill one box and tell me.")])
+        bhv.add(0, [Speech("It's your turn.")])
+        bhv.add(2, [Speech("It's your turn.", 60)])
+        bhv.add(4, [Speech("It's your turn.", 60, 125)])
         for i in range(bhv.maxLevel() + 1):
             bhv.add(i, motion = "PointYou")
             bhv.add(i, motion = "PointYouLeft")
