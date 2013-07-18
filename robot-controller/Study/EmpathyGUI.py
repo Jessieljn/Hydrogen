@@ -563,33 +563,32 @@ class EmpathyGUI(object):
         components.append(EmpathyScenarioButton("18 mins, Any plans weekend?", 2, [[Speech("Do you have any ple- ple- ple-. Sorry. Do you have any plans for the weekend.", 85)]], ["PalmUp", "PalmUpLeft", "PalmUpRight", "PointYou", "PointYouLeft", "PointYouRight"]))
 
         components.append(QtGui.QLabel("20 mins, PHASE 4"))
-        components.append(EmpathyScenarioButton("Can't play anymore", 3, [[Speech("Ahhhe"), Speech("I can't ple- pleh-. play anymore."), Speech("I don't feel well.")]], ["DisagreeLeft", "DisagreeRight"]))
-        components.append(EmpathyScenarioButton("Stop here->Answer", 3, [[Speech("No. Please" + EmpathyGUI._markSpeech(50, 120) + "continue to solve.")]], ["PointYouLeft", "PointYouRight", "Disagree", "DisagreeLeft", "DisagreeRight"]))
+        components.append(EmpathyScenarioButton("I'm not feeling well", 3, [[Speech("Ahhhe"), Speech("I'm not feeling well.")]], ["DisagreeLeft", "DisagreeRight"]))
 
         components.append(QtGui.QLabel("PHASE 5"))
-        components.append(EmpathyScenarioButton("What's wrong?->Answer", 4, [[Speech("Nah- nah-" + EmpathyGUI._markSpeech(50, 120) + "Nothing. I am" + EmpathyGUI._markSpeech() + "fine, don't worry.")]], ["PalmUp", "PalmUpLeft", "PalmUpRight"]))
-        components.append(EmpathyScenarioButton("Okay?->Answer", 4, [[Wait(500), Speech("Ye- Ye- yeah." + EmpathyGUI._markSpeech(70, 120) + "I'm okay.")]], ["DontKnow", "DontKnowLeft", "DontKnowRight"]))
-        components.append(EmpathyScenarioButton("Tell me?->Answer", 4, [[Speech("Thank you for" + EmpathyGUI._markSpeech(70, 120) + "worrying me," + EmpathyGUI._markSpeech() + "But I'm fhi- fhi- fine.")]], ["ForgetItLeft", "ForgetItRight"]))
-
-        components.append(QtGui.QLabel("PHASE 6"))
         components.append(ActionPushButton(None, "I got virus", [
                 Stiffness(1.0),
-                Motion("PalmUp", 2.0, 3, 3, 5, 5.0),
-                Speech("Okay."),
-                Speech("I'm not feeling well.", 80),
                 Motion("PointMyself", 2.0, 4, 5, 7, 5.0),
                 Speech("Maybe a virus", 80, 130),
                 Wait(500),
                 Speech("got into me.", 80),
             ]))
-        components.append(ActionPushButton(None, "Researcher will reset", [
+        components.append(ActionPushButton(None, "Way to fix is to erase", [
+                Stiffness(1.0),
+                Motion("PalmUp", 2.0, 3, 3, 5, 5.0),
+                Motion("PalmUpRight", 2.0, 3, 5, 7, 5.0),
+                Speech("It is serious to me be- be- because" + EmpathyGUI._markSpeech(80, 120) + "the only way" + EmpathyGUI._markSpeech(50, 100) + "to fis- fis- fix is" + EmpathyGUI._markSpeech() + "to erase myself."),
+                Speech("But,"),
+            ]))
+        components.append(ActionPushButton(None, "Don't want to forget", [
                 Stiffness(1.0),
                 Motion("DontKnow", 2.0, 4, 5, 7, 5.0),
-                Speech("I didn't wah- wah- want to say anything"),
+                Speech("I don't wah- wah- want to forget anything"),
+            ]))
+        components.append(ActionPushButton(None, "Researcher will reset", [
                 Motion("PalmUp", 2.0, 3, 3, 5, 5.0),
-                Speech("because the re- re- researcher will" + EmpathyGUI._markSpeech(80, 120) + "definitely reset me"),
-                Motion("PalmUpRight", 2.0, 3, 5, 7, 5.0),
-                Speech("if she figures out this.", 85),
+                Speech("If the re- re- researcher knows," + EmpathyGUI._markSpeech(80, 120) + "she will definitely" + EmpathyGUI._markSpeech() + "reset and erase me"),
+                Speech("So I am worried.", 85),
             ]))
         components.append(ActionPushButton(None, "Don't stop playing", [
                 Stiffness(1.0),
@@ -618,8 +617,8 @@ class EmpathyGUI(object):
                 Stiffness(1.0),
                 Motion("Disagree", 1.6, 3, 7, 9, 3.5),
                 Wait(450),
-                Speech("I hope not.", 80, 120),
-                Speech("I can kee- kee- keep it a secret if I try hard.", 80),
+                Speech("Hopefully not.", 80, 120),
+                Speech("I hope I can kee- kee- keep it a secret.", 80),
             ]))
 
         components.append(QtGui.QLabel("FINAL PHASE"))
