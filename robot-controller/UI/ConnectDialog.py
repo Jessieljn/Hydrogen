@@ -17,33 +17,25 @@ class ConnectDialog(QtGui.QDialog):
         self.ipAddress = str(DEFAULT_IP)
         self.port = str(DEFAULT_PORT)
 
-        self._lIPAddr = QtGui.QLabel('IP address:', self)
-        self._leIPAddr = QtGui.QLineEdit(self)
-        self._leIPAddr.setText(self.ipAddress)
-        self._leIPAddr.setFocusPolicy(QtCore.Qt.StrongFocus)
-
-        self._lPort = QtGui.QLabel('Port number:', self)
-        self._lePort = QtGui.QLineEdit(self)
-        self._lePort.setText(self.port)
-        self._lePort.setFocusPolicy(QtCore.Qt.StrongFocus)
+        wgtRobot, self._leIPAddr, self._lePort = ConnectDialog._createIPInputBox(self, "Robot", self.ipAddress, self.port)
+        wgtCamera, self._leCamIPAddr, self._leCamPort = ConnectDialog._createIPInputBox(self, "Camera", self.ipAddress, self.port)
+        wgtSpeech, self._leTTSIPAddr, self._leTTSPort = ConnectDialog._createIPInputBox(self, "Speech", self.ipAddress, self.port)
 
         self._btnConnect = QtGui.QPushButton('Connect (&C)', self)
         self._btnConnect.clicked.connect(self.on__btnConnect_triggered)
-
         self._btnCancel = QtGui.QPushButton('Cancel (&X)', self)
         self._btnCancel.clicked.connect(self.on__btnCancel_triggered)
 
         self._layoutGrid = QtGui.QGridLayout(self)
         self._layoutGrid.setContentsMargins(10, 10, 10, 10)
         self._layoutGrid.setSpacing(6)
-        self._layoutGrid.addWidget(self._lIPAddr, 0, 0, 1, 1)
-        self._layoutGrid.addWidget(self._leIPAddr, 0, 1, 1, 2)
-        self._layoutGrid.addWidget(self._lPort, 1, 0, 1, 1)
-        self._layoutGrid.addWidget(self._lePort, 1, 1, 1, 2)
-        self._layoutGrid.addWidget(self._btnConnect, 2, 1, 1, 1)
-        self._layoutGrid.addWidget(self._btnCancel, 2, 2, 1, 1)
+        self._layoutGrid.addWidget(wgtRobot, 0, 0, 1, 2)
+        self._layoutGrid.addWidget(wgtCamera, 1, 0, 1, 2)
+        self._layoutGrid.addWidget(wgtSpeech, 2, 0, 1, 2)
+        self._layoutGrid.addWidget(self._btnConnect, 3, 0, 1, 1)
+        self._layoutGrid.addWidget(self._btnCancel, 3, 1, 1, 1)
 
-        self.setFixedSize(260, 120)
+        self.setFixedSize(260, 300)
         self.setWindowModality(QtCore.Qt.ApplicationModal)
         self.setWindowTitle('Connection to NAO')
     # END __init__()
@@ -51,6 +43,10 @@ class ConnectDialog(QtGui.QDialog):
     def on__btnConnect_triggered(self):
         self.ipAddress = self._leIPAddr.text()
         self.port = self._lePort.text()
+        self.camIpAddr = self._leCamIPAddr.text()
+        self.camPort = self._leCamPort.text()
+        self.ttsIpAddr = self._leTTSIPAddr.text()
+        self.ttsPort = self._leTTSPort.text()
         self.setResult(QtGui.QDialog.Accepted)
         self.accept()
         self.close()
@@ -61,4 +57,32 @@ class ConnectDialog(QtGui.QDialog):
         self.reject()
         self.close()
     # END on__btnCancel_triggered()
+
+    @staticmethod
+    def _createIPInputBox(parent, title, ipAddr = "127.0.0.1", port = "8888"):
+        groupBox = QtGui.QGroupBox(parent);
+        groupBox.setTitle(title)
+
+        lIPAddr = QtGui.QLabel('IP address:', groupBox)
+        lIPAddr.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+        leIPAddr = QtGui.QLineEdit(groupBox)
+        leIPAddr.setText(ipAddr)
+        leIPAddr.setFocusPolicy(QtCore.Qt.StrongFocus)
+
+        lPort = QtGui.QLabel('Port number:', groupBox)
+        lPort.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+        lePort = QtGui.QLineEdit(groupBox)
+        lePort.setText(port)
+        lePort.setFocusPolicy(QtCore.Qt.StrongFocus)
+
+        layoutGrid = QtGui.QGridLayout(groupBox)
+        layoutGrid.setContentsMargins(5, 5, 5, 5)
+        layoutGrid.setSpacing(3)
+        layoutGrid.addWidget(lIPAddr, 0, 0, 1, 1)
+        layoutGrid.addWidget(leIPAddr, 0, 1, 1, 2)
+        layoutGrid.addWidget(lPort, 1, 0, 1, 1)
+        layoutGrid.addWidget(lePort, 1, 1, 1, 2)
+
+        return groupBox, leIPAddr, lePort
+    #END _createIPInputBox()
 # END PanelConnect

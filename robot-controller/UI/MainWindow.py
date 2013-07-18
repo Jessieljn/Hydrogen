@@ -12,7 +12,6 @@ from ConnectDialog import ConnectDialog
 from MovementWidget import MovementWidget
 from SpeechWidget import SpeechWidget
 from TimerWidget import TimerWidget
-from SpeechConnection import SpeechConnection
 
 
 ##
@@ -67,18 +66,13 @@ class MainWindow(QtGui.QMainWindow):
             self._loadActions.append(actLoad)
         # END for
 
-        #---------------------------Option Menu---------------------------------#
+        #---------------------------Help Menu---------------------------------#
         actAboutBox = QtGui.QAction(QtGui.QIcon(), '&About', self)
         actAboutBox.triggered.connect(self.on_actAbout_triggered)
         actAboutBox.setShortcut("Ctrl+Alt+H")
 
-        actSpeechConnect = QtGui.QAction(QtGui.QIcon(), '&Speech Connection', self)
-        actSpeechConnect.triggered.connect(self.on_actSpeechConnect_triggered)
-        actSpeechConnect.setShortcut("Ctrl+Alt+S")
-
-        optionMenu = menubar.addMenu('Options')
-        optionMenu.addAction(actAboutBox)
-        optionMenu.addAction(actSpeechConnect)
+        helpMenu = menubar.addMenu('Help')
+        helpMenu.addAction(actAboutBox)
 
         #=======================================================================
         # Create Widgets
@@ -198,18 +192,17 @@ class MainWindow(QtGui.QMainWindow):
         dlgAbout.show()
     # END on_actAbout_triggered()
 
-    def on_actSpeechConnect_triggered(self):
-        speechConnect = ConnectDialog(self)
-        speechConnect.show()
-    # END on_actSpeechConnect_triggered
-
     def on__dlgConnect_accepted(self):
         if not self._nao.isConnected():
             ipAddress = str(self._dlgConnect.ipAddress)
             port = str(self._dlgConnect.port)
+            camIpAddr = str(self._dlgConnect.camIpAddr)
+            camPort = str(self._dlgConnect.camPort)
+            ttsIpAddr = str(self._dlgConnect.ttsIpAddr)
+            ttsPort = str(self._dlgConnect.ttsPort)
             print "==================================="
             print "Connecting to Nao (" + ipAddress + ":" + port + ")"
-            if self._nao.connect(ipAddress, int(port)):
+            if self._nao.connect(ipAddress, int(port), camIpAddr, int(camPort), ttsIpAddr, int(ttsPort)):
                 self._timerID = self.startTimer(50)
             else:
                 print "FAILED"

@@ -25,6 +25,7 @@ class Nao(QtCore.QObject):
         self._stiffness = 0.0
         self._motionId = 0
         self._sayId = 0
+        self._sayToFile = False
         NaoMotionList.initialize()
     # END __init__()
 
@@ -38,14 +39,21 @@ class Nao(QtCore.QObject):
 
     stiffnessChanged = QtCore.pyqtSignal(float)
 
-    def connect(self, ipAddress, port):
+    def connect(self, ipAddress, port, camIpAddr, camPort, ttsIpAddr, ttsPort):
         self._naoBroker = naoqi.ALBroker("NaoBroker", "0.0.0.0", 0, ipAddress, port)
 
         print " > Loading Camera..."
+        # TODO: using camIpAddr and camPort
         self._camera.start()
         print " > " + str(self._camera.getCameraProxy())
         print " > Loading Text To Speech..."
-        self._speechProxy = naoqi.ALProxy("ALTextToSpeech")
+        if ipAddress == ttsIpAddr:
+            self._speechProxy = naoqi.ALProxy("ALTextToSpeech")
+            self._sayToFile = False
+        else:
+            self._speechProxy = naoqi.ALProxy("ALTextToSpeech", ttsIpAddr, ttsPort)
+            self._sayToFile = True
+        #END if
         self._speechProxy.setVolume(0.85)
         print " > " + str(self._speechProxy)
         print " > Loading Behaviors..."
@@ -111,7 +119,13 @@ class Nao(QtCore.QObject):
     # END motion()
 
     def say(self, msg, post):
-        self._sayId = self._speechProxy.post.say(msg)
+        if self._sayToFile:
+            self._speechProxy.sayToFile(msg, "/home/nao/sayToNet/fifo.raw")
+            self._sayId = None
+            post = True
+        else:
+            self._sayId = self._speechProxy.post.say(msg)
+        #END if
         if not post:
             self._speechProxy.wait(self._sayId, 0)
         #END if
