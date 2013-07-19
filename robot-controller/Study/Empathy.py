@@ -48,6 +48,7 @@ class Empathy(QtGui.QWidget):
 
     def LEDNormal(self):
         current_phase = self._jitterLevel
+        # noinspection PyUnusedLocal
         rgb = 0x00000000
         if current_phase <= 1:
             rgb = 0x0087ceeb
@@ -95,6 +96,7 @@ class Empathy(QtGui.QWidget):
         self._timerID = self.startTimer(50)
     #END showEvent()
 
+    # noinspection PyUnusedLocal
     def timerEvent(self, event):
         if self._idleRun and self._idleTime < QtCore.QTime.currentTime():
             if self._idleCount <= 5:
@@ -186,7 +188,7 @@ class Empathy(QtGui.QWidget):
         if jlv <= 0:
             jlv = 0
         elif jlv <= 6:
-            jlv = jlv - 1
+            jlv -= 1
         else:
             jlv = 0
         #END if

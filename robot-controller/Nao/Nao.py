@@ -39,6 +39,7 @@ class Nao(QtCore.QObject):
 
     stiffnessChanged = QtCore.pyqtSignal(float)
 
+    # noinspection PyUnusedLocal
     def connect(self, ipAddress, port, camIpAddr, camPort, ttsIpAddr, ttsPort):
         self._naoBroker = naoqi.ALBroker("NaoBroker", "0.0.0.0", 0, ipAddress, port)
 

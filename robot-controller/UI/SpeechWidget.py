@@ -9,6 +9,14 @@ from SubmittableTextEdit import SubmittableTextEdit
 # Text to Speech.
 ##
 class SpeechWidget(QtGui.QGroupBox):
+
+    inputCancelled = QtCore.pyqtSignal()
+    shapeChanged = QtCore.pyqtSignal(float)
+    speedChanged = QtCore.pyqtSignal(float)
+    textEditing = QtCore.pyqtSignal()
+    textSubmitted = QtCore.pyqtSignal(str)
+    volumeChanged = QtCore.pyqtSignal(float)
+
     def __init__(self, parent):
         super(SpeechWidget, self).__init__(parent)
         self.setTitle("Text To Speech")
@@ -93,18 +101,6 @@ class SpeechWidget(QtGui.QGroupBox):
         layoutMain.addLayout(layoutControls)
     #END __init__()
 
-    inputCancelled = QtCore.pyqtSignal()
-
-    shapeChanged = QtCore.pyqtSignal(float)
-
-    speedChanged = QtCore.pyqtSignal(float)
-
-    textEditing = QtCore.pyqtSignal()
-
-    textSubmitted = QtCore.pyqtSignal(str)
-
-    volumeChanged = QtCore.pyqtSignal(float)
-
     def getShaping(self):
         return self._sldShape.value()
     #END getShaping()
@@ -139,4 +135,4 @@ class SpeechWidget(QtGui.QGroupBox):
         self._VolumeLabel.setText(str(value))
         self.volumeChanged.emit(float(value) / 100)
     #END on__sldVolume_valueChanged()
-#END SpeechWidget
+#END SpeechWidget.py

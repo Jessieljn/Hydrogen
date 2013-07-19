@@ -1,12 +1,15 @@
-from PyQt4 import QtCore
-from PyQt4 import QtGui
 from Action import Behavior
 from Action import Motion
 from Action import Stiffness
 from Nao import NaoMotionList
+from PyQt4 import QtCore
+from PyQt4 import QtGui
 
 
 class MovementWidget(QtGui.QGroupBox):
+
+    stiffnessChanged = QtCore.pyqtSignal(float)
+
     def __init__(self, parent):
         super(MovementWidget, self).__init__(parent)
         self.setTitle("Movement")
@@ -18,15 +21,18 @@ class MovementWidget(QtGui.QGroupBox):
         self._cbBehaviors.setMinimumWidth(120)
         self._btnRunBhv = QtGui.QPushButton("Run")
         self._btnRunBhv.clicked.connect(self.on_runBehavior_clicked)
+
         layoutBehavior = QtGui.QHBoxLayout()
         layoutBehavior.setMargin(0)
         layoutBehavior.addWidget(self._cbBehaviors)
         layoutBehavior.addWidget(self._btnRunBhv)
 
         self._cbMotions = QtGui.QComboBox()
+
         for i in range(NaoMotionList.length()):
             self._cbMotions.addItem(NaoMotionList.get(i).name())
         #END for
+
         self._cbMotionSpeed = QtGui.QComboBox()
         self._cbMotionSpeed.addItems(["x" + str(value / 100.0) for value in range(10, 501, 10)])
         self._cbMotionSpeed.setCurrentIndex(9)
@@ -55,6 +61,7 @@ class MovementWidget(QtGui.QGroupBox):
         layoutMotionRepeat1.addWidget(self._cbMotionRepeatCount)
         layoutMotionRepeat1.addWidget(QtGui.QLabel("times "))
         layoutMotionRepeat1.addWidget(self._cbMotionRepeatSpeed)
+
         layoutMotionRepeat2 = QtGui.QHBoxLayout()
         layoutMotionRepeat2.setMargin(0)
         layoutMotionRepeat2.addWidget(QtGui.QLabel("frame(s) from"))
@@ -94,8 +101,6 @@ class MovementWidget(QtGui.QGroupBox):
         layoutMain.addLayout(layoutControl)
         layoutMain.addLayout(layoutStiffness)
     #END __init__()
-
-    stiffnessChanged = QtCore.pyqtSignal(float)
 
     def setActionQueue(self, actionQueue):
         self._actionQueue = actionQueue
@@ -156,4 +161,4 @@ class MovementWidget(QtGui.QGroupBox):
             self._nao.setStiffness(float(value) / 100)
         #END if
     #END on_sldStiffness_valueChanged()
-#END StiffnessWidget
+#END StiffnessWidget.py

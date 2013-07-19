@@ -5,28 +5,27 @@ from PyQt4 import QtGui
 ###
 # AboutWindow.py
 #
-# An about window, with link to HCI website.
+# Creates an about window with a link to the HCI Website.
 ###
 class AboutWindow(QtGui.QDialog):
     def __init__(self, parent):
         super(AboutWindow, self).__init__(parent)
 
         self._label0 = QtGui.QLabel("NAO Robotic Controller", self)
-
         self._label1 = QtGui.QLabel("<qt><a href=http://www.hci.cs.umanitoba.ca>Human Computer Interaction "
                                     "Laboratory, University of Manitoba</a></qt>", self)
         self._label1.linkActivated.connect(self.OpenURL)
 
-        self._btnOkay = QtGui.QPushButton('Okay', self)
-        self._btnOkay.setMaximumWidth(120)
-        self._btnOkay.clicked.connect(self.on__btnOkay_triggered)
+        self._btnClose = QtGui.QPushButton('Close', self)
+        self._btnClose.setMaximumWidth(120)
+        self._btnClose.clicked.connect(self.on__btnClose_triggered)
 
         self._layoutGrid = QtGui.QVBoxLayout(self)
         self._layoutGrid.setContentsMargins(10, 10, 10, 10)
         self._layoutGrid.setSpacing(6)
         self._layoutGrid.addWidget(self._label0, 0, QtCore.Qt.AlignCenter)
         self._layoutGrid.addWidget(self._label1, 0, QtCore.Qt.AlignCenter)
-        self._layoutGrid.addWidget(self._btnOkay, 0, QtCore.Qt.AlignCenter)
+        self._layoutGrid.addWidget(self._btnClose, 0, QtCore.Qt.AlignCenter)
 
         self.setFixedSize(500, 100)
         self.setWindowIcon(QtGui.QIcon("images/icon.png"))
@@ -38,9 +37,9 @@ class AboutWindow(QtGui.QDialog):
         QtGui.QDesktopServices().openUrl(QtCore.QUrl(URL))
     #END OpenURL()
 
-    def on__btnOkay_triggered(self):
+    def on__btnClose_triggered(self):
         self.setResult(QtGui.QDialog.Accepted)
         self.accept()
         self.close()
     #END on__btnOkay_triggered()
-#END AboutWindow
+#END AboutWindow.py

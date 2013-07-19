@@ -3,13 +3,13 @@ from PyQt4 import QtGui
 
 
 class SubmittableTextEdit(QtGui.QTextEdit):
+
+    inputCancelled = QtCore.pyqtSignal()
+    textSubmitted = QtCore.pyqtSignal()
+
     def __init__(self, parent = None):
         super(SubmittableTextEdit, self).__init__(parent)
     #END __init__()
-
-    inputCancelled = QtCore.pyqtSignal()
-
-    textSubmitted = QtCore.pyqtSignal()
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Return or event.key() == QtCore.Qt.Key_Enter:
@@ -20,4 +20,4 @@ class SubmittableTextEdit(QtGui.QTextEdit):
             super(SubmittableTextEdit, self).keyPressEvent(event)
         #END if
     #END keyPressEvent()
-#END class
+#END SubmittableTextEdit.py

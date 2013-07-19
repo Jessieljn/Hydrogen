@@ -1,4 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
+
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 
@@ -17,12 +18,12 @@ class TimerWidget(QtGui.QGroupBox):
         self._lcdClock.setDigitCount(12)
         self._lcdClock.display(self._currTime.toString("hh:mm:ss.zzz"))
 
-        btnStart = QtGui.QPushButton(u"⏯", self)
+        btnStart = QtGui.QPushButton(u"◄", self)
         btnStart.setMaximumSize(25, 25)
         btnStart.setShortcut("Ctrl+[")
         btnStart.clicked.connect(self._on_btnStart_clicked)
 
-        btnStop = QtGui.QPushButton(u"◼", self)
+        btnStop = QtGui.QPushButton(u"■", self)
         btnStop.setMaximumSize(25, 25)
         btnStop.setShortcut("Ctrl+]")
         btnStop.clicked.connect(self._on_btnStop_clicked)
@@ -60,4 +61,4 @@ class TimerWidget(QtGui.QGroupBox):
             self._lcdClock.display(self._currTime.toString("hh:mm:ss.zzz"))
         #END if
     #END timerEvent()
-#END class
+#END TimerWidget.py

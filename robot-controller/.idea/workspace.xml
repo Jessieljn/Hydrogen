@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="AnalysisUIOptions">
-    <option name="SCOPE_TYPE" value="3" />
-  </component>
   <component name="ChangeListManager">
     <list default="true" id="5757e7d0-2e46-43be-979d-adc705a84221" name="Default" comment="" />
     <ignored path="robot-controller.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/CameraWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371049884157" ignored="false" />
+    <file path="/CameraWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374252591927" ignored="false" />
     <file path="/ConnectionWinClass.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1367948061079" ignored="false" />
     <file path="/controller.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1367948189745" ignored="false" />
     <file path="/GeneralWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370883378919" ignored="false" />
     <file path="/GestureWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368550072244" ignored="false" />
     <file path="/LogWidClass.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1367948755704" ignored="false" />
     <file path="/main.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368727769515" ignored="false" />
-    <file path="/MainWindow.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1373558805433" ignored="false" />
+    <file path="/MainWindow.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374257890045" ignored="false" />
     <file path="/Nao.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370886570216" ignored="false" />
     <file path="/server.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1367949229800" ignored="false" />
     <file path="/StiffnessWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371053112207" ignored="false" />
@@ -29,14 +26,14 @@
     <file path="/PopupWindow.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1369761087003" ignored="false" />
     <file path="/asdf.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1369409264272" ignored="false" />
     <file path="/About.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1369763831152" ignored="false" />
-    <file path="/AboutWindow.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371052735086" ignored="false" />
+    <file path="/AboutWindow.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374252181122" ignored="false" />
     <file path="/JitterWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370450180936" ignored="false" />
     <file path="/Jitter.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370881942731" ignored="false" />
     <file path="/__init__.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1370453733239" ignored="false" />
     <file path="/servertesting.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371052672799" ignored="false" />
-    <file path="/SpeechWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371055586998" ignored="false" />
-    <file path="/ActionListWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371052787606" ignored="false" />
-    <file path="/ActionPushButton.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371052812561" ignored="false" />
+    <file path="/SpeechWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374258183972" ignored="false" />
+    <file path="/ActionListWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374252335893" ignored="false" />
+    <file path="/ActionPushButton.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374252489348" ignored="false" />
     <file path="/FocusableLineEdit.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371053017890" ignored="false" />
     <file path="/FocusableTextEdit.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371053029397" ignored="false" />
     <file path="/BaseStudy.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371053142179" ignored="false" />
@@ -44,7 +41,7 @@
     <file path="/Sudoku.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371223886034" ignored="false" />
     <file path="/Test2.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371224503384" ignored="false" />
     <file path="/Empathy.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371480880830" ignored="false" />
-    <file path="/SudokuBoard.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371480888809" ignored="false" />
+    <file path="/SudokuBoard.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374258275310" ignored="false" />
     <file path="$APPLICATION_HOME_DIR$/lib/openapi.jar!/standardSchemas/xslt-1_0.xsd" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371663669313" ignored="false" />
     <file path="$APPLICATION_HOME_DIR$/lib/openapi.jar!/standardSchemas/XMLSchema-instance.xsd" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371663669313" ignored="false" />
     <file path="$APPLICATION_HOME_DIR$/lib/openapi.jar!/standardSchemas/xslt-2_0.xsd" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371663669313" ignored="false" />
@@ -57,8 +54,13 @@
     <file path="$APPLICATION_HOME_DIR$/lib/openapi.jar!/standardSchemas/html5/xhtml5.xsd" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371663669313" ignored="false" />
     <file path="$APPLICATION_HOME_DIR$/lib/openapi.jar!/standardSchemas/XMLSchema.xsd" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371663669313" ignored="false" />
     <file path="$APPLICATION_HOME_DIR$/lib/openapi.jar!/standardSchemas/xinclude.xsd" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371663669313" ignored="false" />
-    <file path="/TimerWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1372783265845" ignored="false" />
+    <file path="/TimerWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374258293818" ignored="false" />
     <file path="/SpeechConnection.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1373559728378" ignored="false" />
+    <file path="/ActionModel.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374252034489" ignored="false" />
+    <file path="/ConnectDialog.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374254101276" ignored="false" />
+    <file path="/MovementWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374258138589" ignored="false" />
+    <file path="/SubmittableLineEdit.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374258196641" ignored="false" />
+    <file path="/SubmittableTextEdit.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374258218893" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,45 +80,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AboutWindow.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/UI/AboutWindow.py">
+      <file leaf-file-name="TimerWidget.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/UI/TimerWidget.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="16" selection-start="1603" selection-end="1603" vertical-scroll-proportion="0.0">
+            <state line="63" column="19" selection-start="2010" selection-end="2010" vertical-scroll-proportion="0.8477612">
               <folding>
-                <element signature="e#0#24#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ConnectDialog.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/UI/ConnectDialog.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="62" column="35" selection-start="2126" selection-end="2286" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#34#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SpeechConnection.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/UI/SpeechConnection.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="58" column="22" selection-start="2216" selection-end="2216" vertical-scroll-proportion="0.8468468">
-              <folding>
-                <element signature="e#0#34#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SpeechWidget.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/UI/SpeechWidget.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="0" selection-start="307" selection-end="307" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="e#0#24#0" expanded="true" />
+                <element signature="e#25#49#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -132,22 +101,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Action/Stiffness.py" />
-        <option value="$PROJECT_DIR$/Action/Wait.py" />
-        <option value="$PROJECT_DIR$/Action/WaitMotion.py" />
-        <option value="$PROJECT_DIR$/Action/WaitSpeech.py" />
+        <option value="$PROJECT_DIR$/Action/ActionModel.py" />
+        <option value="$PROJECT_DIR$/UI/__init__.py" />
+        <option value="$PROJECT_DIR$/UI/AboutWindow.py" />
+        <option value="$PROJECT_DIR$/UI/ActionListWidget.py" />
         <option value="$PROJECT_DIR$/Nao/Nao.py" />
-        <option value="$PROJECT_DIR$/Nao/NaoMotion.py" />
-        <option value="$PROJECT_DIR$/Nao/NaoMotionList.py" />
         <option value="$PROJECT_DIR$/Study/Empathy.py" />
-        <option value="$PROJECT_DIR$/Study/EmpathyButton.py" />
-        <option value="$PROJECT_DIR$/Study/EmpathyRandomButton.py" />
-        <option value="$PROJECT_DIR$/sudoku.py" />
-        <option value="$PROJECT_DIR$/SudokuSolver.py" />
-        <option value="$PROJECT_DIR$/UI/TimerWidget.py" />
-        <option value="$PROJECT_DIR$/UI/MainWindow.py" />
+        <option value="$PROJECT_DIR$/UI/ActionPushButton.py" />
+        <option value="$PROJECT_DIR$/UI/CameraWidget.py" />
         <option value="$PROJECT_DIR$/UI/ConnectDialog.py" />
-        <option value="$PROJECT_DIR$/UI/SpeechConnection.py" />
+        <option value="$PROJECT_DIR$/UI/MainWindow.py" />
+        <option value="$PROJECT_DIR$/UI/MovementWidget.py" />
+        <option value="$PROJECT_DIR$/UI/SpeechWidget.py" />
+        <option value="$PROJECT_DIR$/UI/SubmittableLineEdit.py" />
+        <option value="$PROJECT_DIR$/UI/SubmittableTextEdit.py" />
+        <option value="$PROJECT_DIR$/UI/SudokuBoard.py" />
+        <option value="$PROJECT_DIR$/UI/TimerWidget.py" />
       </list>
     </option>
   </component>
@@ -223,12 +192,12 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
+    <property name="recentsLimit" value="5" />
     <property name="last_opened_file_path" value="$USER_HOME$/Downloads/pysudokusolver1_8" />
     <property name="FullScreen" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -449,21 +418,21 @@
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943678" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14941302" sideWeight="0.73538786" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.12913553" sideWeight="0.7396387" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39744952" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3953241" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32695374" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2646121" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2603613" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32943678" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39712918" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -532,118 +501,138 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/UI/SudokuBoard.py">
+    <entry file="file://$PROJECT_DIR$/UI/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.05543237" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Study/EmpathySpeech.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Study/EmpathySudoku.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.05543237" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Study/Empathy.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="1.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI/TimerWidget.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="47" selection-start="786" selection-end="786" vertical-scroll-proportion="0.079422385">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Study/EmpathyGUI.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="474" column="38" selection-start="24819" selection-end="24819" vertical-scroll-proportion="0.020782396">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI/ActionListWidget.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.51383877">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI/ActionPushButton.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI/CameraWidget.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.36823106">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/UI/MainWindow.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="45" selection-start="505" selection-end="505" vertical-scroll-proportion="0.0">
+        <state line="10" column="50" selection-start="632" selection-end="632" vertical-scroll-proportion="0.18579236">
           <folding>
-            <element signature="e#0#33#0" expanded="true" />
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Action/ActionModel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="2" selection-start="123" selection-end="123" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/UI/AboutWindow.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="16" selection-start="1603" selection-end="1603" vertical-scroll-proportion="0.0">
+        <state line="44" column="19" selection-start="1625" selection-end="1625" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UI/__init__.py">
+    <entry file="file://$PROJECT_DIR$/Nao/Nao.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="41" column="4" selection-start="940" selection-end="940" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Study/Empathy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="8" selection-start="1414" selection-end="1414" vertical-scroll-proportion="0.1420765">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UI/ActionListWidget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="32" selection-start="2464" selection-end="2464" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UI/ActionPushButton.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="0" selection-start="55" selection-end="55" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#0#47#0" expanded="true" />
+            <element signature="e#0#29#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Definitions.py">
+    <entry file="file://$PROJECT_DIR$/UI/CameraWidget.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.506006">
-          <folding />
+        <state line="95" column="0" selection-start="3996" selection-end="3996" vertical-scroll-proportion="2.2716417">
+          <folding>
+            <element signature="e#24#54#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/UI/ConnectDialog.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="35" selection-start="2126" selection-end="2286" vertical-scroll-proportion="0.0">
+        <state line="89" column="22" selection-start="3597" selection-end="3597" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UI/MainWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="254" column="19" selection-start="10071" selection-end="10071" vertical-scroll-proportion="0.8477612">
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UI/MovementWidget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="163" column="23" selection-start="6913" selection-end="6913" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/UI/SpeechWidget.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="307" selection-end="307" vertical-scroll-proportion="0.0">
+        <state line="137" column="20" selection-start="5702" selection-end="5702" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UI/SubmittableLineEdit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="39" selection-start="180" selection-end="180" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#24#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UI/SubmittableTextEdit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="4" selection-start="104" selection-end="104" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/UI/SpeechConnection.py">
+    <entry file="file://$PROJECT_DIR$/UI/SudokuBoard.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="22" selection-start="2216" selection-end="2216" vertical-scroll-proportion="0.8468468">
+        <state line="148" column="19" selection-start="5600" selection-end="5600" vertical-scroll-proportion="0.8477612">
           <folding>
-            <element signature="e#0#34#0" expanded="true" />
+            <element signature="e#0#24#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UI/TimerWidget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="63" column="19" selection-start="2010" selection-end="2010" vertical-scroll-proportion="0.8477612">
+          <folding>
+            <element signature="e#25#49#0" expanded="true" />
           </folding>
         </state>
       </provider>

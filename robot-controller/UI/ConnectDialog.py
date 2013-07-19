@@ -60,29 +60,31 @@ class ConnectDialog(QtGui.QDialog):
 
     @staticmethod
     def _createIPInputBox(parent, title, ipAddr = "127.0.0.1", port = "8888"):
-        groupBox = QtGui.QGroupBox(parent);
+        groupBox = QtGui.QGroupBox(parent)
         groupBox.setTitle(title)
 
-        lIPAddr = QtGui.QLabel('IP address:', groupBox)
-        lIPAddr.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
-        leIPAddr = QtGui.QLineEdit(groupBox)
-        leIPAddr.setText(ipAddr)
-        leIPAddr.setFocusPolicy(QtCore.Qt.StrongFocus)
+        label_IPAddr = QtGui.QLabel('IP address:', groupBox)
+        label_IPAddr.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
 
-        lPort = QtGui.QLabel('Port number:', groupBox)
-        lPort.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
-        lePort = QtGui.QLineEdit(groupBox)
-        lePort.setText(port)
-        lePort.setFocusPolicy(QtCore.Qt.StrongFocus)
+        lineEdit_IPAddr = QtGui.QLineEdit(groupBox)
+        lineEdit_IPAddr.setText(ipAddr)
+        lineEdit_IPAddr.setFocusPolicy(QtCore.Qt.StrongFocus)
+
+        label_Port = QtGui.QLabel('Port number:', groupBox)
+        label_Port.setAlignment(QtCore.Qt.AlignRight | QtCore.Qt.AlignVCenter)
+
+        line_editPort = QtGui.QLineEdit(groupBox)
+        line_editPort.setText(port)
+        line_editPort.setFocusPolicy(QtCore.Qt.StrongFocus)
 
         layoutGrid = QtGui.QGridLayout(groupBox)
         layoutGrid.setContentsMargins(5, 5, 5, 5)
         layoutGrid.setSpacing(3)
-        layoutGrid.addWidget(lIPAddr, 0, 0, 1, 1)
-        layoutGrid.addWidget(leIPAddr, 0, 1, 1, 2)
-        layoutGrid.addWidget(lPort, 1, 0, 1, 1)
-        layoutGrid.addWidget(lePort, 1, 1, 1, 2)
+        layoutGrid.addWidget(label_IPAddr, 0, 0, 1, 1)
+        layoutGrid.addWidget(lineEdit_IPAddr, 0, 1, 1, 2)
+        layoutGrid.addWidget(label_Port, 1, 0, 1, 1)
+        layoutGrid.addWidget(line_editPort, 1, 1, 1, 2)
 
-        return groupBox, leIPAddr, lePort
+        return groupBox, lineEdit_IPAddr, line_editPort
     #END _createIPInputBox()
-# END PanelConnect
+# END ConnectDialog.py

@@ -5,6 +5,9 @@ from SudokuSolver import SudokuSolver
 
 
 class SudokuBoard(QtGui.QWidget):
+
+    valueChanged = QtCore.pyqtSignal(int, int, int)
+
     def __init__(self, parent = None):
         super(SudokuBoard, self).__init__(parent)
         self._boxes = []
@@ -27,6 +30,7 @@ class SudokuBoard(QtGui.QWidget):
         layout.setMargin(0)
         layout.setHorizontalSpacing(5)
         layout.setVerticalSpacing(5)
+
         for i in range(3):
             widgetLabel = QtGui.QWidget()
             widgetLabel.setMaximumHeight(20)
@@ -69,8 +73,6 @@ class SudokuBoard(QtGui.QWidget):
             #END for
         #END for
     #END __init__()
-
-    valueChanged = QtCore.pyqtSignal(int, int, int)
 
     def focus(self, i, j):
         self._boxes[i][j].setFocus()
@@ -144,4 +146,4 @@ class SudokuBoard(QtGui.QWidget):
             #END for
         #END for
     #END _on_box_textSubmitted()
-#END class
+#END SudokuBoard.py

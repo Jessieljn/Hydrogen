@@ -1,15 +1,15 @@
-from Definitions import Direction
-from PyQt4 import QtCore
-from PyQt4 import QtGui
-from Action import ActionModel
-from Action import Speech
-from Nao import Nao
-from Study import Study
 from AboutWindow import AboutWindow
 from ActionListWidget import ActionListWidget
+from Action import ActionModel
+from Action import Speech
 from CameraWidget import CameraWidget
 from ConnectDialog import ConnectDialog
+from Definitions import Direction
 from MovementWidget import MovementWidget
+from Nao import Nao
+from PyQt4 import QtCore
+from PyQt4 import QtGui
+from Study import Study
 from SpeechWidget import SpeechWidget
 from TimerWidget import TimerWidget
 
@@ -17,12 +17,12 @@ from TimerWidget import TimerWidget
 ##
 # MainWindow.py
 #
-# Puts all the widgets together in one windows.
+# Creates the general window, putting together all of the components
 ##
 class MainWindow(QtGui.QMainWindow):
-
     def __init__(self):
         super(MainWindow, self).__init__()
+
         # noinspection PyCallingNonCallable
         self._nao = Nao()
         self._actionQueue = ActionModel(self, self._nao)
@@ -252,4 +252,4 @@ class MainWindow(QtGui.QMainWindow):
             self._LEDTime = QtCore.QTime.currentTime().addSecs(1.5)
         # END if
     # END timerEvent()
-# END MainWindow
+# END MainWindow.py

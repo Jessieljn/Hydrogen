@@ -1,8 +1,13 @@
-from PyQt4 import QtCore
 from ActionQueue import ActionQueue
+from PyQt4 import QtCore
 from ThreadTimer import ThreadTimer
 
 
+##
+# ActionModel.py
+#
+#
+##
 class ActionModel(QtCore.QAbstractTableModel):
     def __init__(self, parent, nao):
         super(ActionModel, self).__init__(parent)
@@ -98,4 +103,4 @@ class ActionModel(QtCore.QAbstractTableModel):
         self.beginInsertRows(parent, beginIndex, endIndex)
         self.endInsertRows()
     #END on__list_enqueued()
-#END class
+#END ActionModel.py
