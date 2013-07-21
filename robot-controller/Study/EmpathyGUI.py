@@ -577,8 +577,7 @@ class EmpathyGUI(object):
                 Stiffness(1.0),
                 Motion("PalmUp", 2.0, 3, 3, 5, 5.0),
                 Motion("PalmUpRight", 2.0, 3, 5, 7, 5.0),
-                Speech("It is serious to me be- be- because" + EmpathyGUI._markSpeech(80, 120) + "the only way" + EmpathyGUI._markSpeech(50, 100) + "to fis- fis- fix is" + EmpathyGUI._markSpeech() + "to erase myself."),
-                Speech("But,"),
+                Speech("It is serious to me be- be- because" + EmpathyGUI._markSpeech(80, 120) + "the only way" + EmpathyGUI._markSpeech(50, 100) + "to fis- fis- fix is" + EmpathyGUI._markSpeech() + "to erase my memory."),
             ]))
         components.append(ActionPushButton(None, "Don't want to forget", [
                 Stiffness(1.0),
@@ -587,7 +586,7 @@ class EmpathyGUI(object):
             ]))
         components.append(ActionPushButton(None, "Researcher will reset", [
                 Motion("PalmUp", 2.0, 3, 3, 5, 5.0),
-                Speech("If the re- re- researcher knows," + EmpathyGUI._markSpeech(80, 120) + "she will definitely" + EmpathyGUI._markSpeech() + "reset and erase me"),
+                Speech("If the re- re- researcher knows," + EmpathyGUI._markSpeech(80, 120) + "she will definitely" + EmpathyGUI._markSpeech() + "reset and erase my memory"),
                 Speech("So I am worried.", 85),
             ]))
         components.append(ActionPushButton(None, "Don't stop playing", [
@@ -605,7 +604,7 @@ class EmpathyGUI(object):
                 Speech("If the researcher resets me, I will lose" + EmpathyGUI._markSpeech(60, 120) + "my memory.", 80),
                 Wait(500),
                 Motion("PalmUp", 1.5, 5, 4, 6, 5.0),
-                Speech("I don't want to lose my- my- my memories.", 80),
+                Speech("I don't want to lose my- my- my memory.", 80),
             ]))
         components.append(ActionPushButton(None, "Antivirus?->Answer", [
                 Stiffness(1.0),
