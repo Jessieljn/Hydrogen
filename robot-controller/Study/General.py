@@ -41,4 +41,4 @@ class General(BaseStudy):
 
         self._setupUi(True)
     #END __init__()
-#END class
+#END General.py

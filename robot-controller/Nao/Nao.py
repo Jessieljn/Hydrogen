@@ -12,6 +12,11 @@ import naoqi
 # Connection to the NAO
 ##
 class Nao(QtCore.QObject):
+
+    connected = QtCore.pyqtSignal()
+    disconnected = QtCore.pyqtSignal()
+    stiffnessChanged = QtCore.pyqtSignal(float)
+
     def __init__(self):
         super(Nao, self).__init__()
         self._isConnected = False
@@ -32,12 +37,6 @@ class Nao(QtCore.QObject):
     def __del__(self):
         NaoMotionList.destroy()
     # END __del__()
-
-    connected = QtCore.pyqtSignal()
-
-    disconnected = QtCore.pyqtSignal()
-
-    stiffnessChanged = QtCore.pyqtSignal(float)
 
     # noinspection PyUnusedLocal
     def connect(self, ipAddress, port, camIpAddr, camPort, ttsIpAddr, ttsPort):
@@ -242,4 +241,4 @@ class Nao(QtCore.QObject):
     def setVolume(self, volume):
         self._speechProxy.setVolume(volume)
     # END setVolume()
-# END Nao
+# END Nao.py

@@ -1738,4 +1738,4 @@ def WhisperRight():
     motion = NaoMotion("WhisperRight")
     motion.init(names, times, keys, NaoMotion.METHOD_BEZIER)
     return motion
-#END motion
+#END NAOMotionList.py

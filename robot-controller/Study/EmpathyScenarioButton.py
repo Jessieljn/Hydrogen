@@ -32,4 +32,4 @@ class EmpathyScenarioButton(QtGui.QPushButton):
         #END if
         return actions
     #END getRobotActions()
-#END class
+#END EmpathyScenarioButton.py

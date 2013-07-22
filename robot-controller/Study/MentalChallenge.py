@@ -36,4 +36,4 @@ class MentalChallenge(BaseStudy):
 
         self._setupUi(True)
     #END __init__()
-#END class
+#END MentalChallenge.py

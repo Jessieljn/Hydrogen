@@ -65,4 +65,4 @@ class Tedium(BaseStudy):
 
         self._setupUi(True)
     #END __init__()
-#END class
+#END Tedium.py

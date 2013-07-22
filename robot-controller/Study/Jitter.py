@@ -90,4 +90,4 @@ class Jitter(BaseStudy):
     def on_actionReceived(self, action):
         self._actionQueue.enqueue(action)
     # END on_actionReceived()
-# END Jitter
+# END Jitter.py

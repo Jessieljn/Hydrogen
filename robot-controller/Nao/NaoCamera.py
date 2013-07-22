@@ -9,6 +9,7 @@ import naoqi
 class NaoCamera(QtCore.QObject):
     THREAD_SLEEP_INTERVAL = 3
     CAMERA_PARAM_SELECT = 18
+    frameAvailable = QtCore.pyqtSignal()
 
     def __init__(self):
         super(NaoCamera, self).__init__()
@@ -21,8 +22,6 @@ class NaoCamera(QtCore.QObject):
         self._frames = []
         self._mutex = QtCore.QMutex()
     #END __init__()
-
-    frameAvailable = QtCore.pyqtSignal()
 
     def start(self):
         if self._thread is None:
@@ -99,4 +98,4 @@ class NaoCamera(QtCore.QObject):
         #END while
         self._running = False
     #END _process()
-#END class
+#END NAOCamera.py

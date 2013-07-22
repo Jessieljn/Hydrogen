@@ -14,4 +14,4 @@ class EmpathySpeech(Speech):
         txt = txt.replace(EmpathySpeech.NAME_MARKER, EmpathySpeech.ParticipantName)
         nao.say(txt, not self._blocking)
     #END execute()
-#END class
+#END EmpathySpeech.py

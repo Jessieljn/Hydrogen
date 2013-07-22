@@ -151,4 +151,4 @@ class NaoMotion(QtCore.QObject):
             return speed
         #END if
     #END _speedToTimeModifier()
-#END class
+#END NAOMotion.py

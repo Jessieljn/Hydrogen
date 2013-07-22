@@ -68,4 +68,4 @@ class EmpathyRandomButton(QtGui.QPushButton):
     def maxLevel(self):
         return self._maxLevel
     #END maxLevel()
-#END class
+#END EmpathyRandomButton.py
