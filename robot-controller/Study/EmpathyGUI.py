@@ -325,12 +325,12 @@ class EmpathyGUI(object):
         #END for
         buttons.append(bhv)
 
-        bhv = EmpathyRandomButton("Bring next board")
-        bhv.add(0, [Speech("Can you bring next Sudoku board?")])
+        bhv = EmpathyRandomButton("Show me next board")
+        bhv.add(0, [Speech("Can you show me next Sudoku board?")])
         bhv.add(0, [Speech("Let's move to next board.")])
-        bhv.add(2, [Speech("Can you" + EmpathyGUI._markSpeech(50) + "bri- bri-." + EmpathyGUI._markSpeech() + "bring next Sudoku board?")])
+        bhv.add(2, [Speech("Can you" + EmpathyGUI._markSpeech(50) + "sho- sho-." + EmpathyGUI._markSpeech() + "show me next Sudoku board?")])
         bhv.add(2, [Speech("Let's" + EmpathyGUI._markSpeech(50) + "moo- moo-." + EmpathyGUI._markSpeech() + "move to next board.")])
-        bhv.add(4, [Speech("Can you" + EmpathyGUI._markSpeech(50) + "bri- bri- brih-." + EmpathyGUI._markSpeech(50, 130) + "I'm Sorry." + EmpathyGUI._markSpeech() + "Can you bring next Sudoku board?")])
+        bhv.add(4, [Speech("Can you" + EmpathyGUI._markSpeech(50) + "sho- sho- sho-." + EmpathyGUI._markSpeech(50, 130) + "I'm Sorry." + EmpathyGUI._markSpeech() + "Can you show me next Sudoku board?")])
         bhv.add(4, [Speech("Let's" + EmpathyGUI._markSpeech(50) + "moo moo- mooh-." + EmpathyGUI._markSpeech(50, 130) + "I'm Sorry." + EmpathyGUI._markSpeech() + "Let's move to next board.")])
         for i in range(bhv.maxLevel() + 1):
             bhv.add(i, motion = "PointMyself")
@@ -510,7 +510,7 @@ class EmpathyGUI(object):
                 Stiffness(1.0),
                 Motion("PalmUpLeft", 1.5),
                 Speech("Let's start playing"),
-                Speech("Can you bring a Sudoku board here, please?"),
+                Speech("Can you show me the Sudoku board, please?"),
             ]))
         components.append(ActionPushButton(None, "Go first", [
                 Stiffness(1.0),
@@ -533,19 +533,19 @@ class EmpathyGUI(object):
         components.append(EmpathyScenarioButton("8 mins, Do u go UofM?", 1, [[Wait(350), Speech("Do you go to the University of Manitobah?", 85)]], ["PointYouLeft", "PointYouRight"]))
         components.append(EmpathyScenarioButton("Answer, Yes, what are studying?", 1, [[Wait(350), Speech("What are you studying?", 85)]], ["PalmUpLeft", "PalmUpRight"]))
         components.append(EmpathyScenarioButton("Answer, No, what do you do", 1, [[Wait(350), Speech("What do you do instead.", 85)]], ["DontKnowLeft", "DontKnowRight"]))
-        components.append(EmpathyScenarioButton("10 mins, from Winnipeg?", 1, [[Wait(350), Speech("Are you from" + EmpathyGUI._markSpeech(135) + "wieniepeg?", 85)]], ["PalmUpLeft", "PalmUpRight", "PointYouLeft", "PointYouRight"]))
+        components.append(EmpathyScenarioButton("10 mins, from Winnipeg?", 1, [[Wait(350), Speech("Are you froh- froh- from" + EmpathyGUI._markSpeech(135) + "wieniepeg?", 85)]], ["PalmUpLeft", "PalmUpRight", "PointYouLeft", "PointYouRight"]))
         components.append(EmpathyScenarioButton("Answer, No, where from?", 1, [[Wait(350), Speech("Where are you from?", 85)]], ["PalmUpLeft", "PalmUpRight", "PointYouLeft", "PointYouRight"]))
-        components.append(EmpathyScenarioButton("12 mins, like Sudoku?", 1, [[Speech("Do you like Sudoku?", 85)]], ["PalmUpLeft", "PalmUpRight", "PointYouLeft", "PointYouRight"]))
+        components.append(EmpathyScenarioButton("12 mins, like Sudoku?", 1, [[Speech("Do you lie- lie- lie-. Sorry. Do you like Sudoku?", 85)]], ["PalmUpLeft", "PalmUpRight", "PointYouLeft", "PointYouRight"]))
         components.append(EmpathyScenarioButton("14 mins, like board games?", 1, [[Speech("Do you like board games?", 85)]], ["PalmUp", "PalmUpLeft", "PalmUpRight", "PointYou", "PointYouLeft", "PointYouRight"]))
-        components.append(EmpathyScenarioButton("Answer, Yes, your favorite?", 1, [[Speech("What's your favorite one.", 85)]], ["PointYouLeft", "PointYouRight"]))
+        components.append(EmpathyScenarioButton("Answer, Yes, your favorite?", 1, [[Speech("What's your favorite one one one.", 85)]], ["PointYouLeft", "PointYouRight"]))
         components.append(EmpathyScenarioButton("Answer, Yes, my favorite is", 1, [[Speech("My favorite one " + EmpathyGUI._markSpeech(50) + "is" + EmpathyGUI._markSpeech(85) + "Sudoku.", 85)]], ["PointMyselfLeft", "PointMyselfRight"]))
-        components.append(EmpathyScenarioButton("Answer, No, boring?", 1, [[Speech("Is this boring for you?", 85)]], ["PalmUpLeft", "PalmUpRight"]))
+        components.append(EmpathyScenarioButton("Answer, No, boring?", 1, [[Speech("Is this bor- bor- boring for you?", 85)]], ["PalmUpLeft", "PalmUpRight"]))
 
         components.append(QtGui.QLabel("15 mins, PHASE 3"))
         widgetRepSpeech = QtGui.QWidget()
         bhv = EmpathyRandomButton("16 mins, I like your")
-        bhv.add(0, [ReplaceableSpeech("I like your %1."), Speech("Where did you get it?")])
-        bhv.add(2, [ReplaceableSpeech("I like your %1.", 85), Speech("Wheh- wheh-" + EmpathyGUI._markSpeech(85) + "where did you get it?", 50)])
+        bhv.add(0, [ReplaceableSpeech("I lie- like your %1."), Speech("Where did you get it?")])
+        bhv.add(2, [ReplaceableSpeech("I lie- lie- like your %1.", 85), Speech("Wheh- wheh-" + EmpathyGUI._markSpeech(85) + "where did you get it?", 50)])
         bhv.add(2, motion = "PalmUp")
         bhv.add(2, motion = "PalmUpLeft")
         bhv.add(2, motion = "PalmUpRight")
@@ -563,14 +563,13 @@ class EmpathyGUI(object):
         components.append(EmpathyScenarioButton("18 mins, Any plans weekend?", 2, [[Speech("Do you have any ple- ple- ple-. Sorry. Do you have any plans for the weekend.", 85)]], ["PalmUp", "PalmUpLeft", "PalmUpRight", "PointYou", "PointYouLeft", "PointYouRight"]))
 
         components.append(QtGui.QLabel("20 mins, PHASE 4"))
-        components.append(EmpathyScenarioButton("I'm not feeling well", 3, [[Speech("Ahhhe"), Speech("I'm not feeling well.")]], ["DisagreeLeft", "DisagreeRight"]))
+        components.append(EmpathyScenarioButton("I'm not feeling well", 3, [[Speech("Ahhhe"), Speech("I'm not feeh- feeh- feeling well.")]], ["DisagreeLeft", "DisagreeRight"]))
 
         components.append(QtGui.QLabel("PHASE 5"))
         components.append(ActionPushButton(None, "I got virus", [
                 Stiffness(1.0),
                 Motion("PointMyself", 2.0, 4, 5, 7, 5.0),
                 Speech("Maybe a virus", 80, 130),
-                Wait(500),
                 Speech("got into me.", 80),
             ]))
         components.append(ActionPushButton(None, "Way to fix is to erase", [
@@ -587,7 +586,7 @@ class EmpathyGUI(object):
         components.append(ActionPushButton(None, "Researcher will reset", [
                 Motion("PalmUp", 2.0, 3, 3, 5, 5.0),
                 Speech("If the re- re- researcher knows," + EmpathyGUI._markSpeech(80, 120) + "she will definitely" + EmpathyGUI._markSpeech() + "reset and erase my memory"),
-                Speech("So I am worried.", 85),
+                Speech("So I'm worried.", 85),
             ]))
         components.append(ActionPushButton(None, "Don't stop playing", [
                 Stiffness(1.0),
