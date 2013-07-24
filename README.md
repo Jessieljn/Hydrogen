@@ -214,13 +214,16 @@ Robotic Controller for use with the NAO Humanoid Systems.
 		List of buttons used with the movement GUI.
 
 	4d. ActionPushButton.py
-		Creates a button which sets a title for it, and contains a paragraph of text 			which the NAO will say.
+		Creates a button which sets a title for it, and contains a paragraph of 
+		text which the NAO will say.
 
 	4e. CameraWidget.py
-		GUI Camera Widget that shows a live feed from the NAO, allows for switching 		between the top and bottom camera.
+		GUI Camera Widget that shows a live feed from the NAO, allows for 
+		switching between the top and bottom camera.
 
 	4f. ConnectDialog.py
-		Popup for the connection window, which allows various connections to the 			robot, camera, and speech.
+		Popup for the connection window, which allows various connections to 
+		the robot, camera, and speech.
 
 	4g. MainWindow.py
 		The main window of the software.
@@ -254,19 +257,22 @@ Robotic Controller for use with the NAO Humanoid Systems.
 | dist |
 --------
 	6a. General Information
-		Contains the executable version of the software, along with all the required 			files for running.
+		Contains the executable version of the software, along with all the
+		required files for running.
 	
 ----------
 | images |
 ----------
 	7a. General Information
-		Images used throughout the code, includes some extras that have been 			removed from older versions.
+		Images used throughout the code, includes some extras that have been 
+		removed from older versions.
 	
 -----------------
 | Miscellaneous |
 -----------------
 	8a. Defintions.py
-		Definitions of various words used throughout the project, such as default IP 			address, port, etcetera. 
+		Definitions of various words used throughout the project, such as 
+		default IP address, port, etcetera. 
 	
 	8b. main.py
 		The main code for running the software.
