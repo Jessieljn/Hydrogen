@@ -50,4 +50,4 @@ class Motion(BaseAction):
         #END if
         return ret
     #END paramToString()
-#END class
+#END Motion.py

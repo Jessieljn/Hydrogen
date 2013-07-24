@@ -17,4 +17,4 @@ class ActionStart(BaseAction):
     def paramToString(self):
         return "Start current action queue immediately"
     #END paramToString()
-#END class
+#END ActionStart.py

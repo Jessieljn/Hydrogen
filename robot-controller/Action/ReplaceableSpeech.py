@@ -39,4 +39,4 @@ class ReplaceableSpeech(Speech):
         #END if
         self._text = str(self._text)
     #END replace()
-#END class
+#END ReplaceableSpeech.py

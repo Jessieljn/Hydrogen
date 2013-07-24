@@ -35,4 +35,4 @@ class Speech(BaseAction):
     def paramToString(self):
         return "\\RSPD=" + str(self._speed) + "\\ \\VCT=" + str(self._shaping) + "\\ " + self._text + " \\RST\\"
     #END paramToString()
-#END class
+#END Speech.py

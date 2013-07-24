@@ -19,6 +19,7 @@ class HeadMotion(BaseAction):
             nao.turnHeadRight()
         else:
             pass
+        #END if
     #END execute()
 
     def actionToString(self):
@@ -36,5 +37,6 @@ class HeadMotion(BaseAction):
             return "Right"
         else:
             return "Neutral"
+        #END if
     #END paramToString()
-#END class
+#END HeadMotion.py

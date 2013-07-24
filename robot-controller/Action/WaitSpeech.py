@@ -17,4 +17,4 @@ class WaitSpeech(BaseAction):
     def paramToString(self):
         return ""
     #END paramToString()
-#END class
+#END WaitSpeech.py

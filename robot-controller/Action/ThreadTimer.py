@@ -3,6 +3,7 @@ from PyQt4 import QtCore
 
 class ThreadTimer(QtCore.QObject):
     THREAD_SLEEP_INTERVAL = 7
+    timeElapsed = QtCore.pyqtSignal()
 
     def __init__(self, parent = None, interval = 100):
         super(ThreadTimer, self).__init__(parent)
@@ -10,8 +11,6 @@ class ThreadTimer(QtCore.QObject):
         self._interval = interval
         self._running = False
     #END __init__()
-
-    timeElapsed = QtCore.pyqtSignal()
 
     def addToThread(self, obj):
         if self._thread is not None:
@@ -60,4 +59,4 @@ class ThreadTimer(QtCore.QObject):
         #END while
         self._running = False
     #END _process()
-#END class
+#END ThreadTimer.py

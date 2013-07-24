@@ -17,4 +17,4 @@ class WaitMotion(BaseAction):
     def paramToString(self):
         return ""
     #END paramToString()
-#END class
+#END WaitMotion.py

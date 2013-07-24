@@ -17,4 +17,4 @@ class ActionStop(BaseAction):
     def paramToString(self):
         return "Stop action queue now"
     #END paramToString()
-#END class
+#END ActionStop.py

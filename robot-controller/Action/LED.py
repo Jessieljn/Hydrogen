@@ -44,4 +44,4 @@ class LED(BaseAction):
             return ret + " with duration " + str(self._seconds)
         return "INVALID PARAMETER(S)"
     #END paramToString()
-#END class
+#END LED.py

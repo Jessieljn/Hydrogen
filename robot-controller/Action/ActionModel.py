@@ -3,11 +3,6 @@ from PyQt4 import QtCore
 from ThreadTimer import ThreadTimer
 
 
-##
-# ActionModel.py
-#
-#
-##
 class ActionModel(QtCore.QAbstractTableModel):
     def __init__(self, parent, nao):
         super(ActionModel, self).__init__(parent)

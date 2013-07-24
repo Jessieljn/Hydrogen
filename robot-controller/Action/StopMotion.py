@@ -17,4 +17,4 @@ class StopMotion(BaseAction):
     def paramToString(self):
         return ""
     #END paramToString()
-#END class
+#END StopMotion.py

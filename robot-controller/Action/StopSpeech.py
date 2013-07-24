@@ -17,4 +17,4 @@ class StopSpeech(BaseAction):
     def paramToString(self):
         return ""
     #END paramToString()
-#END class
+#END StopSpeech.py

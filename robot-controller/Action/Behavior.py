@@ -19,4 +19,4 @@ class Behavior(BaseAction):
     def paramToString(self):
         return self._bhvName
     #END paramToString()
-#END class
+#END Behavior.py

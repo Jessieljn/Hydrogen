@@ -144,4 +144,4 @@ class ActionQueue(QtCore.QObject):
         self._running = self._autorun or self._running or run_queue
         self.enqueued.emit(beginIndex, endIndex)
     #END _enqueue()
-#END class
+#END ActionQueue.py

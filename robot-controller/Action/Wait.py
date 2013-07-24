@@ -23,4 +23,4 @@ class Wait(BaseAction):
     def paramToString(self):
         return str(self._msecs)
     #END paramToString()
-#END class
+#END Wait.py

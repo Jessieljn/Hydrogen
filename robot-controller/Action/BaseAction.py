@@ -21,4 +21,4 @@ class BaseAction(QtCore.QObject):
     def paramToString(self):
         return ""
     #END paramToString()
-#END class
+#END BaseAction.py

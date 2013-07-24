@@ -18,4 +18,4 @@ class Stiffness(BaseAction):
     def paramToString(self):
         return str(self._value)
     #END paramToString()
-#END class
+#END Stiffness.py
