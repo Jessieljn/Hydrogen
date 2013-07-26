@@ -13,6 +13,8 @@ from Study import Study
 from SpeechWidget import SpeechWidget
 from TimerWidget import TimerWidget
 
+from Study.TreeWidget import TreeWidget
+
 
 ##
 # MainWindow.py

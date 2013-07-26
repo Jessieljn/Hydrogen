@@ -444,18 +444,21 @@ class EmpathyGUI(object):
     @staticmethod
     def setupScenario(parent, wgt):
         components = list()
-
         widgetName = QtGui.QWidget()
+
         lineeditName = QtGui.QLineEdit(widgetName)
         lineeditName.setMinimumWidth(80)
         lineeditName.textEdited.connect(lambda: parent.on_participantName_edited(str(lineeditName.text())))
+
         layoutName = QtGui.QHBoxLayout(widgetName)
         layoutName.setMargin(0)
         layoutName.addWidget(QtGui.QLabel("Name:", widgetName))
         layoutName.addWidget(lineeditName)
+
         components.append(widgetName)
 
         widgetLevel = QtGui.QWidget()
+
         spinbox = QtGui.QSpinBox(widgetLevel)
         spinbox.setMinimumWidth(80)
         spinbox.setPrefix("lv ")
@@ -463,13 +466,15 @@ class EmpathyGUI(object):
         spinbox.setSingleStep(1)
         spinbox.setValue(0)
         spinbox.valueChanged.connect(parent.on_jitterLevel_valueChanged)
+
         layoutLevel = QtGui.QHBoxLayout(widgetLevel)
         layoutLevel.setMargin(0)
         layoutLevel.addWidget(QtGui.QLabel("Level:", widgetLevel))
         layoutLevel.addWidget(spinbox)
-        parent._sbCurrLevel = spinbox
-        components.append(widgetLevel)
 
+        parent._sbCurrLevel = spinbox
+
+        components.append(widgetLevel)
         components.append(QtGui.QLabel("INTRODUCTION"))
         components.append(ActionPushButton(None, "Welcome", [
                     Speech("Oh!"),
@@ -942,4 +947,4 @@ class EmpathyGUI(object):
         # ending mark + speed + shaping
         return " \\RST\\ \\RSPD=" + str(speed) + "\\ \\VCT=" + str(shaping) + "\\ "
     #END _markSpeech()
-#END EmpathyGUI
+#END EmpathyGUI.py

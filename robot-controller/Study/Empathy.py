@@ -322,4 +322,4 @@ class Empathy(QtGui.QWidget):
         layout.addWidget(splitter)
         EmpathyGUI.setupShortcuts(self)
     #END _setupUi()
-#END Empathy
+#END Empathy.py

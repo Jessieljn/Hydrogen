@@ -38,7 +38,6 @@ class General(BaseStudy):
                 Behavior("scratchHeadRight"),
             ]),
         ])
-
         self._setupUi(True)
     #END __init__()
 #END General.py

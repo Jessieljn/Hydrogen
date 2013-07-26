@@ -11,7 +11,7 @@
     <file path="/GestureWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368550072244" ignored="false" />
     <file path="/LogWidClass.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1367948755704" ignored="false" />
     <file path="/main.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1368727769515" ignored="false" />
-    <file path="/MainWindow.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374257890045" ignored="false" />
+    <file path="/MainWindow.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374863992760" ignored="false" />
     <file path="/Nao.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374522549377" ignored="false" />
     <file path="/server.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1367949229800" ignored="false" />
     <file path="/StiffnessWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371053112207" ignored="false" />
@@ -40,7 +40,7 @@
     <file path="/sudoku.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371151770052" ignored="false" />
     <file path="/Sudoku.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371223886034" ignored="false" />
     <file path="/Test2.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371224503384" ignored="false" />
-    <file path="/Empathy.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371480880830" ignored="false" />
+    <file path="/Empathy.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374854890193" ignored="false" />
     <file path="/SudokuBoard.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374258275310" ignored="false" />
     <file path="$APPLICATION_HOME_DIR$/lib/openapi.jar!/standardSchemas/xslt-1_0.xsd" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371663669313" ignored="false" />
     <file path="$APPLICATION_HOME_DIR$/lib/openapi.jar!/standardSchemas/XMLSchema-instance.xsd" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1371663669313" ignored="false" />
@@ -65,7 +65,7 @@
     <file path="/EmpathyScenarioButton.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374519876719" ignored="false" />
     <file path="/EmpathySpeech.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374520223685" ignored="false" />
     <file path="/EmpathySudoku.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374520374284" ignored="false" />
-    <file path="/General.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374520410055" ignored="false" />
+    <file path="/General.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374857465093" ignored="false" />
     <file path="/MentalChallenge.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374521917565" ignored="false" />
     <file path="/Tedium.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374521923567" ignored="false" />
     <file path="/NaoMotionList.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374522202526" ignored="false" />
@@ -88,6 +88,10 @@
     <file path="/ActionStop.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374636545248" ignored="false" />
     <file path="/ActionQueue.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374636601062" ignored="false" />
     <file path="/ActionStart.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374636607734" ignored="false" />
+    <file path="/TreeModel.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374854812067" ignored="false" />
+    <file path="/TreeItem.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374854814586" ignored="false" />
+    <file path="/EmpathyGUI.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374863681863" ignored="false" />
+    <file path="/TreeWidget.py" changelist="5757e7d0-2e46-43be-979d-adc705a84221" time="1374864032328" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,12 +111,50 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="BaseAction.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Action/BaseAction.py">
+      <file leaf-file-name="TreeWidget.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Study/TreeWidget.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="10" selection-start="458" selection-end="458" vertical-scroll-proportion="0.88863635">
+            <state line="24" column="68" selection-start="951" selection-end="951" vertical-scroll-proportion="0.0">
               <folding>
-                <element signature="e#0#30#0" expanded="true" />
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AboutWindow.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/UI/AboutWindow.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EmpathyGUI.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Study/EmpathyGUI.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="474" column="37" selection-start="24551" selection-end="24551" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
+                <element signature="e#620#22354#0" expanded="false" />
+                <element signature="e#22441#23429#0" expanded="false" />
+                <element signature="e#35857#37452#0" expanded="false" />
+                <element signature="e#37537#50719#0" expanded="false" />
+                <element signature="e#50811#51729#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainWindow.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/UI/MainWindow.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="76" column="39" selection-start="2827" selection-end="2827" vertical-scroll-proportion="0.45982143">
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -128,13 +170,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/Action/Wait.py" />
-        <option value="$PROJECT_DIR$/Action/ThreadTimer.py" />
-        <option value="$PROJECT_DIR$/Action/StopSpeech.py" />
-        <option value="$PROJECT_DIR$/Action/Speech.py" />
-        <option value="$PROJECT_DIR$/Action/Stiffness.py" />
-        <option value="$PROJECT_DIR$/Action/StopMotion.py" />
-        <option value="$PROJECT_DIR$/Action/ReplaceableSpeech.py" />
         <option value="$PROJECT_DIR$/Action/Motion.py" />
         <option value="$PROJECT_DIR$/Action/LED.py" />
         <option value="$PROJECT_DIR$/Action/HeadMotion.py" />
@@ -144,14 +179,21 @@
         <option value="$PROJECT_DIR$/Action/ActionModel.py" />
         <option value="$PROJECT_DIR$/Action/ActionQueue.py" />
         <option value="$PROJECT_DIR$/Action/ActionStart.py" />
+        <option value="$PROJECT_DIR$/UI/TreeModel.py" />
+        <option value="$PROJECT_DIR$/UI/TreeItem.py" />
+        <option value="$PROJECT_DIR$/Study/Empathy.py" />
+        <option value="$PROJECT_DIR$/Study/General.py" />
+        <option value="$PROJECT_DIR$/Study/TreeWidget.py" />
+        <option value="$PROJECT_DIR$/Study/EmpathyGUI.py" />
+        <option value="$PROJECT_DIR$/UI/MainWindow.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="54" />
+    <option name="x" value="1358" />
     <option name="y" value="-8" />
-    <option name="width" value="1320" />
-    <option name="height" value="784" />
+    <option name="width" value="1936" />
+    <option name="height" value="1096" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -179,7 +221,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -208,12 +249,27 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Action" />
+              <option name="myItemId" value="UI" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="robot-controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="robot-controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Study" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -440,18 +496,18 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="54" y="-8" width="1320" height="784" extended-state="6" />
+    <frame x="1358" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19236884" sideWeight="0.7408585" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13340448" sideWeight="0.74176407" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39744952" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32695374" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2591415" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25823593" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -528,128 +584,131 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Action/Wait.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="12" selection-start="561" selection-end="561" vertical-scroll-proportion="0.7048093">
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Action/ThreadTimer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="37" selection-start="129" selection-end="129" vertical-scroll-proportion="0.14096186">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Action/StopSpeech.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="18" selection-start="403" selection-end="403" vertical-scroll-proportion="0.5356551">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Action/StopMotion.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="18" selection-start="403" selection-end="403" vertical-scroll-proportion="0.5356551">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Action/Stiffness.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="17" selection-start="467" selection-end="467" vertical-scroll-proportion="0.5638474">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Action/Speech.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="37" column="14" selection-start="1043" selection-end="1043" vertical-scroll-proportion="1.4295454">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Action/ReplaceableSpeech.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="25" selection-start="1397" selection-end="1397" vertical-scroll-proportion="1.6323185">
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Action/Motion.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="14" selection-start="1913" selection-end="1913" vertical-scroll-proportion="2.009091">
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Action/LED.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="11" selection-start="1955" selection-end="1955" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Action/HeadMotion.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="15" selection-start="1107" selection-end="1107" vertical-scroll-proportion="1.5068182">
-          <folding>
-            <element signature="e#0#33#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Action/Behavior.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="16" selection-start="533" selection-end="533" vertical-scroll-proportion="0.81136364">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Action/ActionQueue.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="146" column="19" selection-start="3932" selection-end="3932" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
+        <state line="146" column="19" selection-start="3932" selection-end="3932" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Action/ActionStart.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="19" selection-start="432" selection-end="432" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="19" column="19" selection-start="432" selection-end="432" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Action/ActionStop.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="18" selection-start="411" selection-end="411" vertical-scroll-proportion="0.7340909">
-          <folding />
-        </state>
+        <state line="19" column="18" selection-start="411" selection-end="411" vertical-scroll-proportion="0.7340909" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Action/ActionModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="19" selection-start="2910" selection-end="2910" vertical-scroll-proportion="0.85">
+        <state line="100" column="19" selection-start="2910" selection-end="2910" vertical-scroll-proportion="0.85" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Study/Empathy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="324" column="15" selection-start="11000" selection-end="11000" vertical-scroll-proportion="0.84821427">
           <folding>
-            <element signature="e#0#35#0" expanded="true" />
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Study/EmpathySudoku.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Study/EmpathySpeech.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Study/EmpathyScenarioButton.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Action/BaseAction.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="10" selection-start="458" selection-end="458" vertical-scroll-proportion="0.88863635">
+        <state line="23" column="18" selection-start="466" selection-end="466" vertical-scroll-proportion="0.5818452">
           <folding>
             <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Study/General.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="42" column="15" selection-start="2072" selection-end="2072" vertical-scroll-proportion="0.84821427">
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Study/Jitter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="92" column="15" selection-start="3906" selection-end="3906" vertical-scroll-proportion="0.84821427">
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Study/TreeWidget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="68" selection-start="951" selection-end="951" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UI/AboutWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Study/EmpathyGUI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="474" column="37" selection-start="24551" selection-end="24551" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
+            <element signature="e#620#22354#0" expanded="false" />
+            <element signature="e#22441#23429#0" expanded="false" />
+            <element signature="e#35857#37452#0" expanded="false" />
+            <element signature="e#37537#50719#0" expanded="false" />
+            <element signature="e#50811#51729#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/UI/MainWindow.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="39" selection-start="2827" selection-end="2827" vertical-scroll-proportion="0.45982143">
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
           </folding>
         </state>
       </provider>
