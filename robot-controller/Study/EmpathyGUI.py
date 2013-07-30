@@ -329,11 +329,11 @@ class EmpathyGUI(object):
 
         bhv = EmpathyRandomButton("Show me next board")
         bhv.add(0, [Speech("Can you show me next Sudoku board?")])
-        bhv.add(0, [Speech("Let's move to next board.")])
+        bhv.add(0, [Speech("Let's move on to next board.")])
         bhv.add(2, [Speech("Can you" + EmpathyGUI._markSpeech(50) + "sho- sho-." + EmpathyGUI._markSpeech() + "show me next Sudoku board?")])
-        bhv.add(2, [Speech("Let's" + EmpathyGUI._markSpeech(50) + "moo- moo-." + EmpathyGUI._markSpeech() + "move to next board.")])
+        bhv.add(2, [Speech("Let's" + EmpathyGUI._markSpeech(50) + "moo- moo-." + EmpathyGUI._markSpeech() + "move on to next board.")])
         bhv.add(4, [Speech("Can you" + EmpathyGUI._markSpeech(50) + "sho- sho- sho-." + EmpathyGUI._markSpeech(50, 130) + "I'm Sorry." + EmpathyGUI._markSpeech() + "Can you show me next Sudoku board?")])
-        bhv.add(4, [Speech("Let's" + EmpathyGUI._markSpeech(50) + "moo moo- mooh-." + EmpathyGUI._markSpeech(50, 130) + "I'm Sorry." + EmpathyGUI._markSpeech() + "Let's move to next board.")])
+        bhv.add(4, [Speech("Let's" + EmpathyGUI._markSpeech(50) + "moo moo- mooh-." + EmpathyGUI._markSpeech(50, 130) + "I'm Sorry." + EmpathyGUI._markSpeech() + "Let's move on to next board.")])
         for i in range(bhv.maxLevel() + 1):
             bhv.add(i, motion = "PointMyself")
             bhv.add(i, motion = "PointMyselfLeft")
@@ -541,7 +541,7 @@ class EmpathyGUI(object):
             components.append(EmpathyScenarioButton("12 mins, like Sudoku?", 0, [[Speech("Do you like Sudoku?", 85)]], ["PalmUpLeft", "PalmUpRight", "PointYouLeft", "PointYouRight"]))
             components.append(EmpathyScenarioButton("14 mins, like board games?", 0, [[Speech("Do you like board games?", 85)]], ["PalmUp", "PalmUpLeft", "PalmUpRight", "PointYou", "PointYouLeft", "PointYouRight"]))
             components.append(EmpathyScenarioButton("Answer, Yes, your favorite?", 0, [[Speech("What's your favorite one.", 85)]], ["PointYouLeft", "PointYouRight"]))
-            components.append(EmpathyScenarioButton("Answer, Yes, my favorite is", 0, [[Speech("My favorite one Sudoku.", 85)]], ["PointMyselfLeft", "PointMyselfRight"]))
+            components.append(EmpathyScenarioButton("Answer, Yes, my favorite is", 0, [[Speech("My favorite one is Sudoku.", 85)]], ["PointMyselfLeft", "PointMyselfRight"]))
             components.append(EmpathyScenarioButton("Answer, No, boring?", 0, [[Speech("Is this boring for you?", 85)]], ["PalmUpLeft", "PalmUpRight"]))
         else:
             components.append(EmpathyScenarioButton("6 mins, This room?", 1, [[Speech("What do you think about this room?", 85)]], ["PalmUp", "PalmUpLeft", "PalmUpRight", "PointYouLeft", "PointYouRight"]))
