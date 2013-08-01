@@ -135,6 +135,10 @@ class BaseStudy(QtGui.QWidget):
         #END if
     #END setNao()
 
+    def speech(self, txt):
+        return None
+    #END speech()
+
     def on_button_clicked(self):
         if self._actionQueue is not None:
             self._actionQueue.addActions(self.sender().getRobotActions())

@@ -12,6 +12,7 @@ class SpeechWidget(QtGui.QGroupBox):
     def __init__(self, parent):
         super(SpeechWidget, self).__init__(parent)
         self.setTitle("Text To Speech")
+        self._szLastText = ""
 
         self._message = SubmittableTextEdit(self)
         self._message.textChanged.connect(self.textEditing)
@@ -77,6 +78,11 @@ class SpeechWidget(QtGui.QGroupBox):
         btnSay.clicked.connect(lambda: self.textSubmitted.emit(self.getText()))
         btnSay.clicked.connect(self._message.clear)
 
+        btnRepeat = QtGui.QPushButton('Repeat')
+        btnRepeat.setFixedSize(120, 30)
+        btnRepeat.setSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
+        btnRepeat.clicked.connect(lambda: self.textSubmitted.emit(self.getLastText()))
+
         layoutOptions = QtGui.QHBoxLayout()
         layoutOptions.setMargin(0)
         layoutOptions.addLayout(layoutVolume)
@@ -87,6 +93,7 @@ class SpeechWidget(QtGui.QGroupBox):
         layoutControls.setMargin(0)
         layoutControls.addLayout(layoutOptions)
         layoutControls.addWidget(btnSay, 0, QtCore.Qt.AlignHCenter)
+        layoutControls.addWidget(btnRepeat, 1, QtCore.Qt.AlignHCenter)
 
         layoutMain = QtGui.QHBoxLayout(self)
         layoutMain.addWidget(self._message)
@@ -113,8 +120,13 @@ class SpeechWidget(QtGui.QGroupBox):
         return self._sldSpeed.value()
     #END getSpeed()
 
+    def getLastText(self):
+        return self._szLastText
+    #END getLastText()
+
     def getText(self):
-        return str(self._message.toPlainText())
+        self._szLastText = str(self._message.toPlainText())
+        return self._szLastText
     #END getText()
 
     def setInputFocus(self):

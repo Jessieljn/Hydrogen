@@ -86,6 +86,10 @@ class Empathy(QtGui.QWidget):
         #END if
     #END setNao()
 
+    def speech(self, txt):
+        return None
+    #END speech()
+
     def hideEvent(self, event):
         self._idleRun = False
         self.killTimer(self._timerID)
