@@ -936,36 +936,4 @@ class EmpathyGUI(object):
         layout.addWidget(splitter)
         return layout
     #END setupSudokuUi()
-
-    @staticmethod
-    def setupWidget(parent, wgt, children):
-        widget = QtGui.QWidget()
-        layout = QtGui.QVBoxLayout(widget)
-        layout.setMargin(0)
-        for child in children:
-            if isinstance(child, ActionPushButton):
-                child.clicked.connect(parent.on_actionbutton_clicked)
-            elif isinstance(child, EmpathyScenarioButton):
-                child.clicked.connect(parent.on_actionbutton_clicked)
-            elif isinstance(child, EmpathyRandomButton):
-                child.clicked.connect(parent.on_behaviorbutton_clicked)
-            #END if
-            layout.addWidget(child)
-        #END for
-        scroll = QtGui.QScrollArea()
-        scroll.setAlignment(QtCore.Qt.AlignCenter)
-        scroll.setWidget(widget)
-        layoutScroll = QtGui.QHBoxLayout()
-        layoutScroll.setMargin(0)
-        layoutScroll.addWidget(scroll)
-        widget = QtGui.QWidget(wgt)
-        widget.setLayout(layoutScroll)
-        return widget
-    #END setupWidget()
-
-    @staticmethod
-    def _markSpeech(speed = 90, shaping = 100):
-        # ending mark + speed + shaping
-        return " \\RST\\ \\RSPD=" + str(speed) + "\\ \\VCT=" + str(shaping) + "\\ "
-    #END _markSpeech()
 #END EmpathyGUI

@@ -48,6 +48,16 @@ class ActionCollection(QtCore.QObject):
                 motions = [Motion(motion = MotionList.getByName(str(level) + "_" + motions), blocking = False)]
             elif isinstance(motions, NaoMotion):
                 motions = [Motion(motion = motions, blocking = False)]
+            else:
+                tmp = []
+                for item in motions:
+                    if isinstance(motions, str):
+                        tmp.append(Motion(motion = MotionList.getByName(str(level) + "_" + item), blocking = False))
+                    elif isinstance(motions, NaoMotion):
+                        tmp.append(Motion(motion = item, blocking = False))
+                    #END if
+                #END for
+                motions = tmp
             #END if
             if insert_sequence:
                 if len(self._list[level][ActionCollection.INDEX_MOTION]) <= 0:
