@@ -7,11 +7,11 @@ class EmpathyButton(QtGui.QPushButton):
         self._actions = actionCollection
     #END __init__()
 
-    def getRobotActions(self, level):
-        return self._actions.get(level)
-    #END getRobotActions()
-
     def getActionCollection(self):
         return self._actions
     #END getActionCollection()
+
+    def getRobotActions(self, level):
+        return self._actions.get(level)
+    #END getRobotActions()
 #END class

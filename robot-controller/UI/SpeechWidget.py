@@ -129,6 +129,10 @@ class SpeechWidget(QtGui.QGroupBox):
         return self._szLastText
     #END getText()
 
+    def isTextEmpty(self):
+        return len(str(self._message.toPlainText())) <= 0
+    #END isTextEmpty()
+
     def setInputFocus(self):
         self._message.setFocus(QtCore.Qt.OtherFocusReason)
     #END setInputFocus()

@@ -120,6 +120,7 @@ class ActionQueue(QtCore.QObject):
                 self._list.append(actions)
             #END if
         elif len(actions) <= 0:
+            self._mutex.unlock()
             return
         else:
             if not prior:

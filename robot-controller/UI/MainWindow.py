@@ -231,7 +231,7 @@ class MainWindow(QtGui.QMainWindow):
     # END on__wgtCamera_moveHead()
 
     def on__wgtSpeech_playSpeech(self, value):
-        actions = Study.TASKS[self._layoutTaskPanel.currentIndex()][Study.TASK_WIDGET].speech(value)
+        actions = Study.TASKS[self._layoutTaskPanel.currentIndex()][Study.TASK_WIDGET].speech(str(value))
         if actions is None:
             actions = Speech(value, speed = self._wgtSpeech.getSpeed(), shaping = self._wgtSpeech.getShaping(), blocking = False)
         #END if
@@ -247,7 +247,7 @@ class MainWindow(QtGui.QMainWindow):
     # noinspection PyUnusedLocal
     def timerEvent(self, event):
         if self._LEDTime < QtCore.QTime.currentTime():
-            if self._wgtSpeech.getText() == "" and (self._actionQueue.rowCount(None) <= 0 or self._actionQueue.isRunning()):
+            if self._wgtSpeech.isTextEmpty() and (self._actionQueue.rowCount(None) <= 0 or self._actionQueue.isRunning()):
                 Study.TASKS[self._layoutTaskPanel.currentIndex()][Study.TASK_WIDGET].LEDNormal()
             else:
                 Study.TASKS[self._layoutTaskPanel.currentIndex()][Study.TASK_WIDGET].LEDActive()

@@ -119,6 +119,10 @@ class ActionCollection(QtCore.QObject):
         return self._name
     #END getName()
 
+    def hasText(self):
+        return len(self._text) > 0
+    #END hasText()
+
     def setInsertSequence(self, value):
         self._inSeq = value
     #END setInsertSequence()
