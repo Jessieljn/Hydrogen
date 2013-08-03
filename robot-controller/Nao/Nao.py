@@ -120,7 +120,7 @@ class Nao(QtCore.QObject):
 
     def say(self, msg, post):
         if self._sayToFile:
-            self._speechProxy.sayToFile(msg, "/home/nao/sayToNet/fifo.raw")
+            self._speechProxy.sayToFile(msg, "/tmp/fifo.raw")
             self._sayId = None
             post = True
         else:

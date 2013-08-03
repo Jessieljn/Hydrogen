@@ -13,6 +13,58 @@ class BaseStudy(QtGui.QWidget):
         self._buttons = None
     #END __init__()
 
+    def LEDActive(self):
+        if self._nao is not None:
+            self._nao.LEDrandomEyes(1.0, True)
+        #END if
+    #END LEDActive()
+
+    def LEDNormal(self):
+        if self._nao is not None:
+            self._nao.LEDNormal()
+        #END if
+    #END LEDNormal()
+
+    def setActionQueue(self, actionQueue):
+        self._actionQueue = actionQueue
+    #END setActionQueue()
+
+    def setNao(self, nao):
+        if self._nao is not None:
+            self._nao.connected.disconnect(self.on_nao_connected)
+            self._nao.disconnected.disconnect(self.on_nao_disconnected)
+        #END if
+        self._nao = nao
+        if self._nao is not None:
+            self._nao.connected.connect(self.on_nao_connected)
+            self._nao.disconnected.connect(self.on_nao_disconnected)
+        #END if
+    #END setNao()
+
+    def speech(self, txt):
+        return None
+    #END speech()
+
+    def on_button_clicked(self):
+        if self._actionQueue is not None:
+            self._actionQueue.addActions(self.sender().getRobotActions())
+        #END if
+    #END on_button_clicked()
+
+    def on_nao_connected(self):
+        pass
+    #END on_nao_connected()
+
+    def on_nao_disconnected(self):
+        pass
+    #END on_nao_disconnected()
+
+    def on_runSpeech_clicked(self):
+        if self._actionQueue is not None:
+            self._actionQueue.addActions(self.sender().getRobotActions())
+        #END if
+    #END on_runSpeech_clicked()
+
     def _setupUi(self, general_panel = True, custom_widget = None):
         wgtGeneral = None
         if general_panel:
@@ -106,52 +158,4 @@ class BaseStudy(QtGui.QWidget):
             #END if
         #END if
     #END _setupUi()
-
-    def LEDActive(self):
-        if self._nao is not None:
-            self._nao.LEDrandomEyes(1.0, True)
-        #END if
-    #END LEDActive()
-
-    def LEDNormal(self):
-        if self._nao is not None:
-            self._nao.LEDNormal()
-        #END if
-    #END LEDNormal()
-
-    def setActionQueue(self, actionQueue):
-        self._actionQueue = actionQueue
-    #END setActionQueue()
-
-    def setNao(self, nao):
-        if self._nao is not None:
-            self._nao.connected.disconnect(self.on_nao_connected)
-            self._nao.disconnected.disconnect(self.on_nao_disconnected)
-        #END if
-        self._nao = nao
-        if self._nao is not None:
-            self._nao.connected.connect(self.on_nao_connected)
-            self._nao.disconnected.connect(self.on_nao_disconnected)
-        #END if
-    #END setNao()
-
-    def on_button_clicked(self):
-        if self._actionQueue is not None:
-            self._actionQueue.addActions(self.sender().getRobotActions())
-        #END if
-    #END on_button_clicked()
-
-    def on_nao_connected(self):
-        pass
-    #END on_nao_connected()
-
-    def on_nao_disconnected(self):
-        pass
-    #END on_nao_disconnected()
-
-    def on_runSpeech_clicked(self):
-        if self._actionQueue is not None:
-            self._actionQueue.addActions(self.sender().getRobotActions())
-        #END if
-    #END on_runSpeech_clicked()
 #END BaseStudy
