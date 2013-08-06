@@ -63,10 +63,8 @@ class Empathy(QtGui.QWidget):
         elif current_phase <= 3:
             rgb = 0x003CB371
         elif current_phase <= 4:
-            rgb = 0x00008B45
-        elif current_phase <= 5:
             rgb = 0x00228B22
-        elif current_phase <= 6:
+        elif current_phase <= 5:
             rgb = 0x0000ff00
         else:
             rgb = 0x0087ceeb
@@ -99,7 +97,9 @@ class Empathy(QtGui.QWidget):
                 return bhv.get(self._jitterLevel)
             #END if
         #END for
-        return None
+        actions = self._bhvMovement.get(self._jitterLevel)
+        actions.append(Speech(txt, blocking = False))#, speed = self._wgtSpeech.getSpeed(), shaping = self._wgtSpeech.getShaping(), blocking = False))
+        return actions
     #END speech()
 
     def hideEvent(self, event):
@@ -113,11 +113,7 @@ class Empathy(QtGui.QWidget):
 
     def timerEvent(self, event):
         if self._idleRun and self._idleTime < QtCore.QTime.currentTime():
-            if self._idleCount <= 5:
-                actions = self._bhvIdleSmall.get(self._jitterLevel)
-            else:
-                actions = self._bhvIdleBig.get(self._jitterLevel)
-            #END if
+            actions = self._bhvIdleSmall.get(self._jitterLevel)
             actions.append(ActionStart())
             if not self._actionQueue.isRunning() and self._actionQueue.rowCount(None) <= 0:
                 self._actionQueue.addActions(actions)
@@ -178,6 +174,7 @@ class Empathy(QtGui.QWidget):
                         self._wgtSudoku.set(i, j, SudokuBoards[index][i][j])
                     #END for
                 #END for
+                self._wgtSudoku.resetLastCoordinate()
                 return
             #END if
         #END for
@@ -200,7 +197,7 @@ class Empathy(QtGui.QWidget):
     def on_jitterLevel_valueChanged(self, value):
         if value <= 0:
             self._jitterLevel = 0
-        elif value <= 6:
+        elif value <= 5:
             self._jitterLevel = value - 1
         else:
             self._jitterLevel = 0
@@ -371,6 +368,22 @@ class Empathy(QtGui.QWidget):
     def _setupInteractions(self, wgt):
         components = []
 
+        bhv = ActionCollection("Conv. Movement")
+        for i in range(10):
+            bhv.add(i, None, "Idle0")
+            bhv.add(i, None, "Idle1")
+            bhv.add(i, None, "Idle2")
+            bhv.add(i, None, "Idle3")
+            bhv.add(i, None, "Idle4")
+            bhv.add(i, None, "Idle5")
+            bhv.add(i, None, "Idle6")
+            bhv.add(i, None, "PalmUp")
+            bhv.add(i, None, "PalmUpLeft")
+            bhv.add(i, None, "PalmUpRight")
+        #END for
+        components.append(EmpathyButton(bhv))
+        self._bhvMovement = bhv
+
         bhv = ActionCollection("Conv. Filler")
         bhv.add(0, [Speech("ummmh,", speed = 50)])
         bhv.add(0, [Speech("well,", speed = 50)])
@@ -387,18 +400,18 @@ class Empathy(QtGui.QWidget):
         bhv.add(2, [Speech("well,", speed = 60, shaping = 110)])
         bhv.add(2, [Speech("let me think", speed = 90, shaping = 110)])
         bhv.add(2, [Speech("let's see", speed = 90, shaping = 110)])
-        bhv.add(4, [Speech("ummmh,", speed = 50)])
-        bhv.add(4, [Speech("well,", speed = 50)])
-        bhv.add(4, [Speech("well,", speed = 50)])
-        bhv.add(4, [Speech("let me think", speed = 80)])
-        bhv.add(4, [Speech("let's see", speed = 80)])
-        bhv.add(4, [Speech("ummmh,", speed = 70, shaping = 130)])
-        bhv.add(4, [Speech("well,", speed = 70, shaping = 130)])
-        bhv.add(4, [Speech("well,", speed = 70, shaping = 130)])
-        bhv.add(4, [Speech("let me" + self._markSpeech(90, 130) + "think", speed = 90, shaping = 110)])
-        bhv.add(4, [Speech("let me" + self._markSpeech(90, 110) + "think", speed = 90, shaping = 130)])
-        bhv.add(4, [Speech("let's" + self._markSpeech(90, 130) + "see", speed = 90, shaping = 110)])
-        bhv.add(4, [Speech("let's" + self._markSpeech(90, 110) + "see", speed = 90, shaping = 130)])
+        bhv.add(3, [Speech("ummmh,", speed = 50)])
+        bhv.add(3, [Speech("well,", speed = 50)])
+        bhv.add(3, [Speech("well,", speed = 50)])
+        bhv.add(3, [Speech("let me think", speed = 80)])
+        bhv.add(3, [Speech("let's see", speed = 80)])
+        bhv.add(3, [Speech("ummmh,", speed = 70, shaping = 130)])
+        bhv.add(3, [Speech("well,", speed = 70, shaping = 130)])
+        bhv.add(3, [Speech("well,", speed = 70, shaping = 130)])
+        bhv.add(3, [Speech("let me" + self._markSpeech(90, 130) + "think", speed = 90, shaping = 110)])
+        bhv.add(3, [Speech("let me" + self._markSpeech(90, 110) + "think", speed = 90, shaping = 130)])
+        bhv.add(3, [Speech("let's" + self._markSpeech(90, 130) + "see", speed = 90, shaping = 110)])
+        bhv.add(3, [Speech("let's" + self._markSpeech(90, 110) + "see", speed = 90, shaping = 130)])
         components.append(EmpathyButton(bhv))
         self._bhvFiller = bhv
 
@@ -428,8 +441,8 @@ class Empathy(QtGui.QWidget):
         bhv.add(0, [Speech("Thank you.", 80)])
         bhv.add(2, [Speech("Thank you.", 50)])
         bhv.add(2, [Speech("Thank" + self._markSpeech() + "you.", 50, 120)])
-        bhv.add(4, [Speech("Tha- tha- thank you.", 50)])
-        bhv.add(4, [Speech("Tha- Tha- thank" + self._markSpeech() + "you.", 50, 120)])
+        bhv.add(3, [Speech("Tha- tha- thank you.", 50)])
+        bhv.add(3, [Speech("Tha- Tha- thank" + self._markSpeech() + "you.", 50, 120)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PointMyselfLeft")
             bhv.add(i, None, "PointMyselfRight")
@@ -448,12 +461,12 @@ class Empathy(QtGui.QWidget):
         bhv.add(2, [Speech("Good.", 50)])
         bhv.add(2, [Speech("Cool.", 50)])
         bhv.add(2, [Speech("Nice.", 50)])
-        bhv.add(4, [Speech("Good.", 50)])
-        bhv.add(4, [Speech("Cool.", 50)])
-        bhv.add(4, [Speech("Nice.", 50)])
-        bhv.add(4, [Speech("Good.", 50, 120)])
-        bhv.add(4, [Speech("Cool.", 50, 120)])
-        bhv.add(4, [Speech("Nice.", 50, 120)])
+        bhv.add(3, [Speech("Good.", 50)])
+        bhv.add(3, [Speech("Cool.", 50)])
+        bhv.add(3, [Speech("Nice.", 50)])
+        bhv.add(3, [Speech("Good.", 50, 120)])
+        bhv.add(3, [Speech("Cool.", 50, 120)])
+        bhv.add(3, [Speech("Nice.", 50, 120)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PointMyselfLeft")
             bhv.add(i, None, "PointMyselfRight")
@@ -471,12 +484,12 @@ class Empathy(QtGui.QWidget):
         bhv.add(2, [Speech("Okay.", 50)])
         bhv.add(2, [Speech("I got it.", 60)])
         bhv.add(2, [Speech("Understood.", 50)])
-        bhv.add(4, [Speech("Okay.", 50)])
-        bhv.add(4, [Speech("I got it.", 60)])
-        bhv.add(4, [Speech("Understood.", 50)])
-        bhv.add(4, [Speech("Okay.", 50, 120)])
-        bhv.add(4, [Speech("I" + self._markSpeech(60, 120) + "got it.", 60)])
-        bhv.add(4, [Speech("Under" + self._markSpeech(50, 120) + "stood.", 50)])
+        bhv.add(3, [Speech("Okay.", 50)])
+        bhv.add(3, [Speech("I got it.", 60)])
+        bhv.add(3, [Speech("Understood.", 50)])
+        bhv.add(3, [Speech("Okay.", 50, 120)])
+        bhv.add(3, [Speech("I" + self._markSpeech(60, 120) + "got it.", 60)])
+        bhv.add(3, [Speech("Under" + self._markSpeech(50, 120) + "stood.", 50)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "Idle5")
             bhv.add(i, None, "Idle6")
@@ -495,12 +508,12 @@ class Empathy(QtGui.QWidget):
         bhv.add(2, [Speech("Yes", 50)])
         bhv.add(2, [Speech("I agree.", 50)])
         bhv.add(2, [Speech("You are right.", 50)])
-        bhv.add(4, [Speech("Yes", 50)])
-        bhv.add(4, [Speech("I agree.", 50)])
-        bhv.add(4, [Speech("You are right.", 50)])
-        bhv.add(4, [Speech("Yes", 50, 120)])
-        bhv.add(4, [Speech("I" + self._markSpeech(50, 120) + "agree.", 50)])
-        bhv.add(4, [Speech("You are" + self._markSpeech(50, 120) + "right.", 50)])
+        bhv.add(3, [Speech("Yes", 50)])
+        bhv.add(3, [Speech("I agree.", 50)])
+        bhv.add(3, [Speech("You are right.", 50)])
+        bhv.add(3, [Speech("Yes", 50, 120)])
+        bhv.add(3, [Speech("I" + self._markSpeech(50, 120) + "agree.", 50)])
+        bhv.add(3, [Speech("You are" + self._markSpeech(50, 120) + "right.", 50)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PointYouLeft")
             bhv.add(i, None, "PointYouRight")
@@ -515,10 +528,10 @@ class Empathy(QtGui.QWidget):
         bhv.add(0, [Speech("Right.")])
         bhv.add(2, [Speech("Yes", 50)])
         bhv.add(2, [Speech("Right.", 50)])
-        bhv.add(4, [Speech("Yes", 50)])
-        bhv.add(4, [Speech("Right.", 50)])
-        bhv.add(4, [Speech("Yes", 50, 120)])
-        bhv.add(4, [Speech("Right.", 50, 120)])
+        bhv.add(3, [Speech("Yes", 50)])
+        bhv.add(3, [Speech("Right.", 50)])
+        bhv.add(3, [Speech("Yes", 50, 120)])
+        bhv.add(3, [Speech("Right.", 50, 120)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "Idle5")
             bhv.add(i, None, "Idle6")
@@ -533,10 +546,10 @@ class Empathy(QtGui.QWidget):
         bhv.add(0, [Speech("I don't think so")])
         bhv.add(2, [Speech("No", 50)])
         bhv.add(2, [Speech("I don't think so", 50)])
-        bhv.add(4, [Speech("No", 50)])
-        bhv.add(4, [Speech("I don't think so", 50)])
-        bhv.add(4, [Speech("No", 50, 120)])
-        bhv.add(4, [Speech("I don't" + self._markSpeech(50, 120) + "think so", 50)])
+        bhv.add(3, [Speech("No", 50)])
+        bhv.add(3, [Speech("I don't think so", 50)])
+        bhv.add(3, [Speech("No", 50, 120)])
+        bhv.add(3, [Speech("I don't" + self._markSpeech(50, 120) + "think so", 50)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "Disagree")
             bhv.add(i, None, "DisagreeLeft")
@@ -550,8 +563,8 @@ class Empathy(QtGui.QWidget):
         bhv.add(0, [Speech("You are very good at Sudoku.")])
         bhv.add(2, [Speech("You are" + self._markSpeech() + "doing very well.", 70, 120)])
         bhv.add(2, [Speech("You are" + self._markSpeech() + "very good at Sudoku.", 70, 120)])
-        bhv.add(4, [Speech("You are" + self._markSpeech() + "do- do- do-" + self._markSpeech(50, 120) + "doing very well.", 70, 120)])
-        bhv.add(4, [Speech("You are" + self._markSpeech() + "goo- goo- goo-" + self._markSpeech(50, 120) + "very good at Sudoku.", 70, 120)])
+        bhv.add(3, [Speech("You are" + self._markSpeech() + "do- do- do-" + self._markSpeech(50, 120) + "doing very well.", 70, 120)])
+        bhv.add(3, [Speech("You are" + self._markSpeech() + "goo- goo- goo-" + self._markSpeech(50, 120) + "very good at Sudoku.", 70, 120)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PointYouLeft")
             bhv.add(i, None, "PointYouRight")
@@ -562,10 +575,10 @@ class Empathy(QtGui.QWidget):
         bhv.add(0, [Speech("What do you think?")])
         bhv.add(2, [Speech("What do you" + self._markSpeech(95) + "thiin- thiin- thii-."), Speech("Ahhhe, what do you think?")])
         bhv.add(2, [Speech("What do you do you do you think?")])
-        bhv.add(4, [Speech("What do you" + self._markSpeech(95) + "thiin- thiin- thii-."), Speech("Ahhhe, what do you think?")])
-        bhv.add(4, [Speech("What do you do you do you think?")])
-        bhv.add(4, [Speech("What do you" + self._markSpeech(70, 120) + "thiin- thiin- thii-."), Speech("Sorry.", speed = 50), Speech("What do you think?", 75, 110)])
-        bhv.add(4, [Speech("What" + self._markSpeech(70, 120) + "do you thii-" + self._markSpeech(50) + "think?")])
+        bhv.add(3, [Speech("What do you" + self._markSpeech(95) + "thiin- thiin- thii-."), Speech("Ahhhe, what do you think?")])
+        bhv.add(3, [Speech("What do you do you do you think?")])
+        bhv.add(3, [Speech("What do you" + self._markSpeech(70, 120) + "thiin- thiin- thii-."), Speech("Sorry.", speed = 50), Speech("What do you think?", 75, 110)])
+        bhv.add(3, [Speech("What" + self._markSpeech(70, 120) + "do you thii-" + self._markSpeech(50) + "think?")])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PalmUp")
             bhv.add(i, None, "PalmUpLeft")
@@ -579,7 +592,7 @@ class Empathy(QtGui.QWidget):
         bhv = ActionCollection("Easy!")
         bhv.add(0, [Wait(300), Speech("This one is easy")])
         bhv.add(2, [Wait(300), Speech("This one is e- e- easy")])
-        bhv.add(4, [Wait(300), Speech("This one is" + self._markSpeech(90, 110) + "e- e-" + self._markSpeech(50, 130) + "e- e-."), Speech("Sorry. This one is easy")])
+        bhv.add(3, [Wait(300), Speech("This one is" + self._markSpeech(90, 110) + "e- e-" + self._markSpeech(50, 130) + "e- e-."), Speech("Sorry. This one is easy")])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PalmUp")
             bhv.add(i, None, "PalmUpLeft")
@@ -592,8 +605,8 @@ class Empathy(QtGui.QWidget):
         bhv.add(0, [Wait(300), Speech("This one is difficult")])
         bhv.add(2, [Wait(300), Speech("I don't noh- know")])
         bhv.add(2, [Wait(300), Speech("This one- one- one-."), Speech("This one is difficult")])
-        bhv.add(4, [Wait(300), Speech("I don't no- no- noh-."), Speech("No.", 50, 130), Speech("I don't know")])
-        bhv.add(4, [Wait(300), Speech("This one is diff- diff- diff-."), Speech("Ahhhe.", 50, 130), Speech("Sorry. This one is difficult", 70)])
+        bhv.add(3, [Wait(300), Speech("I don't no- no- noh-."), Speech("No.", 50, 130), Speech("I don't know")])
+        bhv.add(3, [Wait(300), Speech("This one is diff- diff- diff-."), Speech("Ahhhe.", 50, 130), Speech("Sorry. This one is difficult", 70)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "DontKnow")
             bhv.add(i, None, "DontKnowLeft")
@@ -613,9 +626,9 @@ class Empathy(QtGui.QWidget):
         bhv.add(2, [Speech("Is this" + self._markSpeech(80, 115) + "board easy?")])
         bhv.add(2, [Speech("Is this" + self._markSpeech(80, 115) + "board difficult?")])
         bhv.add(2, [Speech("What" + self._markSpeech(80, 115) + "do you think about" + self._markSpeech(90, 100) + "this board?")])
-        bhv.add(4, [Speech("Is this" + self._markSpeech(80, 130) + "board easy?", 50)])
-        bhv.add(4, [Speech("Is this" + self._markSpeech(80, 130) + "board difficult?", 50)])
-        bhv.add(4, [Speech("What" + self._markSpeech(80, 130) + "do you thiih thiih think about" + self._markSpeech(90, 100) + "this board?", 50)])
+        bhv.add(3, [Speech("Is this" + self._markSpeech(80, 130) + "board easy?", 50)])
+        bhv.add(3, [Speech("Is this" + self._markSpeech(80, 130) + "board difficult?", 50)])
+        bhv.add(3, [Speech("What" + self._markSpeech(80, 130) + "do you thiih thiih think about" + self._markSpeech(90, 100) + "this board?", 50)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "DontKnowLeft")
             bhv.add(i, None, "DontKnowRight")
@@ -631,8 +644,8 @@ class Empathy(QtGui.QWidget):
         bhv.add(0, [Speech("Few more numbers to finish this board.")])
         bhv.add(2, [Speech("We are almost" + self._markSpeech(80, 110) + "done with this board.")])
         bhv.add(2, [Speech("Few more numbers to" + self._markSpeech(80, 110) + "finish this board.")])
-        bhv.add(4, [Speech("We are almost" + self._markSpeech(80, 120) + "done with the- the- the-" + self._markSpeech() + "this board.", 130)])
-        bhv.add(4, [Speech("Few more numbers to" + self._markSpeech(80, 110) + "fii- fii-." + self._markSpeech() + "Sorry.finish this board.")])
+        bhv.add(3, [Speech("We are almost" + self._markSpeech(80, 120) + "done with the- the- the-" + self._markSpeech() + "this board.", 130)])
+        bhv.add(3, [Speech("Few more numbers to" + self._markSpeech(80, 110) + "fii- fii-." + self._markSpeech() + "Sorry.finish this board.")])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PalmUp")
             bhv.add(i, None, "PalmUpLeft")
@@ -647,9 +660,9 @@ class Empathy(QtGui.QWidget):
         bhv.add(2, [Speech("I don't lie- lie- like this board."), Speech("Let's start a new boh- boh- board.")])
         bhv.add(2, [Speech("I don't like this board."), Speech("Can we start a new boh- boh- board?")])
         bhv.add(2, [Speech("This board is not in- in- interesting."), Speech("Le- le- let's start a new board.")])
-        bhv.add(4, [Speech("I don't lie- lie-" + self._markSpeech() + "like this board.", 80, 120), Speech("Let's start a new" + self._markSpeech(80, 110) + "boh- boh- board.")])
-        bhv.add(4, [Speech("I don't like" + self._markSpeech(80, 120) + "this board."), Speech("Can we start a new boh- boh- board?")])
-        bhv.add(4, [Speech("This board is not in- in- interesting."), Speech("Le- le- let's start" + self._markSpeech(80, 120) + "a new board.")])
+        bhv.add(3, [Speech("I don't lie- lie-" + self._markSpeech() + "like this board.", 80, 120), Speech("Let's start a new" + self._markSpeech(80, 110) + "boh- boh- board.")])
+        bhv.add(3, [Speech("I don't like" + self._markSpeech(80, 120) + "this board."), Speech("Can we start a new boh- boh- board?")])
+        bhv.add(3, [Speech("This board is not in- in- interesting."), Speech("Le- le- let's start" + self._markSpeech(80, 120) + "a new board.")])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PalmUp")
             bhv.add(i, None, "PalmUpLeft")
@@ -662,8 +675,8 @@ class Empathy(QtGui.QWidget):
         bhv.add(0, [Speech("Let's move on to next board.")])
         bhv.add(2, [Speech("Can you" + self._markSpeech(50) + "sho- sho-." + self._markSpeech() + "show me next Sudoku board?")])
         bhv.add(2, [Speech("Let's" + self._markSpeech(50) + "moo- moo-." + self._markSpeech() + "move on to next board.")])
-        bhv.add(4, [Speech("Can you" + self._markSpeech(50) + "sho- sho- sho-." + self._markSpeech(50, 130) + "I'm Sorry." + self._markSpeech() + "Can you show me next Sudoku board?")])
-        bhv.add(4, [Speech("Let's" + self._markSpeech(50) + "moo moo- mooh-." + self._markSpeech(50, 130) + "I'm Sorry." + self._markSpeech() + "Let's move on to next board.")])
+        bhv.add(3, [Speech("Can you" + self._markSpeech(50) + "sho- sho- sho-." + self._markSpeech(50, 130) + "I'm Sorry." + self._markSpeech() + "Can you show me next Sudoku board?")])
+        bhv.add(3, [Speech("Let's" + self._markSpeech(50) + "moo moo- mooh-." + self._markSpeech(50, 130) + "I'm Sorry." + self._markSpeech() + "Let's move on to next board.")])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PointMyself")
             bhv.add(i, None, "PointMyselfLeft")
@@ -680,7 +693,7 @@ class Empathy(QtGui.QWidget):
         bhv = ActionCollection("Continue Sudoku")
         bhv.add(0, [Speech("Let's continue playing Sudoku.")])
         bhv.add(2, [Speech("Let's" + self._markSpeech(50) + "continue" + self._markSpeech() + "playing Sudoku.")])
-        bhv.add(4, [Speech(self._markSpeech(75) + "Let's" + self._markSpeech(50, 120) + "cont- cont-" + self._markSpeech() + "continue playing Sudoku.")])
+        bhv.add(3, [Speech(self._markSpeech(75) + "Let's" + self._markSpeech(50, 120) + "cont- cont-" + self._markSpeech() + "continue playing Sudoku.")])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PalmUp")
             bhv.add(i, None, "PalmUpLeft")
@@ -712,9 +725,9 @@ class Empathy(QtGui.QWidget):
         bhv.add(2, [Speech("Are you oh- okay?"), Speech("I can help you.")])
         bhv.add(2, [Speech("I can" + self._markSpeech(80, 120) + "help you out.")])
         bhv.add(2, [Speech("Do you need any heh- heh-." + self._markSpeech(80) + "Do you need any help?")])
-        bhv.add(4, [Speech("Are you okay?"), Speech("I can he- heh-."), Speech("I can help you.")])
-        bhv.add(4, [Speech("I can" + self._markSpeech(80, 120) + "help you out.")])
-        bhv.add(4, [Speech("Do you need any heh- heh- heh- heh-."), Speech("Sorry." + self._markSpeech(80) + "Do you need any help?")])
+        bhv.add(3, [Speech("Are you okay?"), Speech("I can he- heh-."), Speech("I can help you.")])
+        bhv.add(3, [Speech("I can" + self._markSpeech(80, 120) + "help you out.")])
+        bhv.add(3, [Speech("Do you need any heh- heh- heh- heh-."), Speech("Sorry." + self._markSpeech(80) + "Do you need any help?")])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PointMyself")
             bhv.add(i, None, "PointMyselfLeft")
@@ -732,7 +745,7 @@ class Empathy(QtGui.QWidget):
         bhv = ActionCollection("Don't touch me")
         bhv.add(0, [Speech("Please, do not touch me.")])
         bhv.add(2, [Speech("Please, do not theh- touch me.")])
-        bhv.add(4, [Speech("Please, do not" + self._markSpeech(140, 130) + "touch me.")])
+        bhv.add(3, [Speech("Please, do not" + self._markSpeech(140, 130) + "touch me.")])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "Disagree")
             bhv.add(i, None, "DisagreeLeft")
@@ -789,7 +802,7 @@ class Empathy(QtGui.QWidget):
         spinbox = QtGui.QSpinBox(widgetLevel)
         spinbox.setMinimumWidth(80)
         spinbox.setPrefix("lv ")
-        spinbox.setRange(0, 7)
+        spinbox.setRange(0, 6)
         spinbox.setSingleStep(1)
         spinbox.setValue(0)
         spinbox.valueChanged.connect(self.on_jitterLevel_valueChanged)
@@ -919,7 +932,7 @@ class Empathy(QtGui.QWidget):
 
         bhv = ActionCollection("8 mins, Do u go UofM?", False)
         bhv.add(0, [Wait(350), Speech("Do you go to the University of Manitobah?", 85)])
-        bhv.add(1, [Wait(350), Speech("Do you go to the University of Manitobah?", 85)])
+        bhv.add(1, [Wait(350), Speech("Do you go to the University of Mah- Mah- Manitobah?", 85)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PointYouLeft")
             bhv.add(i, None, "PointYouRight")
@@ -937,7 +950,7 @@ class Empathy(QtGui.QWidget):
 
         bhv = ActionCollection("Answer, No, what do you do", False)
         bhv.add(0, [Wait(350), Speech("What do you do instead.", 85)])
-        bhv.add(1, [Wait(350), Speech("What do you do instead.", 85)])
+        bhv.add(1, [Wait(350), Speech("What do you do ins- ins- instead.", 85)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "DontKnowLeft")
             bhv.add(i, None, "DontKnowRight")
@@ -957,7 +970,7 @@ class Empathy(QtGui.QWidget):
 
         bhv = ActionCollection("Answer, No, where from?", False)
         bhv.add(0, [Wait(350), Speech("Where are you from?", 85)])
-        bhv.add(1, [Wait(350), Speech("Where are you from?", 85)])
+        bhv.add(1, [Wait(350), Speech("Whe- whe- where are you from?", 85)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PalmUpLeft")
             bhv.add(i, None, "PalmUpRight")
@@ -1277,30 +1290,30 @@ class Empathy(QtGui.QWidget):
         bhv.add(2, [ReplaceableSpeech("I think" + self._markSpeech(90, 105) + "the value, %1, is %2.", 50)])
         bhv.add(2, [ReplaceableSpeech("The number" + self._markSpeech(90, 105) + ", %1, is %2.", 50)])
         bhv.add(2, [ReplaceableSpeech("%1, Let's try," + self._markSpeech(90, 105) + "the number, %2.", 50)])
-        bhv.add(4, [ReplaceableSpeech("I believe" + self._markSpeech(90, 115) + "the answer, %1, is %2.", 50, 110)])
-        bhv.add(4, [ReplaceableSpeech("I believe" + self._markSpeech(90, 115) + "the number, %1, is %2.", 50, 110)])
-        bhv.add(4, [ReplaceableSpeech("I believe" + self._markSpeech(90, 115) + "the value, %1, is %2.", 50, 110)])
-        bhv.add(4, [ReplaceableSpeech("I think" + self._markSpeech(90, 115) + "the answer, %1, is %2.", 50, 110)])
-        bhv.add(4, [ReplaceableSpeech("I think" + self._markSpeech(90, 115) + "the number, %1, is %2.", 50, 110)])
-        bhv.add(4, [ReplaceableSpeech("I think" + self._markSpeech(90, 115) + "the value, %1, is %2.", 50, 110)])
-        bhv.add(4, [ReplaceableSpeech("The number" + self._markSpeech(90, 115) + ", %1, is %2.", 50, 110)])
-        bhv.add(4, [ReplaceableSpeech("%1, Let's tra- tra-," + self._markSpeech(90, 115) + "Let's try, the number, %2.", 50, 110)])
-        bhv.add(4, [ReplaceableSpeech("I believe" + self._markSpeech(90, 120) + "the answer, %1, is %2.", 50, 115)])
-        bhv.add(4, [ReplaceableSpeech("I believe" + self._markSpeech(90, 120) + "the number, %1, is %2.", 50, 115)])
-        bhv.add(4, [ReplaceableSpeech("I believe" + self._markSpeech(90, 120) + "the value, %1, is %2.", 50, 115)])
-        bhv.add(4, [ReplaceableSpeech("I think" + self._markSpeech(90, 120) + "the answer, %1, is %2.", 50, 115)])
-        bhv.add(4, [ReplaceableSpeech("I think" + self._markSpeech(90, 120) + "the number, %1, is %2.", 50, 115)])
-        bhv.add(4, [ReplaceableSpeech("I think" + self._markSpeech(90, 120) + "the value, %1, is %2.", 50, 115)])
-        bhv.add(4, [ReplaceableSpeech("The number" + self._markSpeech(90, 120) + ", %1, is %2.", 50, 115)])
-        bhv.add(4, [ReplaceableSpeech("%1, Let's tra- tra-" + self._markSpeech(50, 120) + "tra- tra-." + self._markSpeech(120) + "Sorry. Let's try, the number, %2.", 50, 105)])
-        bhv.add(4, [ReplaceableSpeech("I believe the answer," + self._markSpeech(90, 120) + "%1, is %2.", 50, 115)])
-        bhv.add(4, [ReplaceableSpeech("I believe the number," + self._markSpeech(90, 120) + "%1, is %2.", 50, 115)])
-        bhv.add(4, [ReplaceableSpeech("I believe the value," + self._markSpeech(90, 120) + "%1, is %2.", 50, 115)])
-        bhv.add(4, [ReplaceableSpeech("I think the answer," + self._markSpeech(90, 120) + "%1, is %2.", 50, 115)])
-        bhv.add(4, [ReplaceableSpeech("I think the number," + self._markSpeech(90, 120) + "%1, is %2.", 50, 115)])
-        bhv.add(4, [ReplaceableSpeech("I think the value," + self._markSpeech(90, 120) + "%1, is %2.", 50, 115)])
-        bhv.add(4, [ReplaceableSpeech("The" + self._markSpeech(90, 120) + "number," + self._markSpeech() + "%1, is %2.", 50, 115)])
-        bhv.add(4, [ReplaceableSpeech("%1, Let's" + self._markSpeech() + "tra- tra-" + self._markSpeech(50, 120) + "tra- tra-." + self._markSpeech(90, 120) + "Sorry. Let's try, the number, %2.", 50, 105)])
+        bhv.add(3, [ReplaceableSpeech("I believe" + self._markSpeech(90, 115) + "the answer, %1, is %2.", 50, 110)])
+        bhv.add(3, [ReplaceableSpeech("I believe" + self._markSpeech(90, 115) + "the number, %1, is %2.", 50, 110)])
+        bhv.add(3, [ReplaceableSpeech("I believe" + self._markSpeech(90, 115) + "the value, %1, is %2.", 50, 110)])
+        bhv.add(3, [ReplaceableSpeech("I think" + self._markSpeech(90, 115) + "the answer, %1, is %2.", 50, 110)])
+        bhv.add(3, [ReplaceableSpeech("I think" + self._markSpeech(90, 115) + "the number, %1, is %2.", 50, 110)])
+        bhv.add(3, [ReplaceableSpeech("I think" + self._markSpeech(90, 115) + "the value, %1, is %2.", 50, 110)])
+        bhv.add(3, [ReplaceableSpeech("The number" + self._markSpeech(90, 115) + ", %1, is %2.", 50, 110)])
+        bhv.add(3, [ReplaceableSpeech("%1, Let's tra- tra-," + self._markSpeech(90, 115) + "Let's try, the number, %2.", 50, 110)])
+        bhv.add(3, [ReplaceableSpeech("I believe" + self._markSpeech(90, 120) + "the answer, %1, is %2.", 50, 115)])
+        bhv.add(3, [ReplaceableSpeech("I believe" + self._markSpeech(90, 120) + "the number, %1, is %2.", 50, 115)])
+        bhv.add(3, [ReplaceableSpeech("I believe" + self._markSpeech(90, 120) + "the value, %1, is %2.", 50, 115)])
+        bhv.add(3, [ReplaceableSpeech("I think" + self._markSpeech(90, 120) + "the answer, %1, is %2.", 50, 115)])
+        bhv.add(3, [ReplaceableSpeech("I think" + self._markSpeech(90, 120) + "the number, %1, is %2.", 50, 115)])
+        bhv.add(3, [ReplaceableSpeech("I think" + self._markSpeech(90, 120) + "the value, %1, is %2.", 50, 115)])
+        bhv.add(3, [ReplaceableSpeech("The number" + self._markSpeech(90, 120) + ", %1, is %2.", 50, 115)])
+        bhv.add(3, [ReplaceableSpeech("%1, Let's tra- tra-" + self._markSpeech(50, 120) + "tra- tra-." + self._markSpeech(120) + "Sorry. Let's try, the number, %2.", 50, 105)])
+        bhv.add(3, [ReplaceableSpeech("I believe the answer," + self._markSpeech(90, 120) + "%1, is %2.", 50, 115)])
+        bhv.add(3, [ReplaceableSpeech("I believe the number," + self._markSpeech(90, 120) + "%1, is %2.", 50, 115)])
+        bhv.add(3, [ReplaceableSpeech("I believe the value," + self._markSpeech(90, 120) + "%1, is %2.", 50, 115)])
+        bhv.add(3, [ReplaceableSpeech("I think the answer," + self._markSpeech(90, 120) + "%1, is %2.", 50, 115)])
+        bhv.add(3, [ReplaceableSpeech("I think the number," + self._markSpeech(90, 120) + "%1, is %2.", 50, 115)])
+        bhv.add(3, [ReplaceableSpeech("I think the value," + self._markSpeech(90, 120) + "%1, is %2.", 50, 115)])
+        bhv.add(3, [ReplaceableSpeech("The" + self._markSpeech(90, 120) + "number," + self._markSpeech() + "%1, is %2.", 50, 115)])
+        bhv.add(3, [ReplaceableSpeech("%1, Let's" + self._markSpeech() + "tra- tra-" + self._markSpeech(50, 120) + "tra- tra-." + self._markSpeech(90, 120) + "Sorry. Let's try, the number, %2.", 50, 105)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PointMyself")
             bhv.add(i, None, "PointMyselfLeft")
@@ -1346,8 +1359,8 @@ class Empathy(QtGui.QWidget):
         bhv.add(0, [Speech("Where was it?")])
         bhv.add(2, [Speech("Which box did you fee- fill?")])
         bhv.add(2, [Speech("Wheh- wheh- where was it?")])
-        bhv.add(4, [Speech("Which box did you" + self._markSpeech(90, 130) + "fill.")])
-        bhv.add(4, [Speech("Wheh- wheh- wheh-." + self._markSpeech() + "I am sorry.", 50, 120), Speech("Where was it?")])
+        bhv.add(3, [Speech("Which box did you" + self._markSpeech(90, 130) + "fill.")])
+        bhv.add(3, [Speech("Wheh- wheh- wheh-." + self._markSpeech() + "I am sorry.", 50, 120), Speech("Where was it?")])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "DontKnow")
             bhv.add(i, None, "DontKnowLeft")
@@ -1365,8 +1378,8 @@ class Empathy(QtGui.QWidget):
         bhv.add(0, [Speech("Would you fill the number in for me?")])
         bhv.add(2, [Speech("Can you fill." + self._markSpeech(70) + "the num- number in for me?")])
         bhv.add(2, [Speech("Would you fill." + self._markSpeech(70) + "the num- number in for me?")])
-        bhv.add(4, [Speech("Can you fill." + self._markSpeech(70, 125) + "the num- number in for me?")])
-        bhv.add(4, [Speech("Would you fill." + self._markSpeech(70, 125) + "the num- number in for me?")])
+        bhv.add(3, [Speech("Can you fill." + self._markSpeech(70, 125) + "the num- number in for me?")])
+        bhv.add(3, [Speech("Would you fill." + self._markSpeech(70, 125) + "the num- number in for me?")])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PalmUp")
             bhv.add(i, None, "PalmUpLeft")
@@ -1380,7 +1393,7 @@ class Empathy(QtGui.QWidget):
         bhv = ActionCollection("My turn", False)
         bhv.add(0, [Speech("It's my turn."), Speech("Wait for me please.")])
         bhv.add(2, [Speech("It's my turn.", 60), Speech("Wait for me please.")])
-        bhv.add(4, [Speech("It's my turn.", 60, 125), Speech("Wait for me please.")])
+        bhv.add(3, [Speech("It's my turn.", 60, 125), Speech("Wait for me please.")])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PointMyself")
             bhv.add(i, None, "PointMyselfLeft")
@@ -1394,7 +1407,7 @@ class Empathy(QtGui.QWidget):
         bhv = ActionCollection("Your turn", False)
         bhv.add(0, [Speech("It's your turn.")])
         bhv.add(2, [Speech("It's your turn.", 60)])
-        bhv.add(4, [Speech("It's your turn.", 60, 125)])
+        bhv.add(3, [Speech("It's your turn.", 60, 125)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PointYou")
             bhv.add(i, None, "PointYouLeft")

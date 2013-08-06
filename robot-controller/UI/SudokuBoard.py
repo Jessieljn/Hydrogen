@@ -9,6 +9,7 @@ class SudokuBoard(QtGui.QWidget):
         super(SudokuBoard, self).__init__(parent)
         self._boxes = []
         self._subgrids = []
+        self._lastCoord = None
 
         for i in range(9):
             self._boxes.append([])
@@ -94,6 +95,10 @@ class SudokuBoard(QtGui.QWidget):
         self._subgrids[i][j].setPalette(palette)
     #END highlightSubgrid()
 
+    def resetLastCoordinate(self):
+        self._lastCoord = None
+    #END resetLastCoordinate()
+
     def solveOne(self):
         solver = SudokuSolver()
         for i in range(9):
@@ -106,7 +111,8 @@ class SudokuBoard(QtGui.QWidget):
                 solver.set(j + 1, i + 1, value)
             #END for
         #END for
-        j, i, value = solver.solveOne()
+        j, i, value = solver.solveOne(self._lastCoord)
+        self._lastCoord = (j, i)
         if value == 0:
             self.valueChanged.emit(0, 0, 0)
         else:
@@ -122,6 +128,7 @@ class SudokuBoard(QtGui.QWidget):
         else:
             self._boxes[i][j].setText(str(value))
         #END if
+        self._lastCoord = (j, i)
     #END set()
 
     def _on_box_inputCancelled(self):

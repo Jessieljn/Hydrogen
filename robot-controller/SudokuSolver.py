@@ -51,7 +51,7 @@ class SudokuSolver(object):
         #END if
     #END set()
 
-    def solveOne(self):
+    def solveOne(self, coord = None):
         # pick an obvious number from a subgrid
         for i in range(3):
             for j in range(3):
@@ -109,18 +109,31 @@ class SudokuSolver(object):
             #END if
         #END for
 
+        # there is no obvious and correct answer
+        # let's pick the cloest number from the given coordinate
+
+        dist = 0x7FFFFFFF
+        retval = (0, 0, 0)
         for i in range(9):
             for j in range(9):
                 value = self._solveOneTryAt(i, j)
                 if value != 0:
-                    return j + 1, i + 1, value
+                    if coord is None:
+                        return j + 1, i + 1, value
+                    else:
+                        tmp = abs(coord[0] - (j + 1)) + abs(coord[1] - (i + 1))
+                        if tmp <= dist:
+                            dist = tmp
+                            retval = (j + 1, i + 1, value)
+                        #END if
+                    #END if
                 #END if
             #END for
         #END for
 
         # TODO Add complex methods to solve
 
-        return 0, 0, 0
+        return retval
     #END solveOne()
 
     def printBoard(self):
