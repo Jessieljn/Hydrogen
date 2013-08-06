@@ -98,7 +98,20 @@ class Empathy(QtGui.QWidget):
             #END if
         #END for
         actions = self._bhvMovement.get(self._jitterLevel)
-        actions.append(Speech(txt, blocking = False))#, speed = self._wgtSpeech.getSpeed(), shaping = self._wgtSpeech.getShaping(), blocking = False))
+        if self._jitterLevel <= 1:
+            actions.append(Speech(txt, blocking = False))
+        else:
+            if random.randint(0, 100) <= 70:
+                txt = txt.replace("want", "wah- wah- want")
+            #END if
+            if random.randint(0, 100) <= 50:
+                txt = txt.replace("where", "wheh- wheh- where")
+            #END if
+            if random.randint(0, 100) <= 30:
+                txt = txt.replace("you", self._markSpeech(50, 120) + "you- you- you." + self._markSpeech(85))
+            #END if
+            actions.append(Speech(txt, speed = 85, blocking = False))
+        #END if
         return actions
     #END speech()
 
@@ -970,7 +983,7 @@ class Empathy(QtGui.QWidget):
 
         bhv = ActionCollection("Answer, No, where from?", False)
         bhv.add(0, [Wait(350), Speech("Where are you from?", 85)])
-        bhv.add(1, [Wait(350), Speech("Whe- whe- where are you from?", 85)])
+        bhv.add(1, [Wait(350), Speech("Wheh- wheh- where are you from?", 85)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PalmUpLeft")
             bhv.add(i, None, "PalmUpRight")
@@ -992,7 +1005,7 @@ class Empathy(QtGui.QWidget):
 
         bhv = ActionCollection("14 mins, like board games?", False)
         bhv.add(0, [Speech("Do you like board games?", 85)])
-        bhv.add(1, [Speech("Do you like board games?", 85)])
+        bhv.add(1, [Speech("Do you like boh- boh- board games?", 85)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PalmUp")
             bhv.add(i, None, "PalmUpLeft")
@@ -1035,7 +1048,7 @@ class Empathy(QtGui.QWidget):
         widgetRepSpeech = QtGui.QWidget()
         bhv = ActionCollection("16 mins, I like your", False)
         bhv.add(0, [ReplaceableSpeech("I like your %1."), Speech("Where did you get it?")])
-        bhv.add(2, [ReplaceableSpeech("I lie- lie- like your %1.", 85), Speech("Wheh- wheh-" + self._markSpeech(85) + "where did you get it?", 50)])
+        bhv.add(2, [ReplaceableSpeech("I" + self._markSpeech(50, 130) + "lie- lie-" + self._markSpeech(85) + "like your %1.", 85), Speech("Wheh- wheh-" + self._markSpeech(85) + "where did you get it?", 50)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "PalmUp")
             bhv.add(i, None, "PalmUpLeft")
