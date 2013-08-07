@@ -259,6 +259,23 @@ class Empathy(QtGui.QWidget):
         self._actionQueue.addActions(action)
     #END on_sayanswerVerbose_clicked()
 
+    def on_solveOne_clicked(self):
+        if self._jitterLevel <= 2 or random.randint(0, 100) <= 80:
+            self._wgtSudoku.solveOne()
+        else:
+            i = random.randint(9, 29)
+            j = str(chr(ord('a') + random.randint(9, 19)))
+            value = random.randint(10, 30)
+            actions = self._bhvAnswer.get(self._jitterLevel)
+            for action in actions:
+                if isinstance(action, ReplaceableSpeech):
+                    action.replace(self._toCoordinate(j, i), str(value))
+                #END if
+            #END for
+            self._actionQueue.addActions(actions)
+        #END if
+    #END on_solveOne_clicked()
+
     def on_sudoku_valueChanged(self, i, j, value):
         self._deselectSubgrid()
         self._lastSudoku = [i, j, value]
@@ -303,8 +320,10 @@ class Empathy(QtGui.QWidget):
             txt += ", geeh."
         elif x == 7:
             txt += ", h."
-        else:
+        elif x == 8:
             txt += ", ai."
+        else:
+            txt += ", " + str(x)
         #END if
         return txt + " " + str(y + 1)
     #END _toCoordinate()
@@ -327,8 +346,10 @@ class Empathy(QtGui.QWidget):
             txt += ", geeh. as in genius."
         elif x == 7:
             txt += ", h. as in honeybee."
-        else:
+        elif x == 8:
             txt += ", ai. as in identity."
+        else:
+            txt += ", " + str(x)
         #END if
         return txt + " " + str(y + 1)
     #END _toCoordinateVerbose()
@@ -447,6 +468,21 @@ class Empathy(QtGui.QWidget):
         #END for
         components.append(EmpathyButton(bhv))
         self._bhvIdleSmall = bhv
+
+        bhv = ActionCollection("You are welcome")
+        bhv.addText("welcome")
+        bhv.add(0, [Speech("You are welcome.", 80)])
+        bhv.add(2, [Speech("You are welcome.", 50)])
+        bhv.add(2, [Speech("You are" + self._markSpeech() + "welcome.", 50, 120)])
+        bhv.add(3, [Speech("You you you are welcome.", 50)])
+        bhv.add(3, [Speech("You you you are" + self._markSpeech() + "welcome.", 50, 120)])
+        for i in range(bhv.getMaxLevel() + 1):
+            bhv.add(i, None, "PointMyselfLeft")
+            bhv.add(i, None, "PointMyselfRight")
+            bhv.add(i, None, "PointYouLeft")
+            bhv.add(i, None, "PointYouRight")
+        #END for
+        components.append(EmpathyButton(bhv))
 
         bhv = ActionCollection("Thank you")
         bhv.addText("thank you")
@@ -1203,7 +1239,7 @@ class Empathy(QtGui.QWidget):
 
         action = QtGui.QAction("Solve", self)
         action.setShortcut(QtCore.Qt.Key_0)
-        action.triggered.connect(lambda: self._wgtSudoku.solveOne())
+        action.triggered.connect(self.on_solveOne_clicked)
         self.addAction(action)
 
         action = QtGui.QAction("SayAgain", self)
@@ -1275,7 +1311,7 @@ class Empathy(QtGui.QWidget):
         widgets.append(widgetIdle)
 
         button = QtGui.QPushButton("Solve next answer")
-        button.clicked.connect(self._wgtSudoku.solveOne)
+        button.clicked.connect(self.on_solveOne_clicked)
         widgets.append(button)
 
         button = QtGui.QPushButton("Say the answer again")
