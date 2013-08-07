@@ -200,18 +200,10 @@ class Empathy(QtGui.QWidget):
     #END on_itemName_changed()
 
     def on_jitterLevel_valueChanged(self, value):
-<<<<<<< HEAD
-        jlv = value
-        if jlv <= 0:
-            jlv = 0
-        elif jlv <= 6:
-            jlv -= 1
-=======
         if value <= 0:
             self._jitterLevel = 0
         elif value <= 6:
             self._jitterLevel = value - 1
->>>>>>> 3a3b8ef2616f73a29a87936ddf06bb663a52f82c
         else:
             self._jitterLevel = 0
         #END if
@@ -377,9 +369,6 @@ class Empathy(QtGui.QWidget):
         layout.addWidget(splitter)
         Empathy._setupShortcuts(self)
     #END _setupUi()
-<<<<<<< HEAD
-#END Empathy.py
-=======
 
     def _setupInteractions(self, wgt):
         components = []
@@ -1428,4 +1417,3 @@ class Empathy(QtGui.QWidget):
         return layout
     #END _setupSudokuUi()
 #END Empathy
->>>>>>> 3a3b8ef2616f73a29a87936ddf06bb663a52f82c
