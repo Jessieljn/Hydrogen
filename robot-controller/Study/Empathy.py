@@ -91,7 +91,7 @@ class Empathy(QtGui.QWidget):
         #END if
     #END setNao()
 
-    def speech(self, txt):
+    def speech(self, txt, speed, shaping):
         for bhv in self._actions:
             if bhv.containText(txt):
                 return bhv.get(self._jitterLevel)
@@ -99,7 +99,7 @@ class Empathy(QtGui.QWidget):
         #END for
         actions = self._bhvMovement.get(self._jitterLevel)
         if self._jitterLevel <= 1:
-            actions.append(Speech(txt, blocking = False))
+            actions.append(Speech(txt, speed, shaping, blocking = False))
         else:
             if random.randint(0, 100) <= 70:
                 txt = txt.replace("want", "wah- wah- want")
@@ -110,7 +110,7 @@ class Empathy(QtGui.QWidget):
             if random.randint(0, 100) <= 30:
                 txt = txt.replace("you", self._markSpeech(50, 120) + "you- you- you." + self._markSpeech(85))
             #END if
-            actions.append(Speech(txt, speed = 85, blocking = False))
+            actions.append(Speech(txt, speed, shaping, blocking = False))
         #END if
         return actions
     #END speech()
@@ -1138,7 +1138,7 @@ class Empathy(QtGui.QWidget):
         components.append(ActionPushButton(None, "I got virus", [
                 Stiffness(1.0),
                 Motion("PointMyself", 2.0, 4, 5, 7, 5.0),
-                Speech("I got a" + self._markSpeech(80) + "computer virus", 80, 130),
+                Speech("I think I got a" + self._markSpeech(80) + "computer virus", 80, 130),
             ]))
 
         components.append(ActionPushButton(None, "Way to fix is to erase", [

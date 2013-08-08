@@ -231,7 +231,7 @@ class MainWindow(QtGui.QMainWindow):
     # END on__wgtCamera_moveHead()
 
     def on__wgtSpeech_playSpeech(self, value):
-        actions = Study.TASKS[self._layoutTaskPanel.currentIndex()][Study.TASK_WIDGET].speech(str(value))
+        actions = Study.TASKS[self._layoutTaskPanel.currentIndex()][Study.TASK_WIDGET].speech(str(value), self._wgtSpeech.getSpeed(), self._wgtSpeech.getShaping())
         if actions is None:
             actions = Speech(value, speed = self._wgtSpeech.getSpeed(), shaping = self._wgtSpeech.getShaping(), blocking = False)
         #END if
