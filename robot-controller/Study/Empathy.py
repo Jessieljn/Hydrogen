@@ -571,6 +571,19 @@ class Empathy(QtGui.QWidget):
         #END for
         components.append(EmpathyButton(bhv))
 
+        bhv = ActionCollection("I disagree")
+        bhv.addText("disagree")
+        bhv.add(0, [Speech("I don't think so")])
+        bhv.add(2, [Speech("I don't think so", 50)])
+        bhv.add(3, [Speech("I don't think so", 50)])
+        bhv.add(3, [Speech("I don't" + self._markSpeech(50, 120) + "think so", 50)])
+        for i in range(bhv.getMaxLevel() + 1):
+            bhv.add(i, None, "Disagree")
+            bhv.add(i, None, "DisagreeLeft")
+            bhv.add(i, None, "DisagreeRight")
+        #END for
+        components.append(EmpathyButton(bhv))
+
         bhv = ActionCollection("Yes")
         bhv.addText("yes")
         bhv.add(0, [Speech("Yes")])
@@ -592,13 +605,9 @@ class Empathy(QtGui.QWidget):
         bhv = ActionCollection("No")
         bhv.addText("no")
         bhv.add(0, [Speech("No")])
-        bhv.add(0, [Speech("I don't think so")])
         bhv.add(2, [Speech("No", 50)])
-        bhv.add(2, [Speech("I don't think so", 50)])
         bhv.add(3, [Speech("No", 50)])
-        bhv.add(3, [Speech("I don't think so", 50)])
         bhv.add(3, [Speech("No", 50, 120)])
-        bhv.add(3, [Speech("I don't" + self._markSpeech(50, 120) + "think so", 50)])
         for i in range(bhv.getMaxLevel() + 1):
             bhv.add(i, None, "Disagree")
             bhv.add(i, None, "DisagreeLeft")
