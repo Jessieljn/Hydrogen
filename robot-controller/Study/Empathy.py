@@ -259,21 +259,22 @@ class Empathy(QtGui.QWidget):
         self._actionQueue.addActions(action)
     #END on_sayanswerVerbose_clicked()
 
+    def on_sayanswerWrong(self):
+        i = random.randint(9, 29)
+        j = str(chr(ord('a') + random.randint(9, 19)))
+        value = random.randint(10, 30)
+        actions = self._bhvAnswer.get(self._jitterLevel)
+        for action in actions:
+            if isinstance(action, ReplaceableSpeech):
+                action.replace(self._toCoordinate(j, i), str(value))
+            #END if
+        #END for
+        self._actionQueue.addActions(actions)
+        self._lastSudoku = [i, j, value]
+    #END on_sayanswerWrong()
+
     def on_solveOne_clicked(self):
-        if self._jitterLevel <= 2 or random.randint(0, 100) <= 80:
-            self._wgtSudoku.solveOne()
-        else:
-            i = random.randint(9, 29)
-            j = str(chr(ord('a') + random.randint(9, 19)))
-            value = random.randint(10, 30)
-            actions = self._bhvAnswer.get(self._jitterLevel)
-            for action in actions:
-                if isinstance(action, ReplaceableSpeech):
-                    action.replace(self._toCoordinate(j, i), str(value))
-                #END if
-            #END for
-            self._actionQueue.addActions(actions)
-        #END if
+        self._wgtSudoku.solveOne()
     #END on_solveOne_clicked()
 
     def on_sudoku_valueChanged(self, i, j, value):
@@ -323,7 +324,7 @@ class Empathy(QtGui.QWidget):
         elif x == 8:
             txt += ", ai."
         else:
-            txt += ", " + str(x)
+            txt += ", " + str(x) + "."
         #END if
         return txt + " " + str(y + 1)
     #END _toCoordinate()
@@ -349,7 +350,7 @@ class Empathy(QtGui.QWidget):
         elif x == 8:
             txt += ", ai. as in identity."
         else:
-            txt += ", " + str(x)
+            txt += ", " + str(x) + "."
         #END if
         return txt + " " + str(y + 1)
     #END _toCoordinateVerbose()
@@ -1145,7 +1146,7 @@ class Empathy(QtGui.QWidget):
                 Stiffness(1.0),
                 Motion("PalmUp", 2.0, 3, 3, 5, 5.0),
                 Motion("PalmUpRight", 2.0, 3, 5, 7, 5.0),
-                Speech("It is serious to me be- be- because" + self._markSpeech(80, 120) + "the only way" + self._markSpeech(50, 100) + "to fis- fis- fix is" + self._markSpeech() + "to erase my memory."),
+                Speech("The only way" + self._markSpeech(50, 100) + "to fis- fis- fix is" + self._markSpeech() + "to erase my memory.", 80, 120),
             ]))
 
         components.append(ActionPushButton(None, "Don't want to forget", [
@@ -1329,6 +1330,10 @@ class Empathy(QtGui.QWidget):
 
         button = QtGui.QPushButton("Say the answer (verbose)")
         button.clicked.connect(self.on_sayanswerVerbose_clicked)
+        widgets.append(button)
+
+        button = QtGui.QPushButton("Say wrong answer")
+        button.clicked.connect(self.on_sayanswerWrong)
         widgets.append(button)
 
         bhv = ActionCollection("#", False)
