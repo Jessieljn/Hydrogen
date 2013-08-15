@@ -11,7 +11,7 @@ class GenderSpeech(Speech):
 
     def execute(self, nao):
         txt = self.paramToString()
-        txt = txt.replace(EmpathySpeech.NAME_MARKER, EmpathySpeech.ParticipantName)
+        txt = txt.replace(GenderSpeech.NAME_MARKER, GenderSpeech.ParticipantName)
         nao.say(txt, not self._blocking)
     #END execute()
 #END class
