@@ -33,39 +33,51 @@ class ActionCollection(QtCore.QObject):
             if isinstance(actions, BaseAction):
                 actions = [actions]
             #END if
-            if insert_sequence:
-                if len(self._list[level][ActionCollection.INDEX_ACTIONS]) <= 0:
-                    self._list[level][ActionCollection.INDEX_ACTIONS].append([])
+            if len(actions) > 0:
+                if insert_sequence:
+                    if len(self._list[level][ActionCollection.INDEX_ACTIONS]) <= 0:
+                        self._list[level][ActionCollection.INDEX_ACTIONS].append([])
+                    #END if
+                    self._list[level][ActionCollection.INDEX_ACTIONS][-1] += actions
+                else:
+                    self._list[level][ActionCollection.INDEX_ACTIONS].append(actions)
                 #END if
-                self._list[level][ActionCollection.INDEX_ACTIONS][-1] += actions
-            else:
-                self._list[level][ActionCollection.INDEX_ACTIONS].append(actions)
             #END if
         #END if
 
         if motions is not None:
             if isinstance(motions, str):
-                motions = [Motion(motion = MotionList.getByName(str(level) + "_" + motions), blocking = False)]
+                tmp = []
+                motion = MotionList.getByName(str(level) + "_" + motions)
+                if motion is not None:
+                    tmp.append(Motion(motion = motion, blocking = False))
+                #END if
+                motions = tmp
             elif isinstance(motions, NaoMotion):
                 motions = [Motion(motion = motions, blocking = False)]
             else:
                 tmp = []
                 for item in motions:
                     if isinstance(motions, str):
-                        tmp.append(Motion(motion = MotionList.getByName(str(level) + "_" + item), blocking = False))
+                        motion = MotionList.getByName(str(level) + "_" + item)
+                        if motion is not None:
+                            tmp.append(Motion(motion = motion, blocking = False))
+                        #END if
                     elif isinstance(motions, NaoMotion):
                         tmp.append(Motion(motion = item, blocking = False))
                     #END if
                 #END for
                 motions = tmp
             #END if
-            if insert_sequence:
-                if len(self._list[level][ActionCollection.INDEX_MOTION]) <= 0:
-                    self._list[level][ActionCollection.INDEX_MOTION].append([])
+            if len(motions) > 0:
+                if insert_sequence:
+                    if len(self._list[level][ActionCollection.INDEX_MOTION]) <= 0:
+                        self._list[level][ActionCollection.INDEX_MOTION].append([])
+                    #END if
+                    self._list[level][ActionCollection.INDEX_MOTION][-1] += motions
+                else:
+                    self._list[level][ActionCollection.INDEX_MOTION].append(motions)
                 #END if
-                self._list[level][ActionCollection.INDEX_MOTION][-1] += motions
-            else:
-                self._list[level][ActionCollection.INDEX_MOTION].append(motions)
             #END if
         #END if
     #END add()

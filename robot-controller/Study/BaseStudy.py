@@ -41,7 +41,7 @@ class BaseStudy(QtGui.QWidget):
         #END if
     #END setNao()
 
-    def speech(self, txt):
+    def speech(self, txt, speed, shaping):
         return None
     #END speech()
 

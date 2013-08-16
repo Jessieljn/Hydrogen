@@ -2,6 +2,7 @@ from General import General
 from Tedium import Tedium
 from MentalChallenge import MentalChallenge
 from Empathy import Empathy
+from Gender import Gender
 from Jitter import Jitter
 
 
@@ -16,6 +17,7 @@ class Study(object):
         Study.TASKS.append([Tedium(), "Tedium"])
         Study.TASKS.append([MentalChallenge(), "Mental Challenge"])
         Study.TASKS.append([Empathy(), "Empathy"])
+        Study.TASKS.append([Gender(), "Gender"])
         Study.TASKS.append([Jitter(), "Jitter"])
     #END setup
 #END class

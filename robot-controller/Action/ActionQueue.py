@@ -145,4 +145,8 @@ class ActionQueue(QtCore.QObject):
         self._running = self._autorun or self._running or run_queue
         self.enqueued.emit(beginIndex, endIndex)
     #END _enqueue()
+<<<<<<< HEAD
 #END ActionQueue.py
+=======
+#END class
+>>>>>>> c539eda38437b33d39c4b7b378e3dfec66508a5c
