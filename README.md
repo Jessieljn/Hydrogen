@@ -3,6 +3,9 @@ Robotic Controller for use with the NAO Humanoid Systems.
 
 [HCI Lab, University of Manitoba](http://www.hci.cs.umanitoba.ca)
 
+##License
+The MIT License (MIT)
+
 -----------------------
 | Table of Contents |
 -----------------------
